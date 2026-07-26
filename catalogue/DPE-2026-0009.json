@@ -1,0 +1,120 @@
+{
+  "id": "DPE-2026-0009",
+  "name": "Hotlink",
+  "family": "transfer",
+  "summary": "A resource loaded straight from a third party makes every page view a transfer.",
+  "mechanism": {
+    "what": "A font, script library or image is loaded directly from an external provider instead of being served by the site. Each page view sends the visitor's IP address, and often more, to that provider.",
+    "why_it_matters": "It needs no consent interaction to establish and no tracking intent to occur. It happens on the first byte, to every visitor, including those who refuse everything.",
+    "common_causes": [
+      "CDN link copied from documentation",
+      "theme or template that references external fonts by default"
+    ],
+    "not_this": "This entry is about the mechanism of loading, not about the destination country. Where the data goes is a separate axis; a hotlink within the EEA is still a hotlink."
+  },
+  "detection": {
+    "indicator": "A subresource request to a host under a different registrable domain, present in the initial document, issued without any interaction.",
+    "method": "network-observed",
+    "qod": 90,
+    "capture_requirements": [
+      "capture from a clean profile with no interaction",
+      "establish the destination separately; do not infer it from the vendor's headquarters"
+    ],
+    "attribution": [
+      "har-pageref"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "The resource is served locally through a proxy or self-hosted copy.",
+      "checkable": "automated",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The request carries no data capable of identifying the visitor.",
+      "checkable": "manual",
+      "if_true": "weaken",
+      "note": "An IP address reaches the provider in any case; that is the core of the German Google Fonts ruling."
+    }
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "repro/hotlink/MANUAL.md",
+        "expect": "a request to an external provider at page load, with no interaction"
+      },
+      {
+        "tier": "bookmarklet",
+        "path": "repro/bookmarklet/frontrun.bookmarklet.txt"
+      },
+      {
+        "tier": "script",
+        "path": "repro/hotlink/hotlink.mjs"
+      }
+    ],
+    "public_scanners": [
+      "urlscan.io",
+      "webbkoll",
+      "webpagetest"
+    ]
+  },
+  "legal": {
+    "provisions": [
+      "eu-gdpr-44",
+      "eu-gdpr-6-1-a"
+    ],
+    "caselaw": [
+      "lg-muenchen-google-fonts",
+      "cjeu-fashion-id"
+    ],
+    "rebuttals": [
+      {
+        "objection": "An IP address is not personal data here.",
+        "answer": "The Munich ruling on Google Fonts treats hotlinking a provider resource as a transfer of personal data, precisely because the IP reaches the provider."
+      },
+      {
+        "objection": "Our hosting is in the Netherlands.",
+        "answer": "Storage location and loaded components are different things. The transfer runs through what the page pulls in, not through where it is stored."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0008"
+  ],
+  "seen_in_the_wild": {
+    "confirmed": true
+  },
+  "schema_version": "2.0",
+  "applies_to": [
+    "web"
+  ],
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ],
+  "slug": "hotlink"
+}

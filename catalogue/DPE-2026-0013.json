@@ -1,0 +1,123 @@
+{
+  "id": "DPE-2026-0013",
+  "name": "Sidecar",
+  "family": "telemetry",
+  "applies_to": [
+    "mobile-app",
+    "desktop",
+    "firmware"
+  ],
+  "summary": "A bundled component collects on its own account, alongside the function the app performs.",
+  "not_a_vulnerability": "The component works exactly as documented by its maker. There is no flaw to fix, only a decision to include it, and vulnerability registers have nowhere to record a decision.",
+  "mechanism": {
+    "what": "An application ships a third-party library that, beyond the service it provides to the app, gathers device identifiers, installed applications, location or contacts and sends them to its own infrastructure. The developer may not have read what it does.",
+    "why_it_matters": "The user chose the app, not the passenger. The collection continues in the background, is invisible in the interface, and often reaches parties that trade in the data rather than use it.",
+    "common_causes": [
+      "analytics or advertising SDK with collection enabled by default",
+      "monetisation library added for revenue rather than function",
+      "component inherited from a framework or a white-label build"
+    ],
+    "not_this": "A processor library operating strictly on the developer's instructions is not this entry. The distinguishing feature is collection on the component's own account."
+  },
+  "detection": {
+    "indicator": "Outbound requests from the application to hosts of a bundled component, carrying device or user identifiers, at moments unrelated to any user action in that app.",
+    "method": "network-with-identifier",
+    "qod": 95,
+    "capture_requirements": [
+      "intercept on the device with a trusted proxy; certificate pinning may need addressing and that fact belongs in the write-up",
+      "start from a fresh install and record what happens before the first screen is dismissed",
+      "list the bundled components statically as well, so traffic can be matched to a component"
+    ],
+    "attribution": [
+      "process-trace",
+      "har-pageref"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "The traffic serves the function the user invoked.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The identifiers are resettable and not tied to the device permanently.",
+      "checkable": "manual",
+      "if_true": "weaken"
+    },
+    {
+      "condition": "The component is configured to collect nothing and the traffic is a heartbeat only.",
+      "checkable": "manual",
+      "if_true": "weaken"
+    }
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "repro/sidecar/MANUAL.md",
+        "expect": "requests to component hosts carrying identifiers, before any user action"
+      },
+      {
+        "tier": "script",
+        "path": "repro/sidecar/inventory.sh",
+        "expect": "a list of bundled components with the hosts each contacts"
+      }
+    ],
+    "public_scanners": []
+  },
+  "legal": {
+    "provisions": [
+      "eu-gdpr-6-1-a",
+      "eu-gdpr-44"
+    ],
+    "caselaw": [
+      "cjeu-fashion-id"
+    ],
+    "rebuttals": [
+      {
+        "objection": "The SDK is the supplier's responsibility.",
+        "answer": "The developer decided to ship it. Fashion ID holds that arranging for data to reach a third party makes you jointly responsible for that reaching."
+      },
+      {
+        "objection": "We only use it for crash reporting.",
+        "answer": "Then the traffic should be limited to crashes. Establish what the payload contains when nothing has crashed."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0012",
+    "DPE-2026-0008"
+  ],
+  "seen_in_the_wild": {
+    "confirmed": true
+  },
+  "schema_version": "2.0",
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ],
+  "slug": "sidecar"
+}

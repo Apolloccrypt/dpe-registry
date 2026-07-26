@@ -1,0 +1,110 @@
+{
+  "id": "DPE-2026-0005",
+  "name": "Overshoulder",
+  "family": "data",
+  "summary": "The session itself is recorded, not merely the page view.",
+  "mechanism": {
+    "what": "A session-recording script captures behaviour inside the page: mouse movement, scrolling, clicks and often keystrokes in form fields, replayable afterwards as a film of the visit.",
+    "why_it_matters": "This is a different order of collection from counting page views. What someone typed and then deleted, where they hesitated, which field they returned to: none of that is needed to run a website, and all of it is revealing.",
+    "common_causes": [
+      "recording script loaded outside the consent gate",
+      "field masking left off, so entered text is captured too"
+    ],
+    "not_this": "Ordinary page-view analytics is not this entry. The distinguishing feature is capture of in-page behaviour."
+  },
+  "detection": {
+    "indicator": "A request to a session-recording endpoint of a recording vendor, carrying a site identifier, at page load.",
+    "method": "network-with-identifier",
+    "qod": 95,
+    "capture_requirements": [
+      "clean profile",
+      "no interaction",
+      "note whether field masking is active; unmasked input raises the stakes considerably"
+    ],
+    "attribution": [
+      "har-pageref",
+      "cdp-initiator"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "The vendor processes only aggregated data without session capture.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "Recording starts only after consent is granted.",
+      "checkable": "automated",
+      "if_true": "drop"
+    },
+    {
+      "condition": "All input fields are masked at source.",
+      "checkable": "manual",
+      "if_true": "weaken"
+    }
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "repro/overshoulder/MANUAL.md",
+        "expect": "a request to a recording vendor endpoint before consent"
+      },
+      {
+        "tier": "script",
+        "path": "repro/overshoulder/overshoulder.mjs"
+      }
+    ],
+    "public_scanners": [
+      "blacklight",
+      "urlscan.io"
+    ]
+  },
+  "legal": {
+    "provisions": [
+      "eu-gdpr-6-1-a",
+      "nl-tw-11-7a"
+    ],
+    "rebuttals": [
+      {
+        "objection": "The recording servers are in the EU.",
+        "answer": "Where the recording is stored says nothing about whether it should have been made. Location is a separate question from lawfulness of collection."
+      }
+    ]
+  },
+  "seen_in_the_wild": {
+    "confirmed": true
+  },
+  "schema_version": "2.0",
+  "applies_to": [
+    "web"
+  ],
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ],
+  "slug": "overshoulder"
+}

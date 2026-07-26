@@ -1,0 +1,109 @@
+{
+  "id": "DPE-2026-0008",
+  "name": "Handover",
+  "family": "chain",
+  "summary": "A form that looks like part of the site is hosted by a third party that profiles on its own account.",
+  "mechanism": {
+    "what": "A signup, contact or newsletter form lives on a domain belonging to a marketing platform. The visitor believes they are dealing with the site; the platform sets its own identifiers and builds its own record.",
+    "why_it_matters": "The visitor cannot see who they are actually handing data to. Interest categories ticked on such a form become a profile at a party the person never chose.",
+    "common_causes": [
+      "marketing platform hosting the form on a vendor subdomain",
+      "embedded form in an iframe from another registrable domain"
+    ],
+    "not_this": "A processor hosting a form under the controller's own domain and instructions is not this entry."
+  },
+  "detection": {
+    "indicator": "Set-Cookie from a host under a different registrable domain than the site that linked to the form, at page load and before any submission.",
+    "method": "network-with-identifier",
+    "qod": 95,
+    "capture_requirements": [
+      "never submit the form; establish the fields, not the processing after sending",
+      "record the fields offered, since that shows what profile would be built"
+    ],
+    "attribution": [
+      "har-pageref"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "The cookies are strictly necessary to operate the form.",
+      "checkable": "not-from-capture",
+      "if_true": "weaken"
+    },
+    {
+      "condition": "The form domain is a CNAME under the controller's own domain, operated as a processor.",
+      "checkable": "manual",
+      "if_true": "reclassify"
+    }
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "repro/handover/MANUAL.md",
+        "expect": "cookies set by the form host at load, without a consent layer"
+      },
+      {
+        "tier": "script",
+        "path": "repro/handover/handover.mjs"
+      }
+    ],
+    "public_scanners": [
+      "urlscan.io",
+      "webbkoll"
+    ]
+  },
+  "legal": {
+    "provisions": [
+      "eu-gdpr-44",
+      "eu-gdpr-6-1-a"
+    ],
+    "caselaw": [
+      "cjeu-fashion-id"
+    ],
+    "rebuttals": [
+      {
+        "objection": "That is our supplier's platform, not our site.",
+        "answer": "Fashion ID holds that a controller who arranges for visitor data to reach a third party is jointly responsible for that collection and transmission. Linking to the form is arranging it."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0009"
+  ],
+  "seen_in_the_wild": {
+    "confirmed": true
+  },
+  "schema_version": "2.0",
+  "applies_to": [
+    "web"
+  ],
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ],
+  "slug": "handover"
+}

@@ -1,0 +1,104 @@
+{
+  "id": "DPE-2026-0003",
+  "name": "OneDoor",
+  "family": "consent",
+  "summary": "The consent dialogue offers acceptance and no way to refuse.",
+  "mechanism": {
+    "what": "The banner presents an accept control, and refusing requires either leaving the site or navigating a path that does not lead to a working refusal.",
+    "why_it_matters": "A choice with one option is not a choice. Consent must be freely given, and it is not free if the only way out is to leave.",
+    "common_causes": [
+      "banner template with a single call to action",
+      "refusal hidden behind a settings layer that does not save",
+      "closing the banner counted as acceptance"
+    ],
+    "not_this": "If a refusal option exists but does nothing, that is HollowNo. Here the option is absent."
+  },
+  "detection": {
+    "indicator": "No refusal affordance in the banner DOM: no control whose action registers a negative consent state, at any layer reachable from the first screen.",
+    "method": "static-source",
+    "qod": 60,
+    "capture_requirements": [
+      "inspect every layer of the dialogue, not only the first screen",
+      "dismissing by clicking away is not a refusal; check what state it writes"
+    ],
+    "attribution": [
+      "cdp-initiator"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "A refusal exists on a second layer of the dialogue.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The site sets no consent-bound technology at all, so no refusal is required.",
+      "checkable": "automated",
+      "if_true": "drop"
+    }
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "repro/onedoor/MANUAL.md",
+        "expect": "no control in the dialogue that writes a negative consent state"
+      }
+    ],
+    "public_scanners": [
+      "urlscan.io"
+    ]
+  },
+  "legal": {
+    "provisions": [
+      "eu-gdpr-6-1-a"
+    ],
+    "caselaw": [
+      "cjeu-planet49"
+    ],
+    "rebuttals": [
+      {
+        "objection": "Visitors can refuse in their browser settings.",
+        "answer": "Consent is sought by the controller and must be refusable where it is sought. Delegating that to the browser does not discharge it."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0002"
+  ],
+  "seen_in_the_wild": {
+    "confirmed": true
+  },
+  "schema_version": "2.0",
+  "applies_to": [
+    "web"
+  ],
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ],
+  "slug": "onedoor"
+}

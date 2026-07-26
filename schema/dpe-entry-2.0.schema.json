@@ -1,0 +1,432 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://totaledigitalewaarborging.nl/register/schema/dpe-entry-2.0.schema.json",
+  "title": "DPE Entry 2.0",
+  "description": "One Data Protection Exposure: a named class of fault in how a system handles personal data. An entry describes the fault itself, the way CWE describes a class of weakness. It names no organisation, no product and no site. Whether a given deployment exhibits it is for a researcher to establish and publish; the registry only defines the fault, how to detect it, what would refute it, and which provisions it engages. Explicitly for faults that are not vulnerabilities: nothing is exploitable, the system works as designed, and the design is the problem. Firmware phoning home to a third country, an SDK uploading a contact list, a television reporting what is on screen: none of these get a CVE, and until now there was no number to cite for them.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "id",
+    "name",
+    "family",
+    "summary",
+    "status",
+    "mechanism",
+    "detection",
+    "falsifiers",
+    "reproduction",
+    "legal",
+    "changes",
+    "applies_to"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "2.0"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^DPE-[0-9]{4}-[0-9]{4}$",
+      "description": "Permanent identifier. Never reused, never deleted. A deprecated entry keeps its number and its URL."
+    },
+    "name": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Za-z]{2,23}$",
+      "description": "The citable unit. One word, memorable, in English, describing the behaviour of the system and not the harm to the person. Heartbleed, not CVE-2014-0160. Never reused, even after deprecation."
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{2,39}$"
+    },
+    "family": {
+      "enum": [
+        "consent",
+        "data",
+        "chain",
+        "transfer",
+        "transparency",
+        "retention",
+        "telemetry",
+        "method"
+      ],
+      "description": "Coarse grouping so the catalogue stays navigable. Not a severity and not a judgement."
+    },
+    "summary": {
+      "type": "string",
+      "maxLength": 160,
+      "description": "One sentence, in terms of the mechanism. This is what people will quote."
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "active",
+        "superseded",
+        "deprecated"
+      ],
+      "description": "draft: proposed, not yet accepted. active: in use. superseded: replaced by a better-defined entry, see supersededBy. deprecated: no longer considered a distinct fault; kept online with the reason."
+    },
+    "mechanism": {
+      "type": "object",
+      "required": [
+        "what",
+        "why_it_matters"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "what": {
+          "type": "string",
+          "description": "How the fault arises, technically."
+        },
+        "why_it_matters": {
+          "type": "string",
+          "description": "What it costs the person whose data it is. Concrete, not abstract."
+        },
+        "common_causes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Typical origins, described generically: 'tag hardcoded outside the consent gate', never a vendor name."
+        },
+        "not_this": {
+          "type": "string",
+          "description": "The neighbouring fault it is most often confused with, and the dividing line. Sharp boundaries are what keep an entry usable in a dispute."
+        }
+      }
+    },
+    "detection": {
+      "type": "object",
+      "required": [
+        "indicator",
+        "method",
+        "qod"
+      ],
+      "additionalProperties": false,
+      "description": "How to establish it without exploiting anything, the way a vulnerability scanner confirms a CVE by finding a deterministic indicator.",
+      "properties": {
+        "indicator": {
+          "type": "string",
+          "description": "The concrete thing that settles it. Must be checkable without interpretation."
+        },
+        "method": {
+          "enum": [
+            "static-source",
+            "network-observed",
+            "network-with-identifier",
+            "document-comparison",
+            "differential",
+            "third-party-confirmed",
+            "archival-continuous"
+          ]
+        },
+        "qod": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Quality of detection of the method, not the seriousness of the fault."
+        },
+        "capture_requirements": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Conditions the measurement must meet, e.g. clean profile, no interaction, separate capture per consent mode. A capture that fails these produces a confident wrong answer."
+        },
+        "attribution": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "har-pageref",
+              "cdp-initiator",
+              "process-trace",
+              "vendor-statement",
+              "document-diff"
+            ]
+          },
+          "description": "Acceptable ways to attribute the behaviour. Referer is never acceptable: it is spoofable and instrumentation spoofs it."
+        }
+      }
+    },
+    "falsifiers": {
+      "type": "array",
+      "minItems": 1,
+      "description": "What would refute a claim that this fault is present. Mandatory, and the reason an entry survives contest: a researcher who works through this list before publishing cannot be caught out by the obvious objection.",
+      "items": {
+        "type": "object",
+        "required": [
+          "condition",
+          "checkable"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "condition": {
+            "type": "string"
+          },
+          "checkable": {
+            "enum": [
+              "automated",
+              "manual",
+              "not-from-capture"
+            ],
+            "description": "not-from-capture means it cannot be settled from the recording alone and needs context the researcher must supply."
+          },
+          "if_true": {
+            "enum": [
+              "drop",
+              "reclassify",
+              "weaken"
+            ]
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "does_not_establish": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Explicit limits, so they travel with every use of this entry. Unlawfulness is always on this list: that is for a supervisory authority or a court."
+    },
+    "reproduction": {
+      "type": "object",
+      "description": "At least one route that needs no tooling owned by the registry.",
+      "required": [
+        "methods"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "methods": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "tier",
+              "path"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "tier": {
+                "enum": [
+                  "manual",
+                  "bookmarklet",
+                  "script",
+                  "suite"
+                ]
+              },
+              "path": {
+                "type": "string"
+              },
+              "commit": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{7,40}$"
+              },
+              "expect": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "public_scanners": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "urlscan.io",
+              "blacklight",
+              "webbkoll",
+              "webpagetest",
+              "securityheaders",
+              "mozilla-observatory",
+              "wayback"
+            ]
+          },
+          "description": "Third-party services that can confirm this fault with a permanent result URL, so a researcher can point at a measurement that is not their own."
+        }
+      }
+    },
+    "legal": {
+      "type": "object",
+      "description": "Which provisions the fault engages. Per jurisdiction, so the entry is usable outside one country: the behaviour is the same across the EEA and only the citation differs.",
+      "required": [
+        "provisions"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "provisions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "description": "Id of a file in law/."
+          }
+        },
+        "caselaw": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Id of a file in caselaw/."
+          }
+        },
+        "rebuttals": {
+          "type": "array",
+          "description": "The objections a researcher will meet, with the answer. Written once here instead of in every article.",
+          "items": {
+            "type": "object",
+            "required": [
+              "objection",
+              "answer"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "objection": {
+                "type": "string"
+              },
+              "answer": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "seen_in_the_wild": {
+      "type": "object",
+      "description": "That the fault occurs in practice, without naming anyone. The registry defines faults; who exhibits one is for a researcher to establish and publish under their own name. References here point at published research, never at an unpublished measurement.",
+      "additionalProperties": false,
+      "properties": {
+        "confirmed": {
+          "type": "boolean"
+        },
+        "first_documented": {
+          "type": "string",
+          "format": "date"
+        },
+        "references": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "title",
+              "url"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "title": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "author": {
+                "type": "string"
+              },
+              "date": {
+                "type": "string",
+                "format": "date"
+              }
+            }
+          }
+        }
+      }
+    },
+    "related": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^DPE-[0-9]{4}-[0-9]{4}$"
+      }
+    },
+    "supersededBy": {
+      "type": "string",
+      "pattern": "^DPE-[0-9]{4}-[0-9]{4}$"
+    },
+    "credit": {
+      "type": "array",
+      "description": "Who proposed and refined this entry. Permanent, because attribution is what a contributor gets in return.",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "role"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "role": {
+            "enum": [
+              "proposed",
+              "refined",
+              "reviewed",
+              "reproduced"
+            ]
+          },
+          "organisation": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      }
+    },
+    "changes": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Append-only. Definitions shift as the field learns, and an entry that changed meaning in 2028 must still be readable as what it meant in 2026.",
+      "items": {
+        "type": "object",
+        "required": [
+          "at",
+          "entries"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "actor": {
+            "type": "string"
+          },
+          "entries": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "applies_to": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "enum": [
+          "web",
+          "mobile-app",
+          "firmware",
+          "iot",
+          "vehicle",
+          "desktop",
+          "api",
+          "network-device"
+        ]
+      },
+      "description": "Which kinds of system this fault can occur in. A fault is not tied to a technology: consent that cannot be refused looks different on a television than in a browser, but it is the same fault."
+    },
+    "not_a_vulnerability": {
+      "type": "string",
+      "description": "Why this is not a security vulnerability, stated so nobody files it in the wrong place. Usually: nothing is exploitable, the behaviour is intended by the builder, and the objection is to the design rather than to a defect in it."
+    }
+  }
+}

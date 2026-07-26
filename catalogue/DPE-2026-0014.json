@@ -1,0 +1,110 @@
+{
+  "id": "DPE-2026-0014",
+  "name": "Deadend",
+  "family": "consent",
+  "applies_to": [
+    "firmware",
+    "iot",
+    "vehicle",
+    "mobile-app"
+  ],
+  "summary": "The setting that would stop the collection does not exist, or does not survive.",
+  "not_a_vulnerability": "Nothing is broken from the builder's point of view. The absence of an off switch is a product decision, and there is no security register that records product decisions.",
+  "mechanism": {
+    "what": "A device or application collects data with no control to prevent it, or with a control that resets on update, on reboot or after a period, so the collection resumes without the owner doing anything.",
+    "why_it_matters": "Consent that cannot be withdrawn is not consent. On a device this bites harder than on a website, because the owner cannot walk away from something they paid for and installed in their home or their car.",
+    "common_causes": [
+      "setting absent from the interface entirely",
+      "preference stored in volatile configuration and lost on firmware update",
+      "regional default reapplied after an update"
+    ],
+    "not_this": "If a control exists and holds, this entry does not apply, however buried the control is. The distinguishing feature is that it is missing or does not survive."
+  },
+  "detection": {
+    "indicator": "Collection continues after the control is set to off, or the control returns to on after a reboot or update, established by capturing before and after.",
+    "method": "differential",
+    "qod": 97,
+    "capture_requirements": [
+      "capture with the control on, then off, then again after a reboot and after an update",
+      "record the firmware version at each step; a reset on update is a different finding from a reset on reboot"
+    ],
+    "attribution": [
+      "process-trace"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "The control exists elsewhere, for instance in a companion app or a web interface.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The remaining traffic is strictly necessary to operate the device.",
+      "checkable": "manual",
+      "if_true": "reclassify"
+    },
+    {
+      "condition": "The reset was caused by a factory reset performed during testing.",
+      "checkable": "manual",
+      "if_true": "drop"
+    }
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "repro/deadend/MANUAL.md",
+        "expect": "identical outbound traffic with the control on and off, or the control reverting after a reboot"
+      }
+    ],
+    "public_scanners": []
+  },
+  "legal": {
+    "provisions": [
+      "eu-gdpr-6-1-a"
+    ],
+    "rebuttals": [
+      {
+        "objection": "The device cannot function without it.",
+        "answer": "Then say so, and establish it. Necessity is a claim that can be tested by disabling the traffic and seeing what stops working."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0002",
+    "DPE-2026-0003",
+    "DPE-2026-0012"
+  ],
+  "seen_in_the_wild": {
+    "confirmed": true
+  },
+  "schema_version": "2.0",
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ],
+  "slug": "deadend"
+}

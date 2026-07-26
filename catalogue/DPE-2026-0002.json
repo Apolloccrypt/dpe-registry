@@ -1,0 +1,125 @@
+{
+  "id": "DPE-2026-0002",
+  "name": "HollowNo",
+  "family": "consent",
+  "summary": "Refusing consent does not change what leaves the browser.",
+  "mechanism": {
+    "what": "The site asks for consent and registers the refusal, but the tags that the refusal should stop do not sit behind the gate. The screen confirms the choice; the wire shows the same traffic as before.",
+    "why_it_matters": "A refusal that changes nothing makes the right to withhold and to withdraw consent a formality. The visitor believes they have decided something and they have not.",
+    "common_causes": [
+      "tags hardcoded rather than gated",
+      "consent tool blocks cookies but not the loading of scripts or containers",
+      "banner is informational and wired to nothing"
+    ],
+    "not_this": "If nothing was asked before the tag fired, that is Frontrun. If no refusal option is offered at all, that is OneDoor."
+  },
+  "detection": {
+    "indicator": "Set comparison: the third-party hosts contacted after an explicitly registered refusal are equal to, or a superset of, those contacted without any interaction. There is no third reading.",
+    "method": "differential",
+    "qod": 97,
+    "capture_requirements": [
+      "two separate captures, each with a fresh profile",
+      "read the consent state back after clicking refuse; an unregistered click measures a failed click, not a hollow refusal",
+      "identical conditions otherwise: same page, same window, same country"
+    ],
+    "attribution": [
+      "har-pageref",
+      "cdp-initiator"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "The refusal was not registered.",
+      "checkable": "automated",
+      "if_true": "drop",
+      "note": "The most important one: it turns a finding into a measurement error."
+    },
+    {
+      "condition": "The banner does block, but later than the capture window.",
+      "checkable": "automated",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The surviving requests are strictly necessary for a service the visitor asked for.",
+      "checkable": "not-from-capture",
+      "if_true": "reclassify",
+      "note": "A judgement per host. Never excluded automatically; an entry may be cited with this untested as long as that is stated."
+    }
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "repro/hollowno/MANUAL.md",
+        "expect": "identical host sets in the no-action and refuse captures"
+      },
+      {
+        "tier": "script",
+        "path": "repro/hollowno/hollowno.mjs"
+      }
+    ],
+    "public_scanners": [
+      "urlscan.io",
+      "webbkoll"
+    ]
+  },
+  "legal": {
+    "provisions": [
+      "eu-gdpr-6-1-a",
+      "nl-tw-11-7a"
+    ],
+    "caselaw": [
+      "cjeu-planet49"
+    ],
+    "rebuttals": [
+      {
+        "objection": "The banner is there, so the visitor has a choice.",
+        "answer": "The choice exists on screen and not on the wire. Consent requires an active act of the user; an act without effect is not such an act."
+      },
+      {
+        "objection": "This is analytics, which needs no consent.",
+        "answer": "Then the banner should not have listed it, and there would be no refusal to honour. A party cannot both treat something as consent-bound and ignore the refusal."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0001",
+    "DPE-2026-0004"
+  ],
+  "seen_in_the_wild": {
+    "confirmed": true,
+    "first_documented": "2026-05-27"
+  },
+  "schema_version": "2.0",
+  "applies_to": [
+    "web"
+  ],
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ],
+  "slug": "hollowno"
+}

@@ -1,0 +1,132 @@
+{
+  "id": "DPE-2026-0012",
+  "name": "Homecall",
+  "family": "telemetry",
+  "applies_to": [
+    "firmware",
+    "iot",
+    "network-device",
+    "vehicle"
+  ],
+  "summary": "A device contacts a server abroad without any function that requires it.",
+  "not_a_vulnerability": "Nothing is exploitable and nothing is broken. The device does what its builder intended, and the objection is to that intention. A vulnerability register has no place to put this, which is why it has gone unrecorded.",
+  "mechanism": {
+    "what": "Firmware opens connections to hosts that serve no function the owner asked for: a fixed endpoint contacted at boot, at intervals, or on every state change. The payload may be status, configuration, usage patterns or an identifier of the device or its owner.",
+    "why_it_matters": "The owner bought a device, not a subscription to being observed. Unlike a website there is no browser to inspect it with, no consent dialogue, and often no way to switch it off without breaking the product. The traffic continues for the life of the device, which for a router or a car is a decade.",
+    "common_causes": [
+      "vendor telemetry enabled by default with no setting to disable it",
+      "chipset SDK contacting the chip maker rather than the device brand",
+      "update or time service pointed at a fixed host in the vendor's home jurisdiction"
+    ],
+    "not_this": "A firmware update check against the vendor is expected behaviour and not this entry. What distinguishes it is traffic without a function the owner asked for, or a destination that has nothing to do with the product."
+  },
+  "detection": {
+    "indicator": "Outbound connections from the device to hosts that persist when every user-facing function is idle, established from a network capture at the gateway rather than from the device itself.",
+    "method": "network-observed",
+    "qod": 90,
+    "capture_requirements": [
+      "capture upstream of the device, on the router or an inline tap; the device cannot be trusted to report its own traffic",
+      "idle baseline first: leave the device untouched and record what it does anyway",
+      "record firmware version and region setting; behaviour frequently differs per region",
+      "establish the destination by address and routing, never by where the vendor is headquartered"
+    ],
+    "attribution": [
+      "process-trace",
+      "vendor-statement"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "The traffic serves a function the owner enabled, such as remote access or cloud backup.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The endpoint is a content delivery network fronting a service in another jurisdiction.",
+      "checkable": "manual",
+      "if_true": "reclassify",
+      "note": "Where an operator is based says nothing about where the data goes. Establish the destination, not the origin of the company."
+    },
+    {
+      "condition": "The connection carries no data beyond what is needed to check for updates.",
+      "checkable": "manual",
+      "if_true": "weaken"
+    },
+    {
+      "condition": "The behaviour can be switched off in the interface and was left on.",
+      "checkable": "manual",
+      "if_true": "weaken",
+      "note": "Still relevant if it is on by default, but it changes the finding from cannot to did not."
+    }
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "repro/homecall/MANUAL.md",
+        "expect": "connections to hosts unrelated to any function the owner enabled, while the device sits idle"
+      },
+      {
+        "tier": "script",
+        "path": "repro/homecall/idle-baseline.sh",
+        "expect": "a list of destinations contacted during an idle window, with volumes and intervals"
+      }
+    ],
+    "public_scanners": []
+  },
+  "legal": {
+    "provisions": [
+      "eu-gdpr-44",
+      "eu-gdpr-6-1-a"
+    ],
+    "rebuttals": [
+      {
+        "objection": "This is anonymous diagnostic data.",
+        "answer": "A device identifier tied to a household is not anonymous, and diagnostics that report usage patterns describe the people using it. Establish what is in the payload before accepting the label."
+      },
+      {
+        "objection": "It is in the terms and conditions.",
+        "answer": "Consent must be specific and freely given. A term buried in a document accepted once at setup, with no way to refuse and keep the product working, is neither."
+      },
+      {
+        "objection": "The servers belong to our chip supplier, not to us.",
+        "answer": "The party placing the product on the market chose that component. Responsibility for what a shipped device does is not transferred by subcontracting it."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0013"
+  ],
+  "seen_in_the_wild": {
+    "confirmed": true
+  },
+  "schema_version": "2.0",
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ],
+  "slug": "homecall"
+}

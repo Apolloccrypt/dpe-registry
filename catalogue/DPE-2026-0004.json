@@ -1,0 +1,114 @@
+{
+  "id": "DPE-2026-0004",
+  "name": "MaxStay",
+  "family": "retention",
+  "summary": "An identifier cookie is set for the maximum lifetime a browser accepts, before the question is answered.",
+  "mechanism": {
+    "what": "At page load, before any consent interaction, a cookie is placed with a lifetime at or near the ceiling the browser permits, currently 399 days in Chromium-based browsers.",
+    "why_it_matters": "The visitor is recognisable for over a year on the basis of a decision they were never given. Storage limitation requires a term tied to the purpose, not to the technical maximum.",
+    "common_causes": [
+      "default retention of the measurement setup left untouched",
+      "cookie placed outside the consent gate, so the term was never considered"
+    ],
+    "not_this": "If the cookie is set only after consent, this is a retention question and not this entry. The pre-consent placement is what makes it a fault here."
+  },
+  "detection": {
+    "indicator": "A Set-Cookie with max-age at or above 34128000 seconds (399 days), or an equivalent Expires, issued before the consent event.",
+    "method": "network-with-identifier",
+    "qod": 95,
+    "capture_requirements": [
+      "clean profile",
+      "no interaction",
+      "read Set-Cookie headers, not only the cookie jar"
+    ],
+    "attribution": [
+      "har-pageref"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "The cookie is strictly necessary for a service the visitor requested.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The lifetime is set by the browser, not by the server.",
+      "checkable": "automated",
+      "if_true": "drop"
+    }
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "repro/maxstay/MANUAL.md",
+        "expect": "a cookie with a lifetime near 399 days, present before any interaction"
+      },
+      {
+        "tier": "bookmarklet",
+        "path": "repro/bookmarklet/frontrun.bookmarklet.txt"
+      },
+      {
+        "tier": "script",
+        "path": "repro/maxstay/maxstay.mjs"
+      }
+    ],
+    "public_scanners": [
+      "urlscan.io",
+      "webbkoll"
+    ]
+  },
+  "legal": {
+    "provisions": [
+      "nl-tw-11-7a",
+      "eu-gdpr-6-1-a"
+    ],
+    "caselaw": [
+      "cjeu-planet49"
+    ],
+    "rebuttals": [
+      {
+        "objection": "399 days is the industry default.",
+        "answer": "A default is not a purpose. Storage limitation asks what term the purpose requires, and the browser ceiling is not an answer to that question."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0001"
+  ],
+  "seen_in_the_wild": {
+    "confirmed": true
+  },
+  "schema_version": "2.0",
+  "applies_to": [
+    "web"
+  ],
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ],
+  "slug": "maxstay"
+}

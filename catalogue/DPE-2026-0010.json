@@ -1,0 +1,99 @@
+{
+  "id": "DPE-2026-0010",
+  "name": "OffBooks",
+  "family": "transparency",
+  "summary": "A recipient of personal data is missing from the party's own privacy statement.",
+  "mechanism": {
+    "what": "Measurement shows data going to a party that the published privacy statement does not mention, or the statement asserts something the traffic contradicts, such as that no personal data is processed or that all recipients are inside the EEA.",
+    "why_it_matters": "The statement is the one place a person can check what happens to their data. If it is wrong, informed consent is impossible by construction, and every other control rests on nothing.",
+    "common_causes": [
+      "statement not updated when the measurement setup changed",
+      "tags added by a team that does not maintain the statement"
+    ],
+    "not_this": "This is not about whether the processing was lawful. It is about the gap between the measurement and the party's own account of it."
+  },
+  "detection": {
+    "indicator": "Set difference: recipients observed in the capture minus recipients named in the privacy statement of the same date is non-empty. Both sources belong to the party; the researcher only does the arithmetic.",
+    "method": "document-comparison",
+    "qod": 97,
+    "capture_requirements": [
+      "use the statement as it stood on the measurement date, from an archive",
+      "search the whole statement and any cookie overview, not just the recipients list"
+    ],
+    "attribution": [
+      "document-diff",
+      "har-pageref"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "The recipient is named elsewhere in the statement or in a linked cookie overview.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The statement was updated outside the measured window.",
+      "checkable": "manual",
+      "if_true": "drop"
+    }
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "repro/offbooks/MANUAL.md",
+        "expect": "a recipient present in the capture and absent from the statement of the same date"
+      }
+    ],
+    "public_scanners": [
+      "wayback",
+      "urlscan.io"
+    ]
+  },
+  "legal": {
+    "provisions": [
+      "eu-gdpr-6-1-a"
+    ],
+    "rebuttals": [
+      {
+        "objection": "The statement is generic on purpose.",
+        "answer": "Article 13 requires the recipients or categories of recipients. A statement that omits a category entirely is not generic but incomplete."
+      }
+    ]
+  },
+  "seen_in_the_wild": {
+    "confirmed": true
+  },
+  "schema_version": "2.0",
+  "applies_to": [
+    "web"
+  ],
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ],
+  "slug": "offbooks"
+}

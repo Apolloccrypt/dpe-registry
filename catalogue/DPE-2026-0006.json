@@ -1,0 +1,98 @@
+{
+  "id": "DPE-2026-0006",
+  "name": "Telltale",
+  "family": "data",
+  "summary": "What the visitor typed or looked for reaches a third party.",
+  "mechanism": {
+    "what": "A search term, form field or URL path that reveals intent is passed to an analytics or advertising party, usually as a parameter or as part of a page title.",
+    "why_it_matters": "The content of a query says far more than the fact of a visit. A search on a health site, a benefits portal or a legal service is close to a statement about the person, and it leaves in plain text.",
+    "common_causes": [
+      "query string included in the page URL that analytics reports verbatim",
+      "form values passed into event parameters",
+      "page titles constructed from user input"
+    ],
+    "not_this": "An identifier alone is not this entry; that is ordinary tracking. What matters here is that the content itself travels."
+  },
+  "detection": {
+    "indicator": "A value entered or searched by the visitor appears verbatim, or trivially encoded, in a request to a host under a different registrable domain.",
+    "method": "network-observed",
+    "qod": 90,
+    "capture_requirements": [
+      "use a distinctive search term so it can be found unambiguously in the capture",
+      "check both query parameters and POST bodies"
+    ],
+    "attribution": [
+      "har-pageref"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "The value is hashed or truncated beyond recovery before leaving.",
+      "checkable": "manual",
+      "if_true": "weaken"
+    },
+    {
+      "condition": "The receiving host is a processor under a documented agreement, self-hosted.",
+      "checkable": "not-from-capture",
+      "if_true": "reclassify"
+    }
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "repro/telltale/MANUAL.md",
+        "expect": "the distinctive search term visible in an outbound request"
+      }
+    ],
+    "public_scanners": [
+      "urlscan.io"
+    ]
+  },
+  "legal": {
+    "provisions": [
+      "eu-gdpr-6-1-a"
+    ],
+    "rebuttals": [
+      {
+        "objection": "We do not send personal data, only the page URL.",
+        "answer": "If the URL contains what the visitor typed, then the URL is the personal data. The container does not change the content."
+      }
+    ]
+  },
+  "seen_in_the_wild": {
+    "confirmed": true
+  },
+  "schema_version": "2.0",
+  "applies_to": [
+    "web"
+  ],
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ],
+  "slug": "telltale"
+}

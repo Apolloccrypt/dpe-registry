@@ -1,0 +1,103 @@
+{
+  "id": "DPE-2026-0007",
+  "name": "Silhouette",
+  "family": "data",
+  "summary": "The device is recognised by its characteristics, without any stored identifier.",
+  "mechanism": {
+    "what": "Scripts read properties that together make a device distinctive: time zone, screen metrics, fonts, canvas or WebGL rendering, enumerated navigator fields. No cookie is stored, so cookie controls do not touch it.",
+    "why_it_matters": "Recognition without storage escapes exactly the controls people are told to use. Clearing cookies and refusing consent leave the technique untouched.",
+    "common_causes": [
+      "anti-fraud or bot-detection library that also serves marketing",
+      "advertising script with built-in fingerprinting"
+    ],
+    "not_this": "Reading a time zone to localise a page is not this entry. The distinguishing feature is enumeration of multiple properties by a third party."
+  },
+  "detection": {
+    "indicator": "Calls to canvas, WebGL, font enumeration, time zone or navigator property enumeration originating from a script under a different registrable domain, before consent.",
+    "method": "network-observed",
+    "qod": 90,
+    "capture_requirements": [
+      "hook the property reads through the debugging protocol; a HAR alone does not show them",
+      "record which script initiated each read"
+    ],
+    "attribution": [
+      "cdp-initiator"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "The properties are read by a first-party script, not a third party.",
+      "checkable": "automated",
+      "if_true": "reclassify"
+    },
+    {
+      "condition": "The reads serve a functional purpose such as localisation or accessibility.",
+      "checkable": "not-from-capture",
+      "if_true": "weaken",
+      "note": "Purpose cannot be established from a capture. The entry establishes the reading, not the intent."
+    }
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "repro/silhouette/MANUAL.md",
+        "expect": "property reads by third-party scripts before consent"
+      },
+      {
+        "tier": "script",
+        "path": "repro/silhouette/silhouette.mjs"
+      }
+    ],
+    "public_scanners": [
+      "blacklight"
+    ]
+  },
+  "legal": {
+    "provisions": [
+      "nl-tw-11-7a",
+      "eu-gdpr-6-1-a"
+    ],
+    "rebuttals": [
+      {
+        "objection": "We set no cookies.",
+        "answer": "The cookie provision covers storing and reading information on the device, not only cookies. Reading device characteristics for recognition is within its scope."
+      }
+    ]
+  },
+  "seen_in_the_wild": {
+    "confirmed": true
+  },
+  "schema_version": "2.0",
+  "applies_to": [
+    "web"
+  ],
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ],
+  "slug": "silhouette"
+}

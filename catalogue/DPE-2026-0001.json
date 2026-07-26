@@ -1,0 +1,145 @@
+{
+  "id": "DPE-2026-0001",
+  "name": "Frontrun",
+  "family": "consent",
+  "summary": "A tag fires before the consent question has been answered.",
+  "mechanism": {
+    "what": "On page load, requests go to a measurement or advertising party at a moment when the visitor has not been able to make a choice. There may be a banner or there may not be; either way something was measured before anything was asked. An identifier is usually set at the same time, making the visitor recognisable on a later visit.",
+    "why_it_matters": "Consent that arrives after the processing is not consent for that processing. Someone opening a page about an illness, a legal conflict or a benefit claim has already signalled that to a third party, and the option not to do so never existed.",
+    "common_causes": [
+      "tag hardcoded in the page rather than behind the consent gate",
+      "consent tool blocks cookie placement but not script or container loading",
+      "tag added through a dashboard by a team that does not know about the gate"
+    ],
+    "not_this": "If the tag fires but refusing changes nothing, that is HollowNo: this entry is about the moment, that one about the effect of the choice. Both can be present at once and they are separate faults, because an operator can fix one and leave the other."
+  },
+  "detection": {
+    "indicator": "A request to a third-party host carrying an identifier parameter or setting an identifier cookie, timestamped before the consent event. Absent a consent event, the whole capture qualifies.",
+    "method": "network-with-identifier",
+    "qod": 95,
+    "capture_requirements": [
+      "clean profile; a warm one may carry earlier consent",
+      "no interaction: nothing accepted, refused or dismissed",
+      "record the country the capture egressed from; consent flows are often geo-targeted"
+    ],
+    "attribution": [
+      "har-pageref",
+      "cdp-initiator"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "The measurement host is a first-party CNAME to the target domain.",
+      "checkable": "manual",
+      "if_true": "reclassify",
+      "note": "Still an exposure, but not third-party by host. Needs DNS resolution at capture time."
+    },
+    {
+      "condition": "The request carries no identifier and sets no cookie.",
+      "checkable": "automated",
+      "if_true": "weaken",
+      "note": "There is traffic, but the inference about personal data is weaker."
+    },
+    {
+      "condition": "Consent was granted in an earlier session on the same profile.",
+      "checkable": "automated",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The tag only fired because the capture clicked something.",
+      "checkable": "automated",
+      "if_true": "drop"
+    }
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "repro/frontrun/MANUAL.md",
+        "expect": "measurement requests visible before touching the banner"
+      },
+      {
+        "tier": "bookmarklet",
+        "path": "repro/bookmarklet/frontrun.bookmarklet.txt"
+      },
+      {
+        "tier": "script",
+        "path": "repro/frontrun/frontrun.mjs",
+        "expect": "at least one request to a measurement host before interaction, plus an identifier cookie"
+      }
+    ],
+    "public_scanners": [
+      "urlscan.io",
+      "webbkoll",
+      "blacklight"
+    ]
+  },
+  "legal": {
+    "provisions": [
+      "nl-tw-11-7a",
+      "eu-gdpr-6-1-a"
+    ],
+    "caselaw": [
+      "cjeu-planet49"
+    ],
+    "rebuttals": [
+      {
+        "objection": "Analytics falls under the strictly-necessary exemption.",
+        "answer": "The exemption covers what is necessary for a service the user asked for. Audience measurement is necessary for the operator, not for the visitor. Where the analytics party also uses the data for its own purposes, the argument fails entirely."
+      },
+      {
+        "objection": "The servers are in the EU.",
+        "answer": "That answers a different question. This fault is about the moment, not the destination. An entry can be present with the recipient squarely inside the EEA."
+      },
+      {
+        "objection": "It was one oversight, since fixed.",
+        "answer": "Testable. Archived source shows how long the tag was there. An unbroken run of years is not an oversight, and it cannot be repaired retroactively."
+      },
+      {
+        "objection": "Our consent tool handles this.",
+        "answer": "Measure it rather than assume it. A tool that blocks cookie placement may leave container loading untouched."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0002",
+    "DPE-2026-0003",
+    "DPE-2026-0005"
+  ],
+  "seen_in_the_wild": {
+    "confirmed": true,
+    "first_documented": "2026-05-27"
+  },
+  "schema_version": "2.0",
+  "applies_to": [
+    "web"
+  ],
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ],
+  "slug": "frontrun"
+}

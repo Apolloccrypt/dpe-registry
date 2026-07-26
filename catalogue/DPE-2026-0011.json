@@ -1,0 +1,105 @@
+{
+  "id": "DPE-2026-0011",
+  "name": "Sideload",
+  "family": "method",
+  "summary": "Tags fire from a container while appearing nowhere in the page source.",
+  "mechanism": {
+    "what": "A tag manager loads measurement or advertising tags at runtime. The identifiers of those tags are not in the delivered HTML, so reading the source suggests they are gone while the traffic shows otherwise.",
+    "why_it_matters": "Mostly a methodological trap rather than a harm in itself, and that is why it is catalogued. A researcher who checks only the source concludes that tracking stopped when it did not. It also means the operator can change what runs without any change to the site.",
+    "common_causes": [
+      "tags migrated from hardcoded to container-managed",
+      "marketing team with dashboard access and no deployment"
+    ],
+    "not_this": "Not every container is this entry. It applies when a tag observed in traffic cannot be found in the delivered source."
+  },
+  "detection": {
+    "indicator": "A property or measurement identifier present in network traffic and absent from the fetched HTML document. A set comparison, not an observation.",
+    "method": "differential",
+    "qod": 97,
+    "capture_requirements": [
+      "fetch and retain the HTML document in the same capture",
+      "search for the full identifier and for split forms; dynamic assembly would otherwise be missed"
+    ],
+    "attribution": [
+      "cdp-initiator",
+      "har-pageref"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "The identifier is present in the source but assembled dynamically.",
+      "checkable": "automated",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The initiator is another script rather than the container.",
+      "checkable": "automated",
+      "if_true": "reclassify"
+    }
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "repro/sideload/MANUAL.md",
+        "expect": "a measurement identifier in traffic that is absent from the HTML"
+      },
+      {
+        "tier": "script",
+        "path": "repro/sideload/sideload.mjs"
+      }
+    ],
+    "public_scanners": [
+      "urlscan.io"
+    ]
+  },
+  "legal": {
+    "provisions": [
+      "eu-gdpr-6-1-a"
+    ],
+    "rebuttals": [
+      {
+        "objection": "We removed the tracking; it is not in our code.",
+        "answer": "Absence from the source is not absence from the traffic. The container is the reliable indicator, and its version history shows what ran when."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0001"
+  ],
+  "seen_in_the_wild": {
+    "confirmed": true
+  },
+  "schema_version": "2.0",
+  "applies_to": [
+    "web"
+  ],
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ],
+  "slug": "sideload"
+}
