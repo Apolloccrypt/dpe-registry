@@ -564,8 +564,13 @@ def main():
             "tier": "manual", "path": "METHOD.md",
             "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"}]
     OUT.mkdir(parents=True, exist_ok=True)
+    # Alleen de eigen entries opruimen. Deze generator is niet de enige bron:
+    # bijdragen van anderen staan als losse bestanden in dezelfde map en die
+    # mogen door een build niet verdwijnen.
+    mine = {x["id"] for x in E}
     for f in OUT.glob("DPE-*.json"):
-        f.unlink()
+        if f.stem in mine:
+            f.unlink()
     for e in E:
         (OUT / (e["id"] + ".json")).write_text(
             json.dumps(e, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

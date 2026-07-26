@@ -64,7 +64,7 @@
       {
         "tier": "manual",
         "path": "repro/homecall/MANUAL.md",
-        "expect": "destinations contacted while the device is idle, with frequency and volume"
+        "expect": "connections to hosts unrelated to any function the owner enabled, while the device sits idle"
       }
     ],
     "public_scanners": []

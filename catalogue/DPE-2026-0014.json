@@ -54,7 +54,7 @@
       {
         "tier": "manual",
         "path": "repro/deadend/MANUAL.md",
-        "expect": "identical idle traffic with the control on and off, or the control reverting after a reboot or update"
+        "expect": "identical outbound traffic with the control on and off, or the control reverting after a reboot"
       }
     ],
     "public_scanners": []

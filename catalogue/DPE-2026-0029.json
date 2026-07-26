@@ -1,0 +1,137 @@
+{
+  "id": "DPE-2026-0029",
+  "name": "Failed capture read as a clean result",
+  "slug": "failed-capture-read-as-clean",
+  "name_nl": "Mislukte meting telt als schoon resultaat",
+  "family": "method",
+  "applies_to": [
+    "web",
+    "mobile-app",
+    "iot",
+    "firmware"
+  ],
+  "summary": "A measurement that did not work is reported as a subject that does nothing.",
+  "not_a_vulnerability": "A fault in a measurement, not in a system. Nobody is at fault except the measurement, and the party that ends up described as clean may be anything but.",
+  "mechanism": {
+    "what": "A capture produces little or no traffic and the conclusion drawn is that the subject collects little or nothing. In fact the run failed: the interception was refused by a pinned connection, the environment was detected, the session was too short, the page never rendered its heavier components because too many captures ran at once, or the traffic arrived but no request bodies were readable. Nothing distinguishes an empty result from a clean subject unless validity is established separately from content.",
+    "why_it_matters": "A false negative is published as reassurance, and reassurance is harder to withdraw than an accusation. It also breaks comparison: a set in which some runs failed silently ranks the subjects by how well they were measured rather than by what they do.",
+    "common_causes": [
+      "many captures run in parallel, starving the heavier components so they never execute",
+      "interception blocked on exactly the channel that carries the sensitive payload, while other channels decrypt normally",
+      "a capture from an address the subject treats differently, so a different version of the subject was measured",
+      "a session that ends before behaviour that fires on scroll, on login or after a delay",
+      "an extraction pattern narrower than the field names in use, so present values are counted as absent"
+    ],
+    "not_this": "A subject that genuinely does nothing observable is a negative finding worth publishing. This entry is about the step before it: whether the run was capable of showing the thing it reports as absent."
+  },
+  "detection": {
+    "indicator": "A control run of the same subject, in isolation and with the same behaviour performed, produces traffic that the original run does not. Alternatively the capture itself fails a validity check: components present in the delivered code produced no traffic at all, or the capture contains flows but no readable request bodies.",
+    "method": "differential",
+    "qod": 90,
+    "capture_requirements": [
+      "record run validity separately from run content: did traffic arrive, was it readable, did the session last long enough, was visitor-like behaviour performed",
+      "record concurrency, since parallel captures compete for the same resources and heavy subjects lose",
+      "keep an idle baseline of the measurement environment, so traffic belonging to the platform is not charged to the subject",
+      "state each negative as a count over valid runs, never as 'not seen'"
+    ],
+    "attribution": [
+      "process-trace",
+      "cdp-initiator"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "A control run in isolation produces the same empty result.",
+      "checkable": "automated",
+      "if_true": "drop",
+      "note": "The negative then stands, and it stands much more strongly for having been tested."
+    },
+    {
+      "condition": "The run passed an explicit validity check recorded at the time.",
+      "checkable": "automated",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The subject is known to behave differently for the measurement environment, and that was recorded.",
+      "checkable": "manual",
+      "if_true": "weaken",
+      "note": "Recording it converts a false negative into a stated limit, which is a legitimate finding."
+    },
+    {
+      "condition": "The absence claimed is about a behaviour that had never been observed in the subject even when measurement worked.",
+      "checkable": "manual",
+      "if_true": "weaken",
+      "note": "Establish how often it occurred while present before claiming it stopped. A behaviour that fires in half of sessions needs several runs before a single clean one means anything."
+    }
+  ],
+  "legal": {
+    "provisions": [
+      "eu-gdpr-5-2"
+    ],
+    "rebuttals": [
+      {
+        "objection": "We measured and found nothing.",
+        "answer": "Say how many valid runs that was, and what would have shown up had it been there. A count over valid runs is a finding; 'nothing seen' is not."
+      },
+      {
+        "objection": "The scan is automated, so it is consistent.",
+        "answer": "Consistent failure is still failure. Automation makes an invalid run cheap to repeat, which is how a whole set acquires the same blind spot."
+      },
+      {
+        "objection": "The subject cleaned up after our questions.",
+        "answer": "Possibly, and that is worth establishing properly: compare against the party's own machine-readable configuration rather than against the absence of traffic in one run."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0026",
+    "DPE-2026-0027",
+    "DPE-2026-0028"
+  ],
+  "seen_in_the_wild": {
+    "confirmed": true
+  },
+  "in_practice": {
+    "dpia": "Verify that a supporting measurement recorded its own validity before accepting a statement that nothing was found.",
+    "procurement": "Measurements delivered by a supplier report the number of valid runs behind every negative statement.",
+    "complaint": "The number of valid runs, what the run was capable of observing, and a control run of the same subject in isolation.",
+    "audit_question": "How do you know your measurement would have seen it if it had been there?"
+  },
+  "schema_version": "2.0",
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+      }
+    ]
+  },
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ]
+}

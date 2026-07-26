@@ -1,0 +1,139 @@
+{
+  "id": "DPE-2026-0018",
+  "name": "Identity document read beyond the check",
+  "slug": "identity-document-beyond-check",
+  "name_nl": "Document verder uitgelezen dan de controle",
+  "family": "data",
+  "applies_to": [
+    "mobile-app",
+    "web",
+    "api"
+  ],
+  "summary": "An identity check captures the whole document where the question it answers needs a fraction of it.",
+  "not_a_vulnerability": "Nothing is exploited and nothing fails. The reader captures what it was built to capture; the objection is to that scope, not to a defect in it.",
+  "mechanism": {
+    "what": "To answer a narrow question, such as whether someone is over eighteen or whether a name matches, the system photographs or chip-reads the document in full and transmits everything it obtained: the complete machine-readable zone, the portrait image, the security object, the document number, the nationality. The relying party frequently receives, and needs, only a yes or no.",
+    "why_it_matters": "The person shows a document to answer one question and hands over a permanent dossier instead: a face image usable for recognition, numbers that never change, and a nationality that was nobody's business. The gap between what was asked and what was taken is invisible at the moment it happens, because the interaction looks like holding a card against a phone.",
+    "common_causes": [
+      "a verification component that reads all available data groups because the reader supports them",
+      "the whole capture uploaded for server-side processing, with the narrowing done afterwards",
+      "an image retained as proof of the check rather than the result of the check",
+      "the comparison performed by a remote service, so the image travels even where the device could do it"
+    ],
+    "not_this": "An ordinary identity check, where a person shows a document and a human or a system compares it, is not this entry. Nor is a chip read that stays on the device and yields only a derived answer. The distinguishing feature is that material beyond what the question needs leaves the device."
+  },
+  "detection": {
+    "indicator": "The upload during a check contains fields or files beyond those needed for the stated question: a portrait image or a complete machine-readable zone where the result exposed to the relying party is a single attribute or a boolean. The comparison between what was transmitted and what the result contains is the finding.",
+    "method": "network-with-identifier",
+    "qod": 85,
+    "capture_requirements": [
+      "your own document only, on a device you control",
+      "capture the payload of the upload, not only its size; the finding is which fields are in it",
+      "record what the relying party receives back, since the gap between the two is the measurement",
+      "note whether the narrowing happens on the device or after the upload; only the first avoids the transfer"
+    ],
+    "attribution": [
+      "process-trace",
+      "vendor-statement"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "The relying party needs the full data set for a task set out in law, such as a statutory identification duty.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "All processing happens on the device and only the derived answer leaves it.",
+      "checkable": "automated",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The extra fields are needed to verify the authenticity of the document itself.",
+      "checkable": "manual",
+      "if_true": "weaken",
+      "note": "Authenticity checking can require the security object. That justifies reading it, not retaining it, and the two are separate questions."
+    },
+    {
+      "condition": "The person was offered a check that reads less and chose the wider one.",
+      "checkable": "manual",
+      "if_true": "weaken"
+    }
+  ],
+  "legal": {
+    "provisions": [
+      "eu-gdpr-5-1-c",
+      "eu-gdpr-9-1",
+      "eu-gdpr-13"
+    ],
+    "rebuttals": [
+      {
+        "objection": "We need the document to establish that the person is who they claim.",
+        "answer": "That is the question, and the question can be answered with the answer rather than the source material. Reading in full and narrowing afterwards is a design choice, and the transfer has already happened by then."
+      },
+      {
+        "objection": "The portrait is only used for the comparison.",
+        "answer": "A face image processed for unique identification is a special category regardless of how briefly it is used. Use and category are separate questions."
+      },
+      {
+        "objection": "The consent screen explained it.",
+        "answer": "Test that. Compare the field list the person was shown with the field list in the payload; where the second is longer, the explanation was not of this processing."
+      },
+      {
+        "objection": "The comparison has to happen in the cloud.",
+        "answer": "That is a build decision, not a necessity: comparison on the device is demonstrably possible. Where it happens remotely, the sample leaves and the transfer question follows it."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0017",
+    "DPE-2026-0010",
+    "DPE-2026-0028"
+  ],
+  "seen_in_the_wild": {
+    "confirmed": true
+  },
+  "in_practice": {
+    "dpia": "Verify which data groups the reader actually extracts and transmits, against the single question the check exists to answer.",
+    "procurement": "The check returns a derived attribute and the source material stays on the device, demonstrated on delivery by a capture of one complete check.",
+    "complaint": "The captured upload with its field list, the answer the relying party received, and the difference between them.",
+    "audit_question": "What question does this check answer, and what exactly leaves the phone in order to answer it?"
+  },
+  "schema_version": "2.0",
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+      }
+    ]
+  },
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ]
+}

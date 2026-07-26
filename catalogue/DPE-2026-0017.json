@@ -1,0 +1,134 @@
+{
+  "id": "DPE-2026-0017",
+  "name": "Statutory identification number to a third party",
+  "slug": "statutory-identification-number",
+  "name_nl": "Wettelijk persoonsnummer naar een derde",
+  "family": "data",
+  "applies_to": [
+    "mobile-app",
+    "web",
+    "api"
+  ],
+  "summary": "A number a state assigns for identification is transmitted to a party that has no statutory task requiring it.",
+  "not_a_vulnerability": "Nothing is exploited. The number is read from a document or a field the person supplied, exactly as the builder intended, and forwarded by design. A vulnerability register has no place for a transfer that works correctly.",
+  "mechanism": {
+    "what": "A system reads a national identification number, either from a field the person fills in, from the machine-readable zone or chip of an identity document, or from a record it already holds, and sends it onward to a party that performs no task for which a state assigned that number. The number frequently travels as part of a larger blob, such as raw document data, rather than as a labelled field.",
+    "why_it_matters": "This number is the key that joins registers which are meant to stay apart. Unlike a cookie it cannot be reset, it is the same number for a lifetime, and once a private party holds it, every later dataset can be matched on it. In much of the EEA private use is restricted precisely because of that property.",
+    "common_causes": [
+      "a document or chip read in full and uploaded as a whole, with the number inside it",
+      "an onboarding flow that asks for the number because a form template contained the field",
+      "an identifier reused as an internal customer key after it entered the system for another purpose"
+    ],
+    "not_this": "A party with a statutory task that requires the number, such as a tax or healthcare body, is not this entry. Nor is a check that returns only a yes or no derived from the number. The distinguishing feature is that the number itself reaches a party for which no statute provides."
+  },
+  "detection": {
+    "indicator": "A request body or upload containing a value that satisfies the structural check for the national identification number in question, sent to a host operated by a party other than the one with the statutory task. Where the number is embedded in raw document data, the finding is the presence of that field within the payload.",
+    "method": "network-with-identifier",
+    "qod": 88,
+    "capture_requirements": [
+      "use your own document and your own account; this is the one place where a measurement must never involve someone else's identity",
+      "capture the payload, not only the request line; the number is usually in the body or in a binary blob",
+      "note where the number came from: typed field, machine-readable zone, chip file, or already held by the system",
+      "record the moment in the flow at which it is sent, since sending before any service is requested is a separate question from sending at the point of a check"
+    ],
+    "attribution": [
+      "process-trace",
+      "har-pageref"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "The receiving party performs the statutory task for which the number exists.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The value is not the statutory number but a structurally similar one, such as a customer or document number.",
+      "checkable": "manual",
+      "if_true": "drop",
+      "note": "Apply the checksum or structural rule for that country before claiming anything."
+    },
+    {
+      "condition": "The number is transmitted only to a processor acting for the party with the statutory task, under its instructions.",
+      "checkable": "not-from-capture",
+      "if_true": "reclassify"
+    },
+    {
+      "condition": "The person entered the number themselves in a free-text field with no prompt for it.",
+      "checkable": "manual",
+      "if_true": "weaken",
+      "note": "Different finding: the system does not ask for it but does forward it."
+    }
+  ],
+  "legal": {
+    "provisions": [
+      "nl-uavg-46",
+      "eu-gdpr-5-1-c",
+      "eu-gdpr-6-1-a"
+    ],
+    "rebuttals": [
+      {
+        "objection": "The person consented to identity verification.",
+        "answer": "Consent to being identified is not consent to a specific number reaching a specific party, and where national law restricts use of the number, consent does not lift that restriction."
+      },
+      {
+        "objection": "We do not use the number, it merely passes through.",
+        "answer": "Receiving is processing. If it is not used, it did not need to be sent, which is the finding rather than a defence."
+      },
+      {
+        "objection": "It was inside the document data, we did not ask for it.",
+        "answer": "Reading a document in full is a choice about what to read. The number is in the payload either way, and the party that built the read decided its scope."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0018",
+    "DPE-2026-0006"
+  ],
+  "seen_in_the_wild": {
+    "confirmed": true
+  },
+  "in_practice": {
+    "dpia": "Verify which fields actually leave during identification, byte for byte, rather than the field list in the supplier's description.",
+    "procurement": "No national identification number leaves the controller's own environment, demonstrated on delivery by a capture of a complete onboarding.",
+    "complaint": "The captured payload with the number located in it, the structural check that confirms what it is, and the point in the flow at which it was sent.",
+    "audit_question": "Show me every field that leaves during identification, including what is inside the document data you upload."
+  },
+  "schema_version": "2.0",
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+      }
+    ]
+  },
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "id": "DPE-2026-0026",
+  "name": "Recipient attributed by a spoofable header",
+  "slug": "recipient-attributed-by-header",
+  "name_nl": "Ontvanger toegeschreven op een spoofbare header",
+  "family": "method",
+  "applies_to": [
+    "web",
+    "mobile-app"
+  ],
+  "summary": "A finding names the page that caused a request on the basis of a header that anything can set.",
+  "not_a_vulnerability": "This is a fault in a measurement rather than in a system. Nothing is exploited and no party is at fault; the finding is wrong, and it is wrong in a way that survives review because the number it produces looks plausible.",
+  "mechanism": {
+    "what": "A capture is turned into a claim about which page sent data to which recipient. The link between page and request is taken from the referring header in the request, or from the order in which requests appear. Both are unreliable: the header can be set by whatever issued the request, measurement instrumentation routinely rewrites it, and ordering breaks as soon as a capture spans more than one page.",
+    "why_it_matters": "The party named as a recipient may never have received anything from that page, and the party that did receive something disappears from the finding. A published measurement that cannot survive this objection damages the case it was meant to support and, worse, the next one by the same researcher.",
+    "common_causes": [
+      "traffic attributed by referring header because it is the field that is always present",
+      "one capture spanning several pages, with requests from a later page counted against an earlier one",
+      "navigation to another site during the capture, whose traffic is then counted against the target",
+      "a redirect chain collapsed to its final host, so the intermediate recipients vanish"
+    ],
+    "not_this": "A recipient that is genuinely present but not named in the privacy statement is Undisclosed recipient, a fault in the system. This entry is about the finding: the recipient may not belong to the page at all."
+  },
+  "detection": {
+    "indicator": "Re-attributing the same capture through the page reference recorded in it, or through the initiator chain, produces a different set of recipients per page than attribution by referring header. The difference between the two sets is the fault.",
+    "method": "differential",
+    "qod": 95,
+    "capture_requirements": [
+      "the raw capture must be retained with its page reference intact; a summarised recipient list cannot be re-attributed",
+      "record every navigation during the capture, including redirects away from the target",
+      "keep one capture per page where feasible, so attribution does not depend on reconstruction",
+      "state which attribution route was used in the publication itself"
+    ],
+    "attribution": [
+      "har-pageref",
+      "cdp-initiator"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "Attribution was already done through the page reference or the initiator chain.",
+      "checkable": "automated",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The capture contains exactly one page load and no navigation, so there is nothing to confuse.",
+      "checkable": "automated",
+      "if_true": "drop"
+    },
+    {
+      "condition": "Both routes yield the same recipient set for the page in question.",
+      "checkable": "automated",
+      "if_true": "drop",
+      "note": "The finding then stands on the stronger route, and saying so is worth a sentence in the publication."
+    },
+    {
+      "condition": "The raw capture no longer exists and the attribution cannot be redone.",
+      "checkable": "not-from-capture",
+      "if_true": "weaken",
+      "note": "The finding cannot be repaired, only repeated. Report it as unverifiable rather than as sound."
+    }
+  ],
+  "legal": {
+    "provisions": [
+      "eu-gdpr-5-2"
+    ],
+    "rebuttals": [
+      {
+        "objection": "The header is what the browser sends, so it is authoritative.",
+        "answer": "It is what the issuing party chose to send. Instrumentation rewrites it as a matter of routine, and a field that anything may set cannot establish who caused a request."
+      },
+      {
+        "objection": "The finding was correct anyway.",
+        "answer": "Then it survives re-attribution, which costs one pass over the capture you already have. Doing it is cheaper than defending it later."
+      },
+      {
+        "objection": "Nobody checks this.",
+        "answer": "The party you named will, and it is the first thing their technical people will look at."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0010",
+    "DPE-2026-0027",
+    "DPE-2026-0028"
+  ],
+  "seen_in_the_wild": {
+    "confirmed": true
+  },
+  "in_practice": {
+    "dpia": "Verify how the assessment's supporting measurement attributed traffic to pages before relying on its recipient list.",
+    "procurement": "Measurements delivered by a supplier state their attribution route, and the raw capture is delivered with them.",
+    "complaint": "The raw capture, the attribution route used, and the recipient list produced by that route rather than a summary.",
+    "audit_question": "How do you know that this request came from that page?"
+  },
+  "schema_version": "2.0",
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+      }
+    ]
+  },
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,136 @@
+{
+  "id": "DPE-2026-0019",
+  "name": "Special-category data in an event",
+  "slug": "special-category-in-event",
+  "name_nl": "Bijzondere gegevens in een gebeurtenis",
+  "family": "data",
+  "applies_to": [
+    "web",
+    "mobile-app"
+  ],
+  "summary": "An event sent to a third party reveals health, belief or sexuality through its name, path or parameters.",
+  "not_a_vulnerability": "Nothing is exploited. The event is defined by the builder and fires as intended; what it discloses is a consequence of how it was named and what was attached to it.",
+  "mechanism": {
+    "what": "A measurement or advertising component sends structured events. The event name, the address of the screen or page it fired on, or a parameter attached to it corresponds to something the person did that falls in a special category: a symptom logged, a condition read about, a support group opened, a triage question answered. No free text is needed; the label alone carries the meaning.",
+    "why_it_matters": "The person filled in a questionnaire or read a page, not a disclosure form. What reaches the recipient is a categorised fact about their health, belief or sexuality, attached to an identifier, in a stream built to be joined with other streams. Unlike a sentence in a message, a labelled event is immediately machine-usable.",
+    "common_causes": [
+      "automatic screen or page tracking, where the address itself names the subject",
+      "event names copied from internal feature names that describe what the feature is for",
+      "a site-search integration that forwards the typed term as the event name and again as a search keyword",
+      "content published under a third party's platform, so its measurement stack receives the path as well"
+    ],
+    "not_this": "Text the person typed appearing verbatim in a request is User input to third parties. Here nothing typed needs to travel: the name of the event or the address of the screen is enough. Ordinary page-view measurement on a neutral page is also not this entry; what makes it one is that the value maps to a special category."
+  },
+  "detection": {
+    "indicator": "A request to a host under a different registrable domain containing an event name, screen address or parameter value that corresponds to a special category, alongside an identifier. The correspondence must be readable from the value itself, not inferred from context.",
+    "method": "network-with-identifier",
+    "qod": 88,
+    "capture_requirements": [
+      "clean profile and your own account; perform only actions you are willing to have recorded",
+      "walk one specific path deliberately and note it, so the event stream can be matched against what was done",
+      "capture per consent mode; these events frequently continue after refusal, which is a separate entry",
+      "record the full request, since the meaning is often in a parameter rather than in the endpoint"
+    ],
+    "attribution": [
+      "har-pageref",
+      "cdp-initiator",
+      "process-trace"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "The value is an opaque identifier that does not itself disclose the category.",
+      "checkable": "automated",
+      "if_true": "weaken",
+      "note": "An opaque code the recipient can resolve through a catalogue it also holds is not opaque in practice, but that has to be established separately."
+    },
+    {
+      "condition": "The recipient is a processor bound to the controller's instructions and does not use the data for its own purposes.",
+      "checkable": "not-from-capture",
+      "if_true": "reclassify",
+      "note": "This one bites more often than expected: the recipient is sometimes the party that built the application. The category still travelled, and the finding narrows rather than disappears."
+    },
+    {
+      "condition": "The event fires on a general page whose address happens to contain a word that reads as a category.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The events only start after explicit consent that named this category.",
+      "checkable": "manual",
+      "if_true": "weaken"
+    }
+  ],
+  "legal": {
+    "provisions": [
+      "eu-gdpr-9-1",
+      "eu-gdpr-6-1-a",
+      "eu-gdpr-5-1-c"
+    ],
+    "rebuttals": [
+      {
+        "objection": "We do not send health data, only usage statistics.",
+        "answer": "The category follows from the content of the message, not from the label on the pipeline. An event named after a symptom is data about health however the stream is described internally."
+      },
+      {
+        "objection": "The data is pseudonymous.",
+        "answer": "It travels with an identifier, which is what makes it useful to the recipient. The prohibition in the regulation is not lifted by pseudonymisation."
+      },
+      {
+        "objection": "The recipient is in the EU.",
+        "answer": "That answers a different question. A special category reaching a party that has no role in the care or the service is the finding, wherever that party sits."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0006",
+    "DPE-2026-0002",
+    "DPE-2026-0010"
+  ],
+  "seen_in_the_wild": {
+    "confirmed": true
+  },
+  "in_practice": {
+    "dpia": "Verify the actual event names and screen addresses that leave, against the categories the assessment claims are not processed.",
+    "procurement": "No event name, screen address or parameter transmitted to a third party discloses a special category, verified from a capture of a representative walkthrough.",
+    "complaint": "A capture of a deliberate walkthrough, the events it produced, and the mapping from each value to the action that caused it.",
+    "audit_question": "Print the list of event names you send outside the organisation and read it out loud."
+  },
+  "schema_version": "2.0",
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+      }
+    ]
+  },
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ]
+}

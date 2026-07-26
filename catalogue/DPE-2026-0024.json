@@ -1,0 +1,135 @@
+{
+  "id": "DPE-2026-0024",
+  "name": "Recognition of every passer-by",
+  "slug": "recognition-of-every-passer-by",
+  "name_nl": "Iedereen die passeert wordt herkend",
+  "family": "data",
+  "applies_to": [
+    "iot",
+    "firmware",
+    "network-device",
+    "vehicle"
+  ],
+  "summary": "A recognition system records everyone it sees, while its purpose concerns only the ones it is looking for.",
+  "not_a_vulnerability": "Nothing is exploited. The system records what it was built to record and the comparison works as intended; the objection is that the recording covers everyone rather than the matches.",
+  "mechanism": {
+    "what": "A camera or sensor reads a characteristic that identifies a person or a vehicle, compares it against a list, and stores a record of the reading whether or not it matched. The stored record includes the identifying value, the time and the location. The purpose stated for the system concerns only the matches, but the storage covers every passage.",
+    "why_it_matters": "Someone who is on no list, suspected of nothing and asked for nothing acquires a location history held by a party they have no relationship with. Combined over several sites, the non-matches alone reconstruct movements. The person cannot know a record exists, and in most deployments there is nothing at the location that says so.",
+    "common_causes": [
+      "everything logged for later evidential use, rather than the comparison result alone",
+      "a retention period set once for the whole system instead of separately for matches and non-matches",
+      "readings kept to demonstrate that the system works, in the form of the readings themselves"
+    ],
+    "not_this": "Comparing against a list and discarding non-matches immediately is not this entry, however extensive the comparison. Nor is a camera that records images without recognising anything. The distinguishing feature is that identifying values of non-matches are retained."
+  },
+  "detection": {
+    "indicator": "Records of readings that produced no match exist after the comparison, established from the system's configuration, its export, its retention schedule, or from an access request that returns your own passage while you are on no list.",
+    "method": "document-comparison",
+    "qod": 78,
+    "capture_requirements": [
+      "state the source of the finding: configuration, documented retention schedule, export, or an access request on your own data",
+      "record the date of the document, since retention schedules change and a finding attaches to a version",
+      "distinguish the recognition system from the camera it runs on; retention is often configured separately for each",
+      "keep matches and non-matches apart throughout; conflating them is what makes this finding collapse"
+    ],
+    "attribution": [
+      "document-diff",
+      "vendor-statement"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "Non-matching readings are discarded within the comparison, with nothing retained beyond a count.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "What is retained is not linkable to a person or a vehicle, such as a count or a coarse category.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "A statute expressly provides for retaining non-matching readings for a stated period.",
+      "checkable": "manual",
+      "if_true": "reclassify",
+      "note": "The retention is then provided for, which changes the question to whether the practice stays inside it."
+    },
+    {
+      "condition": "The retention observed is shorter than the configured maximum.",
+      "checkable": "manual",
+      "if_true": "weaken"
+    }
+  ],
+  "legal": {
+    "provisions": [
+      "eu-gdpr-5-1-c",
+      "eu-gdpr-5-1-e",
+      "eu-gdpr-13",
+      "nl-sv-126jj"
+    ],
+    "rebuttals": [
+      {
+        "objection": "The readings are deleted automatically.",
+        "answer": "After how long, and established how. A period longer than the comparison itself means the non-matches were stored, which is the finding."
+      },
+      {
+        "objection": "Nobody looks at the non-matches.",
+        "answer": "Retention is processing whether or not anyone looks. The question of who may look afterwards is separate and, over years, unknowable in advance."
+      },
+      {
+        "objection": "There is a sign at the entrance.",
+        "answer": "Check what it says. A notice that a camera is present is not information that an identifying characteristic is read, compared and stored, and it rarely names the controller or the retention."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0012",
+    "DPE-2026-0018"
+  ],
+  "seen_in_the_wild": {
+    "confirmed": true
+  },
+  "in_practice": {
+    "dpia": "Verify what happens to a reading that does not match, separately from what happens to one that does.",
+    "procurement": "Readings that produce no match are discarded within the comparison, demonstrated from the delivered configuration and the export.",
+    "complaint": "The retention configuration or schedule with its date, and where possible the answer to an access request showing your own non-matching passage.",
+    "audit_question": "I am on no list and I drove past. What do you have about me, and for how long?"
+  },
+  "schema_version": "2.0",
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+      }
+    ]
+  },
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ]
+}

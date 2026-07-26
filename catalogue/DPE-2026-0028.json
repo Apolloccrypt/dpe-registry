@@ -1,0 +1,135 @@
+{
+  "id": "DPE-2026-0028",
+  "name": "Presence in a binary taken for sending",
+  "slug": "presence-taken-for-sending",
+  "name_nl": "Aanwezigheid in de binary telt als verzending",
+  "family": "method",
+  "applies_to": [
+    "mobile-app",
+    "desktop",
+    "firmware"
+  ],
+  "summary": "A finding treats a component compiled into a package as proof that it transmits.",
+  "not_a_vulnerability": "A fault in a measurement. Nothing is exploited and the package may be entirely innocent of what the finding says; the evidence simply does not reach as far as the conclusion.",
+  "mechanism": {
+    "what": "Analysis of a package finds the strings, classes or endpoints of a collecting component and the finding reports that the product sends data to that party. Packages routinely carry code that is never reached: pulled in through a dependency, kept for a build variant for another market, or left behind after a feature was removed. Presence establishes what could run, not what did.",
+    "why_it_matters": "Naming a recipient that never received anything is the mistake that ends an investigation. It is also the mistake that makes the genuine findings in the same report unusable, because a single overreach lets everything else be dismissed as the same kind of claim.",
+    "common_causes": [
+      "a string or class match reported as a data flow",
+      "a component present for a build variant distributed in another region",
+      "an endpoint constant compiled in with no code path that reaches it",
+      "a dependency that arrived through another dependency and is never initialised"
+    ],
+    "not_this": "A component that does transmit on its own account is Bundled component collection, a fault of the system. This entry is the step before it: the evidence shows presence and the claim asserts sending."
+  },
+  "detection": {
+    "indicator": "The finding rests on static analysis alone, and a dynamic capture of the running product shows no request to the component's endpoints during a run that exercises the relevant functionality. Presence in the package with no observed traffic is the fault in the claim.",
+    "method": "static-source",
+    "qod": 85,
+    "capture_requirements": [
+      "label every finding by evidence level, keeping present-in-package strictly apart from observed-sending",
+      "record the package version and its source, since components differ per build variant and per market",
+      "run the dynamic check from a cold start on a clean device, since much of it fires only at first launch",
+      "state what the dynamic check could not see, including traffic that pinning or a protected channel kept out of view"
+    ],
+    "attribution": [
+      "process-trace",
+      "document-diff"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "A dynamic capture shows requests to the component's endpoints.",
+      "checkable": "manual",
+      "if_true": "drop",
+      "note": "The finding then stands as an observed transmission and should be reported as one."
+    },
+    {
+      "condition": "The finding already states that it establishes presence only.",
+      "checkable": "manual",
+      "if_true": "drop",
+      "note": "Presence is a legitimate finding when labelled as such. This entry is about the leap, not about static analysis."
+    },
+    {
+      "condition": "A code path is shown to reach the component under conditions the capture did not cover, such as a login or a region.",
+      "checkable": "manual",
+      "if_true": "weaken"
+    },
+    {
+      "condition": "The component transmits over a channel the capture could not observe.",
+      "checkable": "not-from-capture",
+      "if_true": "weaken",
+      "note": "Absence of observed traffic is then not evidence of absence, and the finding has to say so."
+    }
+  ],
+  "legal": {
+    "provisions": [
+      "eu-gdpr-5-2"
+    ],
+    "rebuttals": [
+      {
+        "objection": "The library is in there, so it does something.",
+        "answer": "Packages carry code that is never reached. What it does is a question for a capture, and until then the finding is about the package rather than about a transmission."
+      },
+      {
+        "objection": "Dynamic measurement is too hard for this product.",
+        "answer": "Then report presence as presence. A weaker finding that holds is worth more than a strong one that is withdrawn."
+      },
+      {
+        "objection": "Other researchers report it the same way.",
+        "answer": "The party you name will not accept that, and neither will a supervisory authority reading a report where one claim is over-reached."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0013",
+    "DPE-2026-0026",
+    "DPE-2026-0027"
+  ],
+  "seen_in_the_wild": {
+    "confirmed": true
+  },
+  "in_practice": {
+    "dpia": "Verify whether a supporting analysis established transmission or only presence, and treat the two as different statements.",
+    "procurement": "Findings delivered by a supplier label each one as observed transmission or as presence in the package, with the method that established it.",
+    "complaint": "The package version, the static evidence, and a dynamic capture of a cold start with a statement of what it could not observe.",
+    "audit_question": "Did you see this component send anything, or did you see that it is in the package?"
+  },
+  "schema_version": "2.0",
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+      }
+    ]
+  },
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "id": "DPE-2026-0015",
+  "name": "Bid request broadcast",
+  "slug": "bid-request-broadcast",
+  "name_nl": "Biedverzoek naar veel partijen tegelijk",
+  "family": "chain",
+  "applies_to": [
+    "web",
+    "mobile-app"
+  ],
+  "summary": "One page view is offered to many bidding parties at once, each receiving the context and an identifier.",
+  "not_a_vulnerability": "Nothing is exploited and nothing is broken. Broadcasting the request is how the auction is designed to work; the objection is to the design. There is no defect to patch, which is why no vulnerability register has a place for it.",
+  "mechanism": {
+    "what": "An advertising slot is auctioned in the moment the page or screen loads. To collect bids, the request is sent out in parallel to a set of bidding parties, each copy carrying the same material: what is being viewed, an identifier for the device or the person, and usually coarse location and device characteristics. Losing bidders receive the same copy as the winner and keep it.",
+    "why_it_matters": "The person sees one advertisement and does not see that the occasion for it was distributed to dozens of companies, most of which they will never encounter. What is being viewed can itself be sensitive: a page about a diagnosis, a debt, a lawyer. Once broadcast, the copy cannot be recalled, and the number of holders makes any later exercise of rights impractical.",
+    "common_causes": [
+      "header bidding configured with a long list of bidders, each added without a separate assessment",
+      "an exchange forwarding the request onward to further partners after receiving it",
+      "the same identifier passed to every bidder, so the copies are joinable across recipients"
+    ],
+    "not_this": "A single third-party resource loaded from one party is Third-party resource loading. What distinguishes this entry is multiplicity: the same view, with the same identifier, delivered to many parties in one load. It is also not Undisclosed recipient, which is about a gap in a document; here the fault stands even if every bidder is named."
+  },
+  "detection": {
+    "indicator": "Within one page or screen load, requests to two or more hosts under different registrable domains that each carry the same identifier value together with the address or title of what is being viewed. In an application the same finding takes the form of one auction request whose body carries the device advertising identifier, coarse location and network operator in a single payload. The count of distinct receiving domains is the finding.",
+    "method": "network-with-identifier",
+    "qod": 90,
+    "capture_requirements": [
+      "clean profile; a warm profile carries identifiers from earlier auctions and inflates the recipient set",
+      "capture per consent mode separately: no interaction, refused, accepted. Bidder lists differ per mode and a single capture describes only that mode",
+      "record the exit country; bidder configuration is frequently region-dependent",
+      "keep the raw capture: the recipient count is only checkable against the full request list"
+    ],
+    "attribution": [
+      "har-pageref",
+      "cdp-initiator"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "The identifier differs per recipient and no shared value connects the copies.",
+      "checkable": "automated",
+      "if_true": "weaken",
+      "note": "Still a broadcast of the context, but the copies are not trivially joinable."
+    },
+    {
+      "condition": "The requests are made server-side and the observed hosts are one intermediary, not the bidders.",
+      "checkable": "manual",
+      "if_true": "reclassify",
+      "note": "A server-side auction is not visible from the client. The finding then concerns the one recipient that is observable, and the onward set has to be established from the party's own documentation."
+    },
+    {
+      "condition": "The capture shows only the accepted state, and refusing yields no such requests.",
+      "checkable": "automated",
+      "if_true": "weaken",
+      "note": "With consent registered first this is a different discussion; the broadcast itself remains the fault, the consent question does not."
+    },
+    {
+      "condition": "The requests carry no identifier and no address of what is being viewed.",
+      "checkable": "automated",
+      "if_true": "drop"
+    }
+  ],
+  "legal": {
+    "provisions": [
+      "eu-gdpr-6-1-a",
+      "eu-gdpr-5-1-c",
+      "eu-gdpr-26"
+    ],
+    "rebuttals": [
+      {
+        "objection": "The bid request is anonymous.",
+        "answer": "It carries an identifier that is stable enough to bid against, which is the entire point of sending it. A value that lets a party recognise the same device tomorrow is not anonymous."
+      },
+      {
+        "objection": "Consent was collected in the consent framework.",
+        "answer": "Test what the person was actually told: how many recipients, named or as a list behind a link, and whether refusing removes them. A framework signal travelling alongside the request says nothing about whether the choice was informed or effective."
+      },
+      {
+        "objection": "Losing bidders discard the data.",
+        "answer": "That is a statement about their internal handling, not something the sender can demonstrate. The sending is measurable, the discarding is not."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0009",
+    "DPE-2026-0010",
+    "DPE-2026-0016"
+  ],
+  "seen_in_the_wild": {
+    "confirmed": true
+  },
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there",
+    "participation; a party authorised in a declaration file is not thereby a party that received anything. Only an observed request establishes that",
+    "completeness; a browser or device capture sees the first recipient. What that recipient forwards onward is not visible from it, so any count is a lower bound"
+  ],
+  "in_practice": {
+    "dpia": "Verify how many parties receive a copy of one page view and whether that list is fixed, rather than accepting that 'an advertising partner' is engaged.",
+    "procurement": "The supplier states the complete list of parties receiving a bid request, the list is capped, and it is verifiable from a capture on delivery.",
+    "complaint": "A HAR per consent mode, the list of distinct receiving domains, and the shared identifier value that connects the copies.",
+    "audit_question": "How many companies receive a copy when one visitor opens one page, and who decides that list?"
+  },
+  "schema_version": "2.0",
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+      }
+    ]
+  },
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,136 @@
+{
+  "id": "DPE-2026-0020",
+  "name": "Third party under a first-party subdomain",
+  "slug": "third-party-under-first-party-subdomain",
+  "name_nl": "Derde partij onder een eigen subdomein",
+  "family": "chain",
+  "applies_to": [
+    "web",
+    "api"
+  ],
+  "summary": "A subdomain of the site's own domain resolves to a third party, so its collection reads as the site's own.",
+  "not_a_vulnerability": "Nothing is exploited and no control is broken. The alias is configured deliberately, usually to keep a measurement working, and the system resolves it exactly as intended.",
+  "mechanism": {
+    "what": "A host under the site's own registrable domain is aliased in the domain name system to infrastructure operated by a measurement or advertising party. To the browser the requests and the cookies are first-party: they survive third-party cookie restrictions, they get first-party lifetimes, and blocklists that work on domain names do not match. The party at the other end is unchanged.",
+    "why_it_matters": "Every tool the person has to see who is collecting on a page reports the site itself. A visitor who checks, a researcher who scans by domain, and a browser that limits third parties all reach the same wrong conclusion, and the conclusion is wrong by construction rather than by accident.",
+    "common_causes": [
+      "a measurement supplier offering a first-party endpoint as a way of surviving browser restrictions",
+      "an alias configured once by whoever manages the domain, with no record in the tag inventory",
+      "a collection endpoint on the site's own domain that forwards onward between servers, where the recipients are no longer visible to the browser at all"
+    ],
+    "not_this": "A resource served from a delivery network under the operator's own contract is not this entry: nothing collects there on its own account. Third-party resource loading is the opposite case, where the third party is visible as a third party. Here the recipient is a third party while presenting as the first."
+  },
+  "detection": {
+    "indicator": "A host under the site's own registrable domain whose name resolves through an alias chain to a name in a domain operated by another party, and which sets or receives an identifier cookie. The alias chain as resolved at capture time is the finding.",
+    "method": "network-with-identifier",
+    "qod": 92,
+    "capture_requirements": [
+      "resolve the name at capture time and record the full chain, not only the address; the alias is the evidence and it can be removed later",
+      "resolve from the same country the capture ran in, since answers are frequently location-dependent",
+      "record the cookie attributes, because first-party scope and lifetime are half of what makes this worth reporting",
+      "note that a domain-based blocklist will not have matched, so an earlier clean scan says nothing"
+    ],
+    "attribution": [
+      "har-pageref",
+      "document-diff"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "The alias points at infrastructure the operator itself controls, such as a delivery network under its own contract, and nothing collects there.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The receiving party acts strictly as a processor and the endpoint serves only the operator's own measurement.",
+      "checkable": "not-from-capture",
+      "if_true": "reclassify",
+      "note": "The transparency question survives that: the person still cannot see who is at the other end."
+    },
+    {
+      "condition": "The privacy statement names the subdomain and the party behind it.",
+      "checkable": "manual",
+      "if_true": "weaken"
+    },
+    {
+      "condition": "No identifier is set or transmitted on that host.",
+      "checkable": "automated",
+      "if_true": "weaken"
+    }
+  ],
+  "legal": {
+    "provisions": [
+      "eu-gdpr-5-1-a",
+      "eu-gdpr-13",
+      "nl-tw-11-7a"
+    ],
+    "caselaw": [
+      "cjeu-fashion-id"
+    ],
+    "rebuttals": [
+      {
+        "objection": "It is our own subdomain, so it is first-party data.",
+        "answer": "First-party is a browser concept, not a legal one. Who receives the data is established by where the name resolves, and that is measurable."
+      },
+      {
+        "objection": "We did it for measurement accuracy, not to evade anything.",
+        "answer": "The effect is the same whatever the motive: the recipient becomes invisible to the visitor and to every domain-based control. Motive is not measurable, effect is."
+      },
+      {
+        "objection": "A scan of our site shows no trackers.",
+        "answer": "A scan that works on domain names cannot see this by design. That is the finding, not a rebuttal of it."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0001",
+    "DPE-2026-0009",
+    "DPE-2026-0010"
+  ],
+  "seen_in_the_wild": {
+    "confirmed": true
+  },
+  "in_practice": {
+    "dpia": "Verify where each collection endpoint on your own domain actually resolves, rather than treating own-domain traffic as internal.",
+    "procurement": "No host under the buyer's domain resolves to a party outside the processing chain, verifiable from the name resolution on delivery.",
+    "complaint": "The resolution chain as recorded at capture time, the cookie set on that host with its attributes, and the requests sent to it.",
+    "audit_question": "Which of your own subdomains resolve to somebody else, and who put those aliases there?"
+  },
+  "schema_version": "2.0",
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+      }
+    ]
+  },
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ]
+}

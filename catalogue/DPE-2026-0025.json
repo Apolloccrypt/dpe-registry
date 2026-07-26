@@ -1,0 +1,136 @@
+{
+  "id": "DPE-2026-0025",
+  "name": "Transaction data outside the payment chain",
+  "slug": "transaction-data-outside-chain",
+  "name_nl": "Transactiegegevens buiten de betaalketen",
+  "family": "chain",
+  "applies_to": [
+    "web",
+    "mobile-app",
+    "firmware",
+    "iot"
+  ],
+  "summary": "Details of a payment reach parties that play no part in executing it.",
+  "not_a_vulnerability": "Nothing is exploited and no payment fails. The forwarding is configured deliberately, usually to measure how well something sells, and the system performs it correctly.",
+  "mechanism": {
+    "what": "At the moment a payment is initiated or confirmed, the system reports it to parties outside the chain that executes it: what was bought, the amount, an order reference, and an identifier for the customer or the device. In a browser or an app this is a measurement or advertising component; at a terminal or till it is a reporting integration alongside the payment path. The same shape occurs outside retail: a public body reporting each step of a transaction, with a case reference and a status, to a marketing or analytics party.",
+    "why_it_matters": "What someone buys is among the most revealing records there is, from medicines to political membership dues. A payment involves the payer, the merchant and the parties that move the money; everyone else is an addition the person cannot see, at a moment when they are concentrating on paying rather than on who is watching.",
+    "common_causes": [
+      "a purchase event sent to an advertising component to attribute a campaign",
+      "basket contents included in an analytics event because the template offered the field",
+      "a loyalty or reporting integration in a till system that forwards line items",
+      "funnel steps of a payment or application flow reported to an analytics party, keyed to a long-lived identifier"
+    ],
+    "not_this": "Parties that execute the payment, such as the acquirer, the scheme or the issuer, are not this entry. Nor is an internal record kept by the merchant. The distinguishing feature is a recipient with no role in executing the payment receiving what was bought or what it cost, tied to an identifier."
+  },
+  "detection": {
+    "indicator": "At payment confirmation, a request to a host under a registrable domain belonging to neither the merchant nor a party in the payment chain, carrying the amount, an order reference or item identifiers together with a customer or device identifier.",
+    "method": "network-with-identifier",
+    "qod": 88,
+    "capture_requirements": [
+      "your own purchase, your own means of payment; never someone else's transaction",
+      "capture through to the confirmation screen, since the reporting frequently fires only there",
+      "record which parties belong to the payment chain before judging the rest, so the boundary is drawn before the finding",
+      "for a terminal or till, capture at the gateway rather than on the device"
+    ],
+    "attribution": [
+      "har-pageref",
+      "cdp-initiator",
+      "process-trace"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "The recipient is part of the payment chain, such as an acquirer, gateway or fraud-prevention party under contract for that purpose.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The transmitted event carries no identifier and no line detail, only that a purchase occurred.",
+      "checkable": "automated",
+      "if_true": "weaken"
+    },
+    {
+      "condition": "The recipient acts strictly as a processor for the merchant and does not use the data for its own purposes.",
+      "checkable": "not-from-capture",
+      "if_true": "reclassify"
+    },
+    {
+      "condition": "The reporting only fires after consent was registered and refusing removes it.",
+      "checkable": "automated",
+      "if_true": "weaken"
+    }
+  ],
+  "legal": {
+    "provisions": [
+      "eu-gdpr-6-1-a",
+      "eu-gdpr-5-1-c",
+      "eu-gdpr-9-1"
+    ],
+    "rebuttals": [
+      {
+        "objection": "It is only an order total, not personal data.",
+        "answer": "It travels with an identifier and an order reference, which is what makes it usable. Amount plus identifier plus time is a record about a person."
+      },
+      {
+        "objection": "We need it to measure our advertising.",
+        "answer": "That is a purpose for the merchant, not a role in the payment. It has to stand on its own basis, and the person has to be able to refuse it without failing to pay."
+      },
+      {
+        "objection": "The item description is generic.",
+        "answer": "Test it against the actual payload. Where the line detail names the product, the objection is answered by the capture."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0009",
+    "DPE-2026-0020",
+    "DPE-2026-0010"
+  ],
+  "seen_in_the_wild": {
+    "confirmed": true
+  },
+  "in_practice": {
+    "dpia": "Verify which parties receive a message at the moment of payment, and which of them execute the payment.",
+    "procurement": "At payment confirmation no party outside the payment chain receives the amount, the order reference or line detail, demonstrated by a capture of one complete purchase.",
+    "complaint": "A capture from basket to confirmation, the list of recipients at confirmation, and the payment chain named separately.",
+    "audit_question": "Who receives a message when a customer pays, and which of those actually move the money?"
+  },
+  "schema_version": "2.0",
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+      }
+    ]
+  },
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ]
+}

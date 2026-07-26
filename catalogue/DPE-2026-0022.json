@@ -1,0 +1,133 @@
+{
+  "id": "DPE-2026-0022",
+  "name": "Reporting interval that reveals occupancy",
+  "slug": "reporting-interval-reveals-occupancy",
+  "name_nl": "Meetinterval dat aanwezigheid verraadt",
+  "family": "telemetry",
+  "applies_to": [
+    "iot",
+    "firmware",
+    "network-device"
+  ],
+  "summary": "A device reports its measurements so often, and so identifiably, that the series shows when the home is empty.",
+  "not_a_vulnerability": "Nothing is exploited and nothing is broken. The device reports at the interval its builder chose, and the interval is the objection rather than a defect in it.",
+  "mechanism": {
+    "what": "A device that measures something in a building sends a timestamped series to a remote service, each record carrying a permanent device identifier. The interval is fine, typically minutes, and the series is kept. The stated function, such as showing yield or consumption in an application, would work at a far coarser interval and without a permanent identifier per record.",
+    "why_it_matters": "Consumption and production at a five-minute resolution is a presence calendar. Waking, leaving, returning, holidays and an empty house are readable straight from the curve, by anyone holding the series, for as long as they hold it. The occupants never see the series, cannot change the interval, and did not buy a presence sensor.",
+    "common_causes": [
+      "a fixed upload interval in the firmware, chosen for the vendor's dashboard rather than for the owner",
+      "a permanent serial included in every record, so the series is a per-household history rather than an aggregate",
+      "the series retained indefinitely because storage is cheap and no retention was configured"
+    ],
+    "not_this": "A device contacting a server with no function behind it is Device telemetry without function. Here the reporting has a function; what makes it this entry is the granularity, the permanent identifier per record, and the recipient being someone other than the party delivering the service the owner contracted for."
+  },
+  "detection": {
+    "indicator": "A capture at the gateway shows a timestamped measurement series leaving the device at an interval of fifteen minutes or shorter, each record carrying a stable device identifier, addressed to a party other than the one delivering the contracted service. Interval, identifier and recipient are all readable from the capture.",
+    "method": "network-observed",
+    "qod": 85,
+    "capture_requirements": [
+      "capture at the gateway or an inline tap, never on the device",
+      "capture long enough to establish the interval rather than infer it: a full day at minimum, and a multi-day window if a daily cycle matters",
+      "record firmware version and region; interval and destination both change between builds",
+      "record whether the interval is configurable in the interface, since a setting that exists changes the finding from cannot to did not"
+    ],
+    "attribution": [
+      "process-trace",
+      "vendor-statement"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "The recipient is the party delivering the metered service, and the interval follows from that service or from a regulated metering function.",
+      "checkable": "manual",
+      "if_true": "reclassify"
+    },
+    {
+      "condition": "The records carry no stable identifier and cannot be assembled into a per-device series.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The owner can set the interval, and the observed interval was chosen rather than imposed.",
+      "checkable": "manual",
+      "if_true": "weaken"
+    },
+    {
+      "condition": "The series is aggregated before transmission, so no fine-grained curve leaves the building.",
+      "checkable": "manual",
+      "if_true": "drop"
+    }
+  ],
+  "legal": {
+    "provisions": [
+      "eu-gdpr-5-1-c",
+      "eu-gdpr-6-1-a",
+      "eu-gdpr-44"
+    ],
+    "rebuttals": [
+      {
+        "objection": "It is technical measurement data, not personal data.",
+        "answer": "It is measurement data about one building, tied to one device, held as a history. Presence and absence of the people in it are derivable from that series, which is what makes it data about them."
+      },
+      {
+        "objection": "The user wants to see it in the app.",
+        "answer": "Then the interval serves the display, and the display is the test: whether the fine series has to leave the building, and whether it has to be kept, are separate questions from whether it is shown."
+      },
+      {
+        "objection": "Nobody analyses it that way.",
+        "answer": "The finding is that the data supports it and is held by a party the occupants have no relationship with. What is done with it today is not a property of the data."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0012",
+    "DPE-2026-0014",
+    "DPE-2026-0023"
+  ],
+  "seen_in_the_wild": {
+    "confirmed": true
+  },
+  "in_practice": {
+    "dpia": "Verify the actual upload interval and the identifier in each record, against the interval the stated function needs.",
+    "procurement": "The device reports at an interval no finer than the contracted service requires, and the fine-grained series stays in the building, demonstrated by a capture at the gateway.",
+    "complaint": "A gateway capture spanning at least a day, with the interval, the per-record identifier and the destination, plus the firmware version.",
+    "audit_question": "How often does this thing report, and can I tell from that data when the house was empty?"
+  },
+  "schema_version": "2.0",
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+      }
+    ]
+  },
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ]
+}

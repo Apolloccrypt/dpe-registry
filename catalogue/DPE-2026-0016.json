@@ -1,0 +1,145 @@
+{
+  "id": "DPE-2026-0016",
+  "name": "Identifier synchronisation between parties",
+  "slug": "identifier-synchronisation",
+  "name_nl": "Identificatiemerken uitwisselen",
+  "family": "chain",
+  "applies_to": [
+    "web",
+    "mobile-app"
+  ],
+  "summary": "Two parties exchange each other's identifier so their separate records of the same person can be joined.",
+  "not_a_vulnerability": "Nothing is broken and nothing is exploited. The exchange is a deliberate feature that both parties built and both benefit from, which is exactly why it has no place in a vulnerability register.",
+  "mechanism": {
+    "what": "One party calls the other and passes its own identifier for the visitor in the request; the other answers, sets or reads its own identifier, and returns the pairing. Usually this runs as a short chain of redirects or invisible image requests at page load. Afterwards each party can translate its own identifier into the other's.",
+    "why_it_matters": "Two separate records become one. Data collected in one place, under one story about what it is for, can from that moment be matched with data collected somewhere else entirely. The person cannot see this happen, and deleting a cookie at one party does not undo the mapping already stored at the other.",
+    "common_causes": [
+      "a match or sync endpoint invoked automatically when a tag loads",
+      "a chain of redirects in which each hop appends its own identifier to the query string",
+      "an audience or measurement partner integrated by activating a template that includes the exchange",
+      "a match performed between servers, so no cookie is set in the browser at all and a cookie-based audit reports the parties as absent"
+    ],
+    "not_this": "Passing an identifier to one recipient for that recipient's own use is ordinary tracking. What distinguishes this entry is the exchange: the value of party A appears in a request to party B, and the purpose of that request is the pairing rather than any content."
+  },
+  "detection": {
+    "indicator": "A request to a host under one registrable domain whose URL, body or redirect location contains, verbatim or trivially encoded, an identifier value that another registrable domain set as a cookie or returned in the same capture. The match of the two values is the finding, and it holds equally where no cookie is set anywhere and the value only travels in the requests.",
+    "method": "network-with-identifier",
+    "qod": 92,
+    "capture_requirements": [
+      "clean profile, so every identifier observed was minted during this capture and its origin is known",
+      "follow redirect chains fully; the pairing is often in an intermediate 302 that a summary view collapses",
+      "record cookie values as set, so the later match is against a value with a known source",
+      "capture per consent mode; the exchange frequently only runs in the accepted state"
+    ],
+    "attribution": [
+      "har-pageref",
+      "cdp-initiator"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "The matching value is a page identifier, campaign code or cache buster rather than a per-visitor identifier.",
+      "checkable": "manual",
+      "if_true": "drop",
+      "note": "Compare across two clean profiles: a value that differs per profile is per-visitor, a value that is identical is not."
+    },
+    {
+      "condition": "Both hosts belong to the same registrable domain or the same declared processor.",
+      "checkable": "manual",
+      "if_true": "reclassify"
+    },
+    {
+      "condition": "The exchange only occurs after consent was registered.",
+      "checkable": "automated",
+      "if_true": "weaken",
+      "note": "It changes the consent question, not the joining itself."
+    },
+    {
+      "condition": "The value passed is a per-recipient pseudonym that the receiving party cannot map back.",
+      "checkable": "not-from-capture",
+      "if_true": "weaken",
+      "note": "Cannot be settled from the capture. It is a question for the operator, and it belongs in the request for comment."
+    },
+    {
+      "condition": "The identifier field in the exchange contains an unresolved template placeholder rather than a value.",
+      "checkable": "automated",
+      "if_true": "drop",
+      "note": "An attempted exchange and a completed one are different findings. Report the completed one only where the field carries an actual value."
+    }
+  ],
+  "legal": {
+    "provisions": [
+      "eu-gdpr-26",
+      "eu-gdpr-6-1-a",
+      "nl-tw-11-7a"
+    ],
+    "caselaw": [
+      "cjeu-fashion-id"
+    ],
+    "rebuttals": [
+      {
+        "objection": "This is purely technical plumbing between suppliers.",
+        "answer": "Deciding to make two datasets joinable is a decision about the purpose and the means. That the mechanism is a redirect does not make it a technicality."
+      },
+      {
+        "objection": "The identifiers are pseudonymous.",
+        "answer": "Pseudonymous data is personal data under the regulation, and the entire purpose of the exchange is to keep recognising the same person across contexts."
+      },
+      {
+        "objection": "Users can delete their cookies.",
+        "answer": "Deleting a cookie at one party does not remove the mapping already stored at the other. The exchange survives the deletion."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0015",
+    "DPE-2026-0009",
+    "DPE-2026-0010"
+  ],
+  "seen_in_the_wild": {
+    "confirmed": true
+  },
+  "in_practice": {
+    "dpia": "Verify whether any recipient receives an identifier belonging to another recipient, rather than assessing each recipient in isolation.",
+    "procurement": "No party in the chain receives an identifier issued by another party, demonstrated by a capture in which no identifier value appears across two registrable domains.",
+    "complaint": "A HAR with the redirect chain intact, the cookie value as set by the first party, and the request to the second party containing that same value.",
+    "audit_question": "Does any of your partners receive an identifier that another partner issued, and where is the arrangement between them?"
+  },
+  "schema_version": "2.0",
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+      }
+    ]
+  },
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ]
+}

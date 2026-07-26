@@ -1,0 +1,135 @@
+{
+  "id": "DPE-2026-0027",
+  "name": "Country attributed from a stale database",
+  "slug": "country-from-stale-database",
+  "name_nl": "Land bepaald met een verouderde database",
+  "family": "method",
+  "applies_to": [
+    "web",
+    "mobile-app",
+    "iot",
+    "firmware"
+  ],
+  "summary": "A transfer claim rests on an address-to-country lookup that no longer matches the assignment.",
+  "not_a_vulnerability": "A fault in a measurement, not in a system. Nothing was attacked and no party misbehaved; the conclusion about where data went is simply not supported by the source it was drawn from.",
+  "mechanism": {
+    "what": "A finding states that data left for a particular country. The country came from a lookup table mapping addresses to locations. Such tables are snapshots: address blocks are reassigned, providers move ranges between regions, and hosting shifts between sites. A table built before the measurement can place a current address in a country it left, in either direction.",
+    "why_it_matters": "The transfer question is the one most likely to be contested, and it is the one where a wrong answer is easiest to demonstrate. A single misplaced address lets the other party dismiss the whole measurement without addressing the rest of it.",
+    "common_causes": [
+      "a lookup database shipped with a tool and never updated",
+      "the country of the operating company used instead of the destination of the traffic",
+      "a content delivery front end resolved to one country while the origin sits elsewhere",
+      "the country recorded at analysis time rather than at capture time, with the reassignment in between"
+    ],
+    "not_this": "Genuinely sending data to a third country is a fault of the system, and the transfer provisions address it. This entry is about the claim: the destination attributed may not be where the data went."
+  },
+  "detection": {
+    "indicator": "Resolving the same addresses again with a lookup source built after the measurement date yields a different country for at least one host in the finding. Alternatively, the build date of the source used precedes the measurement date.",
+    "method": "differential",
+    "qod": 90,
+    "capture_requirements": [
+      "record the addresses as resolved at capture time, not only the host names; a name resolves differently later",
+      "record the build date and version of the lookup source, and publish it with the finding",
+      "resolve from the same country the capture ran in, since resolution is frequently location-dependent",
+      "keep the routing evidence for any host on which the transfer claim rests"
+    ],
+    "attribution": [
+      "document-diff",
+      "vendor-statement"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "The lookup source was built after the measurement and re-resolution yields the same country.",
+      "checkable": "automated",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The destination is established by routing or by a statement from the party rather than by a lookup table.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The finding does not depend on the country at all.",
+      "checkable": "manual",
+      "if_true": "drop",
+      "note": "Many findings stand regardless of destination. Where the country is decoration, remove it rather than defend it."
+    },
+    {
+      "condition": "Only hosts irrelevant to the claim changed country on re-resolution.",
+      "checkable": "automated",
+      "if_true": "weaken"
+    }
+  ],
+  "legal": {
+    "provisions": [
+      "eu-gdpr-44",
+      "eu-gdpr-5-2"
+    ],
+    "rebuttals": [
+      {
+        "objection": "The tool said so.",
+        "answer": "The tool consulted a table with a build date. Publish that date, and re-resolve if it precedes the measurement."
+      },
+      {
+        "objection": "The company is American, so the data goes to America.",
+        "answer": "Where a company is based says nothing about where the traffic lands, and the reverse holds too. The destination is measurable; the origin of the company is not the measurement."
+      },
+      {
+        "objection": "It resolves to that country from here.",
+        "answer": "Then say from where and when you resolved it. That is a fact about your measurement, and stating it is what makes it checkable."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0026",
+    "DPE-2026-0028",
+    "DPE-2026-0012"
+  ],
+  "seen_in_the_wild": {
+    "confirmed": true
+  },
+  "in_practice": {
+    "dpia": "Verify how the destination country in a supporting measurement was established, and with a source of which date.",
+    "procurement": "Any transfer statement is supported by addresses resolved at the stated date, with the version of the lookup source named.",
+    "complaint": "The addresses as resolved at capture time, the version and build date of the lookup source, and the routing evidence for the hosts the claim rests on.",
+    "audit_question": "Which database told you that this address is in that country, and when was it built?"
+  },
+  "schema_version": "2.0",
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+      }
+    ]
+  },
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ]
+}
