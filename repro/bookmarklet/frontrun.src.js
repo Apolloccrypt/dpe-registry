@@ -67,6 +67,27 @@
   const withId = third.filter(t => t.id);
   const hit = vendors.length > 0 || withId.length > 0;
 
+  // Per catalogus-entry een uitslag, met het nummer erbij. Dat het nummer hier
+  // staat en niet in een handleiding, is het verschil tussen wel en niet
+  // gebruikt worden: niemand zoekt zelf uit welk nummer bij een waarneming hoort.
+  const REC = ['hotjar.com','hotjar.io','clarity.ms','mouseflow.com','fullstory.com','smartlook.com'];
+  const SUB = third.filter(t => /script|css|font|image/i.test(t.type || ''));
+  const long = document.cookie ? [] : [];
+  const found = [
+    { id: 'DPE-2026-0001', nl: 'Meten voor de toestemmingsvraag',
+      hit: (vendors.length > 0 || withId.length > 0) && !!banner,
+      why: `${vendors.length} meetpartij(en) aangesproken terwijl de banner nog onbeantwoord was` },
+    { id: 'DPE-2026-0003', nl: 'Geen weigeroptie',
+      hit: !!banner && !/weiger|afwijzen|noodzakelijk|reject|decline/i.test(banner.innerText || ''),
+      why: 'in de zichtbare banner staat geen knop die weigeren mogelijk maakt' },
+    { id: 'DPE-2026-0005', nl: 'Sessieopname',
+      hit: third.some(t => REC.some(k => t.host.endsWith(k))),
+      why: 'er wordt een partij aangesproken die sessies opneemt, niet alleen paginaweergaven' },
+    { id: 'DPE-2026-0009', nl: 'Externe bron inladen',
+      hit: SUB.length > 0,
+      why: `${SUB.length} bron(nen) worden van een andere partij ingeladen bij het openen van de pagina` },
+  ].filter(x => x.hit);
+
   // ---- report, rendered over the page ------------------------------------
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const row = t => `<tr><td>${t.id ? '<b title="carries an identifier">ID</b>' : ''}</td>
@@ -91,12 +112,23 @@
     #dpe-panel b{color:#d99a5c}
     #dpe-panel .x{position:absolute;top:10px;right:14px;cursor:pointer;color:#78827f;
       font-size:20px;line-height:1;background:none;border:0}
+    #dpe-panel .dpe{display:flex;flex-direction:column;gap:7px;margin:12px 0 14px}
+    #dpe-panel .d{display:block;padding:11px 13px;border-radius:7px;text-decoration:none;
+      background:#1e2529;border:1px solid #2f3a40}
+    #dpe-panel .d:hover{border-color:#4269d0;background:#1b2437}
+    #dpe-panel .did{font-family:inherit;font-size:11.5px;color:#7c9be8;letter-spacing:.04em}
+    #dpe-panel .dnl{display:block;font:600 15px/1.3 ui-sans-serif,system-ui;color:#e7ebe9;margin:3px 0 4px}
+    #dpe-panel .dw{display:block;font-size:12px;color:#8b9491;line-height:1.5}
     #dpe-panel .note{color:#78827f;margin-top:12px;font-size:11.5px;max-width:80ch}
     #dpe-panel .cp{margin-top:10px;background:#262c2e;color:#e7ebe9;border:0;padding:6px 12px;
       border-radius:3px;cursor:pointer;font:inherit;font-size:12px}
   </style>
   <button class="x" aria-label="sluiten">&times;</button>
-  <h2>${hit ? 'Meetverkeer aangetroffen' : 'Geen meetverkeer aangetroffen'} op ${esc(SITE)}</h2>
+  <h2>${found.length ? found.length + ' bevinding' + (found.length > 1 ? 'en' : '') : 'Geen bevinding'} op ${esc(SITE)}</h2>
+  ${found.length ? '<div class="dpe">' + found.map(f =>
+    `<a class="d" href="https://totaledigitalewaarborging.nl/register/${f.id}" target="_blank" rel="noopener">
+       <span class="did">${f.id}</span><span class="dnl">${esc(f.nl)}</span><span class="dw">${esc(f.why)}</span></a>`
+  ).join('') + '</div>' : ''}
   <div class="sub">
     cookiebanner ${banner ? 'staat nog onbeantwoord op het scherm' : 'niet gevonden'} ·
     ${third.length} third-party resources · ${withId.length} met identifier ·
@@ -104,7 +136,7 @@
   </div>
   ${vendors.map(v => `<span class="v">${esc(v)}</span>`).join('')}
   ${third.length ? `<table>${third.sort((a, b) => (b.id - a.id)).slice(0, 40).map(row).join('')}</table>` : ''}
-  <button class="cp">Kopieer als JSON voor een melding</button>
+  <button class="cp">Kopieer als tekst voor je DPIA of mail</button>
   <div class="note">
     Wat dit wel zegt: deze resources zijn geladen${banner ? ' terwijl de toestemmingsvraag nog openstond' : ''}.
     Wat dit niet ziet: HttpOnly-cookies, request-bodies, en verkeer in cross-origin iframes.
@@ -114,10 +146,25 @@
   document.body.appendChild(box);
   box.querySelector('.x').onclick = () => box.remove();
   box.querySelector('.cp').onclick = e => {
-    navigator.clipboard.writeText(JSON.stringify({
-      site: SITE, measured_at: new Date().toISOString(), banner_present: !!banner,
-      third_party: third, tracking_cookies: tracking, user_agent: navigator.userAgent,
-    }, null, 2));
-    e.target.textContent = 'Gekopieerd';
+    // Plakbaar in een DPIA, een mail aan de leverancier of een melding. Ruwe
+    // JSON helpt niemand die geen JSON leest, en dat is de meerderheid.
+    const d = new Date().toISOString().slice(0, 10);
+    const txt = [
+      `Waarneming op ${SITE}, ${d}`,
+      `Gemeten in een prive-venster, zonder de cookiebanner aan te raken.`,
+      ``,
+      found.length ? `Aangetroffen:` : `Geen van de getoetste bevindingen aangetroffen.`,
+      ...found.map(f => `- ${f.id} (${f.nl}): ${f.why}. Zie totaledigitalewaarborging.nl/register/${f.id}`),
+      ``,
+      `Partijen die werden aangesproken: ${vendors.join(', ') || 'geen herkende'}`,
+      tracking.length ? `Cookies gezet voor enige keuze: ${tracking.join(', ')}` : '',
+      ``,
+      `Dit is een eerste waarneming met een bookmarklet, geen sluitend bewijs.`,
+      `Zij toont wat de pagina laadde voordat er iets gekozen was; zij ziet geen`,
+      `HttpOnly-cookies, geen inhoud van verzoeken en niets in iframes van derden.`,
+      `Vraag om een netwerkopname met datum voor een volledig beeld.`,
+    ].filter(x => x !== undefined).join('\n');
+    navigator.clipboard.writeText(txt);
+    e.target.textContent = 'Gekopieerd, plak het in je DPIA of mail';
   };
 })();

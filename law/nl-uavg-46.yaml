@@ -1,0 +1,23 @@
+id: nl-uavg-46
+jurisdiction: NL
+instrument: "Uitvoeringswet Algemene verordening gegevensbescherming"
+reference: "UAVG art. 46"
+implements: "AVG art. 87 (nationaal identificatienummer)"
+title: "Gebruik van een wettelijk voorgeschreven persoonsnummer"
+core: >
+  Een nummer dat ter identificatie van een persoon bij wet is voorgeschreven,
+  wordt bij de verwerking van persoonsgegevens slechts gebruikt ter uitvoering
+  van de betreffende wet dan wel voor doeleinden bij de wet bepaald.
+why_it_matters: >
+  Dit is de bepaling waardoor een burgerservicenummer bij een private partij
+  bijna nooit thuishoort, ook niet met toestemming: de wet wijst aan wie het
+  nummer mag gebruiken en waarvoor. Het nummer reist zelden als los veld; het
+  zit meestal in ruwe documentgegevens, en daarom is de meting de payload en
+  niet het formulier.
+url: "https://wetten.overheid.nl/BWBR0040940"
+mirror: "https://vrijewetgeving.nl/"
+verified: false
+verification_note: >
+  Artikelnummer en strekking zijn opgeschreven uit kennis van de wet, niet
+  tegen de brontekst gecontroleerd op de datum van dit bestand. Controleer het
+  artikelnummer en de exacte formulering voordat een publicatie erop steunt.

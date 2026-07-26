@@ -1,0 +1,18 @@
+id: eu-gdpr-5-1-a
+jurisdiction: EU
+instrument: "Verordening (EU) 2016/679 (AVG)"
+reference: "GDPR art. 5(1)(a)"
+reference_nl: "AVG art. 5 lid 1 sub a"
+title: "Rechtmatigheid, behoorlijkheid en transparantie"
+core: >
+  Persoonsgegevens moeten worden verwerkt op een wijze die ten aanzien van de
+  betrokkene rechtmatig, behoorlijk en transparant is.
+why_it_matters: >
+  Behoorlijkheid is de bepaling die aangrijpt waar de techniek klopt maar de
+  presentatie niet: een derde partij die onder een eigen subdomein binnenkomt,
+  een teller die minder partners noemt dan de configuratie kent, een meting die
+  buiten het zicht van de bezoeker wordt doorgezet. De verwerking is dan niet
+  verborgen voor de toezichthouder maar wel voor de persoon, en dat is precies
+  wat deze bepaling verbiedt.
+url: "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+verified: true
