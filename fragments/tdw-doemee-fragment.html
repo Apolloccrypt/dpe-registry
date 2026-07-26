@@ -1,0 +1,105 @@
+<!-- Sectie "Doe mee" voor totaledigitalewaarborging.nl
+     Plak dit als losse section in de pagina, na "Werkwijze". Gebruikt de
+     bestaande TDW-variabelen (--ink, --line, --accent, --surface, --font-sans,
+     --font-mono), dus er is geen extra kleur of lettertype nodig.
+     Anker: #doemee -->
+
+<section id="doemee" class="dm">
+  <div class="dm-in">
+    <p class="dm-eyebrow">Samen</p>
+    <h2 class="dm-h">Doe mee</h2>
+    <p class="dm-lede">Wij meten wat anderen aannemen. Dat werkt alleen als de methode
+    van iedereen is: hoe meer mensen meten, tegenspreken en aanvullen, hoe minder
+    er op goed vertrouwen hoeft te worden aangenomen.</p>
+
+    <div class="dm-grid">
+      <article class="dm-card">
+        <span class="dm-num">01</span>
+        <h3>Controleer een bevinding</h3>
+        <p>Elke gemeten fout staat met naam, nummer en meetinstructie in de catalogus.
+        Speel er een na op een systeem dat je kent. Vijf minuten met de browser is genoeg,
+        en je hebt geen enkel gereedschap van ons nodig.</p>
+        <p class="dm-note">Ook een bevinding die je <em>niet</em> kunt reproduceren is
+        waardevol. Juist die willen we horen.</p>
+        <a class="dm-link" href="/register/">Naar de catalogus</a>
+      </article>
+
+      <article class="dm-card">
+        <span class="dm-num">02</span>
+        <h3>Meet je eigen omgeving</h3>
+        <p>Werk je bij een gemeente, een uitvoerder, een uitgever of een leverancier?
+        Draai de meting op je eigen site of apparaat voordat iemand anders het doet.
+        De uitkomst is van jou; wij hoeven hem niet te zien.</p>
+        <p class="dm-note">Vind je iets, dan staat er per fout bij hoe je het in een
+        DPIA toetst en hoe je het als inkoopeis formuleert.</p>
+        <a class="dm-link" href="/register/">Meetinstructies</a>
+      </article>
+
+      <article class="dm-card">
+        <span class="dm-num">03</span>
+        <h3>Vul de standaard aan</h3>
+        <p>Een fout die wij nog niet beschreven hebben. Een tegenwerping die we
+        missen. De wetsbepaling die in jouw land geldt. Een betere naam voor iets
+        dat wij onhandig hebben genoemd.</p>
+        <p class="dm-note">Wij lopen zelf vast op hardware: routers, televisies,
+        auto's. Meet je daaraan, dan hebben we je nodig.</p>
+        <a class="dm-link" href="https://github.com/Apolloccrypt/dpe-registry/blob/main/WANTED.md">Waar wij vastlopen</a>
+      </article>
+
+      <article class="dm-card">
+        <span class="dm-num">04</span>
+        <h3>Spreek ons tegen</h3>
+        <p>Staat er iets fout, dan willen we dat weten voordat iemand anders het
+        ontdekt. Bij elke fout staat opgeschreven wat hem zou ontkrachten; dat is
+        geen retoriek maar een uitnodiging.</p>
+        <p class="dm-note">Correcties worden zichtbaar doorgevoerd, met de reden
+        erbij. Wat is aangepast blijft na te lezen.</p>
+        <a class="dm-link" href="https://github.com/Apolloccrypt/dpe-registry/issues">Meld het</a>
+      </article>
+    </div>
+
+    <div class="dm-foot">
+      <p><strong>Wat je ervoor terugkrijgt.</strong> Je naam blijft aan de bijdrage
+      hangen, permanent en citeerbaar. Liever anoniem, dan is dat goed. En je draagt
+      geen risico: de standaard noemt geen bedrijven, dus meedoen kost je niets dan tijd.</p>
+      <p class="dm-cta">
+        <a class="dm-btn" href="/register/">Bekijk de catalogus</a>
+        <a class="dm-btn dm-btn-ghost" href="https://github.com/Apolloccrypt/dpe-registry">Broncode en methode</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+.dm{padding:clamp(48px,7vw,88px) 0;border-top:1px solid var(--line,#E9E9F0)}
+.dm-in{max-width:1100px;margin:0 auto;padding:0 24px}
+.dm-eyebrow{font-family:var(--font-mono,ui-monospace,monospace);font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--accent,#4269D0);margin:0 0 10px}
+.dm-h{font-size:clamp(28px,4vw,42px);font-weight:600;letter-spacing:-.022em;margin:0;line-height:1.1}
+.dm-lede{font-size:18px;color:var(--ink-2,#54545F);max-width:62ch;margin:14px 0 0}
+.dm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:18px;margin-top:36px}
+.dm-card{background:var(--surface,#fff);border:1px solid var(--line,#E9E9F0);border-radius:12px;
+  padding:24px 24px 22px;display:flex;flex-direction:column;
+  box-shadow:var(--shadow,0 1px 2px rgba(20,20,50,.04),0 14px 34px -20px rgba(20,20,50,.16))}
+.dm-num{font-family:var(--font-mono,ui-monospace,monospace);font-size:11px;letter-spacing:.1em;
+  color:var(--accent,#4269D0);margin-bottom:10px}
+.dm-card h3{font-size:19px;font-weight:600;letter-spacing:-.01em;margin:0 0 9px;line-height:1.25}
+.dm-card p{font-size:14.5px;line-height:1.6;color:var(--ink-2,#54545F);margin:0 0 10px}
+.dm-note{font-size:13.5px!important;color:var(--ink-3,#8B8B97)!important}
+.dm-link{margin-top:auto;padding-top:12px;font-size:13.5px;font-weight:500;
+  color:var(--accent,#4269D0);text-decoration:none}
+.dm-link:hover{text-decoration:underline}
+.dm-link:after{content:" \2192"}
+.dm-foot{margin-top:26px;padding-top:22px;border-top:1px solid var(--line,#E9E9F0);
+  display:flex;gap:28px;flex-wrap:wrap;align-items:flex-start;justify-content:space-between}
+.dm-foot p{font-size:14.5px;color:var(--ink-2,#54545F);margin:0;max-width:56ch}
+.dm-foot strong{color:var(--ink,#161620)}
+.dm-cta{display:flex;gap:10px;flex-wrap:wrap}
+.dm-btn{display:inline-block;padding:11px 20px;border-radius:999px;font-size:14.5px;font-weight:500;
+  text-decoration:none;background:var(--accent,#4269D0);color:#fff;white-space:nowrap}
+.dm-btn:hover{filter:brightness(1.08)}
+.dm-btn-ghost{background:transparent;color:var(--accent,#4269D0);
+  border:1px solid var(--accent-line,#D5E0F7)}
+.dm-btn:focus-visible,.dm-link:focus-visible{outline:2px solid var(--accent,#4269D0);outline-offset:3px}
+@media(max-width:640px){.dm-foot{flex-direction:column;gap:18px}}
+</style>
