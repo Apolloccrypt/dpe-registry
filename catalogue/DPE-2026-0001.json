@@ -1,6 +1,6 @@
 {
   "id": "DPE-2026-0001",
-  "name": "Frontrun",
+  "name": "Tracking before consent",
   "family": "consent",
   "summary": "A tag fires before the consent question has been answered.",
   "mechanism": {
@@ -11,7 +11,7 @@
       "consent tool blocks cookie placement but not script or container loading",
       "tag added through a dashboard by a team that does not know about the gate"
     ],
-    "not_this": "If the tag fires but refusing changes nothing, that is HollowNo: this entry is about the moment, that one about the effect of the choice. Both can be present at once and they are separate faults, because an operator can fix one and leave the other."
+    "not_this": "If the tag fires but refusing changes nothing, that is Refusal without effect: this entry is about the moment, that one about the effect of the choice. Both can be present at once and they are separate faults, because an operator can fix one and leave the other."
   },
   "detection": {
     "indicator": "A request to a third-party host carrying an identifier parameter or setting an identifier cookie, timestamped before the consent event. Absent a consent event, the whole capture qualifies.",
@@ -141,5 +141,6 @@
       ]
     }
   ],
-  "slug": "frontrun"
+  "slug": "tracking-before-consent",
+  "name_nl": "Meten voor de toestemmingsvraag"
 }

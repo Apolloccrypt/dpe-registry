@@ -1,6 +1,6 @@
 {
   "id": "DPE-2026-0004",
-  "name": "MaxStay",
+  "name": "Maximum cookie lifetime",
   "family": "retention",
   "summary": "An identifier cookie is set for the maximum lifetime a browser accepts, before the question is answered.",
   "mechanism": {
@@ -110,5 +110,6 @@
       ]
     }
   ],
-  "slug": "maxstay"
+  "slug": "maximum-cookie-lifetime",
+  "name_nl": "Maximale bewaartermijn"
 }

@@ -1,6 +1,6 @@
 {
   "id": "DPE-2026-0008",
-  "name": "Handover",
+  "name": "Third-party hosted form",
   "family": "chain",
   "summary": "A form that looks like part of the site is hosted by a third party that profiles on its own account.",
   "mechanism": {
@@ -105,5 +105,6 @@
       ]
     }
   ],
-  "slug": "handover"
+  "slug": "third-party-hosted-form",
+  "name_nl": "Formulier bij een derde"
 }

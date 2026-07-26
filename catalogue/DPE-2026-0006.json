@@ -1,6 +1,6 @@
 {
   "id": "DPE-2026-0006",
-  "name": "Telltale",
+  "name": "User input to third parties",
   "family": "data",
   "summary": "What the visitor typed or looked for reaches a third party.",
   "mechanism": {
@@ -94,5 +94,6 @@
       ]
     }
   ],
-  "slug": "telltale"
+  "slug": "user-input-to-third-parties",
+  "name_nl": "Invoer naar derden"
 }

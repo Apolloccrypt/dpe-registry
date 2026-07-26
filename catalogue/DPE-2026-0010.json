@@ -1,6 +1,6 @@
 {
   "id": "DPE-2026-0010",
-  "name": "OffBooks",
+  "name": "Undisclosed recipient",
   "family": "transparency",
   "summary": "A recipient of personal data is missing from the party's own privacy statement.",
   "mechanism": {
@@ -95,5 +95,6 @@
       ]
     }
   ],
-  "slug": "offbooks"
+  "slug": "undisclosed-recipient",
+  "name_nl": "Niet-vermelde ontvanger"
 }

@@ -1,6 +1,6 @@
 {
   "id": "DPE-2026-0009",
-  "name": "Hotlink",
+  "name": "Third-party resource loading",
   "family": "transfer",
   "summary": "A resource loaded straight from a third party makes every page view a transfer.",
   "mechanism": {
@@ -116,5 +116,6 @@
       ]
     }
   ],
-  "slug": "hotlink"
+  "slug": "third-party-resource-loading",
+  "name_nl": "Externe bron inladen"
 }

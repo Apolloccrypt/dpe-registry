@@ -27,6 +27,8 @@ LIMITS = [
     "absence: not finding it in one capture is not evidence that it is not there",
 ]
 
+SLUGS = {'Tracking before consent': 'tracking-before-consent', 'Refusal without effect': 'refusal-without-effect', 'No refusal option': 'no-refusal-option', 'Maximum cookie lifetime': 'maximum-cookie-lifetime', 'Session recording': 'session-recording', 'User input to third parties': 'user-input-to-third-parties', 'Device fingerprinting': 'device-fingerprinting', 'Third-party hosted form': 'third-party-hosted-form', 'Third-party resource loading': 'third-party-resource-loading', 'Undisclosed recipient': 'undisclosed-recipient', 'Tag loaded outside the source': 'tag-loaded-outside-source', 'Device telemetry without function': 'device-telemetry-without-function', 'Bundled component collection': 'bundled-component-collection', 'No working off switch': 'no-working-off-switch'}
+
 E = []
 
 
@@ -40,7 +42,8 @@ def entry(**kw):
                                "entries": ["Entry created.", "Name assigned.",
                                            "Detection method and falsifiers defined.",
                                            "Legal provisions linked."]}])
-    kw["slug"] = kw["name"].lower()
+    kw["slug"] = SLUGS[kw["name"]]
+    kw["name_nl"] = kw.pop("name_nl")
     E.append(kw)
 
 
@@ -53,7 +56,7 @@ def repro(*tiers, scanners=()):
 
 # ---------------------------------------------------------------- consent
 
-entry(id="DPE-2026-0001", name="Frontrun", family="consent",
+entry(id="DPE-2026-0001", name="Tracking before consent", name_nl="Meten voor de toestemmingsvraag", family="consent",
       summary="A tag fires before the consent question has been answered.",
       mechanism={
           "what": "On page load, requests go to a measurement or advertising party at a moment when the visitor has not been able to make a choice. There may be a banner or there may not be; either way something was measured before anything was asked. An identifier is usually set at the same time, making the visitor recognisable on a later visit.",
@@ -61,7 +64,7 @@ entry(id="DPE-2026-0001", name="Frontrun", family="consent",
           "common_causes": ["tag hardcoded in the page rather than behind the consent gate",
                             "consent tool blocks cookie placement but not script or container loading",
                             "tag added through a dashboard by a team that does not know about the gate"],
-          "not_this": "If the tag fires but refusing changes nothing, that is HollowNo: this entry is about the moment, that one about the effect of the choice. Both can be present at once and they are separate faults, because an operator can fix one and leave the other.",
+          "not_this": "If the tag fires but refusing changes nothing, that is Refusal without effect: this entry is about the moment, that one about the effect of the choice. Both can be present at once and they are separate faults, because an operator can fix one and leave the other.",
       },
       detection={
           "indicator": "A request to a third-party host carrying an identifier parameter or setting an identifier cookie, timestamped before the consent event. Absent a consent event, the whole capture qualifies.",
@@ -98,7 +101,7 @@ entry(id="DPE-2026-0001", name="Frontrun", family="consent",
       related=["DPE-2026-0002", "DPE-2026-0003", "DPE-2026-0005"],
       seen_in_the_wild={"confirmed": True, "first_documented": "2026-05-27"})
 
-entry(id="DPE-2026-0002", name="HollowNo", family="consent",
+entry(id="DPE-2026-0002", name="Refusal without effect", name_nl="Weigeren zonder effect", family="consent",
       summary="Refusing consent does not change what leaves the browser.",
       mechanism={
           "what": "The site asks for consent and registers the refusal, but the tags that the refusal should stop do not sit behind the gate. The screen confirms the choice; the wire shows the same traffic as before.",
@@ -106,7 +109,7 @@ entry(id="DPE-2026-0002", name="HollowNo", family="consent",
           "common_causes": ["tags hardcoded rather than gated",
                             "consent tool blocks cookies but not the loading of scripts or containers",
                             "banner is informational and wired to nothing"],
-          "not_this": "If nothing was asked before the tag fired, that is Frontrun. If no refusal option is offered at all, that is OneDoor.",
+          "not_this": "If nothing was asked before the tag fired, that is Tracking before consent. If no refusal option is offered at all, that is No refusal option.",
       },
       detection={
           "indicator": "Set comparison: the third-party hosts contacted after an explicitly registered refusal are equal to, or a superset of, those contacted without any interaction. There is no third reading.",
@@ -135,7 +138,7 @@ entry(id="DPE-2026-0002", name="HollowNo", family="consent",
       related=["DPE-2026-0001", "DPE-2026-0004"],
       seen_in_the_wild={"confirmed": True, "first_documented": "2026-05-27"})
 
-entry(id="DPE-2026-0003", name="OneDoor", family="consent",
+entry(id="DPE-2026-0003", name="No refusal option", name_nl="Geen weigeroptie", family="consent",
       summary="The consent dialogue offers acceptance and no way to refuse.",
       mechanism={
           "what": "The banner presents an accept control, and refusing requires either leaving the site or navigating a path that does not lead to a working refusal.",
@@ -143,7 +146,7 @@ entry(id="DPE-2026-0003", name="OneDoor", family="consent",
           "common_causes": ["banner template with a single call to action",
                             "refusal hidden behind a settings layer that does not save",
                             "closing the banner counted as acceptance"],
-          "not_this": "If a refusal option exists but does nothing, that is HollowNo. Here the option is absent.",
+          "not_this": "If a refusal option exists but does nothing, that is Refusal without effect. Here the option is absent.",
       },
       detection={
           "indicator": "No refusal affordance in the banner DOM: no control whose action registers a negative consent state, at any layer reachable from the first screen.",
@@ -163,7 +166,7 @@ entry(id="DPE-2026-0003", name="OneDoor", family="consent",
                             "answer": "Consent is sought by the controller and must be refusable where it is sought. Delegating that to the browser does not discharge it."}]},
       related=["DPE-2026-0002"], seen_in_the_wild={"confirmed": True})
 
-entry(id="DPE-2026-0004", name="MaxStay", family="retention",
+entry(id="DPE-2026-0004", name="Maximum cookie lifetime", name_nl="Maximale bewaartermijn", family="retention",
       summary="An identifier cookie is set for the maximum lifetime a browser accepts, before the question is answered.",
       mechanism={
           "what": "At page load, before any consent interaction, a cookie is placed with a lifetime at or near the ceiling the browser permits, currently 399 days in Chromium-based browsers.",
@@ -193,7 +196,7 @@ entry(id="DPE-2026-0004", name="MaxStay", family="retention",
 
 # ---------------------------------------------------------------- data
 
-entry(id="DPE-2026-0005", name="Overshoulder", family="data",
+entry(id="DPE-2026-0005", name="Session recording", name_nl="Sessieopname", family="data",
       summary="The session itself is recorded, not merely the page view.",
       mechanism={
           "what": "A session-recording script captures behaviour inside the page: mouse movement, scrolling, clicks and often keystrokes in form fields, replayable afterwards as a film of the visit.",
@@ -223,7 +226,7 @@ entry(id="DPE-2026-0005", name="Overshoulder", family="data",
                             "answer": "Where the recording is stored says nothing about whether it should have been made. Location is a separate question from lawfulness of collection."}]},
       seen_in_the_wild={"confirmed": True})
 
-entry(id="DPE-2026-0006", name="Telltale", family="data",
+entry(id="DPE-2026-0006", name="User input to third parties", name_nl="Invoer naar derden", family="data",
       summary="What the visitor typed or looked for reaches a third party.",
       mechanism={
           "what": "A search term, form field or URL path that reveals intent is passed to an analytics or advertising party, usually as a parameter or as part of a page title.",
@@ -251,7 +254,7 @@ entry(id="DPE-2026-0006", name="Telltale", family="data",
                             "answer": "If the URL contains what the visitor typed, then the URL is the personal data. The container does not change the content."}]},
       seen_in_the_wild={"confirmed": True})
 
-entry(id="DPE-2026-0007", name="Silhouette", family="data",
+entry(id="DPE-2026-0007", name="Device fingerprinting", name_nl="Apparaatherkenning", family="data",
       summary="The device is recognised by its characteristics, without any stored identifier.",
       mechanism={
           "what": "Scripts read properties that together make a device distinctive: time zone, screen metrics, fonts, canvas or WebGL rendering, enumerated navigator fields. No cookie is stored, so cookie controls do not touch it.",
@@ -282,7 +285,7 @@ entry(id="DPE-2026-0007", name="Silhouette", family="data",
 
 # ---------------------------------------------------------------- chain
 
-entry(id="DPE-2026-0008", name="Handover", family="chain",
+entry(id="DPE-2026-0008", name="Third-party hosted form", name_nl="Formulier bij een derde", family="chain",
       summary="A form that looks like part of the site is hosted by a third party that profiles on its own account.",
       mechanism={
           "what": "A signup, contact or newsletter form lives on a domain belonging to a marketing platform. The visitor believes they are dealing with the site; the platform sets its own identifiers and builds its own record.",
@@ -310,7 +313,7 @@ entry(id="DPE-2026-0008", name="Handover", family="chain",
                             "answer": "Fashion ID holds that a controller who arranges for visitor data to reach a third party is jointly responsible for that collection and transmission. Linking to the form is arranging it."}]},
       related=["DPE-2026-0009"], seen_in_the_wild={"confirmed": True})
 
-entry(id="DPE-2026-0009", name="Hotlink", family="transfer",
+entry(id="DPE-2026-0009", name="Third-party resource loading", name_nl="Externe bron inladen", family="transfer",
       summary="A resource loaded straight from a third party makes every page view a transfer.",
       mechanism={
           "what": "A font, script library or image is loaded directly from an external provider instead of being served by the site. Each page view sends the visitor's IP address, and often more, to that provider.",
@@ -346,7 +349,7 @@ entry(id="DPE-2026-0009", name="Hotlink", family="transfer",
 
 # ------------------------------------------------------- transparency, method
 
-entry(id="DPE-2026-0010", name="OffBooks", family="transparency",
+entry(id="DPE-2026-0010", name="Undisclosed recipient", name_nl="Niet-vermelde ontvanger", family="transparency",
       summary="A recipient of personal data is missing from the party's own privacy statement.",
       mechanism={
           "what": "Measurement shows data going to a party that the published privacy statement does not mention, or the statement asserts something the traffic contradicts, such as that no personal data is processed or that all recipients are inside the EEA.",
@@ -373,7 +376,7 @@ entry(id="DPE-2026-0010", name="OffBooks", family="transparency",
                             "answer": "Article 13 requires the recipients or categories of recipients. A statement that omits a category entirely is not generic but incomplete."}]},
       seen_in_the_wild={"confirmed": True})
 
-entry(id="DPE-2026-0011", name="Sideload", family="method",
+entry(id="DPE-2026-0011", name="Tag loaded outside the source", name_nl="Tag buiten de broncode", family="method",
       summary="Tags fire from a container while appearing nowhere in the page source.",
       mechanism={
           "what": "A tag manager loads measurement or advertising tags at runtime. The identifiers of those tags are not in the delivered HTML, so reading the source suggests they are gone while the traffic shows otherwise.",
@@ -407,7 +410,7 @@ entry(id="DPE-2026-0011", name="Sideload", family="method",
 # land stuurt is niet te exploiteren; hij doet wat de bouwer wilde. Precies
 # daarom bestaat er geen nummer voor, en precies daarom hoort het hier.
 
-entry(id="DPE-2026-0012", name="Homecall", family="telemetry",
+entry(id="DPE-2026-0012", name="Device telemetry without function", name_nl="Apparaat belt naar huis", family="telemetry",
       applies_to=["firmware", "iot", "network-device", "vehicle"],
       summary="A device contacts a server abroad without any function that requires it.",
       not_a_vulnerability="Nothing is exploitable and nothing is broken. The device does what its builder intended, and the objection is to that intention. A vulnerability register has no place to put this, which is why it has gone unrecorded.",
@@ -454,7 +457,7 @@ entry(id="DPE-2026-0012", name="Homecall", family="telemetry",
                   "answer": "The party placing the product on the market chose that component. Responsibility for what a shipped device does is not transferred by subcontracting it."}]},
       related=["DPE-2026-0013"], seen_in_the_wild={"confirmed": True})
 
-entry(id="DPE-2026-0013", name="Sidecar", family="telemetry",
+entry(id="DPE-2026-0013", name="Bundled component collection", name_nl="Meeliftende component", family="telemetry",
       applies_to=["mobile-app", "desktop", "firmware"],
       summary="A bundled component collects on its own account, alongside the function the app performs.",
       not_a_vulnerability="The component works exactly as documented by its maker. There is no flaw to fix, only a decision to include it, and vulnerability registers have nowhere to record a decision.",
@@ -494,7 +497,7 @@ entry(id="DPE-2026-0013", name="Sidecar", family="telemetry",
                   "answer": "Then the traffic should be limited to crashes. Establish what the payload contains when nothing has crashed."}]},
       related=["DPE-2026-0012", "DPE-2026-0008"], seen_in_the_wild={"confirmed": True})
 
-entry(id="DPE-2026-0014", name="Deadend", family="consent",
+entry(id="DPE-2026-0014", name="No working off switch", name_nl="Geen werkende uitschakeling", family="consent",
       applies_to=["firmware", "iot", "vehicle", "mobile-app"],
       summary="The setting that would stop the collection does not exist, or does not survive.",
       not_a_vulnerability="Nothing is broken from the builder's point of view. The absence of an off switch is a product decision, and there is no security register that records product decisions.",

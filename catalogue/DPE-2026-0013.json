@@ -1,6 +1,6 @@
 {
   "id": "DPE-2026-0013",
-  "name": "Sidecar",
+  "name": "Bundled component collection",
   "family": "telemetry",
   "applies_to": [
     "mobile-app",
@@ -119,5 +119,6 @@
       ]
     }
   ],
-  "slug": "sidecar"
+  "slug": "bundled-component-collection",
+  "name_nl": "Meeliftende component"
 }

@@ -31,8 +31,9 @@
     },
     "name": {
       "type": "string",
-      "pattern": "^[A-Z][A-Za-z]{2,23}$",
-      "description": "The citable unit. One word, memorable, in English, describing the behaviour of the system and not the harm to the person. Heartbleed, not CVE-2014-0160. Never reused, even after deprecation."
+      "minLength": 8,
+      "maxLength": 60,
+      "description": "The title, and the citable unit together with the number. Descriptive, not a codename: a reader must understand it without first learning a vocabulary. 'Tracking before consent', not 'Frontrun'. This is how the standards that get adopted do it, from OWASP to CWE; an invented name only works when there are few of them and the press carries them."
     },
     "slug": {
       "type": "string",
@@ -427,6 +428,11 @@
     "not_a_vulnerability": {
       "type": "string",
       "description": "Why this is not a security vulnerability, stated so nobody files it in the wrong place. Usually: nothing is exploitable, the behaviour is intended by the builder, and the objection is to the design rather than to a defect in it."
+    },
+    "name_nl": {
+      "type": "string",
+      "maxLength": 60,
+      "description": "Dutch title for the front end."
     }
   }
 }

@@ -1,6 +1,6 @@
 {
   "id": "DPE-2026-0002",
-  "name": "HollowNo",
+  "name": "Refusal without effect",
   "family": "consent",
   "summary": "Refusing consent does not change what leaves the browser.",
   "mechanism": {
@@ -11,7 +11,7 @@
       "consent tool blocks cookies but not the loading of scripts or containers",
       "banner is informational and wired to nothing"
     ],
-    "not_this": "If nothing was asked before the tag fired, that is Frontrun. If no refusal option is offered at all, that is OneDoor."
+    "not_this": "If nothing was asked before the tag fired, that is Tracking before consent. If no refusal option is offered at all, that is No refusal option."
   },
   "detection": {
     "indicator": "Set comparison: the third-party hosts contacted after an explicitly registered refusal are equal to, or a superset of, those contacted without any interaction. There is no third reading.",
@@ -121,5 +121,6 @@
       ]
     }
   ],
-  "slug": "hollowno"
+  "slug": "refusal-without-effect",
+  "name_nl": "Weigeren zonder effect"
 }

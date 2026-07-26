@@ -1,6 +1,6 @@
 {
   "id": "DPE-2026-0003",
-  "name": "OneDoor",
+  "name": "No refusal option",
   "family": "consent",
   "summary": "The consent dialogue offers acceptance and no way to refuse.",
   "mechanism": {
@@ -11,7 +11,7 @@
       "refusal hidden behind a settings layer that does not save",
       "closing the banner counted as acceptance"
     ],
-    "not_this": "If a refusal option exists but does nothing, that is HollowNo. Here the option is absent."
+    "not_this": "If a refusal option exists but does nothing, that is Refusal without effect. Here the option is absent."
   },
   "detection": {
     "indicator": "No refusal affordance in the banner DOM: no control whose action registers a negative consent state, at any layer reachable from the first screen.",
@@ -100,5 +100,6 @@
       ]
     }
   ],
-  "slug": "onedoor"
+  "slug": "no-refusal-option",
+  "name_nl": "Geen weigeroptie"
 }

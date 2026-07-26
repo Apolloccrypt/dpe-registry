@@ -39,7 +39,7 @@ def build():
                    f'<span class="cnt">{len(fams[fam])}</span></div><ul>')
         for x in sorted(fams[fam], key=lambda y: y["id"]):
             nav.append(f'<li><button class="nb" data-id="{e(x["id"])}">'
-                       f'<span class="nn">{e(x["name"])}</span>'
+                       f'<span class="nn">{e(x.get("name_nl") or x["name"])}</span>'
                        f'<span class="nid">{e(x["id"].replace("DPE-", ""))}</span></button></li>')
         nav.append("</ul></div>")
 
@@ -79,7 +79,8 @@ def build():
         panes.append(f'''<article class="pane" id="p-{e(x["id"])}" hidden>
   <header class="ph">
     <div><div class="pid">{e(x["id"])}</div>
-      <h2>{e(x["name"])}</h2>
+      <h2>{e(x.get("name_nl") or x["name"])}</h2>
+      <p class="pen">{e(x["name"])}</p>
       <p class="psum">{e(x["summary"])}</p></div>
     <div class="pmeta"><span class="fam">{e(FAM.get(x["family"], x["family"]))}</span>{sys_}</div>
   </header>
@@ -161,13 +162,14 @@ h1{font-size:clamp(28px,4vw,40px);font-weight:600;letter-spacing:-.022em;margin:
  border-radius:7px;padding:6px 9px;cursor:pointer;color:inherit;font:inherit;transition:background .12s}
 .nb:hover{background:var(--surface)}
 .nb[aria-current=true]{background:var(--soft);border-color:var(--aline)}
-.nn{font-weight:600;font-size:14.5px}
+.nn{font-weight:500;font-size:14px;line-height:1.35}
 .nid{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--ink-3);font-variant-numeric:tabular-nums}
 .pane{background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:30px 32px}
 @media(max-width:600px){.pane{padding:20px}}
 .ph{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-bottom:18px;border-bottom:1px solid var(--line)}
 .pid{font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:.05em;margin-bottom:3px}
-.ph h2{margin:0;font-size:32px;font-weight:600;letter-spacing:-.025em;line-height:1.1}
+.ph h2{margin:0;font-size:31px;font-weight:600;letter-spacing:-.025em;line-height:1.1;text-wrap:balance}
+.pen{margin:3px 0 0;font-family:var(--mono);font-size:12.5px;color:var(--ink-3);letter-spacing:.01em}
 .psum{margin:6px 0 0;font-size:17px;color:var(--ink-2);max-width:60ch}
 .pmeta{display:flex;gap:6px;flex-wrap:wrap;align-items:flex-start}
 .fam,.sys{font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:3px 9px;border-radius:999px;white-space:nowrap}

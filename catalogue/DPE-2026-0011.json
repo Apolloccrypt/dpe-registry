@@ -1,6 +1,6 @@
 {
   "id": "DPE-2026-0011",
-  "name": "Sideload",
+  "name": "Tag loaded outside the source",
   "family": "method",
   "summary": "Tags fire from a container while appearing nowhere in the page source.",
   "mechanism": {
@@ -101,5 +101,6 @@
       ]
     }
   ],
-  "slug": "sideload"
+  "slug": "tag-loaded-outside-source",
+  "name_nl": "Tag buiten de broncode"
 }

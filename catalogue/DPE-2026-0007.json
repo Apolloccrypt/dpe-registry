@@ -1,6 +1,6 @@
 {
   "id": "DPE-2026-0007",
-  "name": "Silhouette",
+  "name": "Device fingerprinting",
   "family": "data",
   "summary": "The device is recognised by its characteristics, without any stored identifier.",
   "mechanism": {
@@ -99,5 +99,6 @@
       ]
     }
   ],
-  "slug": "silhouette"
+  "slug": "device-fingerprinting",
+  "name_nl": "Apparaatherkenning"
 }

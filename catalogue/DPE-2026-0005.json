@@ -1,6 +1,6 @@
 {
   "id": "DPE-2026-0005",
-  "name": "Overshoulder",
+  "name": "Session recording",
   "family": "data",
   "summary": "The session itself is recorded, not merely the page view.",
   "mechanism": {
@@ -106,5 +106,6 @@
       ]
     }
   ],
-  "slug": "overshoulder"
+  "slug": "session-recording",
+  "name_nl": "Sessieopname"
 }
