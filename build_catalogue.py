@@ -27,7 +27,7 @@ LIMITS = [
     "absence: not finding it in one capture is not evidence that it is not there",
 ]
 
-SLUGS = {'Tracking before consent': 'tracking-before-consent', 'Refusal without effect': 'refusal-without-effect', 'No refusal option': 'no-refusal-option', 'Maximum cookie lifetime': 'maximum-cookie-lifetime', 'Session recording': 'session-recording', 'User input to third parties': 'user-input-to-third-parties', 'Device fingerprinting': 'device-fingerprinting', 'Third-party hosted form': 'third-party-hosted-form', 'Third-party resource loading': 'third-party-resource-loading', 'Undisclosed recipient': 'undisclosed-recipient', 'Tag loaded outside the source': 'tag-loaded-outside-source', 'Device telemetry without function': 'device-telemetry-without-function', 'Bundled component collection': 'bundled-component-collection', 'No working off switch': 'no-working-off-switch'}
+SLUGS = {'Tracking before consent': 'tracking-before-consent', 'Refusal without effect': 'refusal-without-effect', 'No refusal option': 'no-refusal-option', 'Maximum cookie lifetime': 'maximum-cookie-lifetime', 'Session recording': 'session-recording', 'User input to third parties': 'user-input-to-third-parties', 'Device fingerprinting': 'device-fingerprinting', 'Third-party hosted form': 'third-party-hosted-form', 'Third-party resource loading': 'third-party-resource-loading', 'Undisclosed recipient': 'undisclosed-recipient', 'Source absence read as removal': 'source-absence-read-as-removal', 'Device telemetry without function': 'device-telemetry-without-function', 'Bundled component collection': 'bundled-component-collection', 'No working off switch': 'no-working-off-switch'}
 
 UNSOURCED = ("Observed in practice by the authors but not yet backed by a published "
              "reference. Set to false until a citation exists: a claim without a source "
@@ -46,6 +46,11 @@ def entry(**kw):
                                "entries": ["Entry created.", "Name assigned.",
                                            "Detection method and falsifiers defined.",
                                            "Legal provisions linked."]}])
+    # Wie de entry aanspreekt. Verreweg de meeste beschrijven een verwerking en
+    # dan binden de bepalingen de verwerkingsverantwoordelijke. Beschrijft een
+    # entry een fout in een bevinding, dan zegt hij dat zelf: er is geen
+    # bepaling die op de onderzoeker slaat en er hoort er dus ook geen te staan.
+    kw["legal"].setdefault("applies", "to-processing")
     kw["slug"] = SLUGS[kw["name"]]
     kw["name_nl"] = kw.pop("name_nl")
     E.append(kw)
@@ -96,9 +101,9 @@ entry(id="DPE-2026-0001", name="Tracking before consent", name_nl="Meten voor de
            "checkable": "automated", "if_true": "drop"},
           {"condition": "The tag only fired because the capture clicked something.",
            "checkable": "automated", "if_true": "drop"}],
-      reproduction=repro(("manual", "repro/frontrun/MANUAL.md", "measurement requests visible before touching the banner"),
-                         ("bookmarklet", "repro/bookmarklet/frontrun.bookmarklet.txt"),
-                         ("script", "repro/frontrun/frontrun.mjs", "at least one request to a measurement host before interaction, plus an identifier cookie"),
+      reproduction=repro(("manual", "repro/DPE-2026-0001/MANUAL.md", "measurement requests visible before touching the banner"),
+                         ("bookmarklet", "repro/bookmarklet/before-consent.bookmarklet.txt"),
+                         ("script", "repro/DPE-2026-0001/before-consent.mjs", "at least one request to a measurement host before interaction, plus an identifier cookie"),
                          scanners=("urlscan.io", "webbkoll", "blacklight")),
       legal={"provisions": ["nl-tw-11-7a", "eu-gdpr-6-1-a"], "caselaw": ["cjeu-planet49"],
              "rebuttals": [
@@ -110,8 +115,7 @@ entry(id="DPE-2026-0001", name="Tracking before consent", name_nl="Meten voor de
                   "answer": "Testable. Archived source shows how long the tag was there. An unbroken run of years is not an oversight, and it cannot be repaired retroactively."},
                  {"objection": "Our consent tool handles this.",
                   "answer": "Measure it rather than assume it. A tool that blocks cookie placement may leave container loading untouched."}]},
-      related=["DPE-2026-0002", "DPE-2026-0003", "DPE-2026-0005"],
-      seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
+      related=["DPE-2026-0002", "DPE-2026-0003", "DPE-2026-0004", "DPE-2026-0005", "DPE-2026-0011", "DPE-2026-0020"], seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
 
 entry(id="DPE-2026-0002", name="Refusal without effect", name_nl="Weigeren zonder effect", family="consent",
       summary="Refusing consent does not change what leaves the browser.",
@@ -138,8 +142,8 @@ entry(id="DPE-2026-0002", name="Refusal without effect", name_nl="Weigeren zonde
           {"condition": "The surviving requests are strictly necessary for a service the visitor asked for.",
            "checkable": "not-from-capture", "if_true": "reclassify",
            "note": "A judgement per host. Never excluded automatically; an entry may be cited with this untested as long as that is stated."}],
-      reproduction=repro(("manual", "repro/hollowno/MANUAL.md", "identical host sets in the no-action and refuse captures"),
-                         ("script", "repro/hollowno/hollowno.mjs"),
+      reproduction=repro(("manual", "repro/DPE-2026-0002/MANUAL.md", "identical host sets in the no-action and refuse captures"),
+                         ("script", "repro/DPE-2026-0002/refusal-diff.mjs"),
                          scanners=("urlscan.io", "webbkoll")),
       legal={"provisions": ["eu-gdpr-6-1-a", "nl-tw-11-7a"], "caselaw": ["cjeu-planet49"],
              "rebuttals": [
@@ -147,8 +151,7 @@ entry(id="DPE-2026-0002", name="Refusal without effect", name_nl="Weigeren zonde
                   "answer": "The choice exists on screen and not on the wire. Consent requires an active act of the user; an act without effect is not such an act."},
                  {"objection": "This is analytics, which needs no consent.",
                   "answer": "Then the banner should not have listed it, and there would be no refusal to honour. A party cannot both treat something as consent-bound and ignore the refusal."}]},
-      related=["DPE-2026-0001", "DPE-2026-0004"],
-      seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
+      related=["DPE-2026-0001", "DPE-2026-0003", "DPE-2026-0004", "DPE-2026-0014", "DPE-2026-0019", "DPE-2026-0021", "DPE-2026-0040", "DPE-2026-0044"], seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
 
 entry(id="DPE-2026-0003", name="No refusal option", name_nl="Geen weigeroptie", family="consent",
       summary="The consent dialogue offers acceptance and no way to refuse.",
@@ -167,28 +170,34 @@ entry(id="DPE-2026-0003", name="No refusal option", name_nl="Geen weigeroptie", 
                                    "dismissing by clicking away is not a refusal; check what state it writes"],
           "attribution": ["cdp-initiator"]},
       falsifiers=[
+          {"condition": "The refusal control exists but was not reachable by the inspection, for instance inside a shadow root, an iframe or a layer rendered after a delay.",
+           "checkable": "manual", "if_true": "drop",
+           "note": "The most important one: it turns a finding into a measurement error. Inspect the composed tree, not the served HTML, and wait out the animation."},
+          {"condition": "Refusal is offered, but only in exchange for payment or for giving up access.",
+           "checkable": "manual", "if_true": "reclassify",
+           "note": "A different fault: the option exists and carries a price. Report it as such rather than as an absent option."},
           {"condition": "A refusal exists on a second layer of the dialogue.",
            "checkable": "manual", "if_true": "drop"},
           {"condition": "The site sets no consent-bound technology at all, so no refusal is required.",
            "checkable": "automated", "if_true": "drop"}],
-      reproduction=repro(("manual", "repro/onedoor/MANUAL.md", "no control in the dialogue that writes a negative consent state"),
+      reproduction=repro(("manual", "repro/DPE-2026-0003/MANUAL.md", "no control in the dialogue that writes a negative consent state"),
                          scanners=("urlscan.io",)),
       legal={"provisions": ["eu-gdpr-6-1-a"], "caselaw": ["cjeu-planet49"],
              "rebuttals": [{"objection": "Visitors can refuse in their browser settings.",
                             "answer": "Consent is sought by the controller and must be refusable where it is sought. Delegating that to the browser does not discharge it."}]},
-      related=["DPE-2026-0002"], seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
+      related=["DPE-2026-0001", "DPE-2026-0002", "DPE-2026-0014", "DPE-2026-0040", "DPE-2026-0044"], seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
 
-entry(id="DPE-2026-0004", name="Maximum cookie lifetime", name_nl="Maximale bewaartermijn", family="retention",
+entry(id="DPE-2026-0004", name="Maximum cookie lifetime", name_nl="Maximale cookielevensduur voor de vraag", family="consent",
       summary="An identifier cookie is set for the maximum lifetime a browser accepts, before the question is answered.",
       mechanism={
           "what": "At page load, before any consent interaction, a cookie is placed with a lifetime at or near the ceiling the browser permits, currently 399 days in Chromium-based browsers.",
           "why_it_matters": "The visitor is recognisable for over a year on the basis of a decision they were never given. Storage limitation requires a term tied to the purpose, not to the technical maximum.",
           "common_causes": ["default retention of the measurement setup left untouched",
                             "cookie placed outside the consent gate, so the term was never considered"],
-          "not_this": "If the cookie is set only after consent, this is a retention question and not this entry. The pre-consent placement is what makes it a fault here.",
+          "not_this": "Setting an identifier before the question is answered is Tracking before consent whenever the recipient is a third party. This entry is the term rather than the moment, and it applies to a first-party identifier too: the fault is that the lifetime is the browser ceiling instead of something the purpose requires. Where both apply, cite both and say so; an operator can shorten the term without moving the tag, and can move the tag without shortening the term.",
       },
       detection={
-          "indicator": "A Set-Cookie with max-age at or above 34128000 seconds (399 days), or an equivalent Expires, issued before the consent event.",
+          "indicator": "A Set-Cookie with max-age at or above 34128000 seconds (399 days), or an equivalent Expires, issued before the consent event, whether by the site itself or by a third party. Record the ceiling the browser used at capture time, since it is a browser policy and not a constant.",
           "method": "network-with-identifier", "qod": 95,
           "capture_requirements": ["clean profile", "no interaction", "read Set-Cookie headers, not only the cookie jar"],
           "attribution": ["har-pageref"]},
@@ -197,14 +206,14 @@ entry(id="DPE-2026-0004", name="Maximum cookie lifetime", name_nl="Maximale bewa
            "checkable": "manual", "if_true": "drop"},
           {"condition": "The lifetime is set by the browser, not by the server.",
            "checkable": "automated", "if_true": "drop"}],
-      reproduction=repro(("manual", "repro/maxstay/MANUAL.md", "a cookie with a lifetime near 399 days, present before any interaction"),
-                         ("bookmarklet", "repro/bookmarklet/frontrun.bookmarklet.txt"),
-                         ("script", "repro/maxstay/maxstay.mjs"),
+      reproduction=repro(("manual", "repro/DPE-2026-0004/MANUAL.md", "a cookie with a lifetime near 399 days, present before any interaction"),
+                         ("bookmarklet", "repro/bookmarklet/before-consent.bookmarklet.txt"),
+                         ("script", "repro/DPE-2026-0004/cookie-lifetime.mjs"),
                          scanners=("urlscan.io", "webbkoll")),
       legal={"provisions": ["nl-tw-11-7a", "eu-gdpr-6-1-a"], "caselaw": ["cjeu-planet49"],
              "rebuttals": [{"objection": "399 days is the industry default.",
                             "answer": "A default is not a purpose. Storage limitation asks what term the purpose requires, and the browser ceiling is not an answer to that question."}]},
-      related=["DPE-2026-0001"], seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
+      related=["DPE-2026-0001", "DPE-2026-0002", "DPE-2026-0035"], seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
 
 # ---------------------------------------------------------------- data
 
@@ -218,10 +227,11 @@ entry(id="DPE-2026-0005", name="Session recording", name_nl="Sessieopname", fami
           "not_this": "Ordinary page-view analytics is not this entry. The distinguishing feature is capture of in-page behaviour.",
       },
       detection={
-          "indicator": "A request to a session-recording endpoint of a recording vendor, carrying a site identifier, at page load.",
+          "indicator": "Requests to a host under a different registrable domain carrying a stream of in-page behaviour: serialised DOM mutations, pointer coordinates over time, scroll offsets or key events, batched at an interval unrelated to navigation and tied to a site identifier. The content of the payload settles it, not the identity of the receiving party. Where the payload is compressed or encoded, the volume and the cadence relative to mouse movement are the observable, and that has to be stated as such.",
           "method": "network-with-identifier", "qod": 95,
           "capture_requirements": ["clean profile", "no interaction",
-                                   "note whether field masking is active; unmasked input raises the stakes considerably"],
+                                   "note whether field masking is active; unmasked input raises the stakes considerably",
+                                   "move the pointer and type into a field deliberately, then check whether the outgoing volume tracks that activity; a recorder that captures nothing while you move is a different finding"],
           "attribution": ["har-pageref", "cdp-initiator"]},
       falsifiers=[
           {"condition": "The vendor processes only aggregated data without session capture.",
@@ -230,13 +240,13 @@ entry(id="DPE-2026-0005", name="Session recording", name_nl="Sessieopname", fami
            "checkable": "automated", "if_true": "drop"},
           {"condition": "All input fields are masked at source.",
            "checkable": "manual", "if_true": "weaken"}],
-      reproduction=repro(("manual", "repro/overshoulder/MANUAL.md", "a request to a recording vendor endpoint before consent"),
-                         ("script", "repro/overshoulder/overshoulder.mjs"),
+      reproduction=repro(("manual", "repro/DPE-2026-0005/MANUAL.md", "a request to a recording vendor endpoint before consent"),
+                         ("script", "repro/DPE-2026-0005/recording-endpoint.mjs"),
                          scanners=("blacklight", "urlscan.io")),
       legal={"provisions": ["eu-gdpr-6-1-a", "nl-tw-11-7a"],
              "rebuttals": [{"objection": "The recording servers are in the EU.",
                             "answer": "Where the recording is stored says nothing about whether it should have been made. Location is a separate question from lawfulness of collection."}]},
-      seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
+      related=["DPE-2026-0001", "DPE-2026-0037", "DPE-2026-0039"], seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
 
 entry(id="DPE-2026-0006", name="User input to third parties", name_nl="Invoer naar derden", family="data",
       summary="What the visitor typed or looked for reaches a third party.",
@@ -257,14 +267,15 @@ entry(id="DPE-2026-0006", name="User input to third parties", name_nl="Invoer na
       falsifiers=[
           {"condition": "The value is hashed or truncated beyond recovery before leaving.",
            "checkable": "manual", "if_true": "weaken"},
-          {"condition": "The receiving host is a processor under a documented agreement, self-hosted.",
-           "checkable": "not-from-capture", "if_true": "reclassify"}],
-      reproduction=repro(("manual", "repro/telltale/MANUAL.md", "the distinctive search term visible in an outbound request"),
+          {"condition": "The receiving host belongs to a processor acting on the controller's instructions, and the value is used only to deliver the function the visitor invoked, such as a site search.",
+           "checkable": "not-from-capture", "if_true": "reclassify",
+           "note": "Cannot be settled from the capture. It is a question for the operator and it belongs in the request for comment. The content still left the controller's environment, so the finding narrows rather than disappears."}],
+      reproduction=repro(("manual", "repro/DPE-2026-0006/MANUAL.md", "the distinctive search term visible in an outbound request"),
                          scanners=("urlscan.io",)),
-      legal={"provisions": ["eu-gdpr-6-1-a"],
+      legal={"provisions": ["eu-gdpr-6-1-a", "eu-gdpr-5-1-c"],
              "rebuttals": [{"objection": "We do not send personal data, only the page URL.",
                             "answer": "If the URL contains what the visitor typed, then the URL is the personal data. The container does not change the content."}]},
-      seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
+      related=["DPE-2026-0017", "DPE-2026-0019", "DPE-2026-0031", "DPE-2026-0034", "DPE-2026-0041"], seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
 
 entry(id="DPE-2026-0007", name="Device fingerprinting", name_nl="Apparaatherkenning", family="data",
       summary="The device is recognised by its characteristics, without any stored identifier.",
@@ -276,7 +287,7 @@ entry(id="DPE-2026-0007", name="Device fingerprinting", name_nl="Apparaatherkenn
           "not_this": "Reading a time zone to localise a page is not this entry. The distinguishing feature is enumeration of multiple properties by a third party.",
       },
       detection={
-          "indicator": "Calls to canvas, WebGL, font enumeration, time zone or navigator property enumeration originating from a script under a different registrable domain, before consent.",
+          "indicator": "Within one page load, a script under a different registrable domain reads three or more distinct classes of device property, of which at least one is a canvas or WebGL rendering, an enumeration of installed fonts, or an enumeration of navigator or media-device fields. A single reading, such as the time zone, does not qualify: it is the combination that makes a device distinctive, and the combination is what the indicator has to show. Record which reads the same script performed, so the count is attributable to one party rather than to the page.",
           "method": "network-observed", "qod": 90,
           "capture_requirements": ["hook the property reads through the debugging protocol; a HAR alone does not show them",
                                    "record which script initiated each read"],
@@ -286,14 +297,17 @@ entry(id="DPE-2026-0007", name="Device fingerprinting", name_nl="Apparaatherkenn
            "checkable": "automated", "if_true": "reclassify"},
           {"condition": "The reads serve a functional purpose such as localisation or accessibility.",
            "checkable": "not-from-capture", "if_true": "weaken",
-           "note": "Purpose cannot be established from a capture. The entry establishes the reading, not the intent."}],
-      reproduction=repro(("manual", "repro/silhouette/MANUAL.md", "property reads by third-party scripts before consent"),
-                         ("script", "repro/silhouette/silhouette.mjs"),
+           "note": "Purpose cannot be established from a capture. The entry establishes the reading, not the intent."},
+          {"condition": "The reads come from a component the operator engaged for fraud or bot detection and the result is not used for recognition beyond that purpose.",
+           "checkable": "not-from-capture", "if_true": "reclassify",
+           "note": "The reading itself still engages the terminal-equipment provision, so this narrows the finding instead of removing it. It is a question for the operator."}],
+      reproduction=repro(("manual", "repro/DPE-2026-0007/MANUAL.md", "property reads by third-party scripts before consent"),
+                         ("script", "repro/DPE-2026-0007/property-reads.mjs"),
                          scanners=("blacklight",)),
       legal={"provisions": ["nl-tw-11-7a", "eu-gdpr-6-1-a"],
              "rebuttals": [{"objection": "We set no cookies.",
                             "answer": "The cookie provision covers storing and reading information on the device, not only cookies. Reading device characteristics for recognition is within its scope."}]},
-      seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
+      related=["DPE-2026-0021", "DPE-2026-0042"], seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
 
 # ---------------------------------------------------------------- chain
 
@@ -317,15 +331,15 @@ entry(id="DPE-2026-0008", name="Third-party hosted form", name_nl="Formulier bij
            "checkable": "not-from-capture", "if_true": "weaken"},
           {"condition": "The form domain is a CNAME under the controller's own domain, operated as a processor.",
            "checkable": "manual", "if_true": "reclassify"}],
-      reproduction=repro(("manual", "repro/handover/MANUAL.md", "cookies set by the form host at load, without a consent layer"),
-                         ("script", "repro/handover/handover.mjs"),
+      reproduction=repro(("manual", "repro/DPE-2026-0008/MANUAL.md", "cookies set by the form host at load, without a consent layer"),
+                         ("script", "repro/DPE-2026-0008/form-host.mjs"),
                          scanners=("urlscan.io", "webbkoll")),
       legal={"provisions": ["eu-gdpr-44", "eu-gdpr-6-1-a"], "caselaw": ["cjeu-fashion-id"],
              "rebuttals": [{"objection": "That is our supplier's platform, not our site.",
-                            "answer": "Fashion ID holds that a controller who arranges for visitor data to reach a third party is jointly responsible for that collection and transmission. Linking to the form is arranging it."}]},
-      related=["DPE-2026-0009"], seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
+                            "answer": "Fashion ID holds that a controller who arranges for visitor data to reach a third party is jointly responsible for the collection and the transmission, and not for what the third party does afterwards. That reasoning transfers directly where the form is embedded in your page: the transmission happens without the visitor doing anything. Where the visitor clicks through to the platform's own domain, the reasoning is weaker and the finding rests on the presentation instead: whose name is on the form, whose privacy statement applies, and whether the visitor could see who they were dealing with. State which of the two you measured."}]},
+      related=["DPE-2026-0009", "DPE-2026-0013"], seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
 
-entry(id="DPE-2026-0009", name="Third-party resource loading", name_nl="Externe bron inladen", family="transfer",
+entry(id="DPE-2026-0009", name="Third-party resource loading", name_nl="Externe bron inladen", family="chain",
       summary="A resource loaded straight from a third party makes every page view a transfer.",
       mechanism={
           "what": "A font, script library or image is loaded directly from an external provider instead of being served by the site. Each page view sends the visitor's IP address, and often more, to that provider.",
@@ -335,7 +349,7 @@ entry(id="DPE-2026-0009", name="Third-party resource loading", name_nl="Externe 
           "not_this": "This entry is about the mechanism of loading, not about the destination country. Where the data goes is a separate axis; a hotlink within the EEA is still a hotlink.",
       },
       detection={
-          "indicator": "A subresource request to a host under a different registrable domain, present in the initial document, issued without any interaction.",
+          "indicator": "A subresource request to a host under a different registrable domain, present in the initial document, issued without any interaction, in the no-interaction capture.",
           "method": "network-observed", "qod": 90,
           "capture_requirements": ["capture from a clean profile with no interaction",
                                    "establish the destination separately; do not infer it from the vendor's headquarters"],
@@ -343,21 +357,27 @@ entry(id="DPE-2026-0009", name="Third-party resource loading", name_nl="Externe 
       falsifiers=[
           {"condition": "The resource is served locally through a proxy or self-hosted copy.",
            "checkable": "automated", "if_true": "drop"},
+          {"condition": "The host under the other registrable domain is operated by the controller itself or by a processor on its behalf, and nothing there collects on its own account.",
+           "checkable": "manual", "if_true": "drop",
+           "note": "Common: a separate asset domain exists to keep cookies off it. Establish it from the name resolution and from who answers, not from the name alone."},
+          {"condition": "The resource loads only after the visitor invoked the function it belongs to, such as a map or a video the visitor started.",
+           "checkable": "automated", "if_true": "reclassify",
+           "note": "Then it is not a transfer on every page view. Whether the invocation was informed is a separate question."},
           {"condition": "The request carries no data capable of identifying the visitor.",
            "checkable": "manual", "if_true": "weaken",
-           "note": "An IP address reaches the provider in any case; that is the core of the German Google Fonts ruling."}],
-      reproduction=repro(("manual", "repro/hotlink/MANUAL.md", "a request to an external provider at page load, with no interaction"),
-                         ("bookmarklet", "repro/bookmarklet/frontrun.bookmarklet.txt"),
-                         ("script", "repro/hotlink/hotlink.mjs"),
+           "note": "An IP address reaches the provider in any case, and under C-582/14 that address is personal data for the operator where legal means to identify the visitor exist."}],
+      reproduction=repro(("manual", "repro/DPE-2026-0009/MANUAL.md", "a request to an external provider at page load, with no interaction"),
+                         ("bookmarklet", "repro/bookmarklet/before-consent.bookmarklet.txt"),
+                         ("script", "repro/DPE-2026-0009/subresources.mjs"),
                          scanners=("urlscan.io", "webbkoll", "webpagetest")),
       legal={"provisions": ["eu-gdpr-44", "eu-gdpr-6-1-a"],
-             "caselaw": ["lg-muenchen-google-fonts", "cjeu-fashion-id"],
+             "caselaw": ["cjeu-breyer", "lg-muenchen-google-fonts", "cjeu-fashion-id"],
              "rebuttals": [
                  {"objection": "An IP address is not personal data here.",
-                  "answer": "The Munich ruling on Google Fonts treats hotlinking a provider resource as a transfer of personal data, precisely because the IP reaches the provider."},
+                  "answer": "The Court of Justice held in C-582/14 (Breyer) that a dynamic IP address is personal data for the operator of a site where legal means exist to identify the visitor. That is the ground. A German first-instance ruling on hotlinked fonts applied it to this exact mechanism and awarded damages, but it binds nobody and other German courts have gone the other way. Cite it as illustration, never as the ground."},
                  {"objection": "Our hosting is in the Netherlands.",
                   "answer": "Storage location and loaded components are different things. The transfer runs through what the page pulls in, not through where it is stored."}]},
-      related=["DPE-2026-0008"], seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
+      related=["DPE-2026-0008", "DPE-2026-0015", "DPE-2026-0016", "DPE-2026-0020", "DPE-2026-0025", "DPE-2026-0030"], seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
 
 # ------------------------------------------------------- transparency, method
 
@@ -379,26 +399,31 @@ entry(id="DPE-2026-0010", name="Undisclosed recipient", name_nl="Niet-vermelde o
       falsifiers=[
           {"condition": "The recipient is named elsewhere in the statement or in a linked cookie overview.",
            "checkable": "manual", "if_true": "drop"},
+          {"condition": "The recipient falls within a category of recipients that the statement does name, and the category is specific enough to identify the kind of party.",
+           "checkable": "manual", "if_true": "weaken",
+           "note": "The provision allows categories. 'Analytics providers' covers an analytics provider; 'our partners' covers nothing. Quote the category verbatim in the finding and let the reader judge it."},
           {"condition": "The statement was updated outside the measured window.",
            "checkable": "manual", "if_true": "drop"}],
-      reproduction=repro(("manual", "repro/offbooks/MANUAL.md", "a recipient present in the capture and absent from the statement of the same date"),
+      reproduction=repro(("manual", "repro/DPE-2026-0010/MANUAL.md", "a recipient present in the capture and absent from the statement of the same date"),
                          scanners=("wayback", "urlscan.io")),
-      legal={"provisions": ["eu-gdpr-6-1-a"],
+      legal={"provisions": ["eu-gdpr-13", "eu-gdpr-5-1-a", "eu-gdpr-6-1-a"],
              "rebuttals": [{"objection": "The statement is generic on purpose.",
                             "answer": "Article 13 requires the recipients or categories of recipients. A statement that omits a category entirely is not generic but incomplete."}]},
-      seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
+      related=["DPE-2026-0015", "DPE-2026-0016", "DPE-2026-0018", "DPE-2026-0019", "DPE-2026-0020", "DPE-2026-0025", "DPE-2026-0026"], seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
 
-entry(id="DPE-2026-0011", name="Tag loaded outside the source", name_nl="Tag buiten de broncode", family="method",
-      summary="Tags fire from a container while appearing nowhere in the page source.",
+entry(id="DPE-2026-0011", name="Source absence read as removal", name_nl="Afwezig in de broncode telt als verwijderd", family="method",
+      summary="A finding concludes that tracking stopped because the identifier is no longer in the page source.",
+      not_a_vulnerability="A fault in a measurement, not in a system. Loading tags from a container is ordinary practice and no defect; the error is in reading the source and concluding what the traffic does.",
       mechanism={
-          "what": "A tag manager loads measurement or advertising tags at runtime. The identifiers of those tags are not in the delivered HTML, so reading the source suggests they are gone while the traffic shows otherwise.",
-          "why_it_matters": "Mostly a methodological trap rather than a harm in itself, and that is why it is catalogued. A researcher who checks only the source concludes that tracking stopped when it did not. It also means the operator can change what runs without any change to the site.",
+          "what": "A tag manager loads measurement or advertising tags at runtime, so the identifiers of those tags are not in the delivered HTML. A check that reads the source therefore reports absence while the traffic shows presence. The container is also the reason an operator can change what runs without changing the site, which is why a source-based finding says nothing about a different day either.",
+          "why_it_matters": "A researcher who checks only the source concludes that tracking stopped when it did not, and publishes reassurance that the traffic contradicts. The same error runs the other way in a dispute: an operator can point at a clean source while the container keeps loading what it always did.",
           "common_causes": ["tags migrated from hardcoded to container-managed",
-                            "marketing team with dashboard access and no deployment"],
-          "not_this": "Not every container is this entry. It applies when a tag observed in traffic cannot be found in the delivered source.",
+                            "marketing team with dashboard access and no deployment",
+                            "a check built on fetching HTML because that is cheap, without a capture beside it"],
+          "not_this": "A recipient that is genuinely present and unnamed in the privacy statement is Undisclosed recipient, a fault of the system. This entry is about the claim: absence from the source is not absence from the wire.",
       },
       detection={
-          "indicator": "A property or measurement identifier present in network traffic and absent from the fetched HTML document. A set comparison, not an observation.",
+          "indicator": "The finding rests on the fetched HTML document, and a network capture of the same page shows a property or measurement identifier that the document does not contain. The difference between the two sets is the fault in the claim.",
           "method": "differential", "qod": 97,
           "capture_requirements": ["fetch and retain the HTML document in the same capture",
                                    "search for the full identifier and for split forms; dynamic assembly would otherwise be missed"],
@@ -408,10 +433,10 @@ entry(id="DPE-2026-0011", name="Tag loaded outside the source", name_nl="Tag bui
            "checkable": "automated", "if_true": "drop"},
           {"condition": "The initiator is another script rather than the container.",
            "checkable": "automated", "if_true": "reclassify"}],
-      reproduction=repro(("manual", "repro/sideload/MANUAL.md", "a measurement identifier in traffic that is absent from the HTML"),
-                         ("script", "repro/sideload/sideload.mjs"),
+      reproduction=repro(("manual", "repro/DPE-2026-0011/MANUAL.md", "a measurement identifier in traffic that is absent from the HTML"),
+                         ("script", "repro/DPE-2026-0011/source-versus-wire.mjs"),
                          scanners=("urlscan.io",)),
-      legal={"provisions": ["eu-gdpr-6-1-a"],
+      legal={"applies": "to-a-finding",
              "rebuttals": [{"objection": "We removed the tracking; it is not in our code.",
                             "answer": "Absence from the source is not absence from the traffic. The container is the reliable indicator, and its version history shows what ran when."}]},
       related=["DPE-2026-0001"], seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
@@ -422,9 +447,9 @@ entry(id="DPE-2026-0011", name="Tag loaded outside the source", name_nl="Tag bui
 # land stuurt is niet te exploiteren; hij doet wat de bouwer wilde. Precies
 # daarom bestaat er geen nummer voor, en precies daarom hoort het hier.
 
-entry(id="DPE-2026-0012", name="Device telemetry without function", name_nl="Apparaat belt naar huis", family="telemetry",
+entry(id="DPE-2026-0012", name="Device telemetry without function", name_nl="Telemetrie zonder functie", family="telemetry",
       applies_to=["firmware", "iot", "network-device", "vehicle"],
-      summary="A device contacts a server abroad without any function that requires it.",
+      summary="A device contacts hosts that serve no function the owner asked for.",
       not_a_vulnerability="Nothing is exploitable and nothing is broken. The device does what its builder intended, and the objection is to that intention. A vulnerability register has no place to put this, which is why it has gone unrecorded.",
       mechanism={
           "what": "Firmware opens connections to hosts that serve no function the owner asked for: a fixed endpoint contacted at boot, at intervals, or on every state change. The payload may be status, configuration, usage patterns or an identifier of the device or its owner.",
@@ -432,7 +457,7 @@ entry(id="DPE-2026-0012", name="Device telemetry without function", name_nl="App
           "common_causes": ["vendor telemetry enabled by default with no setting to disable it",
                             "chipset SDK contacting the chip maker rather than the device brand",
                             "update or time service pointed at a fixed host in the vendor's home jurisdiction"],
-          "not_this": "A firmware update check against the vendor is expected behaviour and not this entry. What distinguishes it is traffic without a function the owner asked for, or a destination that has nothing to do with the product."},
+          "not_this": "A firmware update check against the vendor is expected behaviour and not this entry. What distinguishes it is traffic without a function the owner asked for, or a destination that has nothing to do with the product. The destination is a separate axis. Where the finding also states a country, that claim stands or falls on its own evidence and DPE-2026-0027 applies to it. A telemetry flow to a host in the same country is this entry just as much."},
       detection={
           "indicator": "Outbound connections from the device to hosts that persist when every user-facing function is idle, established from a network capture at the gateway rather than from the device itself.",
           "method": "network-observed", "qod": 90,
@@ -454,9 +479,9 @@ entry(id="DPE-2026-0012", name="Device telemetry without function", name_nl="App
            "checkable": "manual", "if_true": "weaken",
            "note": "Still relevant if it is on by default, but it changes the finding from cannot to did not."}],
       reproduction={"methods": [
-          {"tier": "manual", "path": "repro/homecall/MANUAL.md",
+          {"tier": "manual", "path": "repro/DPE-2026-0012/MANUAL.md",
            "expect": "connections to hosts unrelated to any function the owner enabled, while the device sits idle"},
-          {"tier": "script", "path": "repro/homecall/idle-baseline.sh",
+          {"tier": "script", "path": "repro/DPE-2026-0012/idle-baseline.sh",
            "expect": "a list of destinations contacted during an idle window, with volumes and intervals"}],
           "public_scanners": []},
       legal={"provisions": ["eu-gdpr-44", "eu-gdpr-6-1-a"],
@@ -467,7 +492,7 @@ entry(id="DPE-2026-0012", name="Device telemetry without function", name_nl="App
                   "answer": "Consent must be specific and freely given. A term buried in a document accepted once at setup, with no way to refuse and keep the product working, is neither."},
                  {"objection": "The servers belong to our chip supplier, not to us.",
                   "answer": "The party placing the product on the market chose that component. Responsibility for what a shipped device does is not transferred by subcontracting it."}]},
-      related=["DPE-2026-0013"], seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
+      related=["DPE-2026-0013", "DPE-2026-0014", "DPE-2026-0022", "DPE-2026-0023", "DPE-2026-0024", "DPE-2026-0027", "DPE-2026-0038"], seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
 
 entry(id="DPE-2026-0013", name="Bundled component collection", name_nl="Meeliftende component", family="telemetry",
       applies_to=["mobile-app", "desktop", "firmware"],
@@ -496,9 +521,9 @@ entry(id="DPE-2026-0013", name="Bundled component collection", name_nl="Meelifte
           {"condition": "The component is configured to collect nothing and the traffic is a heartbeat only.",
            "checkable": "manual", "if_true": "weaken"}],
       reproduction={"methods": [
-          {"tier": "manual", "path": "repro/sidecar/MANUAL.md",
+          {"tier": "manual", "path": "repro/DPE-2026-0013/MANUAL.md",
            "expect": "requests to component hosts carrying identifiers, before any user action"},
-          {"tier": "script", "path": "repro/sidecar/inventory.sh",
+          {"tier": "script", "path": "repro/DPE-2026-0013/inventory.sh",
            "expect": "a list of bundled components with the hosts each contacts"}],
           "public_scanners": []},
       legal={"provisions": ["eu-gdpr-6-1-a", "eu-gdpr-44"], "caselaw": ["cjeu-fashion-id"],
@@ -507,7 +532,7 @@ entry(id="DPE-2026-0013", name="Bundled component collection", name_nl="Meelifte
                   "answer": "The developer decided to ship it. Fashion ID holds that arranging for data to reach a third party makes you jointly responsible for that reaching."},
                  {"objection": "We only use it for crash reporting.",
                   "answer": "Then the traffic should be limited to crashes. Establish what the payload contains when nothing has crashed."}]},
-      related=["DPE-2026-0012", "DPE-2026-0008"], seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
+      related=["DPE-2026-0008", "DPE-2026-0012", "DPE-2026-0028", "DPE-2026-0042", "DPE-2026-0046"], seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
 
 entry(id="DPE-2026-0014", name="No working off switch", name_nl="Geen werkende uitschakeling", family="consent",
       applies_to=["firmware", "iot", "vehicle", "mobile-app"],
@@ -535,13 +560,13 @@ entry(id="DPE-2026-0014", name="No working off switch", name_nl="Geen werkende u
           {"condition": "The reset was caused by a factory reset performed during testing.",
            "checkable": "manual", "if_true": "drop"}],
       reproduction={"methods": [
-          {"tier": "manual", "path": "repro/deadend/MANUAL.md",
+          {"tier": "manual", "path": "repro/DPE-2026-0014/MANUAL.md",
            "expect": "identical outbound traffic with the control on and off, or the control reverting after a reboot"}],
           "public_scanners": []},
       legal={"provisions": ["eu-gdpr-6-1-a"],
              "rebuttals": [{"objection": "The device cannot function without it.",
                             "answer": "Then say so, and establish it. Necessity is a claim that can be tested by disabling the traffic and seeing what stops working."}]},
-      related=["DPE-2026-0002", "DPE-2026-0003", "DPE-2026-0012"], seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
+      related=["DPE-2026-0002", "DPE-2026-0003", "DPE-2026-0012", "DPE-2026-0022", "DPE-2026-0023"], seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
 
 
 def main():
@@ -588,6 +613,23 @@ def main():
     for e in E:
         (OUT / (e["id"] + ".json")).write_text(
             json.dumps(e, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    # Wederkerigheid van related, over de hele map en niet alleen over de eigen
+    # entries. Een lezer die op de aangewezen entry begint, hoort de verwijzing
+    # terug te vinden; en de opsteller wordt zo gedwongen de omgekeerde relatie
+    # te overwegen in plaats van hem stilzwijgend over te slaan.
+    seen = {}
+    for f in sorted(OUT.glob("DPE-*.json")):
+        d = json.loads(f.read_text(encoding="utf-8"))
+        seen[d["id"]] = d
+    scheef = []
+    for i, d in sorted(seen.items()):
+        for r in d.get("related", []):
+            if r not in seen:
+                scheef.append(f"{i} verwijst naar {r}, dat niet bestaat")
+            elif i not in seen[r].get("related", []):
+                scheef.append(f"{i} verwijst naar {r}, maar {r} verwijst niet terug")
+    if scheef:
+        raise SystemExit("eenzijdige verwijzingen:\n  " + "\n  ".join(scheef))
     fam = {}
     for e in E:
         fam[e["family"]] = fam.get(e["family"], 0) + 1

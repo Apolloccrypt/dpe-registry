@@ -8,11 +8,14 @@ holding: >
   zonder toestemming naar Google in de Verenigde Staten gaat, is onrechtmatig.
   De rechtbank kende een schadevergoeding toe.
 relevance: >
-  De meest directe onderbouwing van hotlink. Een Duitse uitspraak bindt de
-  Nederlandse rechter niet, maar het mechanisme is identiek en de redenering is
-  overdraagbaar. Zo hoort het ook in een record te staan: als ondersteunend
-  argument, niet als vaststaand recht.
-patterns: [hotlink]
+  De meest directe toepassing op dit mechanisme: een bron van een derde die de
+  pagina inlaadt, waardoor het IP-adres bij die derde aankomt. De grondslag is
+  het niet: dat is C-582/14 (Breyer). Dit is een vonnis in eerste aanleg, het
+  bindt niemand, het is breed bekritiseerd en andere Duitse gerechten hebben
+  anders geoordeeld. Citeer het als illustratie naast Breyer, nooit als de
+  grond waarop de bevinding rust.
+entries: [DPE-2026-0009]
+weight: illustrative
 supports: true
 url: "https://gdprhub.eu/index.php?title=LG_M%C3%BCnchen_I_-_3_O_17493/20"
 verified: true

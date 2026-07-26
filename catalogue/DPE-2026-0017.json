@@ -13,13 +13,13 @@
   "not_a_vulnerability": "Nothing is exploited. The number is read from a document or a field the person supplied, exactly as the builder intended, and forwarded by design. A vulnerability register has no place for a transfer that works correctly.",
   "mechanism": {
     "what": "A system reads a national identification number, either from a field the person fills in, from the machine-readable zone or chip of an identity document, or from a record it already holds, and sends it onward to a party that performs no task for which a state assigned that number. The number frequently travels as part of a larger blob, such as raw document data, rather than as a labelled field.",
-    "why_it_matters": "This number is the key that joins registers which are meant to stay apart. Unlike a cookie it cannot be reset, it is the same number for a lifetime, and once a private party holds it, every later dataset can be matched on it. In much of the EEA private use is restricted precisely because of that property.",
+    "why_it_matters": "This number is the key that joins registers which are meant to stay apart. Unlike a cookie it cannot be reset, it is the same number for a lifetime, and once a private party holds it, every later dataset can be matched on it. Article 87 leaves the national identification number to each Member State, and several restrict private use precisely because of that property. Which restriction applies, and whether it applies at all, differs per country: establish the national rule before citing this entry outside the jurisdiction whose provision is linked here.",
     "common_causes": [
       "a document or chip read in full and uploaded as a whole, with the number inside it",
       "an onboarding flow that asks for the number because a form template contained the field",
       "an identifier reused as an internal customer key after it entered the system for another purpose"
     ],
-    "not_this": "A party with a statutory task that requires the number, such as a tax or healthcare body, is not this entry. Nor is a check that returns only a yes or no derived from the number. The distinguishing feature is that the number itself reaches a party for which no statute provides."
+    "not_this": "A party with a statutory task that requires the number, such as a tax or healthcare body, is not this entry. Nor is a check that returns only a yes or no derived from the number. The distinguishing feature is that the number itself reaches a party for which no statute provides. Two public bodies that may both hold the number and join their records on it is Registers joined on a person number: there the fault is the combination, here it is that the number reaches a party for which no statute provides."
   },
   "detection": {
     "indicator": "A request body or upload containing a value that satisfies the structural check for the national identification number in question, sent to a host operated by a party other than the one with the statutory task. Where the number is embedded in raw document data, the finding is the presence of that field within the payload.",
@@ -61,6 +61,7 @@
     }
   ],
   "legal": {
+    "applies": "to-processing",
     "provisions": [
       "nl-uavg-46",
       "eu-gdpr-5-1-c",
@@ -82,8 +83,9 @@
     ]
   },
   "related": [
+    "DPE-2026-0006",
     "DPE-2026-0018",
-    "DPE-2026-0006"
+    "DPE-2026-0043"
   ],
   "seen_in_the_wild": {
     "confirmed": false,
@@ -95,7 +97,7 @@
     "complaint": "The captured payload with the number located in it, the structural check that confirms what it is, and the point in the flow at which it was sent.",
     "audit_question": "Show me every field that leaves during identification, including what is inside the document data you upload.",
     "audit_question_nl": "Laat elk veld zien dat vertrekt bij identificatie, inclusief wat er in de documentgegevens zit die u uploadt.",
-    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "complaint_nl": "De volledige inhoud van wat er bij identificatie vertrekt, veld voor veld, inclusief wat er in het geuploade documentbestand zit.",
     "objection_nl": "Wij hebben dat nummer nodig om iemand te identificeren.",
     "answer_nl": "Vraag welke wettelijke taak dat vereist. Zonder die taak mag het nummer niet."
   },

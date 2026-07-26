@@ -13,7 +13,7 @@
     "not_this": "Reading a time zone to localise a page is not this entry. The distinguishing feature is enumeration of multiple properties by a third party."
   },
   "detection": {
-    "indicator": "Calls to canvas, WebGL, font enumeration, time zone or navigator property enumeration originating from a script under a different registrable domain, before consent.",
+    "indicator": "Within one page load, a script under a different registrable domain reads three or more distinct classes of device property, of which at least one is a canvas or WebGL rendering, an enumeration of installed fonts, or an enumeration of navigator or media-device fields. A single reading, such as the time zone, does not qualify: it is the combination that makes a device distinctive, and the combination is what the indicator has to show. Record which reads the same script performed, so the count is attributable to one party rather than to the page.",
     "method": "network-observed",
     "qod": 90,
     "capture_requirements": [
@@ -35,6 +35,12 @@
       "checkable": "not-from-capture",
       "if_true": "weaken",
       "note": "Purpose cannot be established from a capture. The entry establishes the reading, not the intent."
+    },
+    {
+      "condition": "The reads come from a component the operator engaged for fraud or bot detection and the result is not used for recognition beyond that purpose.",
+      "checkable": "not-from-capture",
+      "if_true": "reclassify",
+      "note": "The reading itself still engages the terminal-equipment provision, so this narrows the finding instead of removing it. It is a question for the operator."
     }
   ],
   "reproduction": {
@@ -64,8 +70,13 @@
         "objection": "We set no cookies.",
         "answer": "The cookie provision covers storing and reading information on the device, not only cookies. Reading device characteristics for recognition is within its scope."
       }
-    ]
+    ],
+    "applies": "to-processing"
   },
+  "related": [
+    "DPE-2026-0021",
+    "DPE-2026-0042"
+  ],
   "seen_in_the_wild": {
     "confirmed": false,
     "note": "Observed in practice by the authors but not yet backed by a published reference. Set to false until a citation exists: a claim without a source is exactly what this catalogue holds others to."
@@ -109,8 +120,8 @@
     "procurement": "No third-party script enumerates device characteristics for recognition purposes before consent.",
     "complaint": "A trace of property reads with the initiating script per read.",
     "audit_question": "What reads the canvas, the fonts or the time zone, and who does it belong to?",
-    "audit_question_nl": "Wat leest de canvas, de lettertypen of de tijdzone uit, en van wie is dat?",
-    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "audit_question_nl": "Herkent u terugkerende bezoekers zonder cookies, en waaraan dan?",
+    "complaint_nl": "Een uitdraai van welke eigenschappen van het apparaat worden uitgelezen en door welk script, niet een cookieoverzicht. Herkenning zonder cookies staat daar per definitie niet in.",
     "objection_nl": "Wij zetten geen cookies.",
     "answer_nl": "De cookiebepaling gaat over opslaan en uitlezen op het apparaat, niet alleen over cookies."
   }

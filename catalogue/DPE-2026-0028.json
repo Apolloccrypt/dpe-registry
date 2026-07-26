@@ -63,9 +63,7 @@
     }
   ],
   "legal": {
-    "provisions": [
-      "eu-gdpr-5-2"
-    ],
+    "applies": "to-a-finding",
     "rebuttals": [
       {
         "objection": "The library is in there, so it does something.",
@@ -83,8 +81,10 @@
   },
   "related": [
     "DPE-2026-0013",
+    "DPE-2026-0018",
     "DPE-2026-0026",
-    "DPE-2026-0027"
+    "DPE-2026-0027",
+    "DPE-2026-0029"
   ],
   "seen_in_the_wild": {
     "confirmed": false,
@@ -96,7 +96,7 @@
     "complaint": "The package version, the static evidence, and a dynamic capture of a cold start with a statement of what it could not observe.",
     "audit_question": "Did you see this component send anything, or did you see that it is in the package?",
     "audit_question_nl": "Hebt u dit onderdeel iets zien versturen, of hebt u gezien dat het in het pakket zit?",
-    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "complaint_nl": "Naast de pakketanalyse een opname van het draaiende product, met per bevinding het bewijsniveau: aanwezig in het pakket, of waargenomen verzonden.",
     "objection_nl": "Het zit in de app, dus het verstuurt.",
     "answer_nl": "In het pakket zitten en verzenden zijn twee dingen. Vraag om de opname."
   },

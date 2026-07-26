@@ -18,10 +18,10 @@
       "an exchange forwarding the request onward to further partners after receiving it",
       "the same identifier passed to every bidder, so the copies are joinable across recipients"
     ],
-    "not_this": "A single third-party resource loaded from one party is Third-party resource loading. What distinguishes this entry is multiplicity: the same view, with the same identifier, delivered to many parties in one load. It is also not Undisclosed recipient, which is about a gap in a document; here the fault stands even if every bidder is named."
+    "not_this": "A single third-party resource loaded from one party is Third-party resource loading. What distinguishes this entry is multiplicity: the same view, with the same identifier, delivered to many parties in one load. It is also not Undisclosed recipient, which is about a gap in a document; here the fault stands even if every bidder is named. The sync requests that usually follow an auction are Identifier synchronisation between parties. That entry is about two parties exchanging each other's value; this one is about one view reaching many. They occur together and are cited together, but a party can cap its bidder list without stopping the exchange, and stop the exchange without capping the list."
   },
   "detection": {
-    "indicator": "Within one page or screen load, requests to two or more hosts under different registrable domains that each carry the same identifier value together with the address or title of what is being viewed. In an application the same finding takes the form of one auction request whose body carries the device advertising identifier, coarse location and network operator in a single payload. The count of distinct receiving domains is the finding.",
+    "indicator": "Within one page or screen load, requests to hosts under four or more distinct registrable domains that each carry the same identifier value together with the address or title of what is being viewed. Two or three recipients is ordinary onward disclosure and belongs under the entries for the individual recipients; the finding here is the multiplicity, and the count of distinct receiving domains is what has to be reported. Four is a threshold set for this catalogue and not derived from a published source: below it the recipients can still be named one by one, above it the number is the point. Report the observed count as well, so a reader who holds a different threshold can apply it. In an application the same finding takes the form of one auction request whose body carries the device advertising identifier, coarse location and network operator in a single payload.",
     "method": "network-with-identifier",
     "qod": 90,
     "capture_requirements": [
@@ -61,6 +61,7 @@
     }
   ],
   "legal": {
+    "applies": "to-processing",
     "provisions": [
       "eu-gdpr-6-1-a",
       "eu-gdpr-5-1-c",
@@ -84,7 +85,8 @@
   "related": [
     "DPE-2026-0009",
     "DPE-2026-0010",
-    "DPE-2026-0016"
+    "DPE-2026-0016",
+    "DPE-2026-0046"
   ],
   "seen_in_the_wild": {
     "confirmed": false,
@@ -105,7 +107,7 @@
     "complaint": "A HAR per consent mode, the list of distinct receiving domains, and the shared identifier value that connects the copies.",
     "audit_question": "How many companies receive a copy when one visitor opens one page, and who decides that list?",
     "audit_question_nl": "Hoeveel bedrijven krijgen een kopie als een bezoeker een pagina opent, en wie bepaalt die lijst?",
-    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "complaint_nl": "De lijst met partijen die mogen meebieden zoals die op de meetdatum gold, plus een opname van een paginaweergave waaruit blijkt hoeveel ontvangers hetzelfde kenmerk kregen.",
     "objection_nl": "Wij delen niets, wij verkopen alleen advertentieruimte.",
     "answer_nl": "Bij een veiling gaat het verzoek naar alle deelnemers tegelijk. Vraag om de lijst met wie mag meebieden."
   },

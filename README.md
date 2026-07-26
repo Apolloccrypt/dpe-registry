@@ -29,7 +29,7 @@ that case, and belongs to whoever applies the entry.
 
 <!-- BEGIN CATALOGUS: gegenereerd door tools/build_readme_list.py -->
 
-## De catalogus (43 fouten)
+## De catalogus (48 fouten)
 
 Elke fout heeft een eigen pagina op <https://totaledigitalewaarborging.nl/register> met de indicator, de eisen
 aan de meting, wat hem zou ontkrachten, en hoe je hem naspeelt.
@@ -44,24 +44,26 @@ aan de meting, wat hem zou ontkrachten, en hoe je hem naspeelt.
 | [`DPE-2026-0017`](https://totaledigitalewaarborging.nl/register/DPE-2026-0017) | **Wettelijk persoonsnummer naar een derde**<br>Een nummer dat de overheid toekent voor identificatie gaat naar een partij zonder wettelijke taak die het vraagt. | app, web, API |
 | [`DPE-2026-0018`](https://totaledigitalewaarborging.nl/register/DPE-2026-0018) | **Document verder uitgelezen dan de controle**<br>Een identiteitscontrole legt het hele document vast waar de vraag aan een fractie genoeg had. | app, web, API |
 | [`DPE-2026-0019`](https://totaledigitalewaarborging.nl/register/DPE-2026-0019) | **Bijzondere gegevens in een gebeurtenis**<br>Een gebeurtenis naar een derde verraadt gezondheid, geloof of seksualiteit via zijn naam, pad of parameters. | web, app |
-| [`DPE-2026-0021`](https://totaledigitalewaarborging.nl/register/DPE-2026-0021) | **De pagina tast je eigen apparaat af**<br>Een pagina tast de eigen machine of het thuisnetwerk van de bezoeker af om te zien wat daar draait. | web, desktop |
-| [`DPE-2026-0023`](https://totaledigitalewaarborging.nl/register/DPE-2026-0023) | **Aanwezigheid via een automatisch antwoord**<br>Een systeem antwoordt uit zichzelf op een ongevraagd signaal, en dat antwoord verraadt of er iemand is. | app, API, desktop, IoT |
-| [`DPE-2026-0024`](https://totaledigitalewaarborging.nl/register/DPE-2026-0024) | **Iedereen die passeert wordt herkend**<br>Een herkenningssysteem legt iedereen vast die het ziet, terwijl het doel alleen over de gezochten gaat. | IoT, firmware, netwerkapparaat, voertuig |
+| [`DPE-2026-0021`](https://totaledigitalewaarborging.nl/register/DPE-2026-0021) | **Aftasten van het apparaat van de bezoeker**<br>Een pagina tast de eigen machine of het thuisnetwerk van de bezoeker af om te zien wat daar draait. | web |
+| [`DPE-2026-0023`](https://totaledigitalewaarborging.nl/register/DPE-2026-0023) | **Aanwezigheid via een automatisch antwoord**<br>Een systeem antwoordt uit zichzelf op een ongevraagd signaal, en dat antwoord verraadt of er iemand is. | web, app, API, desktop, IoT |
 | [`DPE-2026-0030`](https://totaledigitalewaarborging.nl/register/DPE-2026-0030) | **Openen van een bericht wordt gemeten**<br>Een bericht meldt terug wanneer het geopend is, via een bron die bij het weergeven wordt opgehaald en de ontvanger aanwijst. | web, app, desktop |
 | [`DPE-2026-0033`](https://totaledigitalewaarborging.nl/register/DPE-2026-0033) | **Inloggen vraagt meer dan inloggen nodig heeft**<br>Inloggen via een andere partij geeft in dezelfde handeling toegang tot gegevens die voor het inloggen niet nodig zijn. | web, app, API |
-| [`DPE-2026-0034`](https://totaledigitalewaarborging.nl/register/DPE-2026-0034) | **Logboek met inhoud in plaats van gebeurtenissen**<br>Een logboek bewaart wat iemand invulde of te zien kreeg, terwijl vastleggen dat er iets gebeurde volstaat. | web, app, API, desktop, firmware |
+| [`DPE-2026-0034`](https://totaledigitalewaarborging.nl/register/DPE-2026-0034) | **Logboek met inhoud in plaats van gebeurtenissen**<br>Een logboek bewaart wat iemand invulde of te zien kreeg, terwijl vastleggen dat er iets gebeurde volstaat. | achterliggend systeem |
 | [`DPE-2026-0036`](https://totaledigitalewaarborging.nl/register/DPE-2026-0036) | **Productiviteitsmeting per medewerker**<br>Werksoftware legt activiteit per persoon per tijdvak vast en maakt daar een cijfer over die persoon van. | desktop, web, app |
 | [`DPE-2026-0037`](https://totaledigitalewaarborging.nl/register/DPE-2026-0037) | **Schermopname op het werkapparaat**<br>Werksoftware neemt het scherm zelf op, met vaste tussenpozen of op een signaal, zonder dat de medewerker dat start. | desktop, web, app |
 | [`DPE-2026-0038`](https://totaledigitalewaarborging.nl/register/DPE-2026-0038) | **Dienstvoertuig gevolgd buiten werktijd**<br>Een volgsysteem blijft posities vastleggen als het voertuig buiten dienst is, zonder werkende manier om privegebruik aan te geven. | voertuig, IoT, app |
 | [`DPE-2026-0039`](https://totaledigitalewaarborging.nl/register/DPE-2026-0039) | **Examentoezicht met gedragsscores**<br>Examensoftware kijkt naar lichaam, geluid en scherm, en houdt per student een verdenkingsregistratie over na de uitslag. | web, desktop, app |
 | [`DPE-2026-0041`](https://totaledigitalewaarborging.nl/register/DPE-2026-0041) | **Invoer wordt standaard trainingsmateriaal**<br>Wat iemand in een dienst typt, wordt bewaard om een model te verbeteren, tenzij hij een instelling vindt en uitzet. | web, app, API, desktop |
 | [`DPE-2026-0042`](https://totaledigitalewaarborging.nl/register/DPE-2026-0042) | **Uitbreiding vraagt meer rechten dan haar functie**<br>Een uitbreiding claimt toegang tot alle paginas terwijl de functie die zij beschrijft over een handvol sites gaat. | web, desktop |
+| [`DPE-2026-0047`](https://totaledigitalewaarborging.nl/register/DPE-2026-0047) | **Camera die verder kijkt dan het eigen terrein**<br>Een camera die voor het eigen terrein is opgehangen, legt ook de openbare weg of de grond van een ander vast. | opstelling |
+| [`DPE-2026-0048`](https://totaledigitalewaarborging.nl/register/DPE-2026-0048) | **Interne toegang ruimer dan de functie**<br>Iedereen met een account kan elk dossier openen, omdat de toegang het systeem volgt en niet de taak. | achterliggend systeem |
 
 ### Keten
 
 | | Fout | Waar |
 |---|---|---|
 | [`DPE-2026-0008`](https://totaledigitalewaarborging.nl/register/DPE-2026-0008) | **Formulier bij een derde**<br>Een formulier dat bij de site lijkt te horen, staat bij een derde die voor eigen rekening profileert. | web |
+| [`DPE-2026-0009`](https://totaledigitalewaarborging.nl/register/DPE-2026-0009) | **Externe bron inladen**<br>Een bron die rechtstreeks van een derde wordt geladen, maakt van elke paginaweergave een doorgifte. | web |
 | [`DPE-2026-0015`](https://totaledigitalewaarborging.nl/register/DPE-2026-0015) | **Biedverzoek naar veel partijen tegelijk**<br>Een paginaweergave gaat tegelijk naar veel biedende partijen, elk met de context en een identifier. | web, app |
 | [`DPE-2026-0016`](https://totaledigitalewaarborging.nl/register/DPE-2026-0016) | **Identificatiemerken uitwisselen**<br>Twee partijen wisselen elkaars identifier uit, zodat hun aparte dossiers over dezelfde persoon te koppelen zijn. | web, app |
 | [`DPE-2026-0020`](https://totaledigitalewaarborging.nl/register/DPE-2026-0020) | **Derde partij onder een eigen subdomein**<br>Een subdomein van de site zelf wijst naar een derde, zodat diens verzameling leest als die van de site. | web, API |
@@ -69,6 +71,7 @@ aan de meting, wat hem zou ontkrachten, en hoe je hem naspeelt.
 | [`DPE-2026-0031`](https://totaledigitalewaarborging.nl/register/DPE-2026-0031) | **E-mailadres als sleutel tussen diensten**<br>Een adres dat voor contact is gegeven, gaat door naar andere partijen, plat of als hashwaarde, zodat zij dezelfde persoon herkennen. | web, app, API |
 | [`DPE-2026-0032`](https://totaledigitalewaarborging.nl/register/DPE-2026-0032) | **Account gekoppeld aan het volgprofiel**<br>Bij het inloggen gaat de accountaanduiding van de dienst naar een partij die al een profiel van dezelfde browser had. | web, app |
 | [`DPE-2026-0043`](https://totaledigitalewaarborging.nl/register/DPE-2026-0043) | **Registraties gekoppeld op persoonsnummer**<br>Gegevens die voor de ene wettelijke taak zijn verzameld, worden op het persoonsnummer gekoppeld aan die van een andere instantie. | API, web, desktop |
+| [`DPE-2026-0046`](https://totaledigitalewaarborging.nl/register/DPE-2026-0046) | **Locatie uit een app die wordt doorverkocht**<br>Locatie die een onderdeel in een app verzamelt, duikt op als dataset bij een partij die de gebruiker nooit koos. | app |
 
 ### Toestemming
 
@@ -77,14 +80,16 @@ aan de meting, wat hem zou ontkrachten, en hoe je hem naspeelt.
 | [`DPE-2026-0001`](https://totaledigitalewaarborging.nl/register/DPE-2026-0001) | **Meten voor de toestemmingsvraag**<br>Een tag vuurt voordat de toestemmingsvraag is beantwoord. | web |
 | [`DPE-2026-0002`](https://totaledigitalewaarborging.nl/register/DPE-2026-0002) | **Weigeren zonder effect**<br>Weigeren verandert niet wat de browser verlaat. | web |
 | [`DPE-2026-0003`](https://totaledigitalewaarborging.nl/register/DPE-2026-0003) | **Geen weigeroptie**<br>De toestemmingsdialoog biedt accepteren en geen manier om te weigeren. | web |
+| [`DPE-2026-0004`](https://totaledigitalewaarborging.nl/register/DPE-2026-0004) | **Maximale cookielevensduur voor de vraag**<br>Een identifier-cookie krijgt de maximale bewaartermijn die een browser aanvaardt, voordat de vraag is beantwoord. | web |
 | [`DPE-2026-0014`](https://totaledigitalewaarborging.nl/register/DPE-2026-0014) | **Geen werkende uitschakeling**<br>De instelling die het verzamelen zou stoppen bestaat niet, of overleeft geen herstart. | firmware, IoT, voertuig, app |
 | [`DPE-2026-0040`](https://totaledigitalewaarborging.nl/register/DPE-2026-0040) | **Betalen of accepteren als enige keuze**<br>Het eerste scherm biedt betalen of instemmen met doelen van derden, en geen pad dat weigert en toch bij de inhoud komt. | web, app |
+| [`DPE-2026-0044`](https://totaledigitalewaarborging.nl/register/DPE-2026-0044) | **Ongelijk vormgegeven toestemmingskeuze**<br>De keuze wordt aan beide kanten geboden, maar accepteren kost een handeling en weigeren er meerdere. | web, app |
 
 ### Methode
 
 | | Fout | Waar |
 |---|---|---|
-| [`DPE-2026-0011`](https://totaledigitalewaarborging.nl/register/DPE-2026-0011) | **Tag buiten de broncode**<br>Tags vuren vanuit een container terwijl ze nergens in de broncode staan. | web |
+| [`DPE-2026-0011`](https://totaledigitalewaarborging.nl/register/DPE-2026-0011) | **Afwezig in de broncode telt als verwijderd**<br>Een bevinding concludeert dat de tracking weg is omdat de identifier niet meer in de broncode staat. | web |
 | [`DPE-2026-0026`](https://totaledigitalewaarborging.nl/register/DPE-2026-0026) | **Ontvanger toegeschreven op een spoofbare header**<br>Een bevinding wijst de veroorzakende pagina aan op basis van een header die iedereen kan zetten. | web, app |
 | [`DPE-2026-0027`](https://totaledigitalewaarborging.nl/register/DPE-2026-0027) | **Land bepaald met een verouderde database**<br>Een doorgifteclaim rust op een adres-naar-landtabel die niet meer klopt met de toewijzing. | web, app, IoT, firmware |
 | [`DPE-2026-0028`](https://totaledigitalewaarborging.nl/register/DPE-2026-0028) | **Aanwezigheid in de binary telt als verzending**<br>Een bevinding ziet een onderdeel in een pakket aan voor bewijs dat het ook verzendt. | app, desktop, firmware |
@@ -94,7 +99,7 @@ aan de meting, wat hem zou ontkrachten, en hoe je hem naspeelt.
 
 | | Fout | Waar |
 |---|---|---|
-| [`DPE-2026-0012`](https://totaledigitalewaarborging.nl/register/DPE-2026-0012) | **Apparaat belt naar huis**<br>Een apparaat zoekt contact met een server in het buitenland zonder functie die dat vraagt. | firmware, IoT, netwerkapparaat, voertuig |
+| [`DPE-2026-0012`](https://totaledigitalewaarborging.nl/register/DPE-2026-0012) | **Telemetrie zonder functie**<br>Een apparaat zoekt uit zichzelf contact met servers zonder functie die de eigenaar vroeg. | firmware, IoT, netwerkapparaat, voertuig |
 | [`DPE-2026-0013`](https://totaledigitalewaarborging.nl/register/DPE-2026-0013) | **Meeliftende component**<br>Een meegeleverd onderdeel verzamelt voor eigen rekening, naast wat de app zelf doet. | app, desktop, firmware |
 | [`DPE-2026-0022`](https://totaledigitalewaarborging.nl/register/DPE-2026-0022) | **Meetinterval dat aanwezigheid verraadt**<br>Een apparaat rapporteert zo vaak en zo herkenbaar dat de reeks laat zien wanneer het huis leeg is. | IoT, firmware, netwerkapparaat |
 
@@ -102,14 +107,9 @@ aan de meting, wat hem zou ontkrachten, en hoe je hem naspeelt.
 
 | | Fout | Waar |
 |---|---|---|
-| [`DPE-2026-0004`](https://totaledigitalewaarborging.nl/register/DPE-2026-0004) | **Maximale bewaartermijn**<br>Een identifier-cookie krijgt de maximale bewaartermijn die een browser aanvaardt, voordat de vraag is beantwoord. | web |
-| [`DPE-2026-0035`](https://totaledigitalewaarborging.nl/register/DPE-2026-0035) | **Wissen dat de back-up niet bereikt**<br>Een op verzoek gewist gegeven blijft in de back-up staan en komt bij een herstel weer in het systeem terug. | web, app, API, desktop |
-
-### Doorgifte
-
-| | Fout | Waar |
-|---|---|---|
-| [`DPE-2026-0009`](https://totaledigitalewaarborging.nl/register/DPE-2026-0009) | **Externe bron inladen**<br>Een bron die rechtstreeks van een derde wordt geladen, maakt van elke paginaweergave een doorgifte. | web |
+| [`DPE-2026-0024`](https://totaledigitalewaarborging.nl/register/DPE-2026-0024) | **Herkenning van elke passant**<br>Een herkenningssysteem legt iedereen vast die het ziet, terwijl het doel alleen over de gezochten gaat. | opstelling, voertuig, IoT |
+| [`DPE-2026-0035`](https://totaledigitalewaarborging.nl/register/DPE-2026-0035) | **Wissen dat de back-up niet bereikt**<br>Een op verzoek gewist gegeven blijft in de back-up staan en komt bij een herstel weer in het systeem terug. | achterliggend systeem |
+| [`DPE-2026-0045`](https://totaledigitalewaarborging.nl/register/DPE-2026-0045) | **Serverlogboek zonder bewaartermijn**<br>Logbestanden met adressen en opgevraagde pagina's blijven staan omdat er nooit een termijn is ingesteld. | achterliggend systeem |
 
 ### Transparantie
 
@@ -171,15 +171,22 @@ catalogue names no companies, contributing costs you nothing but time.
  METHOD.md     how to conduct a measurement
 ```
 
-Build with `python3 build_catalogue.py && python3 build_pages.py`, publish with
-`./deploy.sh <target>`. The deploy refuses to run if a single entry fails
-validation.
+Build with `python3 build_catalogue.py && python3 build_pages.py && python3
+tools/build_triage.py`, publish with `./deploy.sh <target>`. The third step
+builds the entry page for people who do not measure; leave it out and the
+catalogue publishes without a front page. The deploy refuses to run if a single
+entry fails validation.
 
 ## Status
 
-Draft. Forty-three entries across web, apps, firmware, IoT, vehicles, the
-workplace, the classroom and public administration. Reproduction scripts exist
-for a handful of them; the rest is in WANTED.md.
+Draft. Forty-eight entries across web, apps, firmware, IoT, vehicles, physical
+installations, back-end systems, the workplace, the classroom and public
+administration, all at status `active` under schema 2.0. Reproduction routes of
+their own exist for a handful; the rest point at the general method and are
+listed in WANTED.md as the most concrete thing a contributor can close. No entry
+has an independent reproduction or an external reviewer yet, and none is backed
+by a published reference: `seen_in_the_wild` is `false` throughout, on purpose.
+One editor, named in GOVERNANCE.md.
 
 ## Licence
 

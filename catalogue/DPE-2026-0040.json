@@ -61,6 +61,7 @@
     }
   ],
   "legal": {
+    "applies": "to-processing",
     "provisions": [
       "eu-gdpr-7-4",
       "eu-gdpr-6-1-a",
@@ -87,7 +88,8 @@
   },
   "related": [
     "DPE-2026-0002",
-    "DPE-2026-0003"
+    "DPE-2026-0003",
+    "DPE-2026-0044"
   ],
   "seen_in_the_wild": {
     "confirmed": false,
@@ -99,7 +101,7 @@
     "complaint": "A capture of the first screen, every path taken separately with the consent state that followed, and the price of the paid path.",
     "audit_question": "Show me the way to your article for someone who refuses and does not pay.",
     "audit_question_nl": "Laat me zien hoe iemand bij uw artikel komt die weigert en niet betaalt.",
-    "complaint_nl": "Een opname van het eerste scherm, elk pad afzonderlijk gelopen met de toestemmingsstand die eruit volgt, en de prijs van het betaalde pad.",
+    "complaint_nl": "De prijs van de weigeroptie met de onderbouwing waarop dat bedrag berust, en wat een bezoeker in beide gevallen krijgt. Beide staan in de eigen stukken van de partij.",
     "objection_nl": "Niemand wordt gedwongen, er is een betaald alternatief.",
     "answer_nl": "Dat is juist het punt. Weigeren kost dan geld, en toestemming moet vrij zijn van die afweging."
   },

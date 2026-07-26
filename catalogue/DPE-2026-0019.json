@@ -62,6 +62,7 @@
     }
   ],
   "legal": {
+    "applies": "to-processing",
     "provisions": [
       "eu-gdpr-9-1",
       "eu-gdpr-6-1-a",
@@ -83,8 +84,8 @@
     ]
   },
   "related": [
-    "DPE-2026-0006",
     "DPE-2026-0002",
+    "DPE-2026-0006",
     "DPE-2026-0010"
   ],
   "seen_in_the_wild": {
@@ -97,7 +98,7 @@
     "complaint": "A capture of a deliberate walkthrough, the events it produced, and the mapping from each value to the action that caused it.",
     "audit_question": "Print the list of event names you send outside the organisation and read it out loud.",
     "audit_question_nl": "Druk de lijst af met namen van gebeurtenissen die u naar buiten stuurt, en lees hem hardop voor.",
-    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "complaint_nl": "De lijst met gebeurtenissen die naar derden gaan, met de namen, paden en parameters zoals ze werkelijk vertrekken, niet zoals ze in het meetplan heten.",
     "objection_nl": "Wij versturen geen medische gegevens.",
     "answer_nl": "De naam van een gebeurtenis of een pagina kan het al verraden, zonder dat iemand iets intypt."
   },

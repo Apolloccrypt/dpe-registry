@@ -20,7 +20,7 @@
       "an identity feature of the measurement product, enabled as soon as a user identifier is available",
       "the same identifier used in the application and in the tag, because it was the value at hand"
     ],
-    "not_this": "Two third parties exchanging identifiers so their profiles can be matched is Identifier synchronisation between parties. Here the value comes from the operator itself and names the account. An operator writing its own user identifier into its own store is not this entry either: the value has to reach a party that also holds an identifier of its own for that browser."
+    "not_this": "Two third parties exchanging identifiers so their profiles can be matched is Identifier synchronisation between parties. Here the value comes from the operator itself and names the account. An operator writing its own user identifier into its own store is not this entry either: the value has to reach a party that also holds an identifier of its own for that browser. An address used as the key, hashed or not, is Email address as a cross-service identifier: there the value is computable by both sides from something the person gave, here it is an internal account identifier that only the operator can mint."
   },
   "detection": {
     "indicator": "Differential over accounts. Sign in twice in the same browser profile with two accounts you control: a request to a host under a different registrable domain carries a value that changes with the account while that host's own identifier stays the same. The reverse check confirms it, in that the same account in a fresh profile yields the same account-dependent value against a new host identifier.",
@@ -62,6 +62,7 @@
     }
   ],
   "legal": {
+    "applies": "to-processing",
     "provisions": [
       "eu-gdpr-5-1-b",
       "eu-gdpr-6-1-a",
@@ -101,7 +102,7 @@
     "complaint": "Two captures of the sign-in step with different accounts, the value that changes with the account marked, and the third party's own identifier shown to be constant.",
     "audit_question": "What leaves the browser at the moment someone signs in, and does anything in it change with the account?",
     "audit_question_nl": "Wat verlaat de browser op het moment dat iemand inlogt, en verandert daar iets in met het account mee?",
-    "complaint_nl": "Twee opnamen van dezelfde inlogstap met verschillende accounts, met de waarde die meeverandert aangewezen.",
+    "complaint_nl": "Twee opnames in hetzelfde profiel met twee eigen accounts, waaruit blijkt welke waarde met het account meebeweegt terwijl het kenmerk van de ontvanger gelijk blijft.",
     "objection_nl": "Wij sturen alleen een intern nummer door, geen naam.",
     "answer_nl": "Dat nummer is juist de koppeling. De ontvanger hoeft de naam niet te kennen om te weten dat deze browser en dat account een persoon zijn."
   },

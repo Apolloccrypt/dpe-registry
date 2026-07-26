@@ -22,7 +22,7 @@
     "not_this": "A device contacting a server with no function behind it is Device telemetry without function. Here the reporting has a function; what makes it this entry is the granularity, the permanent identifier per record, and the recipient being someone other than the party delivering the service the owner contracted for."
   },
   "detection": {
-    "indicator": "A capture at the gateway shows a timestamped measurement series leaving the device at an interval of fifteen minutes or shorter, each record carrying a stable device identifier, addressed to a party other than the one delivering the contracted service. Interval, identifier and recipient are all readable from the capture.",
+    "indicator": "A capture at the gateway shows a timestamped measurement series leaving the device at an interval fine enough that daily presence patterns are readable from the curve, each record carrying a stable device identifier, addressed to a party other than the one delivering the contracted service. State the observed interval and why that interval supports the inference, rather than relying on a threshold: fifteen minutes is where occupancy becomes readable in published work on consumption curves, and a finer interval makes the inference stronger rather than differently true. Interval, identifier and recipient are all readable from the capture.",
     "method": "network-observed",
     "qod": 85,
     "capture_requirements": [
@@ -59,6 +59,7 @@
     }
   ],
   "legal": {
+    "applies": "to-processing",
     "provisions": [
       "eu-gdpr-5-1-c",
       "eu-gdpr-6-1-a",
@@ -82,7 +83,9 @@
   "related": [
     "DPE-2026-0012",
     "DPE-2026-0014",
-    "DPE-2026-0023"
+    "DPE-2026-0023",
+    "DPE-2026-0036",
+    "DPE-2026-0038"
   ],
   "seen_in_the_wild": {
     "confirmed": false,
@@ -94,7 +97,7 @@
     "complaint": "A gateway capture spanning at least a day, with the interval, the per-record identifier and the destination, plus the firmware version.",
     "audit_question": "How often does this thing report, and can I tell from that data when the house was empty?",
     "audit_question_nl": "Hoe vaak rapporteert dit ding, en kan ik daaraan zien wanneer het huis leeg was?",
-    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "complaint_nl": "Een reeks van een volledige dag zoals die het apparaat verlaat, met het interval, het apparaatnummer en de ontvanger. Het interval is de vraag, niet de meting zelf.",
     "objection_nl": "Het zijn alleen meetwaarden, geen persoonsgegevens.",
     "answer_nl": "Vraag naar het interval en of elke meting hetzelfde nummer draagt. Een reeks per kwartier toont aanwezigheid."
   },

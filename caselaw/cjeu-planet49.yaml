@@ -11,7 +11,7 @@ relevance: >
   Vestigt dat toestemming actief en voorafgaand moet zijn. Een tag die vuurt
   voordat de gebruiker iets heeft gedaan, kan dus niet op toestemming rusten.
   Ook relevant voor onedoor: een keuze die geen weigering toelaat, is geen keuze.
-patterns: [frontrun, onedoor, hollowno]
+entries: [DPE-2026-0001, DPE-2026-0002, DPE-2026-0003, DPE-2026-0004, DPE-2026-0044]
 supports: true
 url: "https://curia.europa.eu/juris/liste.jsf?num=C-673/17"
 verified: true

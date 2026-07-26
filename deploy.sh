@@ -33,6 +33,7 @@ python3 build_pages.py
 # De voorpagina (vragen + lijst) komt hiervandaan, niet uit build_pages.
 python3 tools/build_db.py
 python3 tools/build_triage.py
+python3 tools/build_docs.py
 python3 tools/build_readme_list.py
 
 echo "== overzetten naar $DEST"
@@ -41,6 +42,7 @@ rsync -av --exclude ".DS_Store" site/register/ "$DEST"
 
 echo
 echo "klaar. Controleer daarna minstens:"
+echo "  - /register/               toont de symptoomkaarten en de vraag per fout"
 echo "  - /register/               opent en toont alle entries"
 echo "  - /register/DPE-2026-0001  opent rechtstreeks, ook zonder JavaScript"
 echo "  - /register/all.json       is geldige JSON"

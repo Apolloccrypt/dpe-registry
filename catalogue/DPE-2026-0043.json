@@ -62,6 +62,7 @@
     }
   ],
   "legal": {
+    "applies": "to-processing",
     "provisions": [
       "eu-gdpr-5-1-b",
       "nl-uavg-46",
@@ -88,7 +89,8 @@
   },
   "related": [
     "DPE-2026-0016",
-    "DPE-2026-0017"
+    "DPE-2026-0017",
+    "DPE-2026-0048"
   ],
   "seen_in_the_wild": {
     "confirmed": false,
@@ -100,7 +102,7 @@
     "complaint": "The access request answers from both bodies, the field that can only have come from the other, and the processing register entry of the same date.",
     "audit_question": "Which provision permits combining these two registers, as opposed to holding each of them?",
     "audit_question_nl": "Welke bepaling staat het koppelen van deze twee registraties toe, los van de bepalingen die elk register afzonderlijk toestaan?",
-    "complaint_nl": "De antwoorden op inzageverzoeken bij beide instanties, het veld dat alleen van de ander kan komen, en het verwerkingsregister van dezelfde datum.",
+    "complaint_nl": "De verwerkingsregisters van beide instanties van dezelfde datum, met de bron die daarin per veld staat, plus de bepaling waarop de koppeling zelf berust.",
     "objection_nl": "Beide instanties mogen het persoonsnummer gebruiken.",
     "answer_nl": "Voor hun eigen taak, ja. Het nummer maakt koppelen makkelijk, niet toegestaan. Er moet een bepaling zijn die de koppeling zelf noemt."
   },

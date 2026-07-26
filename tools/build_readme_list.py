@@ -16,7 +16,8 @@ FAM = {"consent": "Toestemming", "data": "Gegevens", "chain": "Keten", "transfer
        "method": "Methode"}
 SYS = {"web": "web", "mobile-app": "app", "firmware": "firmware", "iot": "IoT",
        "vehicle": "voertuig", "desktop": "desktop", "api": "API",
-       "network-device": "netwerkapparaat"}
+       "network-device": "netwerkapparaat", "installation": "opstelling",
+       "backend": "achterliggend systeem"}
 
 
 def main():

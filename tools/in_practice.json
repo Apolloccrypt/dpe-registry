@@ -60,10 +60,10 @@
     "audit_question": "Name every party that receives data, then let me check that against the traffic."
   },
   "DPE-2026-0011": {
-    "dpia": "Verify what fires at runtime rather than reading the page source, and require the container version history.",
-    "procurement": "The supplier delivers the tag container version history alongside the site, so what ran when is auditable.",
-    "complaint": "A capture showing an identifier in traffic that is absent from the fetched HTML.",
-    "audit_question": "Which tags does your container load that are not in the source, and who can change them?"
+    "dpia": "Test a claim that tracking was removed against a capture of the same page, never against the page source alone.",
+    "procurement": "A statement that a tag was removed is delivered with a capture of the page beside the source, and with the container version history.",
+    "complaint": "The capture and the fetched HTML document of the same page, side by side, with the identifiers present in one and absent from the other.",
+    "audit_question": "Who can add measurement code to the site without changing the site, and where is the record of what was added?"
   },
   "DPE-2026-0012": {
     "dpia": "Verify what the device contacts while idle, rather than accepting the telemetry section of the manual.",

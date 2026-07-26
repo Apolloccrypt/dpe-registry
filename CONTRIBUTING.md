@@ -97,6 +97,18 @@ Two things you never provide: the number and any severity. The number is assigne
 on acceptance so simultaneous submissions cannot collide. Severity does not exist
 here at all, by design.
 
+**Titles.** The English title is a noun phrase that describes the fault, never a
+codename. The Dutch title follows the same rule: a noun phrase, no finite verb,
+addressing nobody, and readable on its own outside the table it appears in. A
+title that only works as a row in a list will be rewritten, because most people
+meet it as a link or in a sentence somewhere else.
+
+**Legal.** State `legal.applies`. Almost every entry is `to-processing` and then
+at least one provision is cited. An entry that describes a fault in a finding
+rather than in a processing operation is `to-a-finding` and cites no provision at
+all: there is none that binds the researcher, and quoting one against them is the
+first thing an opponent will take apart.
+
 ---
 
 ## How to send it

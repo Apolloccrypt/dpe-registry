@@ -62,6 +62,7 @@
     }
   ],
   "legal": {
+    "applies": "to-processing",
     "provisions": [
       "eu-gdpr-5-1-c",
       "eu-gdpr-5-1-e",
@@ -101,7 +102,7 @@
     "complaint": "The number of images per hour for one worker, a sample in which third-party data is visible, and the retention of the image store.",
     "audit_question": "How many pictures of my screen were taken this hour, and who can open them?",
     "audit_question_nl": "Hoeveel opnamen van mijn scherm zijn er dit uur gemaakt, en wie kan die openen?",
-    "complaint_nl": "Het aantal opnamen per uur van een medewerker, een voorbeeld waarop gegevens van derden zichtbaar zijn, en de bewaartermijn van die opslag.",
+    "complaint_nl": "Het aantal schermopnames van een uur van een medewerker, wat er buiten het werk zelf op die beelden staat, en hoe lang ze bewaard blijven.",
     "objection_nl": "Het is alleen voor beveiligingsincidenten.",
     "answer_nl": "Dan draait het tijdens een incident. Een opname die permanent doorloopt is geen onderzoek maar een doorlopende registratie."
   },

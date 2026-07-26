@@ -1,7 +1,7 @@
 {
   "id": "DPE-2026-0004",
   "name": "Maximum cookie lifetime",
-  "family": "retention",
+  "family": "consent",
   "summary": "An identifier cookie is set for the maximum lifetime a browser accepts, before the question is answered.",
   "mechanism": {
     "what": "At page load, before any consent interaction, a cookie is placed with a lifetime at or near the ceiling the browser permits, currently 399 days in Chromium-based browsers.",
@@ -10,10 +10,10 @@
       "default retention of the measurement setup left untouched",
       "cookie placed outside the consent gate, so the term was never considered"
     ],
-    "not_this": "If the cookie is set only after consent, this is a retention question and not this entry. The pre-consent placement is what makes it a fault here."
+    "not_this": "Setting an identifier before the question is answered is Tracking before consent whenever the recipient is a third party. This entry is the term rather than the moment, and it applies to a first-party identifier too: the fault is that the lifetime is the browser ceiling instead of something the purpose requires. Where both apply, cite both and say so; an operator can shorten the term without moving the tag, and can move the tag without shortening the term."
   },
   "detection": {
-    "indicator": "A Set-Cookie with max-age at or above 34128000 seconds (399 days), or an equivalent Expires, issued before the consent event.",
+    "indicator": "A Set-Cookie with max-age at or above 34128000 seconds (399 days), or an equivalent Expires, issued before the consent event, whether by the site itself or by a third party. Record the ceiling the browser used at capture time, since it is a browser policy and not a constant.",
     "method": "network-with-identifier",
     "qod": 95,
     "capture_requirements": [
@@ -41,7 +41,7 @@
     "methods": [
       {
         "tier": "bookmarklet",
-        "path": "repro/bookmarklet/frontrun.bookmarklet.txt"
+        "path": "repro/bookmarklet/before-consent.bookmarklet.txt"
       },
       {
         "tier": "script",
@@ -67,10 +67,13 @@
         "objection": "399 days is the industry default.",
         "answer": "A default is not a purpose. Storage limitation asks what term the purpose requires, and the browser ceiling is not an answer to that question."
       }
-    ]
+    ],
+    "applies": "to-processing"
   },
   "related": [
-    "DPE-2026-0001"
+    "DPE-2026-0001",
+    "DPE-2026-0002",
+    "DPE-2026-0035"
   ],
   "seen_in_the_wild": {
     "confirmed": false,
@@ -108,7 +111,7 @@
     }
   ],
   "slug": "maximum-cookie-lifetime",
-  "name_nl": "Maximale bewaartermijn",
+  "name_nl": "Maximale cookielevensduur voor de vraag",
   "summary_nl": "Een identifier-cookie krijgt de maximale bewaartermijn die een browser aanvaardt, voordat de vraag is beantwoord.",
   "in_practice": {
     "dpia": "Verify the actual lifetime of identifiers set before consent, rather than the retention table in the document.",
@@ -116,7 +119,7 @@
     "complaint": "The Set-Cookie headers from the pre-consent capture, with lifetimes.",
     "audit_question": "What is the longest-lived cookie you set before anyone has chosen anything?",
     "audit_question_nl": "Wat is de langstlevende cookie die u zet voordat iemand iets heeft gekozen?",
-    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "complaint_nl": "De Set-Cookie-regels uit de opname van voor de vraag, met de levensduur per cookie, en per cookie het doel waaruit die termijn volgt.",
     "objection_nl": "399 dagen is de standaard in de markt.",
     "answer_nl": "Een standaardinstelling is geen doel. De vraag is welke termijn het doel vraagt."
   }

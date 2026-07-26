@@ -1,19 +1,21 @@
 {
   "id": "DPE-2026-0011",
-  "name": "Tag loaded outside the source",
+  "name": "Source absence read as removal",
   "family": "method",
-  "summary": "Tags fire from a container while appearing nowhere in the page source.",
+  "summary": "A finding concludes that tracking stopped because the identifier is no longer in the page source.",
+  "not_a_vulnerability": "A fault in a measurement, not in a system. Loading tags from a container is ordinary practice and no defect; the error is in reading the source and concluding what the traffic does.",
   "mechanism": {
-    "what": "A tag manager loads measurement or advertising tags at runtime. The identifiers of those tags are not in the delivered HTML, so reading the source suggests they are gone while the traffic shows otherwise.",
-    "why_it_matters": "Mostly a methodological trap rather than a harm in itself, and that is why it is catalogued. A researcher who checks only the source concludes that tracking stopped when it did not. It also means the operator can change what runs without any change to the site.",
+    "what": "A tag manager loads measurement or advertising tags at runtime, so the identifiers of those tags are not in the delivered HTML. A check that reads the source therefore reports absence while the traffic shows presence. The container is also the reason an operator can change what runs without changing the site, which is why a source-based finding says nothing about a different day either.",
+    "why_it_matters": "A researcher who checks only the source concludes that tracking stopped when it did not, and publishes reassurance that the traffic contradicts. The same error runs the other way in a dispute: an operator can point at a clean source while the container keeps loading what it always did.",
     "common_causes": [
       "tags migrated from hardcoded to container-managed",
-      "marketing team with dashboard access and no deployment"
+      "marketing team with dashboard access and no deployment",
+      "a check built on fetching HTML because that is cheap, without a capture beside it"
     ],
-    "not_this": "Not every container is this entry. It applies when a tag observed in traffic cannot be found in the delivered source."
+    "not_this": "A recipient that is genuinely present and unnamed in the privacy statement is Undisclosed recipient, a fault of the system. This entry is about the claim: absence from the source is not absence from the wire."
   },
   "detection": {
-    "indicator": "A property or measurement identifier present in network traffic and absent from the fetched HTML document. A set comparison, not an observation.",
+    "indicator": "The finding rests on the fetched HTML document, and a network capture of the same page shows a property or measurement identifier that the document does not contain. The difference between the two sets is the fault in the claim.",
     "method": "differential",
     "qod": 97,
     "capture_requirements": [
@@ -55,9 +57,7 @@
     ]
   },
   "legal": {
-    "provisions": [
-      "eu-gdpr-6-1-a"
-    ],
+    "applies": "to-a-finding",
     "rebuttals": [
       {
         "objection": "We removed the tracking; it is not in our code.",
@@ -103,17 +103,17 @@
       ]
     }
   ],
-  "slug": "tag-loaded-outside-source",
-  "name_nl": "Tag buiten de broncode",
-  "summary_nl": "Tags vuren vanuit een container terwijl ze nergens in de broncode staan.",
+  "slug": "source-absence-read-as-removal",
+  "name_nl": "Afwezig in de broncode telt als verwijderd",
+  "summary_nl": "Een bevinding concludeert dat de tracking weg is omdat de identifier niet meer in de broncode staat.",
   "in_practice": {
-    "dpia": "Verify what fires at runtime rather than reading the page source, and require the container version history.",
-    "procurement": "The supplier delivers the tag container version history alongside the site, so what ran when is auditable.",
-    "complaint": "A capture showing an identifier in traffic that is absent from the fetched HTML.",
-    "audit_question": "Which tags does your container load that are not in the source, and who can change them?",
-    "audit_question_nl": "Welke tags laadt uw container die niet in de broncode staan, en wie mag die wijzigen?",
-    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "dpia": "Test a claim that tracking was removed against a capture of the same page, never against the page source alone.",
+    "procurement": "A statement that a tag was removed is delivered with a capture of the page beside the source, and with the container version history.",
+    "complaint": "The capture and the fetched HTML document of the same page, side by side, with the identifiers present in one and absent from the other.",
+    "audit_question": "Who can add measurement code to the site without changing the site, and where is the record of what was added?",
+    "audit_question_nl": "Wie kan er meetcode aan de site toevoegen zonder dat er iets aan de site verandert, en waar staat wat er is toegevoegd?",
+    "complaint_nl": "De opname naast de opgehaalde broncode van dezelfde pagina, plus de versiegeschiedenis van de tagcontainer. Een uitdraai van alleen de broncode toont over het verkeer niets aan.",
     "objection_nl": "Wij hebben de tracking verwijderd, het staat niet in onze code.",
-    "answer_nl": "Afwezig in de broncode is niet afwezig in het verkeer. De container is de betrouwbare indicator."
+    "answer_nl": "Afwezig in de broncode is niet afwezig in het verkeer. Alleen een opname naast die broncode toont aan wat er werkelijk vertrekt."
   }
 }

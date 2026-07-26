@@ -5,11 +5,7 @@
   "name_nl": "Logboek met inhoud in plaats van gebeurtenissen",
   "family": "data",
   "applies_to": [
-    "web",
-    "mobile-app",
-    "api",
-    "desktop",
-    "firmware"
+    "backend"
   ],
   "summary": "A log keeps what the person wrote or was shown, where recording that something happened would do.",
   "summary_nl": "Een logboek bewaart wat iemand invulde of te zien kreeg, terwijl vastleggen dat er iets gebeurde volstaat.",
@@ -64,6 +60,7 @@
     }
   ],
   "legal": {
+    "applies": "to-processing",
     "provisions": [
       "eu-gdpr-5-1-c",
       "eu-gdpr-5-1-b",
@@ -90,7 +87,10 @@
   },
   "related": [
     "DPE-2026-0006",
-    "DPE-2026-0035"
+    "DPE-2026-0035",
+    "DPE-2026-0041",
+    "DPE-2026-0045",
+    "DPE-2026-0048"
   ],
   "in_practice": {
     "dpia": "Verify with a marker string what ends up in the log stores, and check whether those stores appear in the retention schedule at all.",
@@ -98,7 +98,7 @@
     "complaint": "The marker string, the log records returned that contain it, and the retention stated for the store that returned them.",
     "audit_question": "If I type a sentence into your form, in how many stores does that sentence exist an hour later?",
     "audit_question_nl": "Als ik een zin in uw formulier typ, in hoeveel bestanden staat die zin dan een uur later nog?",
-    "complaint_nl": "De ingevoerde markeringstekst, de logregels waarin die terugkomt, en de bewaartermijn van het bestand dat ze leverde.",
+    "complaint_nl": "Een uitdraai van enkele echte regels uit het logboek zoals ze worden weggeschreven, plus de bewaartermijn van dat logboek. Een beschrijving van het logformaat is iets anders.",
     "objection_nl": "Logbestanden zijn technische gegevens.",
     "answer_nl": "Het bestand is technisch, de inhoud niet. Wat er in de regel staat bepaalt de categorie, niet waar die regel staat."
   },
@@ -138,5 +138,9 @@
         "Legal provisions linked."
       ]
     }
-  ]
+  ],
+  "seen_in_the_wild": {
+    "confirmed": false,
+    "note": "Observed in practice by the authors but not yet backed by a published reference. Set to false until a citation exists: a claim without a source is exactly what this catalogue holds others to."
+  }
 }

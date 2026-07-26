@@ -16,7 +16,7 @@ exception_note: >
   De uitzondering geldt voor wat noodzakelijk is voor de gebruiker, niet voor wat
   handig is voor de exploitant. Publieksmeting valt er volgens de gangbare uitleg
   van de toezichthouder niet onder.
-patterns: [frontrun, hollowno, onedoor, maxstay, silhouette]
+entries: [DPE-2026-0001, DPE-2026-0002, DPE-2026-0004, DPE-2026-0005, DPE-2026-0007, DPE-2026-0016, DPE-2026-0020, DPE-2026-0021, DPE-2026-0030, DPE-2026-0040, DPE-2026-0042, DPE-2026-0044]
 url: "https://wetten.overheid.nl/BWBR0009950/#Hoofdstuk11_Paragraaf11.1_Artikel11.7a"
 mirror: "https://vrijewetgeving.nl/"          # TODO: exacte artikel-URL plus commit
 mirror_note: >

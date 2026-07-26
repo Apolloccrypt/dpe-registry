@@ -61,9 +61,7 @@
     }
   ],
   "legal": {
-    "provisions": [
-      "eu-gdpr-5-2"
-    ],
+    "applies": "to-a-finding",
     "rebuttals": [
       {
         "objection": "The header is what the browser sends, so it is authoritative.",
@@ -82,7 +80,8 @@
   "related": [
     "DPE-2026-0010",
     "DPE-2026-0027",
-    "DPE-2026-0028"
+    "DPE-2026-0028",
+    "DPE-2026-0029"
   ],
   "seen_in_the_wild": {
     "confirmed": false,
@@ -94,7 +93,7 @@
     "complaint": "The raw capture, the attribution route used, and the recipient list produced by that route rather than a summary.",
     "audit_question": "How do you know that this request came from that page?",
     "audit_question_nl": "Hoe weet u dat dit verzoek van die pagina kwam?",
-    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "complaint_nl": "De ruwe opname met de pagina-referentie intact, plus welke toeschrijvingsroute is gebruikt. Een samenvattende ontvangerslijst is niet na te rekenen.",
     "objection_nl": "Het staat in de referer.",
     "answer_nl": "Die is te vervalsen en meetsoftware doet dat standaard. Vraag om de pageref of de initiator-keten."
   },

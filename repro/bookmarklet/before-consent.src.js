@@ -1,5 +1,5 @@
 /*
- * DPE registry · in-browser check · patterns: frontrun, maxstay, hotlink
+ * DPE registry · in-browser check · entries: DPE-2026-0001, DPE-2026-0004, DPE-2026-0009
  *
  * A bookmarklet. Drag it to your bookmarks bar, open any site in a private
  * window, do NOT touch the cookie banner, then click it.

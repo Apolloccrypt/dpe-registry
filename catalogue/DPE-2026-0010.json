@@ -32,6 +32,12 @@
       "if_true": "drop"
     },
     {
+      "condition": "The recipient falls within a category of recipients that the statement does name, and the category is specific enough to identify the kind of party.",
+      "checkable": "manual",
+      "if_true": "weaken",
+      "note": "The provision allows categories. 'Analytics providers' covers an analytics provider; 'our partners' covers nothing. Quote the category verbatim in the finding and let the reader judge it."
+    },
+    {
       "condition": "The statement was updated outside the measured window.",
       "checkable": "manual",
       "if_true": "drop"
@@ -52,6 +58,8 @@
   },
   "legal": {
     "provisions": [
+      "eu-gdpr-13",
+      "eu-gdpr-5-1-a",
       "eu-gdpr-6-1-a"
     ],
     "rebuttals": [
@@ -59,8 +67,18 @@
         "objection": "The statement is generic on purpose.",
         "answer": "Article 13 requires the recipients or categories of recipients. A statement that omits a category entirely is not generic but incomplete."
       }
-    ]
+    ],
+    "applies": "to-processing"
   },
+  "related": [
+    "DPE-2026-0015",
+    "DPE-2026-0016",
+    "DPE-2026-0018",
+    "DPE-2026-0019",
+    "DPE-2026-0020",
+    "DPE-2026-0025",
+    "DPE-2026-0026"
+  ],
   "seen_in_the_wild": {
     "confirmed": false,
     "note": "Observed in practice by the authors but not yet backed by a published reference. Set to false until a citation exists: a claim without a source is exactly what this catalogue holds others to."
@@ -105,7 +123,7 @@
     "complaint": "A capture of recipients plus the archived statement of that date, and the set difference between them.",
     "audit_question": "Name every party that receives data, then let me check that against the traffic.",
     "audit_question_nl": "Noem elke partij die gegevens ontvangt, dan leg ik dat naast het verkeer.",
-    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "complaint_nl": "De lijst met gemeten ontvangers naast de privacyverklaring zoals die op de meetdatum luidde, en het verschil tussen beide. Beide bronnen zijn van de partij zelf.",
     "objection_nl": "De verklaring is bewust algemeen gehouden.",
     "answer_nl": "De wet vraagt de ontvangers of categorieen ervan. Een categorie die ontbreekt is niet algemeen maar onvolledig."
   }

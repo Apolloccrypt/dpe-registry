@@ -44,13 +44,12 @@
         "consent",
         "data",
         "chain",
-        "transfer",
         "transparency",
         "retention",
         "telemetry",
         "method"
       ],
-      "description": "Coarse grouping so the catalogue stays navigable. Not a severity and not a judgement."
+      "description": "Coarse grouping so the catalogue stays navigable. Not a severity and not a judgement. Onward transfer is an axis rather than a family: nearly every entry can occur with the recipient inside or outside the EEA, so where the data went is stated in the finding and not in the grouping."
     },
     "summary": {
       "type": "string",
@@ -124,7 +123,7 @@
           "type": "integer",
           "minimum": 0,
           "maximum": 100,
-          "description": "Quality of detection of the method, not the seriousness of the fault."
+          "description": "Strength of this indicator under this method, not the seriousness of the fault. The bands are published so the number can be derived rather than felt: 95-100 a comparison of two captures or of two sources belonging to the party itself; 85-94 an observation carrying an identifier, where the attribution is settled; 70-84 an observation whose meaning depends on context; 50-69 a finding from source code or from a document, with no traffic. The number scores this indicator and not the method in general, so an entry may sit below the band its method allows; where it does, the reason stands in the requirements on the measurement."
         },
         "capture_requirements": {
           "type": "array",
@@ -252,13 +251,43 @@
       "type": "object",
       "description": "Which provisions the fault engages. Per jurisdiction, so the entry is usable outside one country: the behaviour is the same across the EEA and only the citation differs.",
       "required": [
-        "provisions"
+        "applies"
       ],
       "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "applies": {
+                "const": "to-processing"
+              }
+            },
+            "required": [
+              "applies"
+            ]
+          },
+          "then": {
+            "required": [
+              "provisions"
+            ],
+            "properties": {
+              "provisions": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ],
       "properties": {
+        "applies": {
+          "enum": [
+            "to-processing",
+            "to-a-finding"
+          ],
+          "description": "Whom the entry addresses. to-processing: the fault is in a processing operation, so provisions bind the controller and at least one has to be cited. to-a-finding: the fault is in a measurement or a conclusion drawn from one. No provision applies to the researcher who makes it, and citing one against them is wrong; what is at stake is whether the finding survives a dispute."
+        },
         "provisions": {
           "type": "array",
-          "minItems": 1,
           "items": {
             "type": "string",
             "description": "Id of a file in law/."
@@ -424,10 +453,12 @@
           "vehicle",
           "desktop",
           "api",
-          "network-device"
+          "network-device",
+          "installation",
+          "backend"
         ]
       },
-      "description": "Which kinds of system this fault can occur in. A fault is not tied to a technology: consent that cannot be refused looks different on a television than in a browser, but it is the same fault."
+      "description": "Which kinds of system this fault can occur in. A fault is not tied to a technology: consent that cannot be refused looks different on a television than in a browser, but it is the same fault. Two of the values name something other than a client: installation is a physical arrangement such as a camera, a sensor or an access gate, and backend is processing that touches no client at all, such as log files, backups, registers and staff systems. Without those two, faults that never reach a device cannot be written down correctly."
     },
     "not_a_vulnerability": {
       "type": "string",

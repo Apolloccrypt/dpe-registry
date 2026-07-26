@@ -5,13 +5,14 @@
   "name_nl": "Aanwezigheid via een automatisch antwoord",
   "family": "data",
   "applies_to": [
+    "web",
     "mobile-app",
     "api",
     "desktop",
     "iot"
   ],
   "summary": "A system answers an unsolicited signal by itself, and the answer discloses whether someone is there.",
-  "not_a_vulnerability": "Nothing is exploited and no control is circumvented. The automatic answer is a feature, sent over the intended channel and within the intended protocol; that it also reports presence is a property of the design.",
+  "not_a_vulnerability": "Nothing is exploited: the answer is a feature, sent over the intended channel and within the intended protocol, and that it also reports presence is a property of the design. The technique of sending unsolicited signals to observe a person's device is nonetheless studied as an attack, and a party that hardens against it is doing security work. This entry names the property of the system; it does not claim the observer is behaving well.",
   "mechanism": {
     "what": "Someone sends an ordinary, unrequested signal to an address belonging to a person: a message, a call setup, a lookup, a notification. The receiving system answers on its own, below the level at which the person is involved, and the answer or its absence is observable to the sender. Repeating it produces a timeline of when the device was on, awake, connected or nearby.",
     "why_it_matters": "The person is not told, sees nothing and has no record. Encryption of the content does not help, because the fact and the timing of the answer are the signal. A pattern of such answers describes sleep, work, travel and who is in the same place at the same time, and the exposure survives every setting the person can reach.",
@@ -62,6 +63,7 @@
     }
   ],
   "legal": {
+    "applies": "to-processing",
     "provisions": [
       "eu-gdpr-5-1-c",
       "eu-gdpr-13",
@@ -84,7 +86,8 @@
   },
   "related": [
     "DPE-2026-0012",
-    "DPE-2026-0014"
+    "DPE-2026-0014",
+    "DPE-2026-0022"
   ],
   "seen_in_the_wild": {
     "confirmed": false,
@@ -95,8 +98,8 @@
     "procurement": "No unrequested signal from an arbitrary party produces a response that discloses device or user state, demonstrated on delivery.",
     "complaint": "A log of stimuli and responses with the device state per run, the setting state per run, and evidence that nothing was shown on the receiving side.",
     "audit_question": "What does this system answer all by itself, to someone the user never agreed to hear from?",
-    "audit_question_nl": "Wat beantwoordt dit systeem uit zichzelf, aan iemand van wie de gebruiker nooit iets wilde horen?",
-    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "audit_question_nl": "Kan een willekeurige buitenstaander merken of iemands toestel aan staat, zonder dat die persoon iets ziet?",
+    "complaint_nl": "Een proef op twee eigen toestellen: hetzelfde signaal met het toestel aan en uit, met het antwoord en het tijdstip erbij, en wat de ontvangende kant daarvan te zien kreeg.",
     "objection_nl": "Het systeem antwoordt alleen op een geldige aanvraag.",
     "answer_nl": "Vraag wie zo'n aanvraag kan sturen en of de gebruiker daarvan weet."
   },

@@ -55,7 +55,7 @@
     "methods": [
       {
         "tier": "manual",
-        "path": "repro/frontrun/MANUAL.md",
+        "path": "repro/DPE-2026-0001/MANUAL.md",
         "expect": "measurement requests visible before touching the banner"
       },
       {
@@ -65,11 +65,11 @@
       },
       {
         "tier": "bookmarklet",
-        "path": "repro/bookmarklet/frontrun.bookmarklet.txt"
+        "path": "repro/bookmarklet/before-consent.bookmarklet.txt"
       },
       {
         "tier": "script",
-        "path": "repro/frontrun/frontrun.mjs",
+        "path": "repro/DPE-2026-0001/before-consent.mjs",
         "expect": "at least one request to a measurement host before interaction, plus an identifier cookie"
       }
     ],
@@ -104,12 +104,16 @@
         "objection": "Our consent tool handles this.",
         "answer": "Measure it rather than assume it. A tool that blocks cookie placement may leave container loading untouched."
       }
-    ]
+    ],
+    "applies": "to-processing"
   },
   "related": [
     "DPE-2026-0002",
     "DPE-2026-0003",
-    "DPE-2026-0005"
+    "DPE-2026-0004",
+    "DPE-2026-0005",
+    "DPE-2026-0011",
+    "DPE-2026-0020"
   ],
   "seen_in_the_wild": {
     "confirmed": false,
@@ -155,7 +159,7 @@
     "complaint": "A HAR of the no-interaction state, the timestamp of the consent event, and the falsifier list worked through.",
     "audit_question": "Show me a network capture of the homepage before anyone clicks the banner.",
     "audit_question_nl": "Laat een netwerkopname zien van de homepage voordat iemand de banner aanraakt.",
-    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "complaint_nl": "Een opname van de eerste paginaweergave waarin niets is aangeklikt, met het tijdstip van de toestemmingsgebeurtenis ernaast. Daaruit blijkt de volgorde, en de volgorde is de hele vraag.",
     "objection_nl": "Analytics valt onder de uitzondering voor noodzakelijke cookies.",
     "answer_nl": "De uitzondering geldt voor wat nodig is voor een dienst die de bezoeker vroeg. Publieksmeting is nodig voor u, niet voor hem."
   }

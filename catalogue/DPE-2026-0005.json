@@ -13,13 +13,14 @@
     "not_this": "Ordinary page-view analytics is not this entry. The distinguishing feature is capture of in-page behaviour."
   },
   "detection": {
-    "indicator": "A request to a session-recording endpoint of a recording vendor, carrying a site identifier, at page load.",
+    "indicator": "Requests to a host under a different registrable domain carrying a stream of in-page behaviour: serialised DOM mutations, pointer coordinates over time, scroll offsets or key events, batched at an interval unrelated to navigation and tied to a site identifier. The content of the payload settles it, not the identity of the receiving party. Where the payload is compressed or encoded, the volume and the cadence relative to mouse movement are the observable, and that has to be stated as such.",
     "method": "network-with-identifier",
     "qod": 95,
     "capture_requirements": [
       "clean profile",
       "no interaction",
-      "note whether field masking is active; unmasked input raises the stakes considerably"
+      "note whether field masking is active; unmasked input raises the stakes considerably",
+      "move the pointer and type into a field deliberately, then check whether the outgoing volume tracks that activity; a recorder that captures nothing while you move is a different finding"
     ],
     "attribution": [
       "har-pageref",
@@ -71,8 +72,14 @@
         "objection": "The recording servers are in the EU.",
         "answer": "Where the recording is stored says nothing about whether it should have been made. Location is a separate question from lawfulness of collection."
       }
-    ]
+    ],
+    "applies": "to-processing"
   },
+  "related": [
+    "DPE-2026-0001",
+    "DPE-2026-0037",
+    "DPE-2026-0039"
+  ],
   "seen_in_the_wild": {
     "confirmed": false,
     "note": "Observed in practice by the authors but not yet backed by a published reference. Set to false until a citation exists: a claim without a source is exactly what this catalogue holds others to."
@@ -117,7 +124,7 @@
     "complaint": "A capture showing the recording endpoint contacted at load, and whether field masking was active.",
     "audit_question": "Is anything recording mouse movement or keystrokes, and from what moment?",
     "audit_question_nl": "Wordt er muisbeweging of toetsaanslag opgenomen, en vanaf welk moment?",
-    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "complaint_nl": "Een opname waarin bewust met de muis is bewogen en in een veld is getypt, plus de instelling die zegt of invoervelden worden gemaskeerd en sinds wanneer.",
     "objection_nl": "Het is alleen om de gebruikservaring te verbeteren.",
     "answer_nl": "Vraag of de opname invoervelden meeneemt. Dat verschil is groot en wordt zelden uit zichzelf genoemd."
   }

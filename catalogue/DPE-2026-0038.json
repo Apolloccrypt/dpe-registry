@@ -61,6 +61,7 @@
     }
   ],
   "legal": {
+    "applies": "to-processing",
     "provisions": [
       "eu-gdpr-5-1-c",
       "eu-gdpr-5-1-b",
@@ -97,7 +98,7 @@
     "complaint": "The position export for one week, the roster for the same week, and the written answer about the private-use mode.",
     "audit_question": "Show me the track of one vehicle for a Sunday.",
     "audit_question_nl": "Laat de registratie van een voertuig zien voor een zondag.",
-    "complaint_nl": "De uitdraai met posities over een week, het rooster van dezelfde week, en het antwoord over de privestand.",
+    "complaint_nl": "De locatiegegevens van een dienstvoertuig over een weekend, met de instelling die het volgen buiten werktijd zou moeten stoppen en de datum waarop die is ingesteld.",
     "objection_nl": "Het is onze auto.",
     "answer_nl": "Eigendom van de auto zegt wat ermee gereden mag worden, niet wat er over de bestuurder mag worden vastgelegd buiten diensttijd."
   },
@@ -137,5 +138,9 @@
         "Legal provisions linked."
       ]
     }
-  ]
+  ],
+  "seen_in_the_wild": {
+    "confirmed": false,
+    "note": "Observed in practice by the authors but not yet backed by a published reference. Set to false until a citation exists: a claim without a source is exactly what this catalogue holds others to."
+  }
 }

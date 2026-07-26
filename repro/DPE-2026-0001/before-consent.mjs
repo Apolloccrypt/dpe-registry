@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 //
-// DPE registry · reproduction snippet · pattern: frontrun
+// DPE registry · reproduction snippet · entry: DPE-2026-0001
 // "A tag fires before the consent question has been answered."
 //
 // Standalone. One dependency: playwright. No registry tooling is involved, so
 // anyone can run this and reach their own conclusion.
 //
 //   npm i playwright && npx playwright install chromium
-//   node frontrun.mjs pgwoo.nl
+//   node before-consent.mjs pgwoo.nl
 //
 // Writes <domain>-pre.har next to the script. Open it at trace.playwright.dev
 // or in the Chrome devtools network panel; no install needed to read it.
@@ -20,7 +20,7 @@ import { writeFileSync } from 'node:fs';
 
 const target = process.argv[2];
 if (!target) {
-  console.error('usage: node frontrun.mjs <domain>   e.g. node frontrun.mjs pgwoo.nl');
+  console.error('usage: node before-consent.mjs <domain>   e.g. node before-consent.mjs pgwoo.nl');
   process.exit(2);
 }
 const url = target.startsWith('http') ? target : `https://${target}`;
@@ -100,7 +100,7 @@ const idCookies = cookies.filter(c => registrable(c.domain.replace(/^\./, '')) !
 const verdict = measured.length > 0 ? 'FRONTRUN DETECTED' : 'not detected';
 
 console.log(`
-DPE reproduction · pattern frontrun · ${site} · ${new Date().toISOString().slice(0, 10)}
+DPE reproduction · entry DPE-2026-0001 · ${site} · ${new Date().toISOString().slice(0, 10)}
 ${'='.repeat(72)}
 consent banner present   ${bannerText ? 'yes' : 'NO (nothing was asked at all)'}
 requests before answer   ${requests.length} total, ${third.length} third-party

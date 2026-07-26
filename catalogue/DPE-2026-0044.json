@@ -1,0 +1,147 @@
+{
+  "id": "DPE-2026-0044",
+  "name": "Consent weighted towards acceptance",
+  "slug": "consent-weighted-towards-acceptance",
+  "family": "consent",
+  "summary": "The choice is offered on both sides, but accepting takes one action and refusing takes several.",
+  "status": "active",
+  "applies_to": [
+    "web",
+    "mobile-app"
+  ],
+  "not_a_vulnerability": "Nothing is exploited and nothing is broken. Both controls work; the objection is to how they are presented, and a presentation is a design decision rather than a defect.",
+  "mechanism": {
+    "what": "The dialogue offers an accept control and a refuse control, and the two are not comparable. Accepting completes in one action on the first layer; refusing requires opening a second layer, switching off a list of purposes and confirming. The controls also differ in area, in contrast against their background and in reading order, so one is found before the other is looked for.",
+    "why_it_matters": "The choice exists and the cost of making it differs by a factor. Someone who is tired, in a hurry or reading on a small screen takes the cheap route, which is the route the operator chose to make cheap. The result is recorded as consent and used as evidence that people agreed.",
+    "common_causes": [
+      "template of a consent product used at its default settings",
+      "refusal implemented as a settings screen because that was the cheapest place to put it",
+      "styling of the accept control tuned for conversion, and never compared with the other one",
+      "mobile layout inherited from the desktop one, where the ratio between the controls is different"
+    ],
+    "not_this": "Where no refusal exists at all, that is No refusal option. Where refusing costs money or access, that is Pay or accept as the only choice. Where refusal is offered and nothing changes on the wire, that is Refusal without effect. Here the refusal is present, free and effective, and the fault is that reaching it takes more work than accepting."
+  },
+  "detection": {
+    "indicator": "Counted from the same dialogue at the same window size: the number of actions needed to reach a stored negative consent state is higher than the number needed to reach a stored positive one, or the two controls differ measurably in area or in contrast against their background. Record the counts and the measured values together with an image of every layer, so a reader can recheck them without visiting the site.",
+    "method": "static-source",
+    "qod": 65,
+    "capture_requirements": [
+      "record every layer of the dialogue as an image, at one window size and one zoom level",
+      "count actions from the first screen to a stored state, and read the stored consent state back after each route; an unregistered click is a failed click and not a refusal",
+      "measure area and contrast from the rendered page rather than from the stylesheet, since a later rule may override an earlier one",
+      "repeat on a mobile viewport, where the ratio between the two controls is frequently different",
+      "record the country the capture egressed from; dialogues are often region-dependent"
+    ],
+    "attribution": [
+      "document-diff"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "A refusal completes in the same number of actions on a layer the inspection did not open, for instance inside a shadow root or behind an animation.",
+      "checkable": "manual",
+      "if_true": "drop",
+      "note": "The most important one: it turns a finding into a measurement error. Inspect the composed tree and wait out the animation before counting."
+    },
+    {
+      "condition": "The difference in presentation comes from a platform component the operator did not style, and is identical everywhere that component is used.",
+      "checkable": "not-from-capture",
+      "if_true": "weaken",
+      "note": "It narrows the finding to the choice of component and its default, rather than removing it. A question for the operator."
+    },
+    {
+      "condition": "The dialogue sets no consent-bound technology either way, so no choice was being sought.",
+      "checkable": "automated",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The counted difference is one action and the controls are comparable in area and contrast.",
+      "checkable": "manual",
+      "if_true": "weaken",
+      "note": "Report the numbers and let the reader weigh them. A catalogue entry is not a threshold for what counts as too much."
+    }
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+      }
+    ],
+    "public_scanners": []
+  },
+  "legal": {
+    "applies": "to-processing",
+    "provisions": [
+      "eu-gdpr-6-1-a",
+      "eu-gdpr-7-4",
+      "nl-tw-11-7a"
+    ],
+    "caselaw": [
+      "cjeu-planet49"
+    ],
+    "rebuttals": [
+      {
+        "objection": "Both buttons are there, so the visitor has a free choice.",
+        "answer": "Freely given is about the conditions of the choice and not only about its presence. The evidence is a count of actions and a measurement of area and contrast, and it is evidence the operator can reproduce on their own site in a minute."
+      },
+      {
+        "objection": "This is the standard layout our consent supplier ships.",
+        "answer": "The choice of supplier and of its default settings is the operator's. The question does not change: how many actions does a refusal take on the delivered site, and how many does an acceptance take."
+      },
+      {
+        "objection": "Most visitors accept anyway.",
+        "answer": "That is the outcome the presentation was built to produce, so it cannot also be the justification for it. What the numbers show is how the choice was framed, not what people wanted."
+      }
+    ]
+  },
+  "seen_in_the_wild": {
+    "confirmed": false,
+    "note": "Observed in practice by the authors but not yet backed by a published reference. Set to false until a citation exists: a claim without a source is exactly what this catalogue holds others to."
+  },
+  "related": [
+    "DPE-2026-0002",
+    "DPE-2026-0003",
+    "DPE-2026-0040"
+  ],
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created to close a gap named in the July 2026 audit.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ],
+  "schema_version": "2.0",
+  "name_nl": "Ongelijk vormgegeven toestemmingskeuze",
+  "summary_nl": "De keuze wordt aan beide kanten geboden, maar accepteren kost een handeling en weigeren er meerdere.",
+  "in_practice": {
+    "dpia": "Verify how many actions a refusal takes on the delivered site, rather than recording that a consent tool is in place.",
+    "procurement": "On delivery, refusing takes no more actions than accepting and the two controls are comparable in area and contrast, demonstrated with an image of every layer.",
+    "complaint": "An image of each layer of the dialogue, the action count for each route, and the consent state stored by each control.",
+    "audit_question": "How many clicks does it take to refuse here, and how many to accept?",
+    "audit_question_nl": "Hoeveel klikken kost weigeren bij u, en hoeveel kost accepteren?",
+    "complaint_nl": "Schermafdrukken van elke laag van de dialoog, met per route het aantal handelingen tot de keuze is opgeslagen, en wat er per knop wordt opgeslagen.",
+    "objection_nl": "Beide knoppen staan er, dus de bezoeker kan vrij kiezen.",
+    "answer_nl": "Vrij gegeven gaat over de omstandigheden van de keuze, niet alleen over het bestaan ervan. Tel de handelingen aan beide kanten en leg de twee naast elkaar."
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "id": "DPE-2026-0048",
+  "name": "Internal access wider than the role",
+  "slug": "internal-access-wider-than-the-role",
+  "family": "data",
+  "summary": "Everyone with an account can open every record, because access follows the system rather than the task.",
+  "status": "active",
+  "applies_to": [
+    "backend"
+  ],
+  "not_a_vulnerability": "No control is bypassed. Every account does exactly what it was authorised to do, and the objection is to the authorisation, which no vulnerability register has a place to record.",
+  "mechanism": {
+    "what": "Accounts are created with a role that grants the whole set: every patient, every client, every case. The system supports narrower roles, and configuring them requires knowing who needs what, so the broad role is granted and stays. Access logging is switched on, and nobody reads it unless something has already gone wrong.",
+    "why_it_matters": "Whether a record is opened then depends on the curiosity of whoever holds an account rather than on whether they have anything to do with it. That is the mechanism behind most incidents involving people who are known locally, and behind the silence of people who would rather not tell their care provider something. The person cannot see who opened their file and usually learns of it only because somebody talked.",
+    "common_causes": [
+      "role model taken from the supplier's default and never narrowed",
+      "emergency access granted permanently instead of per case",
+      "temporary staff added to an existing broad role because that is quicker",
+      "access logging switched on without anyone reviewing it"
+    ],
+    "not_this": "Data reaching a party outside the organisation is covered by the entries for that recipient; this one stays inside. Keeping records longer than the term is a retention question. The fault here is that the number of people who can reach a record follows the system's default rather than what each of them does."
+  },
+  "detection": {
+    "indicator": "The authorisation configuration exported from the system shows a role that can reach records beyond the ones its task requires, and the access log over the same period shows records opened by accounts with no recorded relationship to the person concerned. Both are the operator's own sources, and the finding is the difference between what the role needs and what it can reach, expressed as the number of accounts that can open one record.",
+    "method": "document-comparison",
+    "qod": 95,
+    "capture_requirements": [
+      "ask for the authorisation configuration as the system exports it, and for a sample of the access log over the same period, each with its date",
+      "count accounts rather than roles; a role held by six hundred people is a number and not a category",
+      "establish whether emergency access is granted per case and time-limited, or standing",
+      "ask whether the log is reviewed, by whom and how often, since a log nobody reads is a record and not a control",
+      "use your own record where you can: an access request on your own file is the one route that needs nobody's cooperation"
+    ],
+    "attribution": [
+      "document-diff",
+      "vendor-statement"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "The broad role exists but is held by a small named group whose task requires it.",
+      "checkable": "manual",
+      "if_true": "weaken",
+      "note": "Then the question moves to the size of that group and to what happens when someone leaves it."
+    },
+    {
+      "condition": "Access is technically possible but every opening requires a reason that is recorded and reviewed.",
+      "checkable": "manual",
+      "if_true": "reclassify",
+      "note": "A control that runs afterwards is weaker than one that runs before, but it is a control. State which of the two was found."
+    },
+    {
+      "condition": "The wide access follows from a statutory duty that names it.",
+      "checkable": "not-from-capture",
+      "if_true": "reclassify"
+    },
+    {
+      "condition": "The document supplied describes intended roles rather than the configuration in the system.",
+      "checkable": "manual",
+      "if_true": "drop",
+      "note": "The most common measurement error here. The document names roles the system does not have; ask for the export from the system itself."
+    }
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+      }
+    ],
+    "public_scanners": []
+  },
+  "legal": {
+    "applies": "to-processing",
+    "provisions": [
+      "eu-gdpr-5-1-c",
+      "eu-gdpr-25",
+      "eu-gdpr-5-2"
+    ],
+    "rebuttals": [
+      {
+        "objection": "Everyone here has a duty of confidentiality.",
+        "answer": "Confidentiality binds what someone may do with what they saw. It does not decide who should have been able to see it, and it cannot be enforced in advance."
+      },
+      {
+        "objection": "We log every access.",
+        "answer": "A log establishes what happened; it does not limit what can happen. Ask who reads it, how often, and what followed the last time something was found."
+      },
+      {
+        "objection": "Narrowing the roles would get in the way of the work.",
+        "answer": "That claim has a testable form. Name the situations in which someone needs a record outside their own work, and grant those per case with a reason recorded at the moment of access."
+      }
+    ]
+  },
+  "seen_in_the_wild": {
+    "confirmed": false,
+    "note": "Observed in practice by the authors but not yet backed by a published reference. Set to false until a citation exists: a claim without a source is exactly what this catalogue holds others to."
+  },
+  "related": [
+    "DPE-2026-0034",
+    "DPE-2026-0043"
+  ],
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created to close a gap named in the July 2026 audit.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ],
+  "schema_version": "2.0",
+  "name_nl": "Interne toegang ruimer dan de functie",
+  "summary_nl": "Iedereen met een account kan elk dossier openen, omdat de toegang het systeem volgt en niet de taak.",
+  "in_practice": {
+    "dpia": "Verify how many accounts can reach a single record, rather than recording that a role model and access logging exist.",
+    "procurement": "On delivery, roles grant access to the records their task requires, demonstrated with an export of the authorisation configuration from the system itself.",
+    "complaint": "The authorisation configuration as exported by the system, a sample of the access log over the same period, and the count of accounts that can open one record.",
+    "audit_question": "How many people here can open my file, and what would have stopped them?",
+    "audit_question_nl": "Hoeveel mensen hier kunnen mijn dossier openen, en wat had hen daarvan weerhouden?",
+    "complaint_nl": "De autorisatiematrix zoals het systeem hem uitvoert, met een steekproef uit het toegangslogboek over dezelfde periode, en het aantal accounts dat bij een enkel dossier kan.",
+    "objection_nl": "Iedereen hier heeft een geheimhoudingsplicht.",
+    "answer_nl": "Geheimhouding gaat over wat iemand met een dossier mag doen, niet over wie het had moeten kunnen openen. Vraag naar het aantal accounts."
+  }
+}

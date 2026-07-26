@@ -11,18 +11,24 @@ vraag die je stelt, waaraan je een deugdelijk antwoord herkent, en waaraan je ee
 ontwijkend antwoord herkent. Dat laatste is wat een niet-technicus het hardst
 nodig heeft, want daar wordt hij afgeserveerd.
 """
-import glob, html, json, pathlib
+import glob, importlib.util, json, pathlib
+
+# site.py heet net zo als een module van Python zelf, en die staat bij het
+# starten al in sys.modules. Een gewone import levert dus de verkeerde op.
+_p = pathlib.Path(__file__).resolve().parent / "site.py"
+_spec = importlib.util.spec_from_file_location("dpe_site", _p)
+S = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(S)
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / "site" / "register" / "uitleg.html"
-
-
-def e(s):
-    return html.escape(str(s), quote=True)
+e = S.e
 
 
 # Symptomen zoals een jurist of functionaris ze tegenkomt, niet zoals een meter
 # ze ziet. De formulering komt uit wat er in een DPIA of een gesprek staat.
+GEBOUWD = "26 juli 2026"
+
 SYMPTOMS = [
     ("Er staat een cookiebanner op de site", ["DPE-2026-0001", "DPE-2026-0002", "DPE-2026-0003"],
      "Een banner zegt niets over wat hij tegenhoudt. Deze drie gaan over het moment, het effect van de keuze, en of er uberhaupt geweigerd kan worden."),
@@ -78,6 +84,30 @@ SYMPTOMS = [
      "Vraag welke rechten de uitbreiding vraagt en welke functie die rechten nodig heeft. Verklaarde toegang bestaat ook als er nog niets is verstuurd."),
     ("Twee overheidsregistraties worden gekoppeld", ["DPE-2026-0043", "DPE-2026-0017"],
      "Beide instanties mogen het persoonsnummer hebben. De vraag is of de koppeling zelf een grondslag heeft."),
+    ("Er staat een chatvenster of chatbot op de site", ["DPE-2026-0006", "DPE-2026-0005", "DPE-2026-0009"],
+     "Een chatvenster is meestal een venster van een andere partij. Alles wat de bezoeker daar intypt komt daar terecht, en het venster staat er ook als er niemand chat."),
+    ("De site is gebouwd of wordt beheerd door een extern bureau", ["DPE-2026-0011", "DPE-2026-0010", "DPE-2026-0009"],
+     "Vraag wie er meetcode mag toevoegen zonder de site te wijzigen, en wie de privacyverklaring bijhoudt. Dat zijn bijna nooit dezelfde mensen, en daar ontstaat het gat."),
+    ("Er staat een video, een kaart of een lettertype van een andere partij op de site", ["DPE-2026-0009", "DPE-2026-0020"],
+     "Voor de bezoeker is het een onderdeel van uw pagina. Voor de partij aan de andere kant is elke paginaweergave een bezoek, ook als niemand op de video klikt."),
+    ("Wij hebben laten scannen en er kwam niets uit", ["DPE-2026-0029", "DPE-2026-0020", "DPE-2026-0011"],
+     "Een schone uitkomst en een mislukte meting zien er hetzelfde uit. Vraag hoeveel geldige metingen eronder liggen en wat de scan niet kon zien."),
+    ("Wij zijn een zorg-, welzijns- of gemeentelijke organisatie", ["DPE-2026-0019", "DPE-2026-0048", "DPE-2026-0006"],
+     "Bij deze organisaties verraadt de naam van een pagina vaak al waarom iemand er is, en binnen de muren is de vraag wie er bij een dossier kan."),
+    ("Er wordt een app uitgedeeld aan medewerkers of clienten", ["DPE-2026-0013", "DPE-2026-0028", "DPE-2026-0046"],
+     "Vraag om de lijst met meegeleverde onderdelen en om een opname van de eerste keer opstarten. Wat in het pakket zit en wat er verstuurt zijn twee vragen."),
+    ("Wij kopen iets in en moeten er eisen over opschrijven", ["DPE-2026-0001", "DPE-2026-0002", "DPE-2026-0014", "DPE-2026-0010"],
+     "Dit is de goedkoopste plek om het te regelen. Elke entry bevat een inkoopeis die op de oplevering te toetsen is, en die hoeft u niet zelf te toetsen."),
+    ("Iemand heeft een inzageverzoek gedaan en wij weten niet wat we hebben", ["DPE-2026-0010", "DPE-2026-0035", "DPE-2026-0016"],
+     "Wat er over iemand bestaat, staat deels bij partijen die u niet hebt aangewezen en deels in kopieen die een verwijdering niet bereikt hebben."),
+    ("De leverancier zegt dat alles binnen de EU blijft", ["DPE-2026-0009", "DPE-2026-0020", "DPE-2026-0027"],
+     "Waar iets staat, waar een bedrijf gevestigd is en waar het verkeer heen gaat zijn drie verschillende dingen. Vraag welke van de drie is gemeten en met welke landendatabase."),
+    ("De cookiebanner heeft twee knoppen, maar weigeren kost meer moeite", ["DPE-2026-0044", "DPE-2026-0003", "DPE-2026-0040"],
+     "Tel de handelingen aan beide kanten en meet de knoppen. Dat is geen mening maar een telling, en u kunt hem zelf doen."),
+    ("Er staat een camera aan de gevel of bij de deur", ["DPE-2026-0047", "DPE-2026-0024"],
+     "Vraag wat de camera in beeld heeft en welk deel daarvan nodig was. Zodra het beeld verder reikt dan het eigen terrein, verandert de vraag."),
+    ("Wij bewaren logbestanden en niemand weet hoe lang", ["DPE-2026-0045", "DPE-2026-0034"],
+     "Vraag om de oudste regel die er nog staat en om de termijn die zegt dat hij er mag staan. Die twee liggen zelden bij dezelfde persoon."),
 ]
 
 
@@ -87,9 +117,11 @@ def build():
         d = json.loads(pathlib.Path(f).read_text(encoding="utf-8"))
         ent[d["id"]] = d
 
+    # De kaart wijst naar het vraagblok op deze pagina, niet naar de Engelse
+    # detailpagina. Wie op een symptoom klikt wil eerst de vraag zien.
     sym = "".join(f'''<div class="sy">
   <h3>{e(t)}</h3><p>{e(why)}</p>
-  <div class="lk">{"".join(f'<a href="{e(i)}/">{e(i)} &middot; {e(ent[i]["name_nl"] if ent.get(i, {}).get("name_nl") else ent.get(i, {}).get("name", i))}</a>' for i in ids if i in ent)}</div>
+  <div class="lk">{"".join(f'<a href="#v-{e(i)}">{e(i)} &middot; {e(ent[i]["name_nl"] if ent.get(i, {}).get("name_nl") else ent.get(i, {}).get("name", i))}</a>' for i in ids if i in ent)}</div>
 </div>''' for t, ids, why in SYMPTOMS)
 
     rows = []
@@ -100,7 +132,7 @@ def build():
             continue
         # het eerste rebuttal is doorgaans het antwoord dat je zult krijgen
         rb = (x["legal"].get("rebuttals") or [{}])[0]
-        rows.append(f'''<div class="qa">
+        rows.append(f'''<div class="qa" id="v-{e(i)}">
   <div class="qa-id"><a href="{e(i)}/">{e(i)}</a><span>{e(x.get("name_nl") or x["name"])}</span></div>
   <div class="qa-q"><span class="lab">Stel deze vraag</span><b>{e(q)}</b></div>
   <div class="qa-g"><span class="lab">Een deugdelijk antwoord</span>
@@ -111,11 +143,7 @@ def build():
 </div>''')
 
     # De volledige lijst, gegroepeerd per familie, onderaan dezelfde pagina.
-    FAM = {"consent": "Toestemming", "data": "Gegevens", "chain": "Keten", "transfer": "Doorgifte",
-           "transparency": "Transparantie", "retention": "Bewaring", "telemetry": "Telemetrie",
-           "method": "Methode"}
-    SYS = {"web": "web", "mobile-app": "app", "firmware": "firmware", "iot": "IoT",
-           "vehicle": "voertuig", "desktop": "desktop", "api": "API", "network-device": "netwerkapparaat"}
+    FAM, SYS = S.FAM, S.SYS
     fams = {}
     for x in ent.values():
         fams.setdefault(x["family"], []).append(x)
@@ -130,26 +158,22 @@ def build():
                 f'<td class="lw">{e(", ".join(SYS.get(s2, s2) for s2 in x["applies_to"]))}</td></tr>')
         lijst.append("</tbody></table>")
 
-    page = (TPL.replace("{sym}", sym).replace("{qa}", "".join(rows))
-               .replace("{n}", str(len(ent))).replace("{lijst}", "".join(lijst)))
+    page = (S.head("Van symptoom naar nummer · DPE-register",
+                   "Van wat je in een DPIA of een leveranciersverklaring tegenkomt naar het "
+                   "nummer in de DPE-catalogus, met per fout de vraag die je stelt.",
+                   up="", cur="uitleg.html", css=CSS)
+            + BODY.replace("{sym}", sym).replace("{qa}", "".join(rows))
+                  .replace("{n}", str(len(ent))).replace("{lijst}", "".join(lijst))
+                  .replace("{gebouwd}", GEBOUWD)
+            + S.foot(up=""))
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(page, encoding="utf-8")
     print(f"triagepagina met {len(SYMPTOMS)} symptomen en {len(rows)} vragen -> {OUT}")
 
 
-TPL = r"""<title>Van symptoom naar nummer · DPE</title>
-<style>
-:root{--bg:#FCFCFE;--surface:#FFF;--surface-2:#F7F7FB;--ink:#161620;--ink-2:#54545F;--ink-3:#8B8B97;
- --line:#E9E9F0;--line-2:#F3F3F8;--accent:#4269D0;--soft:#EDF1FC;--aline:#D5E0F7;
- --ok:#3CA951;--ok-bg:#EAF6EE;--ok-line:#CDE9D6;--warn-bg:#FBF3DD;--warn-line:#EFDFAE;--warn-ink:#8A6200;
- --shadow:0 1px 2px rgba(20,20,50,.04),0 14px 34px -20px rgba(20,20,50,.16);
- --sans:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
- --mono:"DM Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6}
-.in{max-width:980px;margin:0 auto;padding:0 24px 80px}
-.bar{border-bottom:1px solid var(--line);padding:16px 0;margin-bottom:34px;font-size:13.5px}
-.bar a{color:var(--accent);text-decoration:none}
+CSS = r"""
+footer .meta{font-size:12.5px;color:var(--ink-3);margin-top:10px}
+.in{max-width:980px;padding-bottom:20px;font-size:16px}
 .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 10px}
 h1{font-size:clamp(28px,4.4vw,42px);font-weight:600;letter-spacing:-.025em;margin:0;line-height:1.1;text-wrap:balance}
 .lede{font-size:18.5px;color:var(--ink-2);max-width:64ch;margin:14px 0 0}
@@ -190,10 +214,12 @@ h2{font-size:24px;font-weight:600;letter-spacing:-.02em;margin:44px 0 8px}
 .ls{display:block;font-size:13.5px;color:var(--ink-3);margin-top:2px;line-height:1.5}
 .lw{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);white-space:nowrap;text-align:right}
 @media(max-width:640px){.lw{display:none}}
-footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);color:var(--ink-3);font-size:13px}
-</style>
-<div class="in">
-<nav class="bar"><a href="https://totaledigitalewaarborging.nl/">Totale Digitale Waarborging</a> &middot; <a href="./">DPE-database</a> &middot; <span>Van symptoom naar nummer</span> &middot; <a href="all.json">JSON</a> &middot; <a href="https://github.com/Apolloccrypt/dpe-registry">bron en bijdragen</a></nav>
+.slot{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);color:var(--ink-3);font-size:13px}
+.slot p{max-width:72ch}
+"""
+
+BODY = r"""<div class="in">
+<nav class="bar" aria-label="Kruimelpad"><a href="./">Database</a><span class="sp">/</span><span>Van symptoom naar nummer</span></nav>
 <p class="eyebrow">Data Protection Exposures &middot; as 04, privacy</p>
 <h1>Je hoeft niet te kunnen meten om te weten wat je moet vragen</h1>
 <p class="lede">De catalogus staat vol netwerkopnames en indicatoren. Dat is voor wie zelf meet.
@@ -230,8 +256,11 @@ heen, meestal zonder opzet, omdat de leverancier een andere vraag beantwoordt da
     <p style="font-size:13.5px;color:var(--ink-3)">Aangetroffen, niet aangetroffen, of niet
     getoetst. Dat laatste is geen uitkomst.</p></div>
   <div class="sy"><h3>3 · Stel een termijn</h3>
-    <p>Geen van deze bevindingen is een datalek, dus er loopt geen meldtermijn van 72 uur. Vier
-    weken is redelijk voor iets dat neerkomt op een instelling wijzigen.</p>
+    <p>Deze bevindingen zijn in de regel geen datalek: een datalek veronderstelt een inbreuk op de
+    beveiliging en dit zijn bouwkeuzes. Er loopt dus meestal geen meldtermijn van 72 uur. Beoordeel
+    dat wel apart wanneer er inloggegevens of bijzondere gegevens onbedoeld bij een derde
+    terechtkomen; dan kunnen beide waar zijn. Dertig dagen is redelijk voor iets dat neerkomt op een
+    instelling wijzigen.</p>
     <p style="font-size:13.5px;color:var(--ink-3)">DPE-2026-0001 herstellen voor [datum],
     aantonen met een hermeting volgens dezelfde methode.</p></div>
   <div class="sy"><h3>4 · Laat hermeten</h3>
@@ -252,6 +281,13 @@ meting: een netwerkopname met een datum, of een uitdraai uit het beheerpaneel. W
 geregeld, kan dat leveren. Wie erover moet nadenken, weet het niet.</p>
 <p>Deze catalogus kent geen ernst toe en wijst niemand aan. Of een concreet geval onrechtmatig is,
 stelt de Autoriteit Persoonsgegevens of de rechter vast.</p>
+<p class="meta">Verder lezen, alles in de bron:
+<a href="https://github.com/Apolloccrypt/dpe-registry/blob/main/METHOD.md">de meetmethode</a> &middot;
+<a href="https://github.com/Apolloccrypt/dpe-registry/blob/main/WANTED.md">wat er nog niet af is</a> &middot;
+<a href="https://github.com/Apolloccrypt/dpe-registry/blob/main/CONTRIBUTING.md">hoe je bijdraagt</a> &middot;
+<a href="https://github.com/Apolloccrypt/dpe-registry/tree/main/repro">naspelen</a></p>
+<p class="meta">Schema 2.0 &middot; gebouwd op {gebouwd} &middot; licentie CC BY 4.0 &middot;
+nummers zijn permanent en worden nooit hergebruikt.</p>
 </footer>
 </div>
 """

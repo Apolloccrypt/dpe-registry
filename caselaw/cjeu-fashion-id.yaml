@@ -14,7 +14,7 @@ relevance: >
   die data niet, dat doet de leverancier" is daarmee geen antwoord.
   Ook de grens telt: de verantwoordelijkheid reikt tot het verzenden, niet
   verder. Records horen die grens te respecteren.
-patterns: [hotlink, handover, crosswalk]
+entries: [DPE-2026-0008, DPE-2026-0009, DPE-2026-0013, DPE-2026-0016, DPE-2026-0020, DPE-2026-0046]
 supports: true
 url: "https://curia.europa.eu/juris/liste.jsf?num=C-40/17"
 verified: true

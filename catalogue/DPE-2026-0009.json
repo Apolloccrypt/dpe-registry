@@ -1,7 +1,7 @@
 {
   "id": "DPE-2026-0009",
   "name": "Third-party resource loading",
-  "family": "transfer",
+  "family": "chain",
   "summary": "A resource loaded straight from a third party makes every page view a transfer.",
   "mechanism": {
     "what": "A font, script library or image is loaded directly from an external provider instead of being served by the site. Each page view sends the visitor's IP address, and often more, to that provider.",
@@ -13,7 +13,7 @@
     "not_this": "This entry is about the mechanism of loading, not about the destination country. Where the data goes is a separate axis; a hotlink within the EEA is still a hotlink."
   },
   "detection": {
-    "indicator": "A subresource request to a host under a different registrable domain, present in the initial document, issued without any interaction.",
+    "indicator": "A subresource request to a host under a different registrable domain, present in the initial document, issued without any interaction, in the no-interaction capture.",
     "method": "network-observed",
     "qod": 90,
     "capture_requirements": [
@@ -31,17 +31,29 @@
       "if_true": "drop"
     },
     {
+      "condition": "The host under the other registrable domain is operated by the controller itself or by a processor on its behalf, and nothing there collects on its own account.",
+      "checkable": "manual",
+      "if_true": "drop",
+      "note": "Common: a separate asset domain exists to keep cookies off it. Establish it from the name resolution and from who answers, not from the name alone."
+    },
+    {
+      "condition": "The resource loads only after the visitor invoked the function it belongs to, such as a map or a video the visitor started.",
+      "checkable": "automated",
+      "if_true": "reclassify",
+      "note": "Then it is not a transfer on every page view. Whether the invocation was informed is a separate question."
+    },
+    {
       "condition": "The request carries no data capable of identifying the visitor.",
       "checkable": "manual",
       "if_true": "weaken",
-      "note": "An IP address reaches the provider in any case; that is the core of the German Google Fonts ruling."
+      "note": "An IP address reaches the provider in any case, and under C-582/14 that address is personal data for the operator where legal means to identify the visitor exist."
     }
   ],
   "reproduction": {
     "methods": [
       {
         "tier": "bookmarklet",
-        "path": "repro/bookmarklet/frontrun.bookmarklet.txt"
+        "path": "repro/bookmarklet/before-consent.bookmarklet.txt"
       },
       {
         "tier": "script",
@@ -61,22 +73,29 @@
       "eu-gdpr-6-1-a"
     ],
     "caselaw": [
+      "cjeu-breyer",
       "lg-muenchen-google-fonts",
       "cjeu-fashion-id"
     ],
     "rebuttals": [
       {
         "objection": "An IP address is not personal data here.",
-        "answer": "The Munich ruling on Google Fonts treats hotlinking a provider resource as a transfer of personal data, precisely because the IP reaches the provider."
+        "answer": "The Court of Justice held in C-582/14 (Breyer) that a dynamic IP address is personal data for the operator of a site where legal means exist to identify the visitor. That is the ground. A German first-instance ruling on hotlinked fonts applied it to this exact mechanism and awarded damages, but it binds nobody and other German courts have gone the other way. Cite it as illustration, never as the ground."
       },
       {
         "objection": "Our hosting is in the Netherlands.",
         "answer": "Storage location and loaded components are different things. The transfer runs through what the page pulls in, not through where it is stored."
       }
-    ]
+    ],
+    "applies": "to-processing"
   },
   "related": [
-    "DPE-2026-0008"
+    "DPE-2026-0008",
+    "DPE-2026-0015",
+    "DPE-2026-0016",
+    "DPE-2026-0020",
+    "DPE-2026-0025",
+    "DPE-2026-0030"
   ],
   "seen_in_the_wild": {
     "confirmed": false,
@@ -122,7 +141,7 @@
     "complaint": "A capture of the initial document with every subresource host listed.",
     "audit_question": "Which hosts does the page contact before any script of yours has run?",
     "audit_question_nl": "Welke hosts benadert de pagina voordat een script van u heeft gedraaid?",
-    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "complaint_nl": "De lijst met externe bronnen die de pagina bij het openen inlaadt zonder dat er iets is aangeklikt, en per bron wie hem levert en welke functie hem nodig heeft.",
     "objection_nl": "Onze hosting staat in Nederland.",
     "answer_nl": "Waar het staat en wat de pagina inlaadt zijn twee dingen. De doorgifte loopt via het inladen."
   }

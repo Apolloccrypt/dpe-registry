@@ -63,6 +63,7 @@
     }
   ],
   "legal": {
+    "applies": "to-processing",
     "provisions": [
       "eu-gdpr-5-1-c",
       "eu-gdpr-6-1-a",
@@ -96,7 +97,7 @@
     "complaint": "The authorisation request as sent with the scope values marked, a screenshot of the consent screen of the same date, and what happened when a single item was declined.",
     "audit_question": "Read me the scope of your login request, and name the feature behind each item.",
     "audit_question_nl": "Lees me voor wat er in de scope van uw inlogverzoek staat, en noem bij elk onderdeel de functie die het gebruikt.",
-    "complaint_nl": "Het inlogverzoek zoals het verstuurd is, met de gevraagde onderdelen aangewezen, en een schermafdruk van hetzelfde moment.",
+    "complaint_nl": "De lijst met gegevens die bij het inloggen wordt opgevraagd, naast wat er nodig is om vast te stellen wie iemand is. Het verschil tussen die twee is de vraag.",
     "objection_nl": "De gebruiker heeft op het scherm van de aanbieder toestemming gegeven.",
     "answer_nl": "Toestemming moet specifiek zijn. Een knop die tegelijk inloggen en een adresboek weggeeft is dat niet, en de mensen in dat adresboek is niets gevraagd."
   },
@@ -136,5 +137,9 @@
         "Legal provisions linked."
       ]
     }
-  ]
+  ],
+  "seen_in_the_wild": {
+    "confirmed": false,
+    "note": "Observed in practice by the authors but not yet backed by a published reference. Set to false until a citation exists: a claim without a source is exactly what this catalogue holds others to."
+  }
 }

@@ -19,10 +19,15 @@ methodological: anything you can only see by logging in, submitting data or
 circumventing a control cannot be reproduced by a third party, and a finding
 nobody else can check is not a finding.
 
-So: no logging into accounts that are not yours, no submitting forms with real
-data, no circumventing authentication, no load beyond what a normal visit
-generates. Where a fault can only be established behind such a boundary, record
-it as reconstructed rather than measured, and say so.
+So: no data belonging to other people, and no data you are not willing to hand
+over yourself. Your own data in your own account is allowed, and a few entries
+require it: an identity check, a signed-in session, a real payment. Where you do
+that, note in the finding that it was a participating measurement, so a reader
+knows the observation came from inside the flow rather than from the outside.
+Beyond that: no circumventing authentication, no accounts that are not yours, no
+load beyond what a normal visit generates. Where a fault can only be established
+behind a boundary you may not cross, record it as reconstructed rather than
+measured, and say so.
 
 ## 1. Define the scope before you measure
 

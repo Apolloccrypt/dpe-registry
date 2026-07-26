@@ -77,11 +77,15 @@
         "objection": "We only use it for crash reporting.",
         "answer": "Then the traffic should be limited to crashes. Establish what the payload contains when nothing has crashed."
       }
-    ]
+    ],
+    "applies": "to-processing"
   },
   "related": [
+    "DPE-2026-0008",
     "DPE-2026-0012",
-    "DPE-2026-0008"
+    "DPE-2026-0028",
+    "DPE-2026-0042",
+    "DPE-2026-0046"
   ],
   "seen_in_the_wild": {
     "confirmed": false,
@@ -124,7 +128,7 @@
     "complaint": "A static inventory plus a capture from a fresh install before the first screen is dismissed.",
     "audit_question": "List every third-party library you ship and what each one sends home.",
     "audit_question_nl": "Noem elke bibliotheek van derden die u meelevert en wat elk daarvan naar huis stuurt.",
-    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "complaint_nl": "De lijst met meegeleverde onderdelen van de app, plus een opname van de eerste start na een verse installatie, voordat er iets is aangeraakt.",
     "objection_nl": "Die SDK is de verantwoordelijkheid van de leverancier.",
     "answer_nl": "U hebt hem meegeleverd. Dat maakt u medeverantwoordelijk voor wat er daardoor vertrekt."
   }

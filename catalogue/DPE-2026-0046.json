@@ -1,0 +1,146 @@
+{
+  "id": "DPE-2026-0046",
+  "name": "Location from an app offered for resale",
+  "slug": "location-from-an-app-resold",
+  "family": "chain",
+  "summary": "Location collected by a component in an app turns up on offer as a dataset from a party the user never met.",
+  "status": "active",
+  "applies_to": [
+    "mobile-app"
+  ],
+  "not_a_vulnerability": "Nothing is exploited. The component collects what it was configured to collect and the onward supply is a commercial arrangement, which no vulnerability register has a place to record.",
+  "mechanism": {
+    "what": "A component inside an application reads the location the user granted to that application and forwards it to its own infrastructure. That party is a dealer rather than a user of the values: they are pooled with those from other applications and offered onward as a product, by country, by period or by audience.",
+    "why_it_matters": "Location says where someone sleeps, works, prays and receives care, and a handful of points is enough to single a person out. The permission was granted to one application for one purpose, and the step that follows happens where nothing on the screen refers to it. Once the set is sold it is held by parties the person cannot name and therefore cannot ask.",
+    "common_causes": [
+      "monetisation component included for revenue, with collection enabled by default",
+      "a permission granted for a map or a delivery feature that every component in the process can read",
+      "a supply agreement in which the data is the payment for the component",
+      "a component inherited from a framework or from a white-label build"
+    ],
+    "not_this": "A component collecting on its own account inside the app is Bundled component collection, and that entry stops at the first recipient. This one is the step after it: the same values offered onward as a product. It needs evidence beyond the capture, and where that evidence is missing the honest finding is the other entry rather than this one."
+  },
+  "detection": {
+    "indicator": "Two things together: a capture of the running application shows location values leaving to a host of a component, and an offer, catalogue entry or supply document from a party downstream describes a dataset of the same kind with a coverage that includes this application or its category. The finding is the pair; either half on its own is a different and smaller finding.",
+    "method": "third-party-confirmed",
+    "qod": 80,
+    "capture_requirements": [
+      "capture on a device you own, from a fresh install, with the location permission granted as an ordinary user would grant it",
+      "record the precision of the values as sent; a rounded value and an exact one are different findings",
+      "keep the offer or catalogue entry as it stood on the measurement date, with its date, because such documents are withdrawn quietly",
+      "state the link between the two halves explicitly: whether it rests on an identifier, on a named source, or only on a category description"
+    ],
+    "attribution": [
+      "process-trace",
+      "vendor-statement",
+      "document-diff"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "The offer names a category of sources and nothing ties the measured application to it.",
+      "checkable": "manual",
+      "if_true": "weaken",
+      "note": "Common, and it is where this finding usually fails. Without the link the report says that location leaves to the component, and no more."
+    },
+    {
+      "condition": "The values leave only while the user has the relevant feature open, and go to the party that delivers it.",
+      "checkable": "automated",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The party downstream states that the set is derived and cannot be traced back to a device or a person.",
+      "checkable": "not-from-capture",
+      "if_true": "weaken",
+      "note": "A claim to test rather than accept. Ask over what period and at what precision: a coarse aggregate and a rounded trace are not the same thing."
+    },
+    {
+      "condition": "The component is a processor of the developer and the values are used only to deliver the app's own function.",
+      "checkable": "not-from-capture",
+      "if_true": "reclassify"
+    }
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+      }
+    ],
+    "public_scanners": []
+  },
+  "legal": {
+    "applies": "to-processing",
+    "provisions": [
+      "eu-gdpr-6-1-a",
+      "eu-gdpr-5-1-b",
+      "eu-gdpr-13",
+      "eu-gdpr-44"
+    ],
+    "caselaw": [
+      "cjeu-fashion-id"
+    ],
+    "rebuttals": [
+      {
+        "objection": "The user granted location permission.",
+        "answer": "To the application, for what the application does. A dialogue about a map is not a basis for supply to a party further down, and the person had no way to see that second step."
+      },
+      {
+        "objection": "We do not sell data, we work with partners.",
+        "answer": "The question is what leaves and to whom, not what the arrangement is called. Name the parties and state what each of them receives."
+      },
+      {
+        "objection": "The data is anonymous.",
+        "answer": "A location trace is among the least anonymous data there is: a few points identify a household. Establish the precision and the interval before accepting the label."
+      }
+    ]
+  },
+  "seen_in_the_wild": {
+    "confirmed": false,
+    "note": "Observed in practice by the authors but not yet backed by a published reference. Set to false until a citation exists: a claim without a source is exactly what this catalogue holds others to."
+  },
+  "related": [
+    "DPE-2026-0013",
+    "DPE-2026-0015"
+  ],
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created to close a gap named in the July 2026 audit.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ],
+  "schema_version": "2.0",
+  "name_nl": "Locatie uit een app die wordt doorverkocht",
+  "summary_nl": "Locatie die een onderdeel in een app verzamelt, duikt op als dataset bij een partij die de gebruiker nooit koos.",
+  "in_practice": {
+    "dpia": "Verify which components can read the location permission and what each of them does with it, rather than recording that the permission is asked for a stated purpose.",
+    "procurement": "The supplier lists every component that can read location and states for each whether the values leave the processing chain, verifiable from a capture on delivery.",
+    "complaint": "A capture from a fresh install showing location values leaving to a component, and the dated offer or supply document describing a dataset of the same kind.",
+    "audit_question": "Which parts of your app can read the location, and where does that value end up after they have it?",
+    "audit_question_nl": "Welke onderdelen van uw app kunnen de locatie lezen, en waar komt die waarde terecht nadat zij hem hebben?",
+    "complaint_nl": "Een opname vanaf een verse installatie waarin locatiewaarden vertrekken, samen met het gedateerde aanbod of leveringsstuk waarin dezelfde soort dataset wordt beschreven.",
+    "objection_nl": "De gebruiker heeft toestemming gegeven voor locatie.",
+    "answer_nl": "Aan de app, voor wat de app doet. Een vraag over een kaart is geen grondslag voor levering aan een partij die de gebruiker niet kent."
+  }
+}

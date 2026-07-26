@@ -67,6 +67,7 @@
     }
   ],
   "legal": {
+    "applies": "to-processing",
     "provisions": [
       "nl-tw-11-7a",
       "eu-gdpr-6-1-a",
@@ -105,7 +106,7 @@
     "complaint": "The raw source of the same mailing as received at two addresses of the complainant, with the differing addresses marked, and the date of the send.",
     "audit_question": "Show me the raw source of the last mailing, and the same mailing as it went to a second address.",
     "audit_question_nl": "Laat de ruwe bron zien van de laatste mailing, en dezelfde mailing zoals die naar een tweede adres ging.",
-    "complaint_nl": "Twee ontvangen berichten in ruwe vorm, met het verschil in de adressen aangewezen, en de verzenddatum erbij.",
+    "complaint_nl": "Dezelfde mailing op twee eigen adressen ontvangen, met de bronadressen van de beelden naast elkaar. Verschillen die per ontvanger, dan wordt het openen gemeten.",
     "objection_nl": "Wij kijken alleen naar hoeveel mensen openen, niet naar wie.",
     "answer_nl": "Het opgehaalde adres is per ontvanger uniek, en daarom kan dat cijfer bestaan. Wat u ermee doet, verandert de vastlegging niet."
   },

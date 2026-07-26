@@ -62,6 +62,7 @@
     }
   ],
   "legal": {
+    "applies": "to-processing",
     "provisions": [
       "eu-gdpr-5-1-c",
       "eu-gdpr-88",
@@ -102,7 +103,7 @@
     "complaint": "The export of one worker's rows for one day, the interval, and the works council decision if there is one.",
     "audit_question": "Show me one day of one employee, in the form the system stores it.",
     "audit_question_nl": "Laat een dag van een medewerker zien, zoals het systeem het opslaat.",
-    "complaint_nl": "De uitdraai van een dag van een medewerker met het tijdvak per regel, en het instemmingsbesluit van de ondernemingsraad als dat er is.",
+    "complaint_nl": "De opgeslagen regels van een medewerker over een werkdag, in de vorm waarin het product ze uitvoert, en waar is vastgelegd waarvoor die regels worden gebruikt.",
     "objection_nl": "De medewerkers hebben ermee ingestemd.",
     "answer_nl": "In een gezagsverhouding is toestemming zelden vrij. Het gesprek gaat over noodzaak en over de ondernemingsraad, niet over een handtekening."
   },

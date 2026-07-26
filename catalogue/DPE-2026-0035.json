@@ -5,10 +5,7 @@
   "name_nl": "Wissen dat de back-up niet bereikt",
   "family": "retention",
   "applies_to": [
-    "web",
-    "mobile-app",
-    "api",
-    "desktop"
+    "backend"
   ],
   "summary": "A record erased on request survives in the backup and returns to the live system on a restore.",
   "summary_nl": "Een op verzoek gewist gegeven blijft in de back-up staan en komt bij een herstel weer in het systeem terug.",
@@ -63,6 +60,7 @@
     }
   ],
   "legal": {
+    "applies": "to-processing",
     "provisions": [
       "eu-gdpr-17",
       "eu-gdpr-5-1-e",
@@ -89,7 +87,8 @@
   },
   "related": [
     "DPE-2026-0004",
-    "DPE-2026-0034"
+    "DPE-2026-0034",
+    "DPE-2026-0045"
   ],
   "in_practice": {
     "dpia": "Verify what happens to backups on an erasure and whether a restore re-applies past erasures, instead of recording that erasure is supported.",
@@ -97,7 +96,7 @@
     "complaint": "The erasure confirmation, the written answer about backups, and the backup cycle set against the retention period.",
     "audit_question": "You restore last month's backup tonight. Which erased records are back tomorrow?",
     "audit_question_nl": "U zet vanavond de back-up van vorige maand terug. Welke gewiste gegevens staan er morgen weer in?",
-    "complaint_nl": "De bevestiging van het wisverzoek, het schriftelijke antwoord over back-ups, en de back-upcyclus naast de bewaartermijn.",
+    "complaint_nl": "Het herstelbeleid, plus een omschrijving van wat er met een uitgevoerd verwijderverzoek gebeurt bij een terugzetting, en een tweede inzageverzoek na zo'n herstel.",
     "objection_nl": "Een back-up kun je niet aanpassen, dat is het idee van een back-up.",
     "answer_nl": "Dat hoeft ook niet. Gevraagd is dat het wissen een herstel overleeft, en daarvoor bestaat een lijst met wisopdrachten die na herstel opnieuw wordt toegepast."
   },
@@ -137,5 +136,9 @@
         "Legal provisions linked."
       ]
     }
-  ]
+  ],
+  "seen_in_the_wild": {
+    "confirmed": false,
+    "note": "Observed in practice by the authors but not yet backed by a published reference. Set to false until a citation exists: a claim without a source is exactly what this catalogue holds others to."
+  }
 }

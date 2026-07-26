@@ -61,6 +61,7 @@
     }
   ],
   "legal": {
+    "applies": "to-processing",
     "provisions": [
       "eu-gdpr-5-1-c",
       "eu-gdpr-9-1",
@@ -86,9 +87,11 @@
     ]
   },
   "related": [
-    "DPE-2026-0017",
     "DPE-2026-0010",
-    "DPE-2026-0028"
+    "DPE-2026-0017",
+    "DPE-2026-0024",
+    "DPE-2026-0028",
+    "DPE-2026-0033"
   ],
   "seen_in_the_wild": {
     "confirmed": false,
@@ -100,7 +103,7 @@
     "complaint": "The captured upload with its field list, the answer the relying party received, and the difference between them.",
     "audit_question": "What question does this check answer, and what exactly leaves the phone in order to answer it?",
     "audit_question_nl": "Welke vraag beantwoordt deze controle, en wat verlaat het toestel precies om die te beantwoorden?",
-    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "complaint_nl": "Een overzicht van wat er van het document wordt vastgelegd en hoe lang, naast de vraag die beantwoord moest worden. Vaak volstond ja of nee.",
     "objection_nl": "Wij bewaren het document niet.",
     "answer_nl": "Bewaren en versturen zijn verschillende vragen. Vraag wat er vertrekt om de controle uit te voeren."
   },

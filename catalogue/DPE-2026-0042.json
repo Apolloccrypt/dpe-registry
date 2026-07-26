@@ -60,6 +60,7 @@
     }
   ],
   "legal": {
+    "applies": "to-processing",
     "provisions": [
       "eu-gdpr-5-1-c",
       "eu-gdpr-25",
@@ -98,7 +99,7 @@
     "complaint": "The declaration from the published package, the listing text of the same date, and the version number of both.",
     "audit_question": "Which sites can this extension read, and which sites does it say it works on?",
     "audit_question_nl": "Welke sites mag deze uitbreiding lezen, en op welke sites zegt zij te werken?",
-    "complaint_nl": "De rechtenverklaring uit het gepubliceerde pakket, de omschrijving in de winkel van dezelfde datum, en het versienummer van allebei.",
+    "complaint_nl": "De lijst met rechten die de uitbreiding vraagt, met per recht de functie die het nodig heeft. Verklaarde toegang telt, ook als er nog niets is verstuurd.",
     "objection_nl": "De browser laat bij het installeren zien welke rechten er zijn.",
     "answer_nl": "Een zin, een keer, naast een omschrijving die iets anders zegt. Het verschil tussen die twee is de bevinding."
   },

@@ -8,7 +8,7 @@
     "network-device",
     "vehicle"
   ],
-  "summary": "A device contacts a server abroad without any function that requires it.",
+  "summary": "A device contacts hosts that serve no function the owner asked for.",
   "not_a_vulnerability": "Nothing is exploitable and nothing is broken. The device does what its builder intended, and the objection is to that intention. A vulnerability register has no place to put this, which is why it has gone unrecorded.",
   "mechanism": {
     "what": "Firmware opens connections to hosts that serve no function the owner asked for: a fixed endpoint contacted at boot, at intervals, or on every state change. The payload may be status, configuration, usage patterns or an identifier of the device or its owner.",
@@ -18,7 +18,7 @@
       "chipset SDK contacting the chip maker rather than the device brand",
       "update or time service pointed at a fixed host in the vendor's home jurisdiction"
     ],
-    "not_this": "A firmware update check against the vendor is expected behaviour and not this entry. What distinguishes it is traffic without a function the owner asked for, or a destination that has nothing to do with the product."
+    "not_this": "A firmware update check against the vendor is expected behaviour and not this entry. What distinguishes it is traffic without a function the owner asked for, or a destination that has nothing to do with the product. The destination is a separate axis. Where the finding also states a country, that claim stands or falls on its own evidence and DPE-2026-0027 applies to it. A telemetry flow to a host in the same country is this entry just as much."
   },
   "detection": {
     "indicator": "Outbound connections from the device to hosts that persist when every user-facing function is idle, established from a network capture at the gateway rather than from the device itself.",
@@ -63,7 +63,7 @@
     "methods": [
       {
         "tier": "manual",
-        "path": "repro/homecall/MANUAL.md",
+        "path": "repro/DPE-2026-0012/MANUAL.md",
         "expect": "connections to hosts unrelated to any function the owner enabled, while the device sits idle"
       }
     ],
@@ -87,10 +87,17 @@
         "objection": "The servers belong to our chip supplier, not to us.",
         "answer": "The party placing the product on the market chose that component. Responsibility for what a shipped device does is not transferred by subcontracting it."
       }
-    ]
+    ],
+    "applies": "to-processing"
   },
   "related": [
-    "DPE-2026-0013"
+    "DPE-2026-0013",
+    "DPE-2026-0014",
+    "DPE-2026-0022",
+    "DPE-2026-0023",
+    "DPE-2026-0024",
+    "DPE-2026-0027",
+    "DPE-2026-0038"
   ],
   "seen_in_the_wild": {
     "confirmed": false,
@@ -125,15 +132,15 @@
     }
   ],
   "slug": "device-telemetry-without-function",
-  "name_nl": "Apparaat belt naar huis",
-  "summary_nl": "Een apparaat zoekt contact met een server in het buitenland zonder functie die dat vraagt.",
+  "name_nl": "Telemetrie zonder functie",
+  "summary_nl": "Een apparaat zoekt uit zichzelf contact met servers zonder functie die de eigenaar vroeg.",
   "in_practice": {
     "dpia": "Verify what the device contacts while idle, rather than accepting the telemetry section of the manual.",
     "procurement": "The device contacts no host that serves no function the owner enabled, demonstrated by an idle capture.",
     "complaint": "An idle capture at the gateway, with firmware version and region, and the destinations established by routing.",
     "audit_question": "Unplug everything it does and tell me what it still talks to.",
     "audit_question_nl": "Zet alles uit wat het doet en vertel me waar het dan nog mee praat.",
-    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "complaint_nl": "Een opname op de router terwijl het apparaat aan staat en niemand het gebruikt, met firmwareversie en regio-instelling erbij.",
     "objection_nl": "Dat is anonieme diagnostiek.",
     "answer_nl": "Een apparaatnummer dat aan een huishouden hangt is niet anoniem. Vraag wat er in het bericht zit."
   }

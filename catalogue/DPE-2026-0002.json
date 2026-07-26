@@ -81,11 +81,18 @@
         "objection": "This is analytics, which needs no consent.",
         "answer": "Then the banner should not have listed it, and there would be no refusal to honour. A party cannot both treat something as consent-bound and ignore the refusal."
       }
-    ]
+    ],
+    "applies": "to-processing"
   },
   "related": [
     "DPE-2026-0001",
-    "DPE-2026-0004"
+    "DPE-2026-0003",
+    "DPE-2026-0004",
+    "DPE-2026-0014",
+    "DPE-2026-0019",
+    "DPE-2026-0021",
+    "DPE-2026-0040",
+    "DPE-2026-0044"
   ],
   "seen_in_the_wild": {
     "confirmed": false,
@@ -131,7 +138,7 @@
     "complaint": "Two HARs, no-interaction and refused, plus the read-back consent state proving the refusal registered.",
     "audit_question": "Show me two captures, one where the visitor refused, and tell me the difference.",
     "audit_question_nl": "Laat twee opnames zien, een waarin de bezoeker weigerde, en vertel me het verschil.",
-    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "complaint_nl": "Twee opnames van dezelfde pagina, een zonder aanraken en een na weigeren, plus de uitgelezen toestemmingsstand die bewijst dat het weigeren is geregistreerd.",
     "objection_nl": "Er staat toch een banner.",
     "answer_nl": "De keuze bestaat op het scherm en niet op de lijn. Dat is precies het verwijt."
   }

@@ -62,6 +62,7 @@
     }
   ],
   "legal": {
+    "applies": "to-processing",
     "provisions": [
       "eu-gdpr-5-1-c",
       "eu-gdpr-5-1-e",
@@ -101,7 +102,7 @@
     "complaint": "The retention schedule for this system, the student's own flags from an access request, and the answer about whether an alternative was offered.",
     "audit_question": "The exam is graded. What still exists about a student nobody flagged?",
     "audit_question_nl": "Het examen is nagekeken. Wat bestaat er dan nog over een student bij wie niets is opgemerkt?",
-    "complaint_nl": "De bewaartermijn van dit systeem, de eigen scores uit een inzageverzoek, en het antwoord of er een alternatief was.",
+    "complaint_nl": "De waarnemingen die het toezicht vastlegt, het oordeel dat daaruit volgt, en hoe lang dat oordeel de uitslag overleeft. Vraag er ook bij wie het oordeel kan terugdraaien.",
     "objection_nl": "De student ging akkoord met de examenvoorwaarden.",
     "answer_nl": "Akkoord gaan onder dreiging van niet afstuderen is geen vrije toestemming. Daarom loopt dit over noodzaak, niet over toestemming."
   },

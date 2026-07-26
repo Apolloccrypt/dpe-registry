@@ -11,10 +11,10 @@
     "firmware"
   ],
   "summary": "A measurement that did not work is reported as a subject that does nothing.",
-  "not_a_vulnerability": "A fault in a measurement, not in a system. Nobody is at fault except the measurement, and the party that ends up described as clean may be anything but.",
+  "not_a_vulnerability": "A fault in a measurement, not in a system. Nobody is at fault except the measurement itself.",
   "mechanism": {
     "what": "A capture produces little or no traffic and the conclusion drawn is that the subject collects little or nothing. In fact the run failed: the interception was refused by a pinned connection, the environment was detected, the session was too short, the page never rendered its heavier components because too many captures ran at once, or the traffic arrived but no request bodies were readable. Nothing distinguishes an empty result from a clean subject unless validity is established separately from content.",
-    "why_it_matters": "A false negative is published as reassurance, and reassurance is harder to withdraw than an accusation. It also breaks comparison: a set in which some runs failed silently ranks the subjects by how well they were measured rather than by what they do.",
+    "why_it_matters": "The party that ends up described as clean may be anything but. A false negative is published as reassurance, and reassurance is harder to withdraw than an accusation. It also breaks comparison: a set in which some runs failed silently ranks the subjects by how well they were measured rather than by what they do.",
     "common_causes": [
       "many captures run in parallel, starving the heavier components so they never execute",
       "interception blocked on exactly the channel that carries the sensitive payload, while other channels decrypt normally",
@@ -65,9 +65,7 @@
     }
   ],
   "legal": {
-    "provisions": [
-      "eu-gdpr-5-2"
-    ],
+    "applies": "to-a-finding",
     "rebuttals": [
       {
         "objection": "We measured and found nothing.",
@@ -98,7 +96,7 @@
     "complaint": "The number of valid runs, what the run was capable of observing, and a control run of the same subject in isolation.",
     "audit_question": "How do you know your measurement would have seen it if it had been there?",
     "audit_question_nl": "Hoe weet u dat uw meting het gezien zou hebben als het er was geweest?",
-    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "complaint_nl": "Per bevinding het aantal geldige metingen waarover die is geteld, plus wat de meting niet kon zien. Een schone uitkomst zonder dat aantal is geen uitkomst.",
     "objection_nl": "Wij hebben gemeten en niets gevonden.",
     "answer_nl": "Vraag hoe u weet dat de meting het gezien zou hebben. Een mislukte opname lijkt op een schone."
   },

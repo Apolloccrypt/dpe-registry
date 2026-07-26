@@ -21,7 +21,7 @@
       "an identity resolution component added through a tag container",
       "a login form that hashes the address in the browser and sends it onward in the same step"
     ],
-    "not_this": "Text the visitor typed appearing in a request as content is User input to third parties; there the content itself is what travels. Here the address is used as a key, it may be hashed, and it may travel from a server rather than from the browser. Two parties exchanging identifiers of their own is Identifier synchronisation between parties; here no exchange is needed, because both sides can compute the same value from the address."
+    "not_this": "Text the visitor typed appearing in a request as content is User input to third parties; there the content itself is what travels. Here the address is used as a key, it may be hashed, and it may travel from a server rather than from the browser. Two parties exchanging identifiers of their own is Identifier synchronisation between parties; here no exchange is needed, because both sides can compute the same value from the address. An internal account identifier travelling to a party that also holds its own identifier for the browser is Account identity joined to a tracking profile; that value is minted by the operator, this one is derived from the address itself."
   },
   "detection": {
     "indicator": "A request to a host under a different registrable domain containing the address entered, or the MD5, SHA-1 or SHA-256 of that address in lowercase and trimmed, in hexadecimal or base64. Compute the hashes of the test address before measuring and search the capture for those strings.",
@@ -63,6 +63,7 @@
     }
   ],
   "legal": {
+    "applies": "to-processing",
     "provisions": [
       "eu-gdpr-5-1-b",
       "eu-gdpr-6-1-a",
@@ -90,7 +91,8 @@
   "related": [
     "DPE-2026-0006",
     "DPE-2026-0016",
-    "DPE-2026-0030"
+    "DPE-2026-0030",
+    "DPE-2026-0032"
   ],
   "seen_in_the_wild": {
     "confirmed": false,
@@ -102,7 +104,7 @@
     "complaint": "A capture containing the hash of a test address, the hashes computed in advance, and the moment the address was entered.",
     "audit_question": "If I enter an address on your site, which parties can compute that address afterwards?",
     "audit_question_nl": "Als ik een adres invul op uw site, welke partijen kunnen dat adres daarna zelf uitrekenen?",
-    "complaint_nl": "Een opname waarin de hashwaarde van een testadres voorkomt, met de vooraf berekende hashes erbij en het moment van invullen.",
+    "complaint_nl": "Een opname waarin een adres is gebruikt dat alleen voor deze toets bestaat, met de vooraf berekende hashwaarden ernaast en elk verzoek waarin er een terugkomt.",
     "objection_nl": "Het adres is gehasht, dus het zijn geen persoonsgegevens.",
     "answer_nl": "Iedere partij die het adres al heeft, rekent dezelfde waarde uit. Daarom werkt het als sleutel, en daarom is het herleidbaar."
   },

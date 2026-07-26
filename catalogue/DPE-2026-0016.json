@@ -19,7 +19,7 @@
       "an audience or measurement partner integrated by activating a template that includes the exchange",
       "a match performed between servers, so no cookie is set in the browser at all and a cookie-based audit reports the parties as absent"
     ],
-    "not_this": "Passing an identifier to one recipient for that recipient's own use is ordinary tracking. What distinguishes this entry is the exchange: the value of party A appears in a request to party B, and the purpose of that request is the pairing rather than any content."
+    "not_this": "Passing an identifier to one recipient for that recipient's own use is ordinary tracking. What distinguishes this entry is the exchange: the value of party A appears in a request to party B, and the purpose of that request is the pairing rather than any content. One view reaching many bidders at once is Bid request broadcast. That entry is about the number of recipients of a single view; this one is about two parties pairing their values. An auction capture usually shows both, and then both are cited: capping the bidder list does not stop the exchange, and stopping the exchange does not cap the list."
   },
   "detection": {
     "indicator": "A request to a host under one registrable domain whose URL, body or redirect location contains, verbatim or trivially encoded, an identifier value that another registrable domain set as a cookie or returned in the same capture. The match of the two values is the finding, and it holds equally where no cookie is set anywhere and the value only travels in the requests.",
@@ -68,6 +68,7 @@
     }
   ],
   "legal": {
+    "applies": "to-processing",
     "provisions": [
       "eu-gdpr-26",
       "eu-gdpr-6-1-a",
@@ -92,9 +93,12 @@
     ]
   },
   "related": [
-    "DPE-2026-0015",
     "DPE-2026-0009",
-    "DPE-2026-0010"
+    "DPE-2026-0010",
+    "DPE-2026-0015",
+    "DPE-2026-0031",
+    "DPE-2026-0032",
+    "DPE-2026-0043"
   ],
   "seen_in_the_wild": {
     "confirmed": false,
@@ -106,7 +110,7 @@
     "complaint": "A HAR with the redirect chain intact, the cookie value as set by the first party, and the request to the second party containing that same value.",
     "audit_question": "Does any of your partners receive an identifier that another partner issued, and where is the arrangement between them?",
     "audit_question_nl": "Krijgt een van uw partners een identifier die een andere partner heeft uitgegeven, en waar staat die afspraak?",
-    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "complaint_nl": "Een opname waarin de omleidingen volledig zijn gevolgd, met per keten de waarde die bij de ene partij is gezet en bij de andere terugkomt.",
     "objection_nl": "Wij wisselen geen gegevens uit met andere partijen.",
     "answer_nl": "Vraag naar de koppeling van identifiers tussen partijen, ook de vorm die niet via cookies loopt."
   },

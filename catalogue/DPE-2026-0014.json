@@ -53,7 +53,7 @@
     "methods": [
       {
         "tier": "manual",
-        "path": "repro/deadend/MANUAL.md",
+        "path": "repro/DPE-2026-0014/MANUAL.md",
         "expect": "identical outbound traffic with the control on and off, or the control reverting after a reboot"
       }
     ],
@@ -68,12 +68,15 @@
         "objection": "The device cannot function without it.",
         "answer": "Then say so, and establish it. Necessity is a claim that can be tested by disabling the traffic and seeing what stops working."
       }
-    ]
+    ],
+    "applies": "to-processing"
   },
   "related": [
     "DPE-2026-0002",
     "DPE-2026-0003",
-    "DPE-2026-0012"
+    "DPE-2026-0012",
+    "DPE-2026-0022",
+    "DPE-2026-0023"
   ],
   "seen_in_the_wild": {
     "confirmed": false,
@@ -116,7 +119,7 @@
     "complaint": "Captures with the control on, off, and again after a reboot and an update.",
     "audit_question": "Turn it off, restart it, update it, and show me it is still off.",
     "audit_question_nl": "Zet het uit, herstart het, werk het bij, en laat zien dat het nog steeds uit staat.",
-    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "complaint_nl": "Opnames met de instelling aan, uit, en opnieuw na een herstart en na een update. Zonder die laatste twee is er niets aangetoond.",
     "objection_nl": "Zonder dit werkt het apparaat niet.",
     "answer_nl": "Noodzaak is te toetsen: blokkeer het verkeer en kijk wat er stukgaat."
   }

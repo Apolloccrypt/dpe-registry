@@ -1,0 +1,142 @@
+{
+  "id": "DPE-2026-0045",
+  "name": "Server logs without a retention term",
+  "slug": "server-logs-without-a-term",
+  "family": "retention",
+  "summary": "Request logs holding addresses and paths are kept indefinitely because no term was ever set.",
+  "status": "active",
+  "applies_to": [
+    "backend"
+  ],
+  "not_a_vulnerability": "Nothing is broken into and nothing leaks. The lines are written on purpose and kept because nobody decided otherwise, and a vulnerability register has nowhere to record a decision that was never taken.",
+  "mechanism": {
+    "what": "Servers, proxies and gateways write a line per request: the address, the time, the path requested, the browser string and often a session or account identifier. Rotation is configured for disk space rather than for a term, archives are copied to cheaper storage where no lifecycle rule applies, and the collection grows for as long as the system exists.",
+    "why_it_matters": "The result is a browsing history per address, held about people who were never asked and mostly never told. Years later it can still be searched, handed over or reached by whoever gets into the archive. The person cannot know the record exists, and the operator frequently cannot say how far back it goes.",
+    "common_causes": [
+      "log rotation configured for disk space instead of for a term",
+      "archives copied to object storage where no lifecycle rule was set",
+      "a retention schedule that covers the application database and is silent about infrastructure logs",
+      "logs held by a hosting party under a contract that names no term"
+    ],
+    "not_this": "Logs that record what a person typed or read are Logs recording content, not events: that entry is about what stands in the line, this one about how long the line stays. Data that survives a deletion request only in a copy is Erasure that does not reach the backup, where a term does exist and one copy escaped it."
+  },
+  "detection": {
+    "indicator": "The retention schedule of the same date names no term for request logs, or names one that the stored data contradicts: the oldest line available in the log store or its archive predates that term. Both sources belong to the operator and the finding is the difference between them.",
+    "method": "document-comparison",
+    "qod": 95,
+    "capture_requirements": [
+      "ask for the oldest available line and for the retention schedule of the same date, and keep both",
+      "cover the archive and any copies held by a hosting party, not only the live log directory",
+      "list the systems that write request logs; a gateway, a proxy and an application usually each keep their own with their own term",
+      "record what stands in the line beyond the address, since an account or session identifier changes what the record is"
+    ],
+    "attribution": [
+      "document-diff",
+      "vendor-statement"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "A term is set and enforced, and the oldest available line falls inside it.",
+      "checkable": "manual",
+      "if_true": "drop",
+      "note": "The enforcement is the point. A term in a document with older lines in the store is a plan, not a term."
+    },
+    {
+      "condition": "The lines carry no address, no identifier and nothing that can be traced to a person afterwards.",
+      "checkable": "manual",
+      "if_true": "weaken",
+      "note": "Truncating the address is common. Establish how much is removed, since a shortened address in a small network still points at a household."
+    },
+    {
+      "condition": "The retention follows from a statutory duty that names a term.",
+      "checkable": "not-from-capture",
+      "if_true": "reclassify",
+      "note": "Then the term is the statutory one, and the question becomes whether everything kept falls within that duty."
+    },
+    {
+      "condition": "The store queried is a copy kept for an incident, held separately and scheduled for deletion.",
+      "checkable": "manual",
+      "if_true": "reclassify"
+    }
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+      }
+    ],
+    "public_scanners": []
+  },
+  "legal": {
+    "applies": "to-processing",
+    "provisions": [
+      "eu-gdpr-5-1-e",
+      "eu-gdpr-5-1-c",
+      "eu-gdpr-13"
+    ],
+    "rebuttals": [
+      {
+        "objection": "Logs are technical data, not personal data.",
+        "answer": "An address with a time and a path points at a person as reliably as a cookie does, and the operator holds the means to link it to an account. What a file is called does not decide what is in it."
+      },
+      {
+        "objection": "We keep them for security.",
+        "answer": "Security is a purpose that supports a term rather than the absence of one. Name the term the purpose requires and say what is deleted when it expires."
+      },
+      {
+        "objection": "Our hosting party keeps those, not us.",
+        "answer": "The instruction is yours. Ask what term the contract names, and if it names none, that is the finding rather than an answer to it."
+      }
+    ]
+  },
+  "seen_in_the_wild": {
+    "confirmed": false,
+    "note": "Observed in practice by the authors but not yet backed by a published reference. Set to false until a citation exists: a claim without a source is exactly what this catalogue holds others to."
+  },
+  "related": [
+    "DPE-2026-0034",
+    "DPE-2026-0035"
+  ],
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created to close a gap named in the July 2026 audit.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ],
+  "schema_version": "2.0",
+  "name_nl": "Serverlogboek zonder bewaartermijn",
+  "summary_nl": "Logbestanden met adressen en opgevraagde pagina's blijven staan omdat er nooit een termijn is ingesteld.",
+  "in_practice": {
+    "dpia": "Verify the term that applies to request logs and the oldest line actually present, rather than the retention table of the application database.",
+    "procurement": "Request logs and their archives carry a stated term, enforced by a lifecycle rule, demonstrated on delivery with the oldest line present.",
+    "complaint": "The retention schedule of the measurement date and the oldest available log line, side by side, per system that writes one.",
+    "audit_question": "How old is the oldest line in your server logs, and which term says it may still be there?",
+    "audit_question_nl": "Hoe oud is de oudste regel in uw serverlogboek, en welke termijn zegt dat die er nog mag staan?",
+    "complaint_nl": "Het bewaarschema van de meetdatum naast de oudste regel die nog in het logboek of het archief staat, per systeem dat een eigen logboek bijhoudt.",
+    "objection_nl": "Dat zijn technische gegevens, geen persoonsgegevens.",
+    "answer_nl": "Een adres met een tijdstip en een opgevraagd pad wijst even goed naar een persoon als een cookie. Vraag naar de termijn, niet naar de naam van het bestand."
+  }
+}

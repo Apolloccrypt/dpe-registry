@@ -63,6 +63,7 @@
     }
   ],
   "legal": {
+    "applies": "to-processing",
     "provisions": [
       "eu-gdpr-5-1-b",
       "eu-gdpr-25",
@@ -101,7 +102,7 @@
     "complaint": "A screenshot of the default state in a fresh account with its date, and the passage in the terms describing the second purpose.",
     "audit_question": "In a new account, is the training setting on or off, and what happens to what I already typed if I switch it off?",
     "audit_question_nl": "Staat de instelling voor trainen in een nieuw account aan of uit, en wat gebeurt er met wat ik al typte als ik hem uitzet?",
-    "complaint_nl": "Een schermafdruk van de standaardinstelling in een vers account met datum, en de passage in de voorwaarden over het tweede doel.",
+    "complaint_nl": "De instelling die bepaalt of invoer wordt bewaard om het model te verbeteren, met de standaardwaarde erbij, en wat er gebeurt met tekst die al is ingevoerd.",
     "objection_nl": "Het staat in de voorwaarden.",
     "answer_nl": "Het tweede doel moet duidelijk zijn op het moment van typen, en de standaard hoort de beschermende te zijn."
   },

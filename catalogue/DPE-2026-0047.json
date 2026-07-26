@@ -1,0 +1,142 @@
+{
+  "id": "DPE-2026-0047",
+  "name": "Camera covering ground beyond the premises",
+  "slug": "camera-beyond-the-premises",
+  "family": "data",
+  "summary": "A camera placed for a property records the public road or a neighbour's ground as well.",
+  "status": "active",
+  "applies_to": [
+    "installation"
+  ],
+  "not_a_vulnerability": "Nothing is exploited and no control fails. The camera records what it was pointed at, and the objection is to where it points.",
+  "mechanism": {
+    "what": "A doorbell, facade or shop camera is mounted for a purpose that ends at the property line, and its field of view does not. The pavement, the road, the entrance opposite or a neighbour's garden is recorded continuously and kept on the same schedule as the footage the purpose does cover.",
+    "why_it_matters": "Everyone who walks past ends up in a recording held by a party whose premises they never entered. Over time it becomes a record of who passes when and with whom, in exactly the places people cannot avoid. The person cannot see how far the lens reaches, and often cannot tell whether the camera works at all.",
+    "common_causes": [
+      "camera mounted for coverage rather than for a defined field of view",
+      "wide-angle lens fitted where a narrow one would have covered the purpose",
+      "masking available in the software and left unconfigured",
+      "camera repositioned after an incident and never reassessed"
+    ],
+    "not_this": "A system that compares faces or plates against a list and keeps the non-matches is Recognition of every passer-by: there the fault is the retention of identifying values, here nothing is recognised and the reach itself is the fault. A camera that covers only the premises is not this entry however long it retains, which is a retention question."
+  },
+  "detection": {
+    "indicator": "A photograph taken from the camera position, or the camera's own live view, shows ground the operator does not control: public road, pavement, another party's entrance or garden. Set against the area the stated purpose covers and against the masking configured in the software, the part that the purpose does not cover is the finding, described as an area anyone can go and check rather than as an impression.",
+    "method": "document-comparison",
+    "qod": 78,
+    "capture_requirements": [
+      "photograph from the camera position, or ask for the live view, and record the date and the direction",
+      "establish the stated purpose and the area it covers from the operator's own notice, plan or assessment of the same date",
+      "record whether masking is configured, and whether it applies to the recording or only to the displayed view",
+      "describe the area in terms a reader can verify afterwards: which stretch of road, which entrance, from which point to which point",
+      "make the observation from where anyone may stand; entering another party's ground to take the photograph is outside the method"
+    ],
+    "attribution": [
+      "document-diff",
+      "vendor-statement"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "The area beyond the property line is masked in the recording itself, and the masking survives a restart.",
+      "checkable": "manual",
+      "if_true": "drop",
+      "note": "Masking applied only to the displayed view leaves the recording intact. Ask which of the two it is, and test it over a restart."
+    },
+    {
+      "condition": "The camera records nothing, or records only on an event confined to the premises.",
+      "checkable": "manual",
+      "if_true": "drop",
+      "note": "A dummy or a live-view-only device is a different finding, and stating it as this one is the mistake that ends the discussion."
+    },
+    {
+      "condition": "The ground covered belongs to the operator, or is covered under an arrangement with the party that controls it.",
+      "checkable": "not-from-capture",
+      "if_true": "reclassify"
+    },
+    {
+      "condition": "The installation is a household one and nothing beyond the dwelling is in view.",
+      "checkable": "manual",
+      "if_true": "drop",
+      "note": "The exemption for purely personal use and this finding turn on the same observation: it falls away precisely where the view reaches ground the household does not control."
+    }
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+      }
+    ],
+    "public_scanners": []
+  },
+  "legal": {
+    "applies": "to-processing",
+    "provisions": [
+      "eu-gdpr-5-1-c",
+      "eu-gdpr-6-1-a",
+      "eu-gdpr-13"
+    ],
+    "rebuttals": [
+      {
+        "objection": "It is my own camera on my own house.",
+        "answer": "The camera is yours and the pavement is not. Where the view reaches ground you do not control, the exemption for purely personal use stops covering it, and the ordinary duties apply to what is recorded there."
+      },
+      {
+        "objection": "It only records when something moves.",
+        "answer": "Then it records everyone who moves past. A trigger limits the volume of footage, not the reach of the lens."
+      },
+      {
+        "objection": "Nobody ever looks at the footage.",
+        "answer": "Recording is processing whether or not anyone watches. What matters is what is captured, who can reach it and how long it is kept."
+      }
+    ]
+  },
+  "seen_in_the_wild": {
+    "confirmed": false,
+    "note": "Observed in practice by the authors but not yet backed by a published reference. Set to false until a citation exists: a claim without a source is exactly what this catalogue holds others to."
+  },
+  "related": [
+    "DPE-2026-0024"
+  ],
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created to close a gap named in the July 2026 audit.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ],
+  "schema_version": "2.0",
+  "name_nl": "Camera die verder kijkt dan het eigen terrein",
+  "summary_nl": "Een camera die voor het eigen terrein is opgehangen, legt ook de openbare weg of de grond van een ander vast.",
+  "in_practice": {
+    "dpia": "Verify the actual field of view against the area the purpose covers, rather than recording the purpose and the retention alone.",
+    "procurement": "On delivery the field of view is documented with an image from the camera position, and anything beyond the purpose is masked in the recording rather than in the view.",
+    "complaint": "A dated photograph from the camera position, the operator's own statement of purpose and area, and the masking configuration.",
+    "audit_question": "Show me what this camera has in view, and tell me which part of that you needed.",
+    "audit_question_nl": "Laat zien wat deze camera in beeld heeft, en vertel me welk deel daarvan u nodig had.",
+    "complaint_nl": "Een gedateerde foto vanaf de camerapositie of de live-weergave, naast het eigen doel en gebied van de exploitant, en de instelling die het gebied daarbuiten afdekt.",
+    "objection_nl": "Het is mijn eigen camera aan mijn eigen huis.",
+    "answer_nl": "De camera is van u, de stoep niet. Zodra het beeld verder reikt dan uw eigen grond, geldt de uitzondering voor puur persoonlijk gebruik niet meer."
+  }
+}

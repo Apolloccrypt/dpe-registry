@@ -29,7 +29,7 @@ hold, not that it is hard to find.
 ## The four captures
 
 Capture the same idle window four times, using the method in
-[`../homecall/MANUAL.md`](../homecall/MANUAL.md). One variable changes each time.
+[`../DPE-2026-0012/MANUAL.md`](../DPE-2026-0012/MANUAL.md). One variable changes each time.
 
 | # | State | What it tells you |
 |---|---|---|

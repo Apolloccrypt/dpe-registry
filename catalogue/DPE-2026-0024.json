@@ -2,13 +2,12 @@
   "id": "DPE-2026-0024",
   "name": "Recognition of every passer-by",
   "slug": "recognition-of-every-passer-by",
-  "name_nl": "Iedereen die passeert wordt herkend",
-  "family": "data",
+  "name_nl": "Herkenning van elke passant",
+  "family": "retention",
   "applies_to": [
-    "iot",
-    "firmware",
-    "network-device",
-    "vehicle"
+    "installation",
+    "vehicle",
+    "iot"
   ],
   "summary": "A recognition system records everyone it sees, while its purpose concerns only the ones it is looking for.",
   "not_a_vulnerability": "Nothing is exploited. The system records what it was built to record and the comparison works as intended; the objection is that the recording covers everyone rather than the matches.",
@@ -61,6 +60,7 @@
     }
   ],
   "legal": {
+    "applies": "to-processing",
     "provisions": [
       "eu-gdpr-5-1-c",
       "eu-gdpr-5-1-e",
@@ -84,7 +84,9 @@
   },
   "related": [
     "DPE-2026-0012",
-    "DPE-2026-0018"
+    "DPE-2026-0018",
+    "DPE-2026-0039",
+    "DPE-2026-0047"
   ],
   "seen_in_the_wild": {
     "confirmed": false,
@@ -96,7 +98,7 @@
     "complaint": "The retention configuration or schedule with its date, and where possible the answer to an access request showing your own non-matching passage.",
     "audit_question": "I am on no list and I drove past. What do you have about me, and for how long?",
     "audit_question_nl": "Ik sta op geen enkele lijst en ik reed langs. Wat heeft u over mij, en hoe lang?",
-    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "complaint_nl": "De bewaarconfiguratie of het bewaarschema met de datum erop, waarin treffers en niet-treffers apart zijn geregeld.",
     "objection_nl": "Wij bewaren alleen treffers.",
     "answer_nl": "Vraag hoe lang de niet-treffers blijven staan. Daar zit het verschil."
   },

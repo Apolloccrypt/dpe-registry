@@ -1,0 +1,22 @@
+id: cjeu-breyer
+court: "Hof van Justitie van de Europese Unie"
+case: "C-582/14 (Breyer)"
+ecli: "ECLI:EU:C:2016:779"
+date: 2016-10-19
+holding: >
+  Een dynamisch IP-adres dat een aanbieder van een website vastlegt bij een
+  bezoek, is voor die aanbieder een persoonsgegeven wanneer hij over wettelijke
+  middelen beschikt om de bezoeker te laten identificeren met behulp van de
+  aanvullende gegevens die de internetaanbieder heeft.
+relevance: >
+  Dit is de dragende bron onder elke bevinding waarin een IP-adres het
+  persoonsgegeven is dat vertrekt, en dus onder DPE-2026-0009. Het arrest bindt
+  in de hele Unie. Een nationale uitspraak over ingeladen lettertypen past die
+  lijn toe op dit precieze mechanisme, maar is illustratie en geen grondslag;
+  wie de illustratie citeert waar de grondslag hoort, geeft de tegenpartij het
+  eerste weerwoord cadeau.
+weight: binding
+supports: true
+url: "https://curia.europa.eu/juris/liste.jsf?num=C-582/14"
+verified: true
+entries: [DPE-2026-0009]
