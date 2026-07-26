@@ -63,13 +63,8 @@
     "methods": [
       {
         "tier": "manual",
-        "path": "repro/homecall/MANUAL.md",
-        "expect": "connections to hosts unrelated to any function the owner enabled, while the device sits idle"
-      },
-      {
-        "tier": "script",
-        "path": "repro/homecall/idle-baseline.sh",
-        "expect": "a list of destinations contacted during an idle window, with volumes and intervals"
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
       }
     ],
     "public_scanners": []

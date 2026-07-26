@@ -54,13 +54,8 @@
     "methods": [
       {
         "tier": "manual",
-        "path": "repro/sidecar/MANUAL.md",
-        "expect": "requests to component hosts carrying identifiers, before any user action"
-      },
-      {
-        "tier": "script",
-        "path": "repro/sidecar/inventory.sh",
-        "expect": "a list of bundled components with the hosts each contacts"
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
       }
     ],
     "public_scanners": []

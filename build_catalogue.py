@@ -555,6 +555,14 @@ def main():
             x["reproduction"]["methods"].insert(1, {
                 "tier": "script", "path": "repro/web/check.mjs",
                 "expect": f'the run reports {x["id"]} as present, with the detail behind it'})
+    # Laatste zeef: welke route ook is opgegeven, alleen wat bestaat blijft
+    # staan. Een verwijzing naar een script dat er niet is, is een belofte die
+    # het register niet waarmaakt.
+    for x in E:
+        live = [m for m in x["reproduction"]["methods"] if (ROOT / m["path"]).exists()]
+        x["reproduction"]["methods"] = live or [{
+            "tier": "manual", "path": "METHOD.md",
+            "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"}]
     OUT.mkdir(parents=True, exist_ok=True)
     for f in OUT.glob("DPE-*.json"):
         f.unlink()
