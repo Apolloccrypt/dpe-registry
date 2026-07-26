@@ -1,99 +1,99 @@
 # DPE · Data Protection Exposures
 
-Een openbaar register van gemeten privacybevindingen, opgezet zoals CVE dat voor
-softwarekwetsbaarheden doet.
+A catalogue of numbered faults in how systems handle personal data.
 
-Het idee erachter is simpel. Wie onderzoek doet naar tracking vindt telkens
-dezelfde soorten bevindingen, maar ze hebben geen naam. Daardoor begint elke
-publicatie opnieuw bij nul: dezelfde uitleg, dezelfde juridische onderbouwing,
-dezelfde tegenwerpingen. Met een naam hoeft dat één keer.
+Researchers keep finding the same things, and those things have no name. So every
+publication starts from nothing: the same explanation, the same legal grounding,
+the same objections answered again. With a number, that happens once.
 
 ```
- PATROON     Frontrun                een naam die je onthoudt en kunt citeren
-             "een tag vuurt voordat de toestemmingsvraag is beantwoord"
-
- RECORD      DPE-2026-0001           een nummer dat je kunt opzoeken
-             pgwoo.nl · 27-05-2026 · gemeten · ernst hoog
+  DPE-2026-0001   Tracking before consent
+                  A tag fires before the consent question has been answered.
 ```
 
-Zo lees je een bevinding: *"pgwoo.nl vertoont Frontrun, HollowNo en MaxStay."*
-Drie woorden, en wie de patronen kent weet meteen wat er aan de hand is.
+## What this is for
 
-## Wat er anders is dan bij CVE
+**Not vulnerabilities.** There is nothing to exploit. The system does what its
+builder intended, and that intention is the objection. A router phoning home to
+another country gets no CVE because nothing is broken, and until now there was no
+number to cite for it either. That gap is why this exists.
 
-Drie dingen, en ze komen allemaal voort uit hetzelfde: bij ons is het bewijs
-machineleesbaar en bij CVE is het proza.
+**Not accusations.** No company, product or domain appears in this catalogue.
+Whoever establishes that a system exhibits one of these faults publishes that
+themselves, under their own name, and cites the number. That keeps definitions
+usable long after any individual site has been cleaned up.
 
-**Elk record is na te spelen zonder onze tooling.** Met de hand in de browser,
-of met een standalone script. Wie ons niet vertrouwt, hoeft dat ook niet.
+**No severity.** No score, no judgement of harm, by design. CVE does not weigh
+either; NVD does that, separately. How heavily a concrete case weighs depends on
+that case, and belongs to whoever applies the entry.
 
-**Elk record zegt wat het zou ontkrachten.** Het veld `falsifier` staat verplicht
-in elk record: wat zou er waar moeten zijn om ons ongelijk te geven, en hebben we
-dat nagekeken. Een record zonder getoetste falsifier komt er niet in.
-
-**Elk record heeft een openbaar wijzigingsspoor.** Append-only. Een stille
-correctie is technisch onmogelijk, en dat is precies de bedoeling.
-
-## Meedoen
-
-Zie [CONTRIBUTING.md](CONTRIBUTING.md). Vier manieren, van vijf minuten tot een
-middag:
-
-| Wat | Tijd | Waarom het telt |
-|---|---|---|
-| Een bestaand record naspelen | 5 min | tilt de bewijskracht naar de hoogste trede |
-| Een nieuwe meting insturen | 20 min | met de bookmarklet, geen installatie nodig |
-| Een patroon uitschrijven | een middag | elk volgend record erft die onderbouwing |
-| Een record betwisten | | ook, en juist, als je organisatie erin staat |
-
-Je naam blijft aan het record hangen, met de rol die je had. Anoniem mag ook.
-
-**Jij levert een meting, het register draagt de publicatie.** Wie iets meldt, is
-niet de uitgever. Krijgt een record tegenwind, dan komt die bij ons terecht.
-
-## Hoe het in elkaar zit
-
-```
- schema/          het recordformaat, de vector en de severity-regel, versioned
- rules/           de detectielogica per patroon, machineleesbaar
- registry/        de patronen, uitgeschreven voor mensen
- observations/    de records
- repro/           handleidingen, standalone scripts, de bookmarklet
- tools/           poortwachter, nummertoekenning, narekenen
- site/            de gegenereerde leeskant
-```
-
-Bij elke inzending draait `tools/validate.py`. Die toetst het schema, herberekent
-de ernst uit de vector, controleert of er een wederhoorspoor is, of de falsifiers
-zijn nagekeken, en of de reproductie buiten onze eigen tooling om kan. Zit er een
-HAR bij, dan rekent `tools/replay.py` de bevinding na op dat bewijs. Wat rood
-wordt, komt er niet in.
-
-## Stand van zaken
-
-Dit register is in opbouw. Eerlijk over wat er wel en niet af is:
+## What is in an entry
 
 | | |
 |---|---|
-| Records | 15, alle gevalideerd, uit één dossier |
-| Patronen met een volledige pagina | 1 van 10 (`frontrun`) |
-| Regels | 2 volledig, 7 stubs met openstaande TODO's |
-| Onafhankelijke bevestiging gekoppeld | nog geen |
+| Mechanism | how the fault arises, and the fault it is most often confused with |
+| Indicator | the concrete thing that settles it, checkable without interpretation |
+| Detection quality | which method establishes it and how strongly, on a fixed scale |
+| Falsifiers | what would refute it, and whether that can be checked from a capture |
+| Reproduction | by hand, bookmarklet, script; never requiring tooling we own |
+| Legal framing | provisions per jurisdiction, case law, and the standard objections answered |
+| In practice | what to verify in a DPIA, how to word a procurement clause, what to hand a regulator |
 
-De negen andere patronen hebben wel records en een werkende regel, maar nog geen
-uitgeschreven pagina. Tot die er is, staat er bij het patroon dat het nog niet af
-is. Zie [OPEN.md](OPEN.md) voor de volledige lijst.
+Each entry lives at its own permanent address with the same content as JSON
+beside it. Identifiers are never reused; a deprecated entry keeps its number and
+its address, with the reason attached, because references to it exist elsewhere.
 
-## Wat een record niet is
+## The method is published too
 
-Een record beschrijft gemeten gedrag op een genoemd moment. Het stelt geen
-onrechtmatigheid vast; dat is aan de Autoriteit Persoonsgegevens of aan de
-rechter. Het register benoemt welke bepalingen in het geding zijn, per
-jurisdictie, en houdt het daarbij.
+[METHOD.md](METHOD.md) sets out how to go looking for these faults: define scope
+before measuring, capture clean, take a baseline, vary one thing at a time, walk
+the catalogue rather than your intuition, try to break your own finding, ask
+before publishing. Versioned, because a measurement taken under 1.0 is not the
+same claim as one taken under 2.0.
 
-## Licentie
+Security has the OWASP Testing Guide for this. Data protection had nothing, which
+is why no two investigations were comparable.
 
-Records, patronen en schema onder CC BY 4.0. Scripts en tooling onder MIT.
-Overname en voortzetting door anderen is uitdrukkelijk toegestaan, inclusief de
-nummerreeks: een verwijzing naar een record hoort over tien jaar nog iets te
-betekenen, ook als de mensen erachter verdwenen zijn.
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) and [WANTED.md](WANTED.md), which lists
+what we are actually stuck on rather than a wish list.
+
+The cheapest useful contribution is reproducing an entry and reporting what you
+saw, including when it did not reproduce. After that: a falsifier we missed, the
+national provision for your jurisdiction, a reproduction script, a better title
+for something we named badly, or a fault we have not written down because you
+work on hardware and we mostly measure browsers.
+
+You get credit in the entry, permanently. Anonymous is fine. And since this
+catalogue names no companies, contributing costs you nothing but time.
+
+## Layout
+
+```
+ catalogue/    the entries, one JSON each
+ schema/       the entry schema, versioned
+ law/          provisions, per jurisdiction
+ caselaw/      rulings and decisions, with ECLI where one exists
+ repro/        manuals, standalone scripts, the bookmarklet
+ tools/        replay a rule against a capture, adapt scanner output
+ METHOD.md     how to conduct a measurement
+```
+
+Build with `python3 build_catalogue.py && python3 build_pages.py`, publish with
+`./deploy.sh <target>`. The deploy refuses to run if a single entry fails
+validation.
+
+## Status
+
+Draft. Fourteen entries across web, apps, firmware, IoT and vehicles. Reproduction
+scripts exist for four of them; the rest is in WANTED.md.
+
+## Licence
+
+Entries, schema and legal material under CC BY 4.0. Tooling under MIT. Both allow
+anyone to continue this work, including the numbering, should this catalogue ever
+stop. A reference made today has to still resolve in ten years.
+
+Part of [Totale Digitale Waarborging](https://totaledigitalewaarborging.nl),
+fourth axis: can you account for it in legal terms?
