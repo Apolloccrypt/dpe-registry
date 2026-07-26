@@ -62,6 +62,14 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font
  color:var(--accent);margin:0 0 8px}
 h1{font-size:clamp(26px,4vw,36px);font-weight:600;letter-spacing:-.022em;margin:0;line-height:1.12;text-wrap:balance}
 .sum{font-size:18px;color:var(--ink-2);margin:10px 0 0;max-width:62ch}
+.nl{margin-top:16px;background:var(--soft);border:1px solid var(--aline);border-radius:9px;
+ padding:13px 16px}
+.nl span{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.11em;
+ text-transform:uppercase;color:var(--accent);margin-bottom:3px}
+.nl b{font-size:17px;font-weight:600;display:block;margin-bottom:6px}
+.nl a{font-size:14px;color:var(--accent);text-decoration:none}
+.nl a:hover{text-decoration:underline}
+.nl a:after{content:" \2192"}
 .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
 .tag{font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:3px 9px;border-radius:999px;
  background:var(--surface-2);border:1px solid var(--line);color:var(--ink-2)}
@@ -169,6 +177,7 @@ def entry_page(x, ents):
 <p class="eyebrow">{e(x["id"])}</p>
 <h1>{e(x["name"])}</h1>
 <p class="sum">{e(x["summary"])}</p>
+{f'<div class="nl"><span>In het Nederlands</span><b>{e(x["name_nl"])}</b><a href="start.html">Wat vraag ik hierover, en hoe herken ik een ontwijkend antwoord?</a></div>' if x.get("name_nl") else ""}
 <div class="tags"><span class="tag fam">{e(FAM.get(x["family"], x["family"]))}</span>
   {"".join(f'<span class="tag">{e(SYS.get(s, s))}</span>' for s in x["applies_to"])}
   <span class="tag">status {e(x["status"])}</span></div>
@@ -233,6 +242,7 @@ def index_page(ents):
             for x in sorted(fams[fam], key=lambda y: y["id"]))
         blocks.append(f'<h2 style="margin-top:30px">{e(FAM.get(fam, fam))}</h2>'
                       f'<table><tbody>{rows}</tbody></table>')
+    credit = {c.get("name") for x in ents.values() for c in (x.get("credit") or []) if c.get("name")}
     body = f'''<div class="wrap" style="max-width:1000px">
 <nav class="bar"><a href="https://totaledigitalewaarborging.nl/">Totale Digitale Waarborging</a>
   <span class="sep">/</span><span>DPE catalogue</span><span class="sep">&middot;</span>
@@ -292,6 +302,21 @@ wrong. Take it and use it.</p>
   to contribute</a> &middot; <a href="all.json">the whole catalogue as JSON</a></p>
 </div>
 {"".join(blocks)}
+<div class="who">
+  <h2 style="margin:0 0 8px;font-size:22px;font-weight:600;letter-spacing:-.02em">Dit hangt niet op één persoon</h2>
+  <p style="margin:0 0 14px;color:var(--ink-2);max-width:70ch">Een standaard die door één iemand
+  wordt onderhouden en gemeten, stopt zodra die iemand een week wegvalt. Daarom staat bij elke fout
+  wat hem zou ontkrachten, is de methode openbaar, en heeft elke bijdrager zijn naam in de entry.</p>
+  <div class="wg">
+    <div><b>{len(credit)} bijdragers</b><span>staan met naam in een entry</span></div>
+    <div><b>Doe een meting</b><span>en stuur wat je zag, ook als je niets vond</span></div>
+    <div><b>Spreek ons tegen</b><span>een falsifier die wij misten is de waardevolste bijdrage</span></div>
+  </div>
+  <p style="margin:14px 0 0"><a href="https://github.com/Apolloccrypt/dpe-registry/blob/main/WANTED.md"
+   style="font-weight:500">Waar wij vastlopen</a> &middot; <a
+   href="https://github.com/Apolloccrypt/dpe-registry/blob/main/CONTRIBUTING.md">Hoe je meedoet</a></p>
+</div>
+
 <footer><p>{len(ents)} entries. Schema 2.0. Licence CC BY 4.0 for the entries, MIT for the tooling, so
 anyone can take this further, including the numbering, if this catalogue ever stops. Identifiers are
 permanent and never reused: a reference made today has to still resolve in ten years.</p></footer>
@@ -308,6 +333,12 @@ td a:hover{{text-decoration:underline}}
 .rt:hover{{border-color:var(--accent)}}
 .rn{{display:block;font-size:17.5px;font-weight:600;color:var(--accent);margin-bottom:7px;letter-spacing:-.01em}}
 .rd{{display:block;font-size:14px;color:var(--ink-2);line-height:1.55}}
+.who{{margin-top:44px;padding-top:28px;border-top:1px solid var(--line)}}
+.wg{{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;
+ background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}}
+.wg div{{background:var(--surface);padding:16px 18px}}
+.wg b{{display:block;font-size:16px;margin-bottom:3px}}
+.wg span{{font-size:13.5px;color:var(--ink-3);line-height:1.5}}
 .lede{{max-width:72ch;margin-top:26px;background:var(--surface);border:1px solid var(--line);
  border-radius:12px;padding:22px 26px;box-shadow:var(--shadow)}}
 .lede p{{color:var(--ink-2);font-size:15px}}
