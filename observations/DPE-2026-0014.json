@@ -1,0 +1,156 @@
+{
+  "id": "DPE-2026-0014",
+  "pattern": "handover",
+  "target": {
+    "kind": "website",
+    "name": "sites-pelsrijcken.vuturevx.com",
+    "domain": "sites-pelsrijcken.vuturevx.com",
+    "operator": "Pels Rijcken & Droogleever Fortuijn N.V.",
+    "sector": "legal marketing"
+  },
+  "status": "published",
+  "first_seen": "2026-05-27",
+  "last_seen": "2026-05-27",
+  "vector": "DPE:1.0/EV:M/CS:NA/DC:ID/RC:3P/JU:3C/SC:ONE",
+  "destinations": [
+    {
+      "country": "GB",
+      "host": "aws eu-west-2",
+      "method": "vendor-statement"
+    },
+    {
+      "country": "US",
+      "host": "fonts.gstatic.com",
+      "method": "vendor-statement"
+    }
+  ],
+  "sources": [
+    {
+      "source": "own-measurement",
+      "date": "2026-05-27",
+      "description": "De knop 'Houd mij op de hoogte' op pelsrijcken.nl leidt naar een aanmeldformulier op een dedicated subdomein van Vuture, een marketing-CRM voor advocatenkantoren, sinds 2021 onderdeel van Intapp Inc. (VS). Bij paginalaad worden twee cookies gezet zonder enige consent-laag: VxSessionId en ASPSESSIONIDSGDARRTB. Google Fonts wordt gehotlinked van fonts.gstatic.com. Hosting op AWS eu-west-2 plus Cloudflare-CDN.",
+      "artefact": "https://mickbeer.com/n/addendum-tijdlijn-tracking-pelsrijcken"
+    }
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "label": "Browser devtools, met de hand",
+        "repo": "https://github.com/OWNER/dpe-registry",
+        "path": "repro/MANUAL.md",
+        "expect": "cookies gezet bij paginalaad op het formulierdomein van de derde partij, zonder consent-mechanisme"
+      },
+      {
+        "tier": "script",
+        "label": "Standalone Playwright, geen registertooling",
+        "repo": "https://github.com/OWNER/dpe-registry",
+        "path": "repro/handover/handover.mjs",
+        "language": "javascript",
+        "command": "npm i playwright && node handover.mjs",
+        "runner": {
+          "service": "github-codespaces",
+          "url": "https://codespaces.new/OWNER/dpe-registry",
+          "exit_country": "NL",
+          "caveat": "Kies een EU-regio. Een US-egress kan een andere consent-flow krijgen, waardoor CS:PRE niet reproduceert."
+        },
+        "environment": {
+          "browser": "chromium",
+          "exit_country": "NL",
+          "headless": true,
+          "profile": "clean"
+        },
+        "expect": "cookies gezet bij paginalaad op het formulierdomein van de derde partij, zonder consent-mechanisme"
+      }
+    ],
+    "independent_confirmation": []
+  },
+  "falsifier": {
+    "attribution": "har-pageref",
+    "conditions": [
+      {
+        "condition": "de cookies zijn strikt noodzakelijk voor het formulier",
+        "tested": false,
+        "outcome": "untested",
+        "evidence": "sessiecookies kunnen functioneel zijn; het record stelt de plaatsing vast zonder consent-laag, niet de onrechtmatigheid"
+      },
+      {
+        "condition": "er is wel een consent-laag die de meting miste",
+        "tested": true,
+        "outcome": "excluded",
+        "evidence": "meting van de landingspagina, 27 mei 2026"
+      }
+    ]
+  },
+  "products": [
+    {
+      "vendor": "Intapp",
+      "product": "Vuture",
+      "state": "known_affected"
+    }
+  ],
+  "legal_context": {
+    "provisions": [
+      {
+        "jurisdiction": "NL",
+        "reference": "Telecommunicatiewet art. 11.7a",
+        "implements": "ePrivacy art. 5(3)"
+      },
+      {
+        "jurisdiction": "EU",
+        "reference": "GDPR art. 44"
+      }
+    ]
+  },
+  "changes": [
+    {
+      "at": "2026-05-27T00:00:00Z",
+      "actor": "import/pelsrijcken",
+      "entries": [
+        "Record created from published addendum.",
+        "Pattern linked.",
+        "Vector created.",
+        "Sources created.",
+        "Falsifier imported.",
+        "Severity derived (dpe-severity-1.0)."
+      ]
+    }
+  ],
+  "schema_version": "1.0",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "measured",
+      "date": "2026-05-27"
+    }
+  ],
+  "tlp": "CLEAR",
+  "detection": {
+    "rule": "handover",
+    "rule_version": 1,
+    "method": "network-with-identifier",
+    "qod": 95,
+    "basis": "traffic-property",
+    "indicator": "Set-Cookie op een host onder een andere registrable domain dan de gastheer",
+    "samples": {
+      "taken": 1,
+      "positive": 1,
+      "dates": [
+        "2026-05-27"
+      ],
+      "vantage_points": [
+        "NL"
+      ]
+    }
+  },
+  "disclosure": {
+    "channel": "onderzoekspublicatie; partij heeft publiek gereageerd",
+    "response": "contested",
+    "response_on": "2026-05-22",
+    "response_text": "Publieke verklaring 22 mei 2026: het ging om enkele slordigheden met YouTube-embeds, opgelost door de Cookiebot-scanfrequentie van maandelijks naar dagelijks te verhogen, en Hotjar voldoet aan de AVG omdat de servers in de EU staan. Twee bevindingen zijn erkend en verwijderd."
+  },
+  "severity": {
+    "label": "medium",
+    "rule": "dpe-severity-1.0"
+  }
+}

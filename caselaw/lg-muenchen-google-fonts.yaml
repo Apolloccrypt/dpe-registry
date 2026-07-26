@@ -1,0 +1,18 @@
+id: lg-muenchen-google-fonts
+court: "Landgericht München I"
+case: "3 O 17493/20"
+date: 2022-01-20
+jurisdiction: DE
+holding: >
+  Het dynamisch inladen van Google Fonts, waarbij het IP-adres van de bezoeker
+  zonder toestemming naar Google in de Verenigde Staten gaat, is onrechtmatig.
+  De rechtbank kende een schadevergoeding toe.
+relevance: >
+  De meest directe onderbouwing van hotlink. Een Duitse uitspraak bindt de
+  Nederlandse rechter niet, maar het mechanisme is identiek en de redenering is
+  overdraagbaar. Zo hoort het ook in een record te staan: als ondersteunend
+  argument, niet als vaststaand recht.
+patterns: [hotlink]
+supports: true
+url: "https://gdprhub.eu/index.php?title=LG_M%C3%BCnchen_I_-_3_O_17493/20"
+verified: true

@@ -1,0 +1,81 @@
+# DPE detection rule
+#
+# The differential rule. Where frontrun observes one state, this one compares
+# two, and the comparison is the evidence. A vulnerability scanner cannot do
+# this: a version string has no second state. Consent does.
+
+id: hollowno
+rule_version: 1
+pattern: hollowno
+info:
+  name: Refusing consent does not change what leaves the browser
+  family: consent
+  authors: [dpe-registry]
+
+requires_capture:
+  profile: clean
+  captures:                     # two separate runs, each with a fresh profile
+    - mode: noop                # loaded, nothing clicked
+    - mode: reject              # refusal actually registered before capture ends
+  artefact: har
+  attribution: [har-pageref, cdp-initiator]
+  verify_before_compare:
+    - consent state read back after the click; the refusal must be registered,
+      otherwise the comparison measures a failed click and not a hollow refusal
+
+# ---------------------------------------------------------------------------
+# The indicator is a set operation, not an observation. Either the third-party
+# host sets are equal, or the refusal did something. There is no third reading.
+# ---------------------------------------------------------------------------
+match:
+  compare:
+    left: captures.noop.third_party_hosts
+    right: captures.reject.third_party_hosts
+  any:
+    - condition: right is_superset_or_equal_of left
+      verdict: refusal changed nothing
+    - condition: right intersects lists/measurement-hosts.txt
+      verdict: measurement continues after an explicit refusal
+
+report:
+  survivors: right intersect lists/measurement-hosts.txt
+  note: report the surviving hosts by name; a count alone is not checkable
+
+qod:
+  method: differential
+  value: 97
+  rationale: |
+    Two captures under identical conditions differing only in the refusal.
+    Nothing is inferred from a single observation, so the usual objections
+    about timing, caching and coincidence do not apply. The weak point is
+    elsewhere: proving the refusal registered at all. Hence verify_before_compare.
+
+falsifiers:
+  - id: refusal-not-registered
+    condition: the click did not register the refusal
+    check: captures.reject.consent_state == "rejected"
+    on_true: drop
+  - id: strictly-necessary
+    condition: surviving requests are strictly necessary for a service the visitor asked for
+    check: manual                # per surviving host, by hand
+    on_true: reclassify
+    note: |
+      Requires judgement, so it is never auto-excluded. A record may be published
+      with this falsifier at outcome "untested" as long as the record says so.
+      See DPE-2026-0008.
+  - id: banner-delay
+    condition: the banner blocks, but later than the capture window
+    check: captures.reject.settle_seconds >= 6
+    on_true: drop
+
+does_not_establish:
+  - lawfulness
+  - that the operator intended the refusal to be ineffective
+  - anything about the accept mode; that is a separate capture and a separate record
+
+reproduction:
+  manual: repro/hollowno/MANUAL.md
+  script: repro/hollowno/hollowno.mjs
+  independent:
+    - urlscan.io
+    - webbkoll

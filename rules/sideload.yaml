@@ -1,0 +1,50 @@
+# DPE detection rule (stub, opgezet uit bestaande records)
+#
+# TODO voor een mens: vul requires_capture en does_not_establish aan, en
+# controleer of de indicator hieronder scherp genoeg is om zonder oordeel
+# toegepast te kunnen worden. Zolang deze regel er staat, is de rule niet af.
+
+id: sideload
+rule_version: 1
+pattern: sideload
+info:
+  name: Sideload
+  family: method
+  authors: [dpe-registry]
+
+requires_capture:
+  profile: clean
+  interaction: none
+  artefact: har
+  attribution: [cdp-initiator]
+  forbidden_attribution:
+    - referer   # spoofbaar, en meetinstrumentatie doet dat ook
+
+match:
+  indicator: >
+    property-ID aanwezig in het netwerkverkeer en ontbrekend in de opgehaalde HTML; duur onafhankelijk bevestigd via wayback op marker GTM-PMFWLS7
+
+qod:
+  method: differential
+  value: 97
+  basis: set-comparison
+
+falsifiers:
+  - condition: het ID staat wel in de broncode, maar dynamisch samengesteld
+    check: automated
+    on_true: drop
+  - condition: de initiator is niet de container maar een ander script
+    check: automated
+    on_true: drop
+
+does_not_establish:
+  - lawfulness; that is for a supervisory authority or a court
+  - absence: no detection in one capture is not evidence of absence
+  # TODO: wat deze regel specifiek niet kan zien
+
+reproduction:
+  manual: repro/sideload/MANUAL.md      # TODO: schrijven
+  script: repro/sideload/sideload.mjs     # TODO: schrijven
+  independent:
+    - urlscan.io
+    - webbkoll

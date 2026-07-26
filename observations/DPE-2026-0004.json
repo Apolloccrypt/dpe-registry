@@ -1,0 +1,178 @@
+{
+  "id": "DPE-2026-0004",
+  "pattern": "frontrun",
+  "target": {
+    "kind": "website",
+    "name": "pgawb.nl",
+    "domain": "pgawb.nl",
+    "operator": "Pels Rijcken & Droogleever Fortuijn N.V.",
+    "sector": "juridische dienstverlening"
+  },
+  "status": "published",
+  "first_seen": "2026-05-27",
+  "last_seen": "2026-05-27",
+  "vector": "DPE:1.0/EV:M/CS:PRE/DC:ID+BEH/RC:3P/JU:3C/SC:ONE",
+  "destinations": [
+    {
+      "country": "US",
+      "host": "google-analytics.com",
+      "method": "vendor-statement"
+    }
+  ],
+  "sources": [
+    {
+      "source": "own-measurement",
+      "date": "2026-05-27",
+      "description": "GA4-stream G-RTMT1BGGHG vuurt bij paginalaad voor enige toestemmingsinteractie, met gezette _ga-cookie en POST naar het measurement-endpoint.",
+      "artefact": "https://mickbeer.com/n/addendum-tijdlijn-tracking-pelsrijcken"
+    },
+    {
+      "source": "archival-corroboration",
+      "date": "2026-05-27",
+      "description": "Universal Analytics UA-18970241-6 staat onafgebroken in de archieven van december 2013 tot september 2024, opgevolgd door deze GA4-stream vanaf januari 2025.",
+      "artefact": "https://mickbeer.com/n/addendum-tijdlijn-tracking-pelsrijcken"
+    }
+  ],
+  "continuity": {
+    "source": "wayback",
+    "continuous_since": "2013-12",
+    "continuous_until": "2024-09",
+    "duration_months": 129,
+    "marker": "UA-18970241-6",
+    "note": "Onafgebroken UA-periode van 10 jaar en 9 maanden, met aansluitend GA4 vanaf januari 2025."
+  },
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "label": "Browser devtools, met de hand",
+        "repo": "https://github.com/OWNER/dpe-registry",
+        "path": "repro/MANUAL.md",
+        "expect": "minstens een request naar een Google-meethost voor interactie, plus een gezette _ga-cookie"
+      },
+      {
+        "tier": "script",
+        "label": "Standalone Playwright, geen registertooling",
+        "repo": "https://github.com/OWNER/dpe-registry",
+        "path": "repro/frontrun/frontrun.mjs",
+        "language": "javascript",
+        "command": "npm i playwright && node frontrun.mjs",
+        "runner": {
+          "service": "github-codespaces",
+          "url": "https://codespaces.new/OWNER/dpe-registry",
+          "exit_country": "NL",
+          "caveat": "Kies een EU-regio. Een US-egress kan een andere consent-flow krijgen, waardoor CS:PRE niet reproduceert."
+        },
+        "environment": {
+          "browser": "chromium",
+          "exit_country": "NL",
+          "headless": true,
+          "profile": "clean"
+        },
+        "expect": "minstens een request naar een Google-meethost voor interactie, plus een gezette _ga-cookie"
+      }
+    ],
+    "independent_confirmation": []
+  },
+  "falsifier": {
+    "attribution": "har-pageref",
+    "conditions": [
+      {
+        "condition": "de meethost is een first-party CNAME naar het doeldomein",
+        "tested": true,
+        "outcome": "excluded",
+        "evidence": "requests gaan naar google-analytics.com respectievelijk region1.google-analytics.com"
+      },
+      {
+        "condition": "het request draagt geen identifier en zet geen cookie",
+        "tested": true,
+        "outcome": "excluded",
+        "evidence": "_ga-cookie gezet bij paginalaad, POST naar measurement-endpoint in HAR"
+      },
+      {
+        "condition": "toestemming was in een eerdere sessie op hetzelfde profiel gegeven",
+        "tested": true,
+        "outcome": "excluded",
+        "evidence": "meting in drie afzonderlijke modi met schoon profiel per mode"
+      }
+    ]
+  },
+  "products": [
+    {
+      "vendor": "Google",
+      "product": "Analytics 4",
+      "state": "known_affected",
+      "configuration": "hardgecodeerd, buiten enige consent-gate"
+    },
+    {
+      "vendor": "WP Engine",
+      "product": "WordPress hosting",
+      "state": "known_affected",
+      "configuration": "gedeeld IP 35.189.124.151, toebehorend aan Google LLC"
+    }
+  ],
+  "legal_context": {
+    "provisions": [
+      {
+        "jurisdiction": "NL",
+        "reference": "Telecommunicatiewet art. 11.7a",
+        "implements": "ePrivacy art. 5(3)"
+      },
+      {
+        "jurisdiction": "EU",
+        "reference": "GDPR art. 6(1)(a)"
+      }
+    ]
+  },
+  "disclosure": {
+    "channel": "onderzoekspublicatie; partij heeft publiek gereageerd",
+    "response": "contested",
+    "response_on": "2026-05-22",
+    "response_text": "Publieke verklaring 22 mei 2026: het ging om enkele slordigheden met YouTube-embeds, opgelost door de Cookiebot-scanfrequentie van maandelijks naar dagelijks te verhogen, en Hotjar voldoet aan de AVG omdat de servers in de EU staan. Twee bevindingen zijn erkend en verwijderd. Op pgawb.nl zijn op het moment van publicatie geen sporen van een opruimactie aangetroffen."
+  },
+  "changes": [
+    {
+      "at": "2026-05-27T00:00:00Z",
+      "actor": "import/pelsrijcken",
+      "entries": [
+        "Record created from published addendum.",
+        "Pattern linked.",
+        "Vector created.",
+        "Sources created.",
+        "Falsifier imported.",
+        "Severity derived (dpe-severity-1.0)."
+      ]
+    }
+  ],
+  "schema_version": "1.0",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "measured",
+      "date": "2026-05-27"
+    }
+  ],
+  "tlp": "CLEAR",
+  "detection": {
+    "rule": "frontrun",
+    "rule_version": 1,
+    "method": "network-with-identifier",
+    "qod": 95,
+    "basis": "traffic-property",
+    "indicator": "GA-request met identifier-parameter en gezette _ga-cookie, voor het consent-event; duur onafhankelijk bevestigd via wayback op marker UA-18970241-6",
+    "samples": {
+      "taken": 1,
+      "positive": 1,
+      "dates": [
+        "2026-05-27"
+      ],
+      "vantage_points": [
+        "NL"
+      ]
+    }
+  },
+  "severity": {
+    "label": "high",
+    "rule": "dpe-severity-1.0"
+  }
+}

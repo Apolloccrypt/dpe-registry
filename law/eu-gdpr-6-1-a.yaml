@@ -1,0 +1,16 @@
+id: eu-gdpr-6-1-a
+jurisdiction: EU
+instrument: "Verordening (EU) 2016/679 (AVG)"
+reference: "GDPR art. 6(1)(a)"
+reference_nl: "AVG art. 6 lid 1 sub a"
+title: "Toestemming als grondslag"
+core: >
+  Verwerking is rechtmatig voor zover en voor zover als de betrokkene toestemming
+  heeft gegeven voor de verwerking voor een of meer specifieke doeleinden.
+why_it_matters: >
+  Toestemming die na de verwerking komt, is geen grondslag voor die verwerking.
+  Dat is wat frontrun aantoont: het moment van de meting ligt voor het moment van
+  de vraag.
+patterns: [frontrun, hollowno, onedoor, maxstay, overshoulder]
+url: "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+verified: true

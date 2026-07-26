@@ -1,0 +1,495 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dpe.example/schema/dpe-record-1.0.schema.json",
+  "title": "DPE Record 1.0",
+  "description": "One Data Protection Exposure record: one named pattern, observed at one target, at one point in time, with retained evidence. A record describes measured behaviour. It is not a finding of unlawfulness; that is for a supervisory authority or a court.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "id",
+    "pattern",
+    "target",
+    "tlp",
+    "status",
+    "first_seen",
+    "last_seen",
+    "vector",
+    "sources",
+    "reproduction",
+    "falsifier",
+    "changes"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "const": "1.0" },
+
+    "id": {
+      "type": "string",
+      "pattern": "^DPE-[0-9]{4}-[0-9]{4,6}$",
+      "description": "Permanent identifier. Never reused, never deleted. A withdrawn record keeps its id and its URL."
+    },
+
+    "pattern": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{2,39}$",
+      "description": "Slug of the named pattern in the registry, e.g. 'frontrun'. The name is the citable unit; this id is administrative."
+    },
+
+    "target": {
+      "type": "object",
+      "required": ["kind", "name"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": ["website", "mobile-app", "api", "firmware", "vendor-product", "installation"],
+          "description": "'vendor-product' means the exposure sits in the product itself, in its default or documented configuration, and every deployment inherits it."
+        },
+        "name": { "type": "string", "minLength": 1 },
+        "domain": { "type": "string" },
+        "package": { "type": "string", "description": "Android package name, iOS bundle id, or firmware model." },
+        "operator": { "type": "string", "description": "Organisation responsible for the deployment, as named in its own privacy statement." },
+        "sector": { "type": "string" }
+      }
+    },
+
+    "tlp": {
+      "enum": ["CLEAR", "GREEN", "AMBER", "AMBER+STRICT", "RED"],
+      "description": "Traffic Light Protocol 2.0. Governs whether this record may be published. Records at evidence level S are capped at AMBER."
+    },
+
+    "status": {
+      "enum": ["draft", "disclosure", "published", "disputed", "corrected", "resolved", "withdrawn"],
+      "description": "draft: machine-generated, not reviewed. disclosure: party notified, publication deadline running. disputed: party contests it, contest documented. corrected: substantive content changed after publication. resolved: re-check shows the exposure is gone. withdrawn: the record was wrong; it stays online with this status."
+    },
+
+    "first_seen": { "type": "string", "format": "date" },
+    "last_seen": { "type": "string", "format": "date" },
+
+    "vector": {
+      "type": "string",
+      "pattern": "^DPE:1\\.0/EV:[MRTS]/CS:(PRE|REJ|ACC|NA|X)/DC:(ID|BEH|LOC|CNT|SPC|IDD)(\\+(ID|BEH|LOC|CNT|SPC|IDD))*/RC:(1P|PR|3P|UND)/JU:(EU|ADQ|3C|HR|X)/SC:(ONE|SEC|NAT|VND)$",
+      "description": "See dpe-vector-1.0.md. Describes what was measured, carries no severity."
+    },
+
+    "severity": {
+      "type": "object",
+      "description": "Derived from the vector by a published, versioned rule. Never entered by hand.",
+      "required": ["label", "rule"],
+      "additionalProperties": false,
+      "properties": {
+        "label": { "enum": ["critical", "high", "medium", "low", "unrated"] },
+        "rule": { "type": "string", "pattern": "^dpe-severity-[0-9.]+$" }
+      }
+    },
+
+    "credit": {
+      "type": "array",
+      "description": "Who did the work. Permanent and citable, because attribution is what a contributor gets in return. One entry per person or organisation per role; the same person may appear in several roles across records. A contributor may be credited as 'anonymous' and still hold the role: the registry, not the reporter, carries the publication.",
+      "items": {
+        "type": "object",
+        "required": ["name", "role"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "description": "As the contributor wants to be cited, or 'anonymous'." },
+          "role": {
+            "enum": ["measured", "reproduced", "reported", "reviewed", "disputed", "corrected"],
+            "description": "measured: ran the capture. reproduced: independently replayed someone else's record, which is what raises detection quality. reported: brought it to the registry without measuring. reviewed: editorial check before publication. disputed: contested it, including from the named party's own side. corrected: fixed an error in a published record."
+          },
+          "organisation": { "type": "string" },
+          "url": { "type": "string", "description": "Where the contributor wants to be linked, if anywhere." },
+          "date": { "type": "string", "format": "date" }
+        }
+      }
+    },
+
+    "detection": {
+      "type": "object",
+      "description": "How the exposure was confirmed. Modelled on the Quality of Detection concept from vulnerability scanning: the number describes the method, not the seriousness. It exists so a weak detection method can never be quoted as if it were a strong one.",
+      "required": ["rule", "rule_version", "method", "qod"],
+      "additionalProperties": false,
+      "properties": {
+        "rule": { "type": "string", "description": "Slug of the detection rule in rules/." },
+        "rule_version": { "type": "integer" },
+        "method": {
+          "enum": [
+            "static-source",
+            "network-observed",
+            "network-with-identifier",
+            "document-comparison",
+            "differential",
+            "third-party-confirmed",
+            "archival-continuous"
+          ]
+        },
+        "qod": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "static-source 60, network-observed 90, network-with-identifier 95, document-comparison 97 (measurement checked against the party\u0027s own published statement), differential 97, third-party-confirmed 99, archival-continuous 99 (for duration, not for current behaviour)."
+        },
+        "indicator": { "type": "string", "description": "The concrete thing that settled it: a property id, a container id, an endpoint, or the set comparison that was performed." },
+        "samples": {
+          "type": "object",
+          "description": "A single capture is a sample, not a scan: behaviour varies with time, location and A/B testing. A record that reproduced 3 of 3 times is a different claim from one that reproduced 1 of 3, and the record must be able to say which.",
+          "required": ["taken", "positive"],
+          "additionalProperties": false,
+          "properties": {
+            "taken": { "type": "integer", "minimum": 1 },
+            "positive": { "type": "integer", "minimum": 0 },
+            "dates": { "type": "array", "items": { "type": "string", "format": "date" } },
+            "vantage_points": { "type": "array", "items": { "type": "string" }, "description": "Where each capture egressed. Consent flows are frequently geo-targeted." }
+          }
+        },
+        "basis": {
+          "enum": ["traffic-property", "host-list", "own-documents", "set-comparison"],
+          "description": "What carries the finding. 'traffic-property' (a third party received a persistent identifier) is preferred over 'host-list' (the host appears on our list), because the first is a property of the traffic and the second is a classification we made and therefore a thing to argue about. 'own-documents' compares the measurement against the party's own privacy statement or code of conduct, which is the least contestable basis available."
+        }
+      }
+    },
+
+    "reach": {
+      "type": "object",
+      "description": "How many people the deployment plausibly touches. Reported separately from severity: national reach makes an exposure more important, not more serious.",
+      "required": ["value", "basis"],
+      "additionalProperties": false,
+      "properties": {
+        "value": { "type": "number", "minimum": 0, "maximum": 1 },
+        "basis": { "type": "string", "description": "Where the figure comes from, with a source." },
+        "measured_on": { "type": "string", "format": "date" }
+      }
+    },
+
+    "assessments": {
+      "type": "array",
+      "description": "Weightings by named parties. Multiple assessments may disagree; each keeps its author. This is where opinion lives, explicitly labelled.",
+      "items": {
+        "type": "object",
+        "required": ["author", "score", "rationale"],
+        "additionalProperties": false,
+        "properties": {
+          "author": { "type": "string" },
+          "score": { "type": "number" },
+          "scale": { "type": "string", "default": "0-10" },
+          "rationale": { "type": "string" },
+          "assessed_on": { "type": "string", "format": "date" }
+        }
+      }
+    },
+
+    "destinations": {
+      "type": "array",
+      "description": "ISO 3166-1 alpha-2 codes of observed destinations, with how each was established. Kept out of the vector so an edge-node change does not alter the vector.",
+      "items": {
+        "type": "object",
+        "required": ["country", "method"],
+        "additionalProperties": false,
+        "properties": {
+          "country": { "type": "string", "pattern": "^[A-Z]{2}$" },
+          "host": { "type": "string" },
+          "method": {
+            "enum": ["geoip-offline", "reverse-dns", "whois", "vendor-statement", "tls-certificate"],
+            "description": "GeoIP database version is recorded in reproduction.environment."
+          }
+        }
+      }
+    },
+
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "description": "One block per source, each with its own text, date and artefact. Provenance is never merged into a single description.",
+      "items": {
+        "type": "object",
+        "required": ["source", "date", "description"],
+        "additionalProperties": false,
+        "properties": {
+          "source": {
+            "type": "string",
+            "description": "Identifier of the source, e.g. 'byom-v4.3', 'vendor-response', 'recheck', 'supervisory-decision', 'third-party-report'."
+          },
+          "date": { "type": "string", "format": "date" },
+          "description": { "type": "string", "minLength": 1 },
+          "artefact": { "type": "string", "description": "URL or path of the raw evidence." },
+          "artefact_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+        }
+      }
+    },
+
+    "reproduction": {
+      "type": "object",
+      "description": "A third party must be able to replay this without the registry's own tooling. The core advantage over CVE, and the reason a record survives contest.",
+      "required": ["methods"],
+      "additionalProperties": false,
+      "properties": {
+        "methods": {
+          "type": "array",
+          "minItems": 1,
+          "description": "At least one method must have tier 'manual' or 'script', so that reproduction never depends on tooling only the registry possesses.",
+          "items": {
+            "type": "object",
+            "required": ["tier", "expect"],
+            "additionalProperties": false,
+            "properties": {
+              "tier": {
+                "enum": ["manual", "script", "suite"],
+                "description": "manual: browser devtools by hand, no install. script: standalone snippet, one dependency at most. suite: the registry's own scanner, for scale."
+              },
+              "label": { "type": "string" },
+              "repo": { "type": "string", "description": "Public repository holding the snippet." },
+              "path": { "type": "string" },
+              "commit": { "type": "string", "pattern": "^[a-f0-9]{7,40}$", "description": "Pinned commit. The published link is a permalink at this commit, so the cited snippet can never change under the record." },
+              "language": { "type": "string" },
+              "command": { "type": "string" },
+              "runner": {
+                "type": "object",
+                "description": "A hosted environment where the snippet can be executed without local install.",
+                "required": ["service", "url"],
+                "additionalProperties": false,
+                "properties": {
+                  "service": { "enum": ["github-codespaces", "google-colab", "replit", "codesandbox", "stackblitz", "binder", "other"] },
+                  "url": { "type": "string" },
+                  "exit_country": { "type": "string", "pattern": "^[A-Z]{2}$", "description": "Where the hosted runner egresses. Decisive: consent flows and CMP geo-targeting differ per region, so a US-hosted runner may not reproduce an EU observation." },
+                  "caveat": { "type": "string" }
+                }
+              },
+              "expect": { "type": "string", "description": "What a correct replay yields." },
+              "tool_version": { "type": "string" },
+              "methodology_hash": { "type": "string" },
+              "rule_version": { "type": "integer" },
+              "environment": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "browser": { "type": "string" },
+                  "exit_country": { "type": "string", "pattern": "^[A-Z]{2}$" },
+                  "headless": { "type": "boolean" },
+                  "profile": { "enum": ["clean", "warm"], "description": "A warm profile can carry prior consent and invalidates a CS:PRE claim." },
+                  "geoip_db": { "type": "string" },
+                  "runtime_seconds": { "type": "integer" }
+                }
+              }
+            }
+          }
+        },
+        "evidence_viewer": {
+          "type": "array",
+          "description": "Where a reader can inspect the retained artefact without installing anything.",
+          "items": {
+            "type": "object",
+            "required": ["service", "url"],
+            "additionalProperties": false,
+            "properties": {
+              "service": { "type": "string" },
+              "url": { "type": "string" },
+              "note": { "type": "string" }
+            }
+          }
+        },
+        "independent_confirmation": {
+          "type": "array",
+          "description": "Measurements by third parties with their own permanent result URL. The strongest evidence a record can carry, because the measuring party is not the registry. Also tamper-evident: a party that cleans up after publication cannot alter last week's public scan.",
+          "items": {
+            "type": "object",
+            "required": ["service", "url", "date", "outcome"],
+            "additionalProperties": false,
+            "properties": {
+              "service": {
+                "enum": ["urlscan.io", "blacklight", "webbkoll", "webpagetest", "securityheaders", "mozilla-observatory", "wayback", "other"]
+              },
+              "url": { "type": "string", "description": "Permanent result URL held by the third party." },
+              "date": { "type": "string", "format": "date" },
+              "outcome": { "enum": ["confirmed", "partially-confirmed", "not-reproduced", "inconclusive"] },
+              "operator": { "type": "string", "description": "Who ran it. An entry run by someone other than the registry carries more weight and should say so." },
+              "note": { "type": "string" }
+            }
+          }
+        },
+        "reproduced_by": {
+          "type": "array",
+          "description": "Independent replays of the snippet itself by a named party.",
+          "items": {
+            "type": "object",
+            "required": ["party", "date", "outcome"],
+            "additionalProperties": false,
+            "properties": {
+              "party": { "type": "string" },
+              "date": { "type": "string", "format": "date" },
+              "outcome": { "enum": ["confirmed", "partially-confirmed", "not-reproduced"] },
+              "note": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+
+    "continuity": {
+      "type": "object",
+      "description": "Archival evidence of how long the exposure has existed. The registry's second advantage over CVE: an uninterrupted run of public snapshots cannot be repaired retroactively, so it turns an incident into a structural finding.",
+      "additionalProperties": false,
+      "properties": {
+        "source": { "enum": ["wayback", "archive-today", "own-archive", "vendor-changelog"] },
+        "continuous_since": { "type": "string", "description": "Start of the strictly uninterrupted run (ISO date or year-month)." },
+        "continuous_until": { "type": "string" },
+        "duration_months": { "type": "integer" },
+        "snapshots_consecutive": { "type": "integer", "description": "Number of consecutive snapshots carrying the marker. Reported as a lower bound." },
+        "snapshots_total": { "type": "integer" },
+        "earlier_traces": { "type": "string", "description": "Older, non-contiguous traces, reported separately so the headline figure stays strictly defensible." },
+        "marker": { "type": "string", "description": "What was searched for in the snapshots, e.g. a property id or container id." },
+        "note": { "type": "string" }
+      }
+    },
+
+    "falsifier": {
+      "type": "object",
+      "description": "What would refute this record, and whether it was tested. Mandatory: a record without a tested falsifier cannot leave draft.",
+      "required": ["conditions"],
+      "additionalProperties": false,
+      "properties": {
+        "conditions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["condition", "tested", "outcome"],
+            "additionalProperties": false,
+            "properties": {
+              "condition": { "type": "string" },
+              "tested": { "type": "boolean" },
+              "outcome": { "enum": ["excluded", "not-excluded", "untested"] },
+              "evidence": { "type": "string", "description": "Where in the artefact this was checked." }
+            }
+          }
+        },
+        "attribution": {
+          "enum": ["har-pageref", "cdp-initiator", "process-trace", "vendor-statement"],
+          "description": "How the flow was attributed to this target. Referer headers are not accepted: stealth instrumentation spoofs them."
+        }
+      }
+    },
+
+    "products": {
+      "type": "array",
+      "description": "The product layer. A CMP, SDK or tag manager configuration that causes the exposure in its default state is one record with many affected deployments.",
+      "items": {
+        "type": "object",
+        "required": ["vendor", "product", "state"],
+        "additionalProperties": false,
+        "properties": {
+          "vendor": { "type": "string" },
+          "product": { "type": "string" },
+          "versions": { "type": "array", "items": { "type": "string" } },
+          "state": { "enum": ["known_affected", "known_not_affected", "under_investigation", "fixed"] },
+          "configuration": { "type": "string", "description": "Whether the exposure follows from the default configuration or from this deployment's own settings. Decisive for who is responsible." }
+        }
+      }
+    },
+
+    "legal_context": {
+      "type": "object",
+      "description": "The provisions in play and prior decisions on the same pattern. Deliberately named 'context': the record does not assert a breach.",
+      "additionalProperties": false,
+      "properties": {
+        "provisions": {
+          "type": "array",
+          "description": "The provisions in play, each tied to a jurisdiction. This is the layer that makes a pattern usable outside one country: the behaviour is the same everywhere in the EEA, only the citation differs. A contributor in another country reuses the pattern, the rule and the reproduction script, and attaches their own national provision.",
+          "items": {
+            "oneOf": [
+              { "type": "string", "description": "Shorthand, treated as jurisdiction EU." },
+              {
+                "type": "object",
+                "required": ["jurisdiction", "reference"],
+                "additionalProperties": false,
+                "properties": {
+                  "jurisdiction": { "type": "string", "pattern": "^(EU|[A-Z]{2})$", "description": "EU for union-wide instruments, otherwise an ISO 3166-1 alpha-2 code." },
+                  "reference": { "type": "string", "description": "E.g. 'GDPR art. 6(1)(a)', 'Telecommunicatiewet art. 11.7a', 'TDDDG §25'." },
+                  "implements": { "type": "string", "description": "The EU instrument this national provision implements, so equivalents across countries can be lined up." },
+                  "url": { "type": "string" }
+                }
+              }
+            ]
+          }
+        },
+        "decisions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["authority", "reference"],
+            "additionalProperties": false,
+            "properties": {
+              "authority": { "type": "string" },
+              "reference": { "type": "string" },
+              "date": { "type": "string", "format": "date" },
+              "url": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+
+    "disclosure": {
+      "type": "object",
+      "description": "Coordinated disclosure trail. Required before status may become 'published'.",
+      "additionalProperties": false,
+      "properties": {
+        "notified_on": { "type": "string", "format": "date" },
+        "channel": { "type": "string" },
+        "deadline": { "type": "string", "format": "date" },
+        "response": { "enum": ["acknowledged", "fixed", "contested", "silent", "refused-contact"] },
+        "response_on": { "type": "string", "format": "date" },
+        "response_text": { "type": "string", "description": "The party's own words, quoted, not summarised." }
+      }
+    },
+
+    "rechecks": {
+      "type": "array",
+      "description": "A record is a moment in time. Re-checks turn an incident into a time series, which is what makes a structural claim possible.",
+      "items": {
+        "type": "object",
+        "required": ["date", "outcome"],
+        "additionalProperties": false,
+        "properties": {
+          "date": { "type": "string", "format": "date" },
+          "outcome": { "enum": ["still-present", "partially-resolved", "resolved", "changed", "inconclusive"] },
+          "note": { "type": "string" },
+          "artefact": { "type": "string" }
+        }
+      }
+    },
+
+    "changes": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Append-only audit trail, machine-generated at field level. Entries are never edited or removed. This is what makes a silent correction impossible.",
+      "items": {
+        "type": "object",
+        "required": ["at", "entries"],
+        "additionalProperties": false,
+        "properties": {
+          "at": { "type": "string", "format": "date-time" },
+          "entries": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+          "actor": { "type": "string", "description": "Who or what made the change: a pipeline stage or a named editor." }
+        }
+      }
+    },
+
+    "supersedes": { "type": "string", "pattern": "^DPE-[0-9]{4}-[0-9]{4,6}$" },
+    "related": { "type": "array", "items": { "type": "string", "pattern": "^DPE-[0-9]{4}-[0-9]{4,6}$" } }
+  },
+
+  "allOf": [
+    {
+      "if": { "properties": { "status": { "const": "published" } }, "required": ["status"] },
+      "then": {
+        "required": ["disclosure"],
+        "description": "Publication requires a disclosure trail."
+      }
+    },
+    {
+      "if": { "properties": { "vector": { "pattern": "^DPE:1\\.0/EV:S/" } }, "required": ["vector"] },
+      "then": {
+        "properties": { "tlp": { "enum": ["AMBER", "AMBER+STRICT", "RED"] } },
+        "description": "A suspicion is never published. Evidence level S caps the record at AMBER."
+      }
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+name: Een bestaand record reproduceren
+description: Je hebt een record van iemand anders nagespeeld. Dit is de meest waardevolle bijdrage die er is.
+title: "[reproductie] DPE-2026-XXXX"
+labels: ["reproductie"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Een bevinding die alleen de oorspronkelijke meter kan aantonen, is een
+        bewering. Speelt iemand anders hem na, dan is het een feit. Een geslaagde
+        reproductie tilt de detectiekwaliteit van het record naar de hoogste trede.
+
+        Een mislukte reproductie is net zo welkom. Die willen we juist weten.
+  - type: input
+    id: record
+    attributes:
+      label: Welk record
+      placeholder: DPE-2026-0001
+    validations: {required: true}
+  - type: dropdown
+    id: outcome
+    attributes:
+      label: Uitkomst
+      options:
+        - "bevestigd · ik zag hetzelfde"
+        - "deels bevestigd · deels anders"
+        - "niet gereproduceerd · ik zag het niet"
+    validations: {required: true}
+  - type: dropdown
+    id: how
+    attributes:
+      label: Hoe heb je het nagespeeld
+      options:
+        - "met de hand, via de browserconsole (MANUAL.md)"
+        - "met het standalone script"
+        - "met de bookmarklet"
+        - "via een publieke scanner (urlscan, Webbkoll, Blacklight)"
+    validations: {required: true}
+  - type: input
+    id: country
+    attributes:
+      label: Vanuit welk land
+      value: NL
+    validations: {required: true}
+  - type: textarea
+    id: detail
+    attributes:
+      label: Wat zag je
+      description: Bij een afwijking graag zo precies mogelijk. Een verschil komt vaker door de meetlocatie of het tijdstip dan door een fout in het record.
+    validations: {required: true}
+  - type: input
+    id: permalink
+    attributes:
+      label: Permanente URL, als je een publieke scanner gebruikte
+      placeholder: https://urlscan.io/result/...
+  - type: input
+    id: credit
+    attributes:
+      label: Hoe wil je gecrediteerd worden
+      description: Laat leeg voor anoniem.

@@ -1,0 +1,85 @@
+name: Nieuw voorval melden
+description: Je hebt zelf gemeten dat een site of app een patroon vertoont.
+title: "[voorval] <domein> · <patroon>"
+labels: ["voorval", "te-reviewen"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Jij levert een meting, het register draagt de publicatie. Wil je niet
+        genoemd worden, laat het naamveld dan leeg; dat verandert niets aan de
+        behandeling.
+
+        Meet in een privé-venster en raak de cookiebanner niet aan, anders meet
+        je iets anders dan je denkt.
+  - type: input
+    id: target
+    attributes:
+      label: Doelwit
+      description: Het domein, de app of het product. Eén per melding.
+      placeholder: voorbeeld.nl
+    validations: {required: true}
+  - type: dropdown
+    id: pattern
+    attributes:
+      label: Welk patroon
+      description: Weet je het niet zeker? Kies wat het dichtst in de buurt komt, wij kijken mee.
+      options:
+        - "frontrun · een tag vuurt voor de toestemmingsvraag is beantwoord"
+        - "hollowno · weigeren verandert niets aan het verkeer"
+        - "onedoor · er is geen weigeroptie"
+        - "maxstay · cookie met maximale bewaartermijn, voor de vraag"
+        - "overshoulder · de sessie zelf wordt opgenomen"
+        - "hotlink · een bron van een derde wordt ingeladen"
+        - "sideload · meet-ID in het verkeer maar niet in de HTML"
+        - "offbooks · ontvanger ontbreekt in de privacyverklaring"
+        - "silhouette · herkenning aan apparaatkenmerken"
+        - "handover · formulier bij een derde met eigen profilering"
+        - "weet ik niet / staat er niet bij"
+    validations: {required: true}
+  - type: textarea
+    id: evidence
+    attributes:
+      label: De meting
+      description: Plak de JSON uit de bookmarklet, of beschrijf wat je in het netwerkpaneel zag. Een HAR mag je als bestand meesturen.
+      render: json
+    validations: {required: true}
+  - type: checkboxes
+    id: conditions
+    attributes:
+      label: Opnamecondities
+      description: Zonder deze vier is de meting niet te wegen. Klopt er een niet, meld het dan alsnog en zet het hieronder erbij.
+      options:
+        - {label: "Privé-venster of schoon profiel", required: false}
+        - {label: "Ik heb de cookiebanner niet aangeraakt", required: false}
+        - {label: "Ik heb alleen een openbare pagina geladen, niet ingelogd of iets verstuurd", required: true}
+        - {label: "Ik heb het ruwe bewijs bewaard (HAR of JSON)", required: false}
+  - type: input
+    id: country
+    attributes:
+      label: Vanuit welk land heb je gemeten
+      description: Bepalend, want consent-dialogen worden vaak per regio anders uitgeleverd.
+      value: NL
+    validations: {required: true}
+  - type: textarea
+    id: falsifier
+    attributes:
+      label: Wat zou je eigen bevinding onderuit halen
+      description: |
+        Het belangrijkste veld van de melding. Noem wat er waar zou moeten zijn
+        om jou ongelijk te geven, en of je dat hebt nagekeken. Weet je het niet,
+        schrijf dan op wat je niet kon controleren. Dat is geen zwakte maar
+        precisie.
+      placeholder: "Bijvoorbeeld: het verzoek draagt geen identifier, of ik had de site eerder bezocht in ditzelfde profiel."
+    validations: {required: true}
+  - type: input
+    id: credit
+    attributes:
+      label: Hoe wil je gecrediteerd worden
+      description: Laat leeg voor anoniem. Naam, eventueel organisatie en een link.
+  - type: markdown
+    attributes:
+      value: |
+        Je hoeft geen DPE-nummer te kiezen en geen ernst in te schatten. Het
+        nummer wordt bij opname toegekend en de ernst volgt uit de vector,
+        volgens een openbare regel.

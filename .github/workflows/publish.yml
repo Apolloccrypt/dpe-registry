@@ -1,0 +1,59 @@
+name: Publiceer het register
+
+# Bij elke merge op main: nummers toekennen aan geaccepteerde inzendingen, de
+# site opnieuw bouwen en publiceren. Zo staat een nieuw record binnen enkele
+# minuten online, met een permanente URL.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install --quiet jsonschema
+
+      - name: Nummers toekennen aan nieuwe inzendingen
+        run: |
+          python3 tools/assign_id.py --actor "ci/publish"
+          if ! git diff --quiet; then
+            git config user.name  "dpe-registry"
+            git config user.email "noreply@users.noreply.github.com"
+            git add observations
+            git commit -m "records opgenomen en genummerd"
+            git push
+          fi
+
+      - name: Valideren voor publicatie
+        run: python3 tools/validate.py
+
+      - name: Site bouwen
+        run: python3 build_site.py
+
+      - uses: actions/upload-pages-artifact@v3
+        with: {path: site}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,50 @@
+# DPE detection rule (stub, opgezet uit bestaande records)
+#
+# TODO voor een mens: vul requires_capture en does_not_establish aan, en
+# controleer of de indicator hieronder scherp genoeg is om zonder oordeel
+# toegepast te kunnen worden. Zolang deze regel er staat, is de rule niet af.
+
+id: offbooks
+rule_version: 1
+pattern: offbooks
+info:
+  name: OffBooks
+  family: transparency
+  authors: [dpe-registry]
+
+requires_capture:
+  profile: clean
+  interaction: none
+  artefact: har
+  attribution: [vendor-statement]
+  forbidden_attribution:
+    - referer   # spoofbaar, en meetinstrumentatie doet dat ook
+
+match:
+  indicator: >
+    gemeten ontvangers vergeleken met de ontvangers genoemd in de eigen privacyverklaring van dezelfde datum
+
+qod:
+  method: static-source
+  value: 90
+  basis: own-documents
+
+falsifiers:
+  - condition: de vendor werd elders in de verklaring of in een cookieoverzicht wel genoemd
+    check: automated
+    on_true: drop
+  - condition: de verklaring was buiten de gemeten periode wel bijgewerkt
+    check: automated
+    on_true: drop
+
+does_not_establish:
+  - lawfulness; that is for a supervisory authority or a court
+  - absence: no detection in one capture is not evidence of absence
+  # TODO: wat deze regel specifiek niet kan zien
+
+reproduction:
+  manual: repro/offbooks/MANUAL.md      # TODO: schrijven
+  script: repro/offbooks/offbooks.mjs     # TODO: schrijven
+  independent:
+    - urlscan.io
+    - webbkoll

@@ -1,0 +1,20 @@
+id: cjeu-fashion-id
+court: "Hof van Justitie van de Europese Unie"
+case: "C-40/17 (Fashion ID)"
+ecli: "ECLI:EU:C:2019:629"
+date: 2019-07-29
+holding: >
+  De beheerder van een website die een social plug-in van een derde inlaadt,
+  waardoor gegevens van bezoekers naar die derde worden verzonden, is samen met
+  die derde verwerkingsverantwoordelijke voor het verzamelen en doorzenden van
+  die gegevens. Niet voor wat de derde er daarna mee doet.
+relevance: >
+  Dit is de kern onder hotlink en handover: het inladen van een bron van een
+  derde is zelf een verwerking waarvoor de site verantwoordelijk is. "Wij hebben
+  die data niet, dat doet de leverancier" is daarmee geen antwoord.
+  Ook de grens telt: de verantwoordelijkheid reikt tot het verzenden, niet
+  verder. Records horen die grens te respecteren.
+patterns: [hotlink, handover, crosswalk]
+supports: true
+url: "https://curia.europa.eu/juris/liste.jsf?num=C-40/17"
+verified: true

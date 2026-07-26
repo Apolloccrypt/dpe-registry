@@ -1,0 +1,17 @@
+id: cjeu-planet49
+court: "Hof van Justitie van de Europese Unie"
+case: "C-673/17 (Planet49)"
+ecli: "ECLI:EU:C:2019:801"
+date: 2019-10-01
+holding: >
+  Toestemming voor het plaatsen van cookies is niet geldig gegeven met een vooraf
+  aangevinkt vakje dat de gebruiker moet uitvinken. Toestemming vereist een actieve
+  handeling van de gebruiker.
+relevance: >
+  Vestigt dat toestemming actief en voorafgaand moet zijn. Een tag die vuurt
+  voordat de gebruiker iets heeft gedaan, kan dus niet op toestemming rusten.
+  Ook relevant voor onedoor: een keuze die geen weigering toelaat, is geen keuze.
+patterns: [frontrun, onedoor, hollowno]
+supports: true
+url: "https://curia.europa.eu/juris/liste.jsf?num=C-673/17"
+verified: true

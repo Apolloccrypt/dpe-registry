@@ -1,0 +1,26 @@
+id: nl-tw-11-7a
+jurisdiction: NL
+instrument: "Telecommunicatiewet"
+reference: "Telecommunicatiewet art. 11.7a"
+implements: "ePrivacy-richtlijn 2002/58/EG art. 5 lid 3"
+title: "Cookiebepaling: toestemming voor plaatsen en uitlezen"
+core: >
+  Het plaatsen of uitlezen van gegevens op de randapparatuur van een gebruiker
+  vereist voorafgaande informatie en toestemming, met een nauwe uitzondering voor
+  wat strikt noodzakelijk is voor een door de gebruiker gevraagde dienst.
+why_it_matters: >
+  Deze bepaling grijpt aan op het plaatsen zelf, los van de vraag of er
+  persoonsgegevens worden verwerkt. Daarom kan een record ook bij een discussie
+  over persoonsgegevens overeind blijven.
+exception_note: >
+  De uitzondering geldt voor wat noodzakelijk is voor de gebruiker, niet voor wat
+  handig is voor de exploitant. Publieksmeting valt er volgens de gangbare uitleg
+  van de toezichthouder niet onder.
+patterns: [frontrun, hollowno, onedoor, maxstay, silhouette]
+url: "https://wetten.overheid.nl/BWBR0009950/#Hoofdstuk11_Paragraaf11.1_Artikel11.7a"
+mirror: "https://vrijewetgeving.nl/"          # TODO: exacte artikel-URL plus commit
+mirror_note: >
+  De git-spiegel maakt het mogelijk te verwijzen naar de tekst zoals die op de
+  meetdatum gold. Zolang de exacte URL en commit hier niet staan, verwijst een
+  record naar de huidige tekst en dat is voor oudere metingen niet zuiver.
+verified: true

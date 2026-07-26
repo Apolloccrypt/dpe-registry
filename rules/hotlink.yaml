@@ -1,0 +1,50 @@
+# DPE detection rule (stub, opgezet uit bestaande records)
+#
+# TODO voor een mens: vul requires_capture en does_not_establish aan, en
+# controleer of de indicator hieronder scherp genoeg is om zonder oordeel
+# toegepast te kunnen worden. Zolang deze regel er staat, is de rule niet af.
+
+id: hotlink
+rule_version: 1
+pattern: hotlink
+info:
+  name: Hotlink
+  family: transfer
+  authors: [dpe-registry]
+
+requires_capture:
+  profile: clean
+  interaction: none
+  artefact: har
+  attribution: [har-pageref]
+  forbidden_attribution:
+    - referer   # spoofbaar, en meetinstrumentatie doet dat ook
+
+match:
+  indicator: >
+    subresource-request naar een andere registrable domain in het initiele document; duur onafhankelijk bevestigd via wayback op marker ajax.googleapis.com
+
+qod:
+  method: network-observed
+  value: 95
+  basis: traffic-property
+
+falsifiers:
+  - condition: de resource wordt lokaal geserveerd via een proxy of self-host
+    check: automated
+    on_true: drop
+  - condition: het IP-adres van de bezoeker is geen persoonsgegeven in deze context
+    check: automated
+    on_true: drop
+
+does_not_establish:
+  - lawfulness; that is for a supervisory authority or a court
+  - absence: no detection in one capture is not evidence of absence
+  # TODO: wat deze regel specifiek niet kan zien
+
+reproduction:
+  manual: repro/hotlink/MANUAL.md      # TODO: schrijven
+  script: repro/hotlink/hotlink.mjs     # TODO: schrijven
+  independent:
+    - urlscan.io
+    - webbkoll

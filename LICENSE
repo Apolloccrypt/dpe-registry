@@ -1,0 +1,24 @@
+Dit register hanteert twee licenties.
+
+RECORDS, PATRONEN, REGELS, SCHEMA EN JURIDISCH MATERIAAL
+(observations/, registry/, rules/, schema/, law/, caselaw/)
+Creative Commons Naamsvermelding 4.0 Internationaal (CC BY 4.0)
+https://creativecommons.org/licenses/by/4.0/deed.nl
+
+Hergebruik, citeren en voortzetting door anderen is uitdrukkelijk toegestaan,
+inclusief de nummerreeks. Een verwijzing naar een record hoort over tien jaar
+nog iets te betekenen, ook als de mensen erachter verdwenen zijn.
+
+SCRIPTS EN TOOLING
+(tools/, repro/, build_*.py)
+MIT-licentie
+
+Copyright (c) 2026 de bijdragers aan het DPE-register
+
+Hierbij wordt gratis toestemming verleend aan een ieder die een kopie van deze
+software en bijbehorende documentatie verkrijgt om ermee te doen wat hij wil,
+inclusief gebruiken, kopieren, wijzigen, samenvoegen, publiceren, distribueren,
+in sublicentie geven en verkopen, mits bovenstaande copyrightvermelding en deze
+toestemmingsverklaring in alle kopieen worden opgenomen.
+
+DE SOFTWARE WORDT GELEVERD "ZOALS HIJ IS", ZONDER ENIGE GARANTIE.

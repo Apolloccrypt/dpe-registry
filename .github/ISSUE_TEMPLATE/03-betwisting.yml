@@ -1,0 +1,49 @@
+name: Een record betwisten
+description: Je organisatie staat in het register en er klopt iets niet. Dit is een gewone route, geen klachtenprocedure.
+title: "[betwisting] DPE-2026-XXXX"
+labels: ["betwisting", "spoed"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Wat er gebeurt na deze melding: het record krijgt zichtbaar de status
+        `disputed`, jouw reactie komt er letterlijk in te staan, en er volgt een
+        hercontrole. Blijkt de bevinding onjuist, dan wordt het record
+        ingetrokken. Het blijft dan staan met de status `withdrawn`, want een
+        verdwenen record is niet te controleren.
+
+        Wij vatten dit niet op als een aanval. Een register dat niet corrigeert,
+        is geen register.
+  - type: input
+    id: record
+    attributes:
+      label: Welk record
+      placeholder: DPE-2026-0001
+    validations: {required: true}
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Waar gaat het om
+      options:
+        - "de meting klopt niet"
+        - "de meting klopte wel, maar het is inmiddels verholpen"
+        - "de duiding of het patroon klopt niet"
+        - "wij zijn niet de verantwoordelijke partij"
+        - "anders"
+    validations: {required: true}
+  - type: textarea
+    id: reaction
+    attributes:
+      label: Jouw reactie
+      description: Deze tekst komt letterlijk in het record te staan, in jouw eigen woorden en niet samengevat.
+    validations: {required: true}
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Onderbouwing
+      description: Een eigen meting, een configuratie-uitdraai, een verklaring van je leverancier. Alles wat toetsbaar is helpt.
+  - type: input
+    id: contact
+    attributes:
+      label: Contact voor de hercontrole
+      description: Wordt niet gepubliceerd.

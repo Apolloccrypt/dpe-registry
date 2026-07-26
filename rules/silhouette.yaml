@@ -1,0 +1,47 @@
+# DPE detection rule (stub, opgezet uit bestaande records)
+#
+# TODO voor een mens: vul requires_capture en does_not_establish aan, en
+# controleer of de indicator hieronder scherp genoeg is om zonder oordeel
+# toegepast te kunnen worden. Zolang deze regel er staat, is de rule niet af.
+
+id: silhouette
+rule_version: 1
+pattern: silhouette
+info:
+  name: Silhouette
+  family: data
+  authors: [dpe-registry]
+
+requires_capture:
+  profile: clean
+  interaction: none
+  artefact: har
+  attribution: [cdp-initiator]
+  forbidden_attribution:
+    - referer   # spoofbaar, en meetinstrumentatie doet dat ook
+
+match:
+  indicator: >
+    uitlezen van navigator-eigenschappen en tijdzone in scripts van derden
+
+qod:
+  method: network-observed
+  value: 90
+  basis: traffic-property
+
+falsifiers:
+  - condition: de eigenschappen worden uitgelezen voor een functioneel doel, zoals lokalisatie
+    check: manual
+    on_true: reclassify
+
+does_not_establish:
+  - lawfulness; that is for a supervisory authority or a court
+  - absence: no detection in one capture is not evidence of absence
+  # TODO: wat deze regel specifiek niet kan zien
+
+reproduction:
+  manual: repro/silhouette/MANUAL.md      # TODO: schrijven
+  script: repro/silhouette/silhouette.mjs     # TODO: schrijven
+  independent:
+    - urlscan.io
+    - webbkoll
