@@ -71,7 +71,7 @@ def build():
 
     sym = "".join(f'''<div class="sy">
   <h3>{e(t)}</h3><p>{e(why)}</p>
-  <div class="lk">{"".join(f'<a href="{e(i)}">{e(i)} &middot; {e(ent[i]["name_nl"] if ent.get(i, {}).get("name_nl") else ent.get(i, {}).get("name", i))}</a>' for i in ids if i in ent)}</div>
+  <div class="lk">{"".join(f'<a href="{e(i)}/">{e(i)} &middot; {e(ent[i]["name_nl"] if ent.get(i, {}).get("name_nl") else ent.get(i, {}).get("name", i))}</a>' for i in ids if i in ent)}</div>
 </div>''' for t, ids, why in SYMPTOMS)
 
     rows = []
@@ -83,7 +83,7 @@ def build():
         # het eerste rebuttal is doorgaans het antwoord dat je zult krijgen
         rb = (x["legal"].get("rebuttals") or [{}])[0]
         rows.append(f'''<div class="qa">
-  <div class="qa-id"><a href="{e(i)}">{e(i)}</a><span>{e(x.get("name_nl") or x["name"])}</span></div>
+  <div class="qa-id"><a href="{e(i)}/">{e(i)}</a><span>{e(x.get("name_nl") or x["name"])}</span></div>
   <div class="qa-q"><span class="lab">Stel deze vraag</span><b>{e(q)}</b></div>
   <div class="qa-g"><span class="lab">Een deugdelijk antwoord</span>
     <p>{e(ip.get("complaint", "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij."))}</p></div>

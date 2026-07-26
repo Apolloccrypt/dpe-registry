@@ -154,7 +154,7 @@ def entry_page(x, ents):
                     f'<p class="ra">{e(r["answer"])}</p></div>'
                     for r in x["legal"].get("rebuttals", []))
     limits = "".join(f"<li>{e(l)}</li>" for l in x["does_not_establish"])
-    rel = "".join(f'<a href="{e(r)}">{e(r)} &middot; {e(ents[r]["name"])}</a>'
+    rel = "".join(f'<a href="../{e(r)}/">{e(r)} &middot; {e(ents[r]["name"])}</a>'
                   for r in x.get("related", []) if r in ents)
     prac = ""
     if ip:
@@ -168,16 +168,16 @@ def entry_page(x, ents):
 
     body = f'''<div class="wrap">
 <nav class="bar"><a href="https://totaledigitalewaarborging.nl/">TDW</a><span class="sep">/</span>
-  <a href="./">DPE catalogue</a><span class="sep">/</span>
+  <a href="../">DPE catalogue</a><span class="sep">/</span>
   <span>{e(x["id"])}</span><span class="sep">&middot;</span>
-  <a href="{e(x["id"])}.json">JSON</a><span class="sep">&middot;</span>
-  <a href="start.html">niet-technisch</a><span class="sep">&middot;</span>
+  <a href="index.json">JSON</a><span class="sep">&middot;</span>
+  <a href="../start.html">niet-technisch</a><span class="sep">&middot;</span>
   <a href="https://github.com/Apolloccrypt/dpe-registry/blob/main/METHOD.md">method 1.0</a></nav>
 
 <p class="eyebrow">{e(x["id"])}</p>
 <h1>{e(x["name"])}</h1>
 <p class="sum">{e(x["summary"])}</p>
-{f'<div class="nl"><span>In het Nederlands</span><b>{e(x["name_nl"])}</b><a href="start.html">Wat vraag ik hierover, en hoe herken ik een ontwijkend antwoord?</a></div>' if x.get("name_nl") else ""}
+{f'<div class="nl"><span>In het Nederlands</span><b>{e(x["name_nl"])}</b><a href="../start.html">Wat vraag ik hierover, en hoe herken ik een ontwijkend antwoord?</a></div>' if x.get("name_nl") else ""}
 <div class="tags"><span class="tag fam">{e(FAM.get(x["family"], x["family"]))}</span>
   {"".join(f'<span class="tag">{e(SYS.get(s, s))}</span>' for s in x["applies_to"])}
   <span class="tag">status {e(x["status"])}</span></div>
@@ -235,8 +235,8 @@ def index_page(ents):
     blocks = []
     for fam in sorted(fams, key=lambda f: -len(fams[f])):
         rows = "".join(
-            f'<tr><td><a href="{e(x["id"])}">{e(x["id"])}</a></td>'
-            f'<td><a href="{e(x["id"])}">{e(x["name"])}</a></td>'
+            f'<tr><td><a href="{e(x["id"])}/">{e(x["id"])}</a></td>'
+            f'<td><a href="{e(x["id"])}/">{e(x["name"])}</a></td>'
             f'<td class="sm">{e(x["summary"])}</td>'
             f'<td class="sm">{e(", ".join(SYS.get(s, s) for s in x["applies_to"]))}</td></tr>'
             for x in sorted(fams[fam], key=lambda y: y["id"]))
@@ -358,9 +358,17 @@ def main():
         ents[x["id"]] = x
     OUT.mkdir(parents=True, exist_ok=True)
     for x in ents.values():
-        (OUT / f'{x["id"]}.html').write_text(entry_page(x, ents), encoding="utf-8")
-        (OUT / f'{x["id"]}.json').write_text(
-            json.dumps(x, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        page = entry_page(x, ents)
+        blob = json.dumps(x, ensure_ascii=False, indent=2) + "\n"
+        # Als map met index, zodat /register/DPE-2026-0001 werkt zonder dat de
+        # webserver impliciete .html-extensies hoeft te kennen. De permanente URL
+        # mag niet afhangen van een serverinstelling die iemand later wijzigt.
+        d = OUT / x["id"]
+        d.mkdir(exist_ok=True)
+        (d / "index.html").write_text(page, encoding="utf-8")
+        (d / "index.json").write_text(blob, encoding="utf-8")
+        # Bewust geen platte kopie ernaast: twee adressen voor dezelfde entry
+        # betekent twee dingen om te citeren en een van de twee raakt achter.
     (OUT / "index.html").write_text(index_page(ents), encoding="utf-8")
 
     # Losse pagina's die niet uit de catalogus komen. Het script van de verifier
