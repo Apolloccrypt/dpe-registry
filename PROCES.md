@@ -1,5 +1,10 @@
 # Het koppelproces
 
+> *This document is in Dutch on purpose. It describes how the paper side and the
+> building side of an organisation hand work to each other, and the vocabulary,
+> the roles and the procurement practice it addresses are Dutch. The catalogue
+> itself is in English.*
+
 Er zijn twee werelden en ze praten niet.
 
 Aan de ene kant staat de papieren kant: functionarissen, juristen, inkopers.

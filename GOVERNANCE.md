@@ -1,81 +1,91 @@
-# Bestuur van het register
+# Governance
 
-Een register is pas een register als het niet van één persoon afhangt. Dit
-document beschrijft wie wat mag, en het is expliciet geschreven om zichzelf
-overbodig te maken als enige-uitgeversregeling.
+A catalogue that depends on one person is not a standard. This document exists to
+make that dependency visible and, over time, unnecessary.
 
-## Rollen
+It is deliberately short. The catalogue names no organisations, so most of the
+machinery a disclosure register needs does not apply here: there is nobody to
+notify, nothing under embargo and no party with a right of reply. What remains is
+the question of who may change a definition, and on what grounds.
 
-**Bijdrager.** Iedereen. Meldt voorvallen, reproduceert bestaande records,
-schrijft patronen uit, betwist. Heeft geen rechten nodig en geen account bij
-wie dan ook behalve GitHub. Wordt gecrediteerd, of anoniem als hij dat wil.
+---
 
-**Uitgever.** Mag een inzending opnemen, de status naar `published` zetten, en
-een record intrekken. Doet het wederhoor bij de betrokken partij. Uitgevers
-worden benoemd door het bestuur en staan met naam in `UITGEVERS.md`, zodat
-zichtbaar is wie het register vult.
+## Roles
 
-**Bestuur.** Benoemt uitgevers, beslist over wijzigingen aan het schema en aan
-de severity-regel, en behandelt bezwaren tegen een besluit van een uitgever.
+**Contributor.** Anyone. Proposes entries, reproduces them, sharpens a falsifier,
+adds a jurisdiction, or argues that an entry is wrong. Needs no permission and no
+account beyond GitHub. Credited in the entry, or anonymous if preferred.
 
-Bij de start is er één uitgever. Dat is geen ideale toestand maar een
-beginsituatie, en dit document staat er om die te kunnen verlaten.
+**Editor.** May accept a proposal, assign a number, and mark an entry deprecated.
+Editors are listed by name in the repository, so it is visible who is shaping the
+catalogue.
 
-## Wat een uitgever niet mag
+At the time of writing there is one editor. That is a starting condition, not a
+design, and this document exists to be able to leave it behind.
 
-Deze grenzen zijn er zodat de uitkomst niet van een persoon afhangt.
+## What an editor may not do
 
-- **Een ernstlabel met de hand zetten.** Ernst wordt afgeleid uit de vector met
-  `dpe-severity-1.0`. Wie een andere ernst wil, moet de meting veranderen, en dat
-  is zichtbaar in het wijzigingsspoor.
-- **Een record stil aanpassen.** Elke wijziging is een regel in `changes`, en die
-  lijst is append-only. De CI weigert een record waarin oudere regels zijn
-  gewijzigd.
-- **Publiceren zonder wederhoor.** Zie `DISCLOSURE.md`. Geen uitzonderingen, ook
-  niet als de bevinding evident is.
-- **Een record verwijderen.** Een onjuist record wordt ingetrokken en blijft
-  staan met de status `withdrawn` en de reden erbij. Wat weg is, is niet te
-  controleren.
-- **Een eigen inzending zelf opnemen zonder tweede paar ogen**, zodra er meer dan
-  één uitgever is.
+These limits exist so that an outcome does not depend on who happened to handle
+it.
 
-## Wijzigingen aan het schema
+- **Assign a severity.** There is none in the schema and none may be introduced
+  without a major version. The catalogue standardises a finding so it can be
+  referenced; weighing belongs to whoever applies it to a concrete case.
+- **Name a party in an entry.** No organisation, product or domain, ever, in any
+  field. An entry that needs a vendor name to be understood is not yet properly
+  described.
+- **Change an entry silently.** Every change is an appended line in `changes`,
+  and that list is append-only. An entry whose earlier lines were edited is
+  rejected.
+- **Reuse a number.** Not after deprecation, not after a merge. References exist
+  elsewhere and they must keep resolving.
+- **Accept an entry without a falsifier.** If nothing would refute it, it is not
+  a finding but an opinion.
 
-Het schema en de severity-regel zijn gepinde versies. Een wijziging die de
-betekenis van bestaande records verandert, vereist een nieuw versienummer; oude
-records blijven verwijzen naar de versie waaronder ze zijn gemaakt.
+## Changing a definition
 
-Dat is geen formaliteit. Zou de severity-regel stilletjes veranderen, dan zou een
-label uit 2026 iets anders betekenen dan hetzelfde label uit 2027, en dan is het
-register waardeloos als tijdreeks. `tools/dpe.py` berekent daarom een
-methodiek-hash over schema, vectordefinitie en regels, en die hash staat in de
-uitvoer van elke validatieronde.
+Entries shift as the field learns. What matters is that a reader in five years
+can tell what an entry meant when it was cited.
 
-## Belangenverstrengeling
+- **Sharpening** an indicator, adding a falsifier, adding a jurisdiction: a
+  normal change, appended to `changes`.
+- **Narrowing or widening the scope** of an entry: only if the old reading stays
+  legible. Say in `changes` what shifted and when.
+- **Replacing an entry** with a better-defined one: the old entry gets status
+  `superseded` and points at the new one. It stays online.
+- **Withdrawing** an entry that turned out to be wrong: status `deprecated`, with
+  the reason. It stays online too. A finding that vanishes cannot be checked, and
+  someone cited it.
 
-Een uitgever neemt geen records op over een organisatie waarvoor hij werkt of
-heeft gewerkt, of waarmee hij een financiële band heeft. Doet die situatie zich
-voor, dan gaat het naar een andere uitgever, en bij één uitgever wordt het
-opgeschort tot er een tweede is.
+The schema and the measurement method carry their own version numbers. A change
+that alters what a measurement means requires a new major version; wording and
+examples get a minor one.
 
-Metingen aan de eigen infrastructuur van het register zijn wel toegestaan en
-worden aangemoedigd. Wie anderen meet, hoort zichzelf te meten.
+## Conflict of interest
 
-## Toetreden als uitgever
+An editor does not decide on an entry that concerns work they were paid for.
+That situation is not hypothetical: whoever maintains a standard tends to be the
+same person who is asked to apply it. Where the catalogue is maintained by one
+party and services are sold on top of it, those should sit in separate legal
+entities, and it should be visible which is which.
 
-Organisaties met een aantoonbaar belang bij dit veld kunnen uitgever worden:
-onderzoeksinstellingen, belangenorganisaties, redacties, en toezichthouders.
-Voorwaarden: onderschrijving van dit document en van het disclosurebeleid, en
-minstens vijf opgenomen records of tien reproducties als bijdrager.
+Measuring the catalogue's own infrastructure is encouraged. Anyone who measures
+others should be measuring themselves.
 
-Dat laatste is bewust laag. De drempel is bedoeld om te weten dat iemand de
-methode kent, niet om de deur dicht te houden.
+## Becoming an editor
 
-## Als het register ophoudt
+Organisations with a demonstrable stake can join: research groups, civil society
+organisations, newsrooms, supervisory authorities. Conditions: endorse this
+document, and have contributed either three accepted entries or ten
+reproductions.
 
-Alle records, het schema, de regels en de reproductiescripts staan onder een
-open licentie in een publieke repository. Houdt dit register op te bestaan, dan
-kan iedereen het voortzetten of overnemen, inclusief de nummerreeks. De
-identifiers blijven daarmee bruikbaar, ook als de mensen erachter verdwijnen.
-Dat is de bedoeling: een verwijzing naar een record moet over tien jaar nog iets
-betekenen.
+That threshold is low on purpose. It exists to establish that someone knows the
+method, not to keep the door shut.
+
+## If this stops
+
+Everything is under CC BY 4.0 for the entries and MIT for the tooling, in a
+public repository. Anyone may continue or take over this catalogue, including the
+numbering. That is not a fallback but the point: a reference made today has to
+still mean something in ten years, whether or not the people behind it are still
+here.

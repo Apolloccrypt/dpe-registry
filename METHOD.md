@@ -131,6 +131,15 @@ Give the operator the finding, the raw artefact and the reproduction, and a
 deadline. Ask explicitly whether something is missing or misread; a mistake
 found before publication costs nobody anything.
 
+**Deadlines.** Thirty days is a reasonable default. That is shorter than the
+ninety common for software vulnerabilities, and the difference is deliberate:
+switching off a tag is not the same as building, testing and shipping a patch.
+Extend once if a concrete remediation plan with a date is offered.
+
+Do not let a party block publication by staying silent, and do not let one remove
+a measurement because it has since been fixed. Note the fix with its date
+instead. The point of a measurement is that it establishes a moment.
+
 Record the response verbatim, including silence. That a party did not respond is
 itself a fact, and paraphrasing a response is how disputes start.
 

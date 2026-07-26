@@ -1,0 +1,15 @@
+Mensen vragen me vaak hoe ik die dingen vind. Trackers die vuren voordat je iets hebt gekozen, een router die contact zoekt met een server in het buitenland, een cookiebanner waar weigeren niets verandert.
+
+Ik heb het opgeschreven. Alles.
+
+Er is een probleem waar bijna niemand het over heeft. Bij beveiliging is alles geregeld: een kwetsbaarheid krijgt een nummer, iedereen verwijst naar hetzelfde en het onderzoek stapelt op. Bij privacy bestaat dat niet. Een DPIA wordt ingevuld op basis van wat de leverancier verklaart en vrijwel niemand controleert of het klopt. Twee onderzoekers die precies hetzelfde aantreffen, noemen het allebei anders. Daardoor begint iedereen elke keer opnieuw.
+
+Vandaag staat er een catalogus online. Genummerde fouten in de omgang met persoonsgegevens, met per fout hoe je hem vaststelt, wat hem zou ontkrachten en hoe je hem zelf nameet. Zonder mijn gereedschap. Vijf minuten met je eigen browser is genoeg.
+
+Uitdrukkelijk voor wat geen kwetsbaarheid is. Een router die telemetrie naar het buitenland stuurt is niet te misbruiken. Het apparaat doet precies wat de bouwer wilde. Daarom bestaat er geen CVE voor, en daarom bestond er tot nu toe geen nummer.
+
+Er staat geen enkel bedrijf in. De catalogus beschrijft het soort fout, niet wie hem maakt. Wie iets aantreft publiceert dat zelf en verwijst naar het nummer.
+
+En ik heb je nodig. Ik meet vooral browsers. Werk je aan hardware, routers, televisies of auto's, dan zie je dingen die ik niet zie. Er staat een lijst met precies de punten waar ik zelf vastloop.
+
+Kijken, nameten, tegenspreken: totaledigitalewaarborging.nl/register

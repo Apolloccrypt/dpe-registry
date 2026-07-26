@@ -1,0 +1,17 @@
+Voor iedereen die met gegevensbescherming werkt en niet uit de techniek komt. Dit is voor jou geschreven.
+
+Je krijgt een DPIA voorgelegd. Daar staat in wat er met gegevens gebeurt. Die beschrijving komt van de leverancier. Bijna nergens wordt gecontroleerd of het klopt, en jij tekent wel.
+
+Dat is geen nalatigheid van jou. Er was geen manier om het te controleren die niet vroeg dat je zelf netwerkverkeer kon lezen.
+
+Wat er nu is: een catalogus met genummerde fouten, en per fout een vraag die je kunt stellen zonder iets van meten te weten. Bijvoorbeeld:
+
+Laat een opname zien van de homepage voordat iemand de cookiebanner aanraakt.
+Waar in de banner kan iemand nee zeggen, en wat slaat die knop op?
+Zet het uit, herstart het, en laat zien dat het nog steeds uit staat.
+
+En, belangrijker: bij elke fout staat waaraan je merkt dat je een ontwijkend antwoord krijgt. Je vraagt of er gemeten wordt voordat iemand toestemming geeft, en je hoort dat de servers in Europa staan. Dat mag kloppen en toch geen antwoord op je vraag zijn. Nu kun je aanwijzen waarom.
+
+Je hoeft niet te leren meten. Je moet kunnen vragen, beoordelen en vastleggen. Wie het goed geregeld heeft, levert een meting binnen een week. Wie erover moet nadenken, weet het niet, en dat is zelf een antwoord.
+
+totaledigitalewaarborging.nl/register

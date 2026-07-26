@@ -1,106 +1,108 @@
-# Gezocht
+# Wanted
 
-Openstaande vragen waar we niet uitkomen. Geen wenslijst en geen lege
-nummerreeks: iedere regel hieronder is een concreet gat waar we vastlopen, met
-erbij wat een antwoord zou zijn.
+Open questions we are stuck on. Not a wish list and not an empty numbering: every
+line below is a concrete gap, with what an answer would look like.
 
-Wie er een oplost, staat als bijdrager in de entry. Dat blijft daar staan.
-
----
-
-## Detectie waar we geen goede indicator voor hebben
-
-**Homecall (DPE-2026-0012), scriptbaar maken.**
-De handmatige route werkt: capture op de router, apparaat met rust laten, kijken
-wat er toch uitgaat. Wat ontbreekt is een indicator die een script kan toetsen.
-Waar loopt het op vast: het onderscheid tussen een update-controle die legitiem
-is en telemetrie die dat niet is, valt niet uit het verkeer alleen af te leiden.
-
-*Wat helpt:* een idle-capture van een consumentenapparaat, met vermelding van
-model en firmwareversie, plus jouw redenering waarom een bepaalde stroom wel of
-niet functioneel is. Ook een negatief resultaat is bruikbaar.
-
-**Sidecar (DPE-2026-0013) bij gepinde apps.**
-Componenten met certificate pinning laten zich niet zomaar meelezen. Wij willen
-geen methode die neerkomt op het slopen van andermans app.
-
-*Wat helpt:* een aanpak die binnen de grenzen blijft en toch vaststelt welke
-hosts een component benadert. Statische inventarisatie plus DNS-observatie is
-misschien genoeg; we weten het niet.
-
-**Silhouette (DPE-2026-0007) zonder debugprotocol.**
-Fingerprinting vaststellen vereist nu het aanhaken op property-reads via het
-debugprotocol. Dat kan een gewone gebruiker niet.
-
-*Wat helpt:* een bookmarklet-achtige route die aantoont dat een script van een
-derde device-eigenschappen uitleest, zonder debugger.
-
-## Namen waar we niet zeker over zijn
-
-Een naam die niet blijft hangen, wordt niet gebruikt. Deze drie twijfelen wij
-zelf over, en een beter voorstel is welkom.
-
-- **Deadend** (DPE-2026-0014), de knop die er niet is of niet blijft staan. De
-  naam suggereert een doodlopende weg, terwijl het gaat om een ontbrekende uitgang.
-- **Telltale** (DPE-2026-0006), wat je typt bereikt een derde. Werkt in het
-  Engels, maar de nuance van verklikken zit er misschien te dik op.
-- **Sidecar** (DPE-2026-0013). Mooi beeld, maar het botst met bestaand jargon in
-  containerarchitectuur, waar een sidecar juist iets nuttigs is.
-
-Een voorstel is bruikbaar als het één woord is, het gedrag van het systeem
-beschrijft en niet de schade bij de persoon, en uitspreekbaar is in een
-telefoongesprek met een redacteur.
-
-## Fouten die vast bestaan maar hier nog niet staan
-
-Wij zien ze wel maar hebben ze niet scherp genoeg om een nummer te rechtvaardigen.
-
-- Een televisie die vaststelt wat er op het scherm te zien is en dat rapporteert.
-  Bestaat aantoonbaar; wij hebben geen meetopstelling.
-- Een auto die locatie of rijgedrag deelt met de fabrikant, zonder een instelling
-  die dat stopt. Raakt Deadend en Homecall, maar verdient waarschijnlijk een
-  eigen nummer.
-- Een betaalterminal of kassasysteem dat transactiegegevens doorgeeft aan derden.
-- Identificatiedocumenten of biometrie die naar een verificatieleverancier gaan.
-  Wij hebben hier materiaal over maar nog geen scherpe afbakening tegenover
-  gewone identiteitscontrole.
-
-*Wat helpt:* een beschrijving van het mechanisme, en vooral de grens: wanneer is
-het dit en wanneer is het normaal functioneren.
-
-## Rechtsgebieden buiten Nederland
-
-De fouten zijn EER-breed, de verwijzingen niet. Nu staan alleen Nederlandse en
-EU-bepalingen in `law/`.
-
-*Wat helpt:* de nationale bepaling die in jouw land dezelfde EU-regel uitvoert,
-in het formaat van `law/nl-tw-11-7a.yaml`. Voor Duitsland is dat vermoedelijk
-§25 TDDDG, voor België een artikel in de wet elektronische communicatie, maar wij
-zijn daar niet thuis en gokken liever niet.
-
-## Jurisprudentie
-
-Drie uitspraken staan er nu in. Er is veel meer, en juist uitspraken die een
-fout **inperken** zijn welkom: die maken een entry bruikbaar in een discussie in
-plaats van alleen in een aanklacht.
-
-*Wat helpt:* ECLI, kern in twee zinnen, en welke entry het raakt.
-
-## Reproductiescripts
-
-Tien van de veertien entries hebben nog geen werkend script. De structuur staat
-en `repro/frontrun/frontrun.mjs` is het model: standalone, één afhankelijkheid,
-en het rapporteert wat het niet kan zien.
-
-*Wat helpt:* een script voor één entry. Dat is een afgerond stuk werk van
-ongeveer een uur, en het is de meest concrete bijdrage die er is.
+Whoever closes one is credited in the entry, permanently.
 
 ---
 
-## Hoe je iets aanlevert
+## Detection we have no good indicator for
 
-Een issue is genoeg. Een pull request mag, hoeft niet. Losse gedachten in een
-issue zijn ook welkom: wij schrijven het dan uit en jij staat als bijdrager in
-de entry.
+**DPE-2026-0012, device telemetry, made scriptable.**
+The manual route works: capture at the gateway, leave the device alone, see what
+goes out anyway. What is missing is an indicator a script can test. Where it
+breaks down: distinguishing a legitimate update check from telemetry cannot be
+derived from the traffic alone.
 
-Zie [CONTRIBUTING.md](CONTRIBUTING.md).
+*What helps:* an idle capture of a consumer device, with model and firmware
+version, plus your reasoning for why a given flow is or is not functional. A
+negative result is useful too.
+
+**DPE-2026-0013, bundled components in pinned applications.**
+Components with certificate pinning cannot simply be read along with. We do not
+want a method that amounts to breaking someone else's application.
+
+*What helps:* an approach that stays within bounds and still establishes which
+hosts a component contacts. Static inventory plus DNS observation may be enough;
+we do not know.
+
+**DPE-2026-0007, fingerprinting without a debugging protocol.**
+Establishing it currently requires hooking property reads through the debugger.
+An ordinary user cannot do that.
+
+*What helps:* a bookmarklet-style route that shows a third-party script reading
+device characteristics, without a debugger attached.
+
+## Faults that certainly exist but are not here yet
+
+We see them but cannot define them sharply enough to justify a number.
+
+- A television establishing what is on screen and reporting it. Demonstrably
+  real; we have no measurement setup.
+- A vehicle sharing location or driving behaviour with the manufacturer with no
+  setting that stops it. Touches DPE-2026-0012 and 0014 but probably deserves its
+  own number.
+- School and parenting applications. No measurements exist in our sources at all.
+- Payment terminals beyond the web checkout. DPE-2026-0025 is written from the
+  mechanism rather than from a measurement, which is weaker than the rest of the
+  catalogue and should be strengthened or narrowed.
+
+*What helps:* a description of the mechanism, and above all the boundary. When is
+this the fault and when is it ordinary operation?
+
+## Jurisdictions outside the Netherlands
+
+The faults are the same across the EEA; only the citation differs. `law/` holds
+Dutch and EU provisions only.
+
+*What helps:* the national provision in your country implementing the same EU
+rule, in the format of an existing file. For Germany that is presumably §25
+TDDDG, for Belgium an article in the electronic communications act, but we are
+not at home there and would rather not guess.
+
+Two files are already marked `verified: false` because the article numbers come
+from knowledge rather than from checking the text: `nl-uavg-46` and
+`nl-sv-126jj`. Someone who can check them against the source would settle that.
+
+## Case law
+
+Three rulings are in. There is far more, and rulings that **narrow** an entry are
+especially welcome: those make an entry usable in a discussion rather than only
+in an accusation.
+
+*What helps:* the ECLI, the holding in two sentences, and which entry it touches.
+
+## Reproduction routes
+
+Most entries share `repro/web/check.mjs`, which tests eight of them in one run.
+The remaining ones have no route of their own, and several device entries can
+only be done by hand.
+
+*What helps:* a script for one entry. That is a contained piece of work of about
+an hour, and it is the most concrete contribution available.
+`repro/web/check.mjs` is the model: standalone, one dependency, and it reports
+what it cannot see.
+
+## Naming
+
+A title that does not stick will not be used. These are worth a second opinion:
+
+- **DPE-2026-0021**, "Probing the visitor's own device". Accurate but long.
+- **DPE-2026-0023**, "Presence revealed by an automatic reply". Describes the
+  mechanism well and reads awkwardly.
+- **DPE-2026-0029**, "Failed capture read as a clean result". Correct, but it
+  should be recognisable to someone who has just made that mistake.
+
+A proposal works if it is descriptive rather than a codename, describes the
+behaviour of the system rather than the harm to the person, and can be said out
+loud in a conversation with an editor.
+
+---
+
+## How to send something
+
+An issue is enough. A pull request is welcome but not expected. Loose notes in an
+issue are fine too: we will write it up and you appear as contributor.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).

@@ -1,0 +1,19 @@
+Vorige week zette ik een catalogus online met genummerde fouten in de omgang met persoonsgegevens. Deze post is voor de mensen die kunnen meten.
+
+Het probleem is niet dat je het niet kunt vinden. Het probleem is dat je functionaris gegevensbescherming je uitkomst niet kan lezen, en jij zijn DPIA niet. Dus maakt iedereen zijn eigen document en gaat ervan uit dat de ander erover gaat.
+
+Daarom staat er nu dit:
+
+npm i playwright
+node repro/web/check.mjs voorbeeld.nl
+python3 tools/rapport.py voorbeeld.nl-dpe.json > rapport.md
+
+Drie opnames met een vers profiel per stuk: niets aanklikken, weigeren, accepteren. Acht fouten getoetst in een run. En daarna een rapport dat je functionaris wel kan lezen: wat is getoetst, wat is gevonden, wat het betekent, wat de vervolgstap is. Zonder jargon, zonder hostnamen.
+
+Tien minuten werk voor jou. Voor hem het verschil tussen een dossier met een aanname en een dossier met een meting.
+
+De methode staat er ook. Versienummer erop, want een meting onder 1.0 is een andere claim dan onder 2.0.
+
+Werkt het niet, of vind je iets dat de regel niet ziet? Dat wil ik weten. Een falsifier die wij misten is de waardevolste bijdrage die er is, en je naam blijft eraan hangen.
+
+totaledigitalewaarborging.nl/register
