@@ -109,6 +109,10 @@
     "dpia": "Verify what fires at runtime rather than reading the page source, and require the container version history.",
     "procurement": "The supplier delivers the tag container version history alongside the site, so what ran when is auditable.",
     "complaint": "A capture showing an identifier in traffic that is absent from the fetched HTML.",
-    "audit_question": "Which tags does your container load that are not in the source, and who can change them?"
+    "audit_question": "Which tags does your container load that are not in the source, and who can change them?",
+    "audit_question_nl": "Welke tags laadt uw container die niet in de broncode staan, en wie mag die wijzigen?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Wij hebben de tracking verwijderd, het staat niet in onze code.",
+    "answer_nl": "Afwezig in de broncode is niet afwezig in het verkeer. De container is de betrouwbare indicator."
   }
 }

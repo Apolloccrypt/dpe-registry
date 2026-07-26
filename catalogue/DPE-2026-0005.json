@@ -114,6 +114,10 @@
     "dpia": "Verify whether in-page behaviour is captured and whether input fields are masked, rather than treating it as analytics.",
     "procurement": "No session recording is active before consent, and where used, input masking is enabled and demonstrated.",
     "complaint": "A capture showing the recording endpoint contacted at load, and whether field masking was active.",
-    "audit_question": "Is anything recording mouse movement or keystrokes, and from what moment?"
+    "audit_question": "Is anything recording mouse movement or keystrokes, and from what moment?",
+    "audit_question_nl": "Wordt er muisbeweging of toetsaanslag opgenomen, en vanaf welk moment?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Het is alleen om de gebruikservaring te verbeteren.",
+    "answer_nl": "Vraag of de opname invoervelden meeneemt. Dat verschil is groot en wordt zelden uit zichzelf genoemd."
   }
 }

@@ -113,6 +113,10 @@
     "dpia": "Verify the actual lifetime of identifiers set before consent, rather than the retention table in the document.",
     "procurement": "No identifier is stored with a lifetime beyond what the stated purpose requires, and none before consent.",
     "complaint": "The Set-Cookie headers from the pre-consent capture, with lifetimes.",
-    "audit_question": "What is the longest-lived cookie you set before anyone has chosen anything?"
+    "audit_question": "What is the longest-lived cookie you set before anyone has chosen anything?",
+    "audit_question_nl": "Wat is de langstlevende cookie die u zet voordat iemand iets heeft gekozen?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "399 dagen is de standaard in de markt.",
+    "answer_nl": "Een standaardinstelling is geen doel. De vraag is welke termijn het doel vraagt."
   }
 }

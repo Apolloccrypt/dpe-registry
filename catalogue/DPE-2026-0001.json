@@ -153,6 +153,10 @@
     "dpia": "Verify that no measurement request leaves before consent is recorded, rather than accepting a statement that tags are 'consent-gated'.",
     "procurement": "On delivery, a capture in the no-interaction state shows no requests to third-party measurement hosts and no identifier cookies.",
     "complaint": "A HAR of the no-interaction state, the timestamp of the consent event, and the falsifier list worked through.",
-    "audit_question": "Show me a network capture of the homepage before anyone clicks the banner."
+    "audit_question": "Show me a network capture of the homepage before anyone clicks the banner.",
+    "audit_question_nl": "Laat een netwerkopname zien van de homepage voordat iemand de banner aanraakt.",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Analytics valt onder de uitzondering voor noodzakelijke cookies.",
+    "answer_nl": "De uitzondering geldt voor wat nodig is voor een dienst die de bezoeker vroeg. Publieksmeting is nodig voor u, niet voor hem."
   }
 }

@@ -112,6 +112,10 @@
     "dpia": "Verify that a refusal control exists and writes a negative state, rather than that a banner is present.",
     "procurement": "The consent dialogue offers refusal at the same level as acceptance, verifiable from the first screen.",
     "complaint": "A screenshot of every layer of the dialogue and the consent state written by each control.",
-    "audit_question": "Where in the banner does someone say no, and what does that store?"
+    "audit_question": "Where in the banner does someone say no, and what does that store?",
+    "audit_question_nl": "Waar in de banner zegt iemand nee, en wat slaat die knop op?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Wie niet wil, kan het in zijn browser uitzetten.",
+    "answer_nl": "Toestemming wordt door u gevraagd en moet dus bij u geweigerd kunnen worden."
   }
 }

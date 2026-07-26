@@ -102,6 +102,10 @@
     "dpia": "Compare the measured recipients against the recipients named in the published privacy statement of the same date.",
     "procurement": "Every party receiving personal data is named in the published statement, verified against a capture on delivery.",
     "complaint": "A capture of recipients plus the archived statement of that date, and the set difference between them.",
-    "audit_question": "Name every party that receives data, then let me check that against the traffic."
+    "audit_question": "Name every party that receives data, then let me check that against the traffic.",
+    "audit_question_nl": "Noem elke partij die gegevens ontvangt, dan leg ik dat naast het verkeer.",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "De verklaring is bewust algemeen gehouden.",
+    "answer_nl": "De wet vraagt de ontvangers of categorieen ervan. Een categorie die ontbreekt is niet algemeen maar onvolledig."
   }
 }

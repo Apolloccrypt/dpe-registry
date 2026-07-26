@@ -107,6 +107,10 @@
     "dpia": "Verify whether device characteristics are read by third parties, rather than checking only for cookies.",
     "procurement": "No third-party script enumerates device characteristics for recognition purposes before consent.",
     "complaint": "A trace of property reads with the initiating script per read.",
-    "audit_question": "What reads the canvas, the fonts or the time zone, and who does it belong to?"
+    "audit_question": "What reads the canvas, the fonts or the time zone, and who does it belong to?",
+    "audit_question_nl": "Wat leest de canvas, de lettertypen of de tijdzone uit, en van wie is dat?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Wij zetten geen cookies.",
+    "answer_nl": "De cookiebepaling gaat over opslaan en uitlezen op het apparaat, niet alleen over cookies."
   }
 }

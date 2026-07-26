@@ -113,6 +113,10 @@
     "dpia": "Verify that the control that stops collection exists and survives a reboot and an update.",
     "procurement": "Any collection beyond what is strictly necessary can be switched off, and the setting survives updates.",
     "complaint": "Captures with the control on, off, and again after a reboot and an update.",
-    "audit_question": "Turn it off, restart it, update it, and show me it is still off."
+    "audit_question": "Turn it off, restart it, update it, and show me it is still off.",
+    "audit_question_nl": "Zet het uit, herstart het, werk het bij, en laat zien dat het nog steeds uit staat.",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Zonder dit werkt het apparaat niet.",
+    "answer_nl": "Noodzaak is te toetsen: blokkeer het verkeer en kijk wat er stukgaat."
   }
 }

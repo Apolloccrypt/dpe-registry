@@ -129,6 +129,10 @@
     "dpia": "Verify that refusing changes the outgoing traffic, rather than accepting that a consent tool is installed.",
     "procurement": "On delivery, the set of third-party hosts contacted after refusal is empty of measurement hosts, demonstrated by two captures.",
     "complaint": "Two HARs, no-interaction and refused, plus the read-back consent state proving the refusal registered.",
-    "audit_question": "Show me two captures, one where the visitor refused, and tell me the difference."
+    "audit_question": "Show me two captures, one where the visitor refused, and tell me the difference.",
+    "audit_question_nl": "Laat twee opnames zien, een waarin de bezoeker weigerde, en vertel me het verschil.",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Er staat toch een banner.",
+    "answer_nl": "De keuze bestaat op het scherm en niet op de lijn. Dat is precies het verwijt."
   }
 }

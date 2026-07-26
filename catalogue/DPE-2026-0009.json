@@ -119,6 +119,10 @@
     "dpia": "Verify which external resources the page loads on first byte, rather than reviewing only the tracking section.",
     "procurement": "All fonts, scripts and libraries are served from the controller's own infrastructure.",
     "complaint": "A capture of the initial document with every subresource host listed.",
-    "audit_question": "Which hosts does the page contact before any script of yours has run?"
+    "audit_question": "Which hosts does the page contact before any script of yours has run?",
+    "audit_question_nl": "Welke hosts benadert de pagina voordat een script van u heeft gedraaid?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Onze hosting staat in Nederland.",
+    "answer_nl": "Waar het staat en wat de pagina inlaadt zijn twee dingen. De doorgifte loopt via het inladen."
   }
 }

@@ -545,6 +545,7 @@ def main():
     # geschreven is en niet af te leiden valt uit de definitie.
     prac = json.loads((ROOT / "tools" / "in_practice.json").read_text(encoding="utf-8"))
     nl = json.loads((ROOT / "tools" / "summary_nl.json").read_text(encoding="utf-8"))
+    tri = json.loads((ROOT / "tools" / "triage_nl.json").read_text(encoding="utf-8"))
     for x in E:
         if x["id"] in nl:
             x["summary_nl"] = nl[x["id"]]
@@ -555,6 +556,11 @@ def main():
     for x in E:
         if x["id"] in prac:
             x["in_practice"] = prac[x["id"]]
+        # Merge NA de toewijzing hierboven, anders wordt hij er weer afgegooid.
+        # Zonder deze regels staat de vragenpagina half Engels en half
+        # Nederlands, en dat is precies waarom niemand hem gebruikt.
+        if x["id"] in tri:
+            x.setdefault("in_practice", {}).update(tri[x["id"]])
         if x["id"] in WEB:
             x["reproduction"]["methods"].insert(1, {
                 "tier": "script", "path": "repro/web/check.mjs",

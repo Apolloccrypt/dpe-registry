@@ -101,6 +101,10 @@
     "dpia": "Verify that user-entered values do not travel to third parties, rather than that 'only page URLs' are shared.",
     "procurement": "No value entered or searched by a user appears in a request to a party outside the processing chain.",
     "complaint": "A capture using a distinctive search term, showing where that term reappears.",
-    "audit_question": "Type a nonsense word into the search box and show me every request containing it."
+    "audit_question": "Type a nonsense word into the search box and show me every request containing it.",
+    "audit_question_nl": "Typ een onzinwoord in het zoekveld en laat me elk verzoek zien waar het in staat.",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Wij sturen geen persoonsgegevens, alleen de pagina-URL.",
+    "answer_nl": "Staat wat de bezoeker intypte in die URL, dan is de URL het persoonsgegeven."
   }
 }
