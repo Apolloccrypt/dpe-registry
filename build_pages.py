@@ -255,10 +255,10 @@ wrong. Take it and use it.</p>
     <span class="rn">Ik wil zelf meten</span>
     <span class="rd">Met de hand in je browser, met een bookmarklet zonder installatie, of met
     een script dat acht fouten in een keer toetst. Je hebt geen gereedschap van ons nodig.</span></a>
-  <a class="rt" href="verify.html">
-    <span class="rn">Ik wil een meting narekenen</span>
-    <span class="rd">Sleep een opname erin en de regels draaien op je eigen computer. Er gaat
-    niets naar een server. Ook voor je eigen opname.</span></a>
+  <a class="rt" href="https://github.com/Apolloccrypt/dpe-registry/blob/main/METHOD.md">
+    <span class="rn">Ik wil weten hoe er gemeten wordt</span>
+    <span class="rd">De meetmethode, met versienummer: reikwijdte vooraf vastleggen, schoon meten,
+    per keer een ding varieren, en je eigen bevinding proberen te breken.</span></a>
 </div>
 
 <div class="lede">
@@ -357,13 +357,8 @@ def main():
         (d / "index.json").write_text(blob, encoding="utf-8")
         # Bewust geen platte kopie ernaast: twee adressen voor dezelfde entry
         # betekent twee dingen om te citeren en een van de twee raakt achter.
-    (OUT / "index.html").write_text(index_page(ents), encoding="utf-8")
+    # index wordt door tools/build_triage.py gemaakt: vragen en lijst op een pagina
 
-    # Losse pagina's die niet uit de catalogus komen. Het script van de verifier
-    # staat apart: de doelserver draait script-src 'self', dus een inline script
-    # wordt daar stilzwijgend geblokkeerd en de pagina doet dan niets.
-    for f in sorted((ROOT / "pages").glob("*")):
-        (OUT / f.name).write_text(f.read_text(encoding="utf-8"), encoding="utf-8")
     (OUT / "all.json").write_text(json.dumps({
         "catalogue": "Data Protection Exposures", "schema_version": "2.0",
         "generated": TODAY, "base_url": BASE, "count": len(ents),

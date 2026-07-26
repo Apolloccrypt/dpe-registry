@@ -14,7 +14,7 @@ nodig heeft, want daar wordt hij afgeserveerd.
 import glob, html, json, pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-OUT = ROOT / "site" / "register" / "start.html"
+OUT = ROOT / "site" / "register" / "index.html"
 
 
 def e(s):
@@ -92,13 +92,34 @@ def build():
     <p class="ans">{e(ip.get("answer_nl") or rb.get("answer", "Vraag om de meting, niet om de toelichting."))}</p></div>
 </div>''')
 
-    page = TPL.replace("{sym}", sym).replace("{qa}", "".join(rows)).replace("{n}", str(len(ent)))
+    # De volledige lijst, gegroepeerd per familie, onderaan dezelfde pagina.
+    FAM = {"consent": "Toestemming", "data": "Gegevens", "chain": "Keten", "transfer": "Doorgifte",
+           "transparency": "Transparantie", "retention": "Bewaring", "telemetry": "Telemetrie",
+           "method": "Methode"}
+    SYS = {"web": "web", "mobile-app": "app", "firmware": "firmware", "iot": "IoT",
+           "vehicle": "voertuig", "desktop": "desktop", "api": "API", "network-device": "netwerkapparaat"}
+    fams = {}
+    for x in ent.values():
+        fams.setdefault(x["family"], []).append(x)
+    lijst = []
+    for fam in sorted(fams, key=lambda f: -len(fams[f])):
+        lijst.append(f'<h3 class="lf">{e(FAM.get(fam, fam))}</h3><table class="lt"><tbody>')
+        for x in sorted(fams[fam], key=lambda y: y["id"]):
+            lijst.append(
+                f'<tr><td class="li"><a href="{e(x["id"])}/">{e(x["id"])}</a></td>'
+                f'<td><a class="ln" href="{e(x["id"])}/">{e(x.get("name_nl") or x["name"])}</a>'
+                f'<span class="ls">{e(x.get("summary_nl") or x["summary"])}</span></td>'
+                f'<td class="lw">{e(", ".join(SYS.get(s2, s2) for s2 in x["applies_to"]))}</td></tr>')
+        lijst.append("</tbody></table>")
+
+    page = (TPL.replace("{sym}", sym).replace("{qa}", "".join(rows))
+               .replace("{n}", str(len(ent))).replace("{lijst}", "".join(lijst)))
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(page, encoding="utf-8")
     print(f"triagepagina met {len(SYMPTOMS)} symptomen en {len(rows)} vragen -> {OUT}")
 
 
-TPL = r"""<title>Start hier als je niet meet · DPE</title>
+TPL = r"""<title>DPE-catalogus · Totale Digitale Waarborging</title>
 <style>
 :root{--bg:#FCFCFE;--surface:#FFF;--surface-2:#F7F7FB;--ink:#161620;--ink-2:#54545F;--ink-3:#8B8B97;
  --line:#E9E9F0;--line-2:#F3F3F8;--accent:#4269D0;--soft:#EDF1FC;--aline:#D5E0F7;
@@ -140,11 +161,22 @@ h2{font-size:24px;font-weight:600;letter-spacing:-.02em;margin:44px 0 8px}
 .qa-g p,.qa-b p{margin:0;font-size:14px;line-height:1.55;color:var(--ink-2)}
 .qa-b em{color:var(--warn-ink);font-style:italic}
 .qa-b .ans{margin-top:8px;padding-top:8px;border-top:1px solid var(--warn-line)}
+.lf{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+ color:var(--ink-3);margin:26px 0 8px;font-weight:600}
+.lt{border-collapse:collapse;width:100%}
+.lt td{padding:10px 14px 10px 0;border-bottom:1px solid var(--line-2);vertical-align:top}
+.li{font-family:var(--mono);font-size:12px;white-space:nowrap;width:1%}
+.li a{color:var(--accent);text-decoration:none}
+.ln{font-weight:600;font-size:15.5px;color:inherit;text-decoration:none;display:block}
+.ln:hover{color:var(--accent)}
+.ls{display:block;font-size:13.5px;color:var(--ink-3);margin-top:2px;line-height:1.5}
+.lw{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);white-space:nowrap;text-align:right}
+@media(max-width:640px){.lw{display:none}}
 footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);color:var(--ink-3);font-size:13px}
 </style>
 <div class="in">
-<nav class="bar"><a href="./">DPE-catalogus</a> &middot; <span>Start hier als je niet meet</span></nav>
-<p class="eyebrow">Voor juristen, functionarissen en inkopers</p>
+<nav class="bar"><a href="https://totaledigitalewaarborging.nl/">Totale Digitale Waarborging</a> &middot; <span>DPE-catalogus</span> &middot; <a href="#lijst">alle fouten</a> &middot; <a href="all.json">JSON</a> &middot; <a href="https://github.com/Apolloccrypt/dpe-registry">bron en bijdragen</a></nav>
+<p class="eyebrow">Data Protection Exposures &middot; as 04, privacy</p>
 <h1>Je hoeft niet te kunnen meten om te weten wat je moet vragen</h1>
 <p class="lede">De catalogus staat vol netwerkopnames en indicatoren. Dat is voor wie zelf meet.
 Werk je met gegevensbescherming zonder technische achtergrond, dan kom je een fout ergens anders
@@ -155,6 +187,11 @@ gaat van wat je hoort naar het nummer.</p>
 <p class="note">Kies wat het dichtst in de buurt komt. Je krijgt de fouten die daarbij horen, met
 per fout de vraag die je kunt stellen.</p>
 <div class="grid">{sym}</div>
+
+<h2 id="lijst">Alle {n} fouten</h2>
+<p class="note">De volledige catalogus, gegroepeerd naar het soort fout. Klik door voor de
+beschrijving, de indicator die hem vaststelt, wat hem zou ontkrachten en hoe je hem naspeelt.</p>
+{lijst}
 
 <h2>De vraag per fout</h2>
 <p class="note">Eén vraag per fout, in gewone taal, zonder dat je hoeft te weten hoe je meet.
