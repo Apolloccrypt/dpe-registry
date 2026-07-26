@@ -1,0 +1,149 @@
+{
+  "id": "DPE-2026-0030",
+  "name": "Open tracking in an email",
+  "slug": "open-tracking-in-email",
+  "name_nl": "Openen van een bericht wordt gemeten",
+  "family": "data",
+  "applies_to": [
+    "web",
+    "mobile-app",
+    "desktop"
+  ],
+  "summary": "A message reports back when it was opened, through a resource fetched on rendering whose address identifies the recipient.",
+  "summary_nl": "Een bericht meldt terug wanneer het geopend is, via een bron die bij het weergeven wordt opgehaald en de ontvanger aanwijst.",
+  "not_a_vulnerability": "Nothing is exploited and nothing is broken. The message does exactly what the sending platform was configured to make it do, and the objection is to that configuration.",
+  "mechanism": {
+    "what": "The message body references a remote resource: a one-pixel image, a background image, a font, a stylesheet. Its address carries a value unique to the recipient. Displaying the message makes the client fetch it, which tells the measuring party the time of opening, the client, the operating system and the network the reader was on, and it repeats on every later opening. The resource is chosen so that nothing appears on screen, so the reader has no cue that anything happened.",
+    "why_it_matters": "Reading is not an act the reader performs towards the sender. Here it becomes one: the sender learns when a message was read, how often, from where and on which device, and from a series of those the reader's daily rhythm, time zone, holidays and whether a message was forwarded. The reader learns none of it and was asked nothing, because there is no moment in a message at which anything can be asked.",
+    "common_causes": [
+      "open measurement enabled by default per campaign in the sending platform",
+      "a decorative remote image whose address carries the recipient token anyway",
+      "a read receipt implemented as an image fetch because the protocol offers no other route",
+      "a template inherited between campaigns, with the measurement in it"
+    ],
+    "not_this": "A resource loaded by a web page is Third-party resource loading; there the fetch belongs to a page and the address is the same for everyone. What distinguishes this entry is that rendering a message triggers the fetch and that the address singles out one recipient. A visible image with an address identical for every recipient is not this entry."
+  },
+  "detection": {
+    "indicator": "The same mailing, received at two addresses under your control, contains remote resource references whose path or query differs between the two copies while the message is otherwise identical. The per-recipient difference in the address is the fault. An address identical in both copies is not.",
+    "method": "differential",
+    "qod": 95,
+    "capture_requirements": [
+      "two addresses you control, both subscribed to the same mailing, compared on the raw source of the message rather than on the rendered view",
+      "record the state of remote content blocking in the client used, because it decides whether the fetch happens, not whether the address identifies you",
+      "keep the message as received, headers included; a forwarded copy may have been rewritten on the way",
+      "send a second mailing to the same two addresses, so a value that varies per send can be told apart from one that varies per recipient"
+    ],
+    "attribution": [
+      "document-diff"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "The remote resource addresses are identical in both copies, so nothing in them singles out a recipient.",
+      "checkable": "automated",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The differing value varies per send rather than per recipient, shown by the second mailing to the same two addresses.",
+      "checkable": "automated",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The resource is served from the sender's own domain and no other party receives the fetch.",
+      "checkable": "manual",
+      "if_true": "reclassify",
+      "note": "Still open tracking, but only the sender learns it. The number of parties changes, the mechanism does not."
+    },
+    {
+      "condition": "The recipient asked for a delivery or read confirmation and can see the same record.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The client fetches every remote resource in advance through a proxy, for every message, whether opened or not.",
+      "checkable": "manual",
+      "if_true": "weaken",
+      "note": "The address still identifies the recipient; what it reports about the moment of reading becomes unreliable. That is a limit on the inference, not on the finding."
+    }
+  ],
+  "legal": {
+    "provisions": [
+      "nl-tw-11-7a",
+      "eu-gdpr-6-1-a",
+      "eu-gdpr-13"
+    ],
+    "rebuttals": [
+      {
+        "objection": "We only look at aggregate open rates.",
+        "answer": "The address fetched is unique per recipient, which is what makes the aggregate possible in the first place. Which rows are looked at is a choice made after the fact and can change tomorrow; the record is there either way."
+      },
+      {
+        "objection": "The recipient subscribed.",
+        "answer": "Subscribing is agreement to receive the message, not to being observed while reading it. The two are separately askable, and a platform can send without measuring."
+      },
+      {
+        "objection": "We need it for deliverability.",
+        "answer": "Deliverability is measured from bounces and complaints, which the mail protocol reports without touching the reader. Whether a message was opened adds nothing to it."
+      },
+      {
+        "objection": "Most clients block images anyway.",
+        "answer": "Then the measurement fails for those readers and works for the rest. What the message was built to do is the finding, not the success rate."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0009",
+    "DPE-2026-0031"
+  ],
+  "seen_in_the_wild": {
+    "confirmed": false,
+    "note": "Observed in practice by the authors but not yet backed by a published reference. Set to false until a citation exists: a claim without a source is exactly what this catalogue holds others to."
+  },
+  "in_practice": {
+    "dpia": "Verify from the raw source of a sent message which remote addresses it contains and whether they differ per recipient, instead of accepting that the platform measures opens 'anonymously'.",
+    "procurement": "Messages sent on the buyer's behalf contain no remote resource whose address differs per recipient, unless the recipient asked for the confirmation and can see it.",
+    "complaint": "The raw source of the same mailing as received at two addresses of the complainant, with the differing addresses marked, and the date of the send.",
+    "audit_question": "Show me the raw source of the last mailing, and the same mailing as it went to a second address.",
+    "audit_question_nl": "Laat de ruwe bron zien van de laatste mailing, en dezelfde mailing zoals die naar een tweede adres ging.",
+    "complaint_nl": "Twee ontvangen berichten in ruwe vorm, met het verschil in de adressen aangewezen, en de verzenddatum erbij.",
+    "objection_nl": "Wij kijken alleen naar hoeveel mensen openen, niet naar wie.",
+    "answer_nl": "Het opgehaalde adres is per ontvanger uniek, en daarom kan dat cijfer bestaan. Wat u ermee doet, verandert de vastlegging niet."
+  },
+  "schema_version": "2.0",
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+      }
+    ]
+  },
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "id": "DPE-2026-0039",
+  "name": "Exam supervision by behavioural scoring",
+  "slug": "exam-supervision-scoring",
+  "name_nl": "Examentoezicht met gedragsscores",
+  "family": "data",
+  "applies_to": [
+    "web",
+    "desktop",
+    "mobile-app"
+  ],
+  "summary": "Exam software watches body, sound and screen, and a per-student suspicion record outlives the result.",
+  "summary_nl": "Examensoftware kijkt naar lichaam, geluid en scherm, en houdt per student een verdenkingsregistratie over na de uitslag.",
+  "not_a_vulnerability": "Nothing is exploited and the software works as sold. The objection is to what it observes and to what remains of it, not to a defect.",
+  "mechanism": {
+    "what": "During an examination the software watches through the camera and the microphone and over the screen: face position, gaze direction, a second face in the frame, sound in the room, windows opened, typing rhythm. From that it derives flags or a score for each student. The recording and the derived judgement are stored, reviewed by staff or by the supplier, and kept after the examination has been graded. An identity step by face comparison often precedes it.",
+    "why_it_matters": "The student sits at home and cannot decline without failing the course. What is recorded includes the room, the people in it and the sounds of a household. A score derived from body movement is a judgement about a person that the person has to argue against, produced by a system that does not explain itself, and where a face is compared the processing is biometric identification.",
+    "common_causes": [
+      "a supplier product with flagging enabled as delivered",
+      "recordings kept for the appeal period for every student rather than for the flagged ones",
+      "the identity step performed by face comparison because the alternative requires staff",
+      "flags treated as evidence rather than as a prompt for a human to look"
+    ],
+    "not_this": "Recording a website session is Session recording. Recognising everyone who passes a camera is Recognition of every passer-by, where the setting is a public space. This entry is about a compulsory examination: the observation concerns one identified student, it produces a judgement about that student, and it outlives the result."
+  },
+  "detection": {
+    "indicator": "After the mark is final, records about individual students still exist: the recording, the derived flags, or a score. Establish it from the institution's retention schedule for this system, from the supplier's export, or from a student's access request that returns their own flags, and distinguish the three.",
+    "method": "document-comparison",
+    "qod": 85,
+    "capture_requirements": [
+      "ask what remains per student after grading, distinguishing recording, flags and score",
+      "ask which of the three the student can see, and whether they were told about the score at the time",
+      "record whether the identity step compares a face, and against which source",
+      "record whether an alternative to the software was offered, in the same period, and what it cost the student"
+    ],
+    "attribution": [
+      "document-diff",
+      "vendor-statement"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "Nothing per student survives grading except the mark itself.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "A human invigilator watched live and nothing was recorded or scored.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "Only sessions a human flagged are kept, with a stated ground and an end date.",
+      "checkable": "manual",
+      "if_true": "weaken"
+    },
+    {
+      "condition": "A genuine alternative was available in the same period, without a penalty and without a separate fee.",
+      "checkable": "manual",
+      "if_true": "weaken",
+      "note": "The compulsion argument then falls. The observation itself still has to be necessary for the purpose."
+    }
+  ],
+  "legal": {
+    "provisions": [
+      "eu-gdpr-5-1-c",
+      "eu-gdpr-5-1-e",
+      "eu-gdpr-22",
+      "eu-gdpr-9-1"
+    ],
+    "rebuttals": [
+      {
+        "objection": "The student agreed to the examination conditions.",
+        "answer": "Agreeing under threat of not graduating is not free consent, which is why examinations run on a public task or a contract and have to satisfy necessity instead."
+      },
+      {
+        "objection": "The system does not decide, a person does.",
+        "answer": "Where that person sees only the flags the system produced, the system did the selecting. What has to be shown is what the reviewer had in front of them besides the score."
+      },
+      {
+        "objection": "The camera image is deleted immediately.",
+        "answer": "Then the flags derived from it are the record, and the question moves to them. Ask what remains, not what is deleted."
+      },
+      {
+        "objection": "Fraud has to be prevented.",
+        "answer": "It does, and that is a purpose. It does not settle the interval, the room, the retention or the score, each of which is a separate choice that can be made differently."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0005",
+    "DPE-2026-0024"
+  ],
+  "seen_in_the_wild": {
+    "confirmed": false,
+    "note": "Observed in practice by the authors but not yet backed by a published reference. Set to false until a citation exists: a claim without a source is exactly what this catalogue holds others to."
+  },
+  "in_practice": {
+    "dpia": "Verify what remains per student after grading, recording, flags and score separately, instead of the supplier's statement that data is deleted after the exam.",
+    "procurement": "After grading, nothing per student remains beyond the mark, except sessions flagged by a human with a stated ground and an end date.",
+    "complaint": "The retention schedule for this system, the student's own flags from an access request, and the answer about whether an alternative was offered.",
+    "audit_question": "The exam is graded. What still exists about a student nobody flagged?",
+    "audit_question_nl": "Het examen is nagekeken. Wat bestaat er dan nog over een student bij wie niets is opgemerkt?",
+    "complaint_nl": "De bewaartermijn van dit systeem, de eigen scores uit een inzageverzoek, en het antwoord of er een alternatief was.",
+    "objection_nl": "De student ging akkoord met de examenvoorwaarden.",
+    "answer_nl": "Akkoord gaan onder dreiging van niet afstuderen is geen vrije toestemming. Daarom loopt dit over noodzaak, niet over toestemming."
+  },
+  "schema_version": "2.0",
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+      }
+    ]
+  },
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ]
+}

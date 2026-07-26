@@ -1,0 +1,141 @@
+{
+  "id": "DPE-2026-0038",
+  "name": "Vehicle tracked outside working hours",
+  "slug": "vehicle-tracked-outside-hours",
+  "name_nl": "Dienstvoertuig gevolgd buiten werktijd",
+  "family": "data",
+  "applies_to": [
+    "vehicle",
+    "iot",
+    "mobile-app"
+  ],
+  "summary": "A tracking unit keeps recording position when the vehicle is out of service, with no working way to mark private use.",
+  "summary_nl": "Een volgsysteem blijft posities vastleggen als het voertuig buiten dienst is, zonder werkende manier om privegebruik aan te geven.",
+  "not_a_vulnerability": "Nothing is exploited. The unit reports because that is what it was fitted to do, and the objection is to the period it covers rather than to a defect in it.",
+  "mechanism": {
+    "what": "A tracking unit reports position, speed and ignition state at a fixed interval for as long as it has power. The purpose given for it, planning, theft recovery, mileage administration, concerns the vehicle in service. The unit knows nothing about shifts, so it records the drive home, the weekend, the pharmacy and the address where the driver sleeps. Where a private-use control exists it is often not fitted on the installed model, switched off in the fleet configuration, or it hides the track in the interface while the records keep arriving.",
+    "why_it_matters": "A position series over weeks is among the most revealing records there is. It shows where someone lives, who they visit and when they are away from home, and it does so for everyone else in the vehicle as well. The driver cannot see the record, cannot switch off the unit, and often has no other car.",
+    "common_causes": [
+      "a unit with a fixed reporting interval and no awareness of shifts",
+      "the private-use control not fitted, or fitted and disabled in the fleet configuration",
+      "a private-use mode that hides the track for the manager while the records are stored",
+      "an interval chosen for theft recovery applied to normal operation"
+    ],
+    "not_this": "A device reporting at an interval that reveals when a house is empty is Reporting interval that reveals occupancy, where the subject is a household. A vehicle sending data to its manufacturer with no function behind it is Device telemetry without function. This entry is about the employment relationship and the boundary of the shift: records exist about time that is not the employer's."
+  },
+  "detection": {
+    "indicator": "Position records exist with timestamps outside the driver's recorded working hours, in the fleet system's own export or in the driver's access request. Where a private-use mode exists, records for the same period exist after it was switched on. The roster and the export are compared row by row.",
+    "method": "document-comparison",
+    "qod": 85,
+    "capture_requirements": [
+      "ask for the records of one vehicle over one week, with timestamps, and the roster for the same week",
+      "test the private-use control if there is one, and ask for the records of the period during which it was on",
+      "record the interval and whether periods with the ignition off are reported as well",
+      "record who in the organisation can see the track and how long it is kept"
+    ],
+    "attribution": [
+      "document-diff",
+      "vendor-statement"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "A private-use mode exists and no records for that period appear in the export.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "Only ignition events are recorded outside the shift, without position.",
+      "checkable": "manual",
+      "if_true": "weaken"
+    },
+    {
+      "condition": "The vehicle may not be used privately and does not leave the site outside working hours, which the records themselves show.",
+      "checkable": "manual",
+      "if_true": "weaken"
+    },
+    {
+      "condition": "The record outside working hours is limited to what a theft alert needs and is destroyed when no alert follows.",
+      "checkable": "manual",
+      "if_true": "weaken"
+    }
+  ],
+  "legal": {
+    "provisions": [
+      "eu-gdpr-5-1-c",
+      "eu-gdpr-5-1-b",
+      "eu-gdpr-88",
+      "nl-wor-27"
+    ],
+    "rebuttals": [
+      {
+        "objection": "It is our vehicle.",
+        "answer": "Owning the vehicle settles what may be driven in it, not what may be recorded about the person driving. Outside the shift, the time is not the employer's."
+      },
+      {
+        "objection": "It is for theft recovery.",
+        "answer": "Theft recovery needs a position when a vehicle is reported stolen. A permanent series in a database is a different processing with a different retention, and the two can be told apart in the export."
+      },
+      {
+        "objection": "The driver can switch it off.",
+        "answer": "Test it, and ask for the records of the period it was off. A mode that hides the track in the interface while the records keep arriving is the finding, not the refutation."
+      },
+      {
+        "objection": "We need it for the mileage administration.",
+        "answer": "That needs distances per trip, which is a coarser record than a position every minute, and it needs nothing at all on days the vehicle was not in service."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0012",
+    "DPE-2026-0022",
+    "DPE-2026-0036"
+  ],
+  "in_practice": {
+    "dpia": "Verify the export of one vehicle for one week against the roster, instead of the statement that tracking is for business use.",
+    "procurement": "The unit records no position outside service, or a private-use mode is fitted, works, and suppresses the record rather than the display.",
+    "complaint": "The position export for one week, the roster for the same week, and the written answer about the private-use mode.",
+    "audit_question": "Show me the track of one vehicle for a Sunday.",
+    "audit_question_nl": "Laat de registratie van een voertuig zien voor een zondag.",
+    "complaint_nl": "De uitdraai met posities over een week, het rooster van dezelfde week, en het antwoord over de privestand.",
+    "objection_nl": "Het is onze auto.",
+    "answer_nl": "Eigendom van de auto zegt wat ermee gereden mag worden, niet wat er over de bestuurder mag worden vastgelegd buiten diensttijd."
+  },
+  "schema_version": "2.0",
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+      }
+    ]
+  },
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ]
+}

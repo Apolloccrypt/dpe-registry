@@ -1,0 +1,142 @@
+{
+  "id": "DPE-2026-0034",
+  "name": "Logs recording content, not events",
+  "slug": "logs-recording-content",
+  "name_nl": "Logboek met inhoud in plaats van gebeurtenissen",
+  "family": "data",
+  "applies_to": [
+    "web",
+    "mobile-app",
+    "api",
+    "desktop",
+    "firmware"
+  ],
+  "summary": "A log keeps what the person wrote or was shown, where recording that something happened would do.",
+  "summary_nl": "Een logboek bewaart wat iemand invulde of te zien kreeg, terwijl vastleggen dat er iets gebeurde volstaat.",
+  "not_a_vulnerability": "Nothing is broken into. The logging level is a setting, the payload is written on purpose, and the objection is to what that setting causes to be stored.",
+  "mechanism": {
+    "what": "Logging is set to a level that writes the payload: the body of a request, the fields of a form, the text of a message, the parameters of a query, the response returned to the person. The line then holds the content itself instead of a reference to the record it belongs to. Because logs exist for running the system rather than for the process they describe, they usually sit outside the retention schedule of that process, are readable by more people, are copied into a search or monitoring system, and are kept for as long as storage allows.",
+    "why_it_matters": "Content is where the sensitive part is. A log written this way holds what someone searched for, what they wrote to a helpdesk, the contents of a report about their health or their debts, in a store that was never designed to hold it, that an access request usually never reaches, and that outlives the deletion of the record it came from.",
+    "common_causes": [
+      "debug logging left on after release",
+      "a framework that writes full request and response bodies by default",
+      "an error handler that serialises the whole object it failed on",
+      "the payload written deliberately, to make support easier"
+    ],
+    "not_this": "Content reaching another party is User input to third parties; this entry is about the operator's own store, and content does not have to leave the organisation to be in the wrong place. A log recording that a record was opened, by whom and when, is the normal case and is not this entry."
+  },
+  "detection": {
+    "indicator": "A value only the person could have supplied, a distinctive marker string entered into a field for this test, appears in the log records the operator returns for that session, whether through an access request, a support export or the log store itself. The line contains the value rather than a reference to where the value is kept.",
+    "method": "document-comparison",
+    "qod": 85,
+    "capture_requirements": [
+      "use a distinctive marker string entered into a field, so a match cannot have come from anywhere else",
+      "ask for the log records of that session specifically; a general access request returns the process record, not the log",
+      "record which store answered: application log, access log, error log, or an external search or monitoring system",
+      "record the retention stated for that store separately from the retention stated for the process"
+    ],
+    "attribution": [
+      "document-diff",
+      "vendor-statement"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "The marker appears only in the record that is part of the process itself, not in a log.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The log line holds the value in a masked form, or a reference instead of the value.",
+      "checkable": "automated",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The log store falls under the same retention and access rules as the process record, and an access request reaches it.",
+      "checkable": "manual",
+      "if_true": "weaken"
+    },
+    {
+      "condition": "The logging level was raised for a bounded incident and the records were destroyed when it closed.",
+      "checkable": "manual",
+      "if_true": "weaken",
+      "note": "Checkable against the change record and the retention of the store, rather than against the recollection of the engineer."
+    }
+  ],
+  "legal": {
+    "provisions": [
+      "eu-gdpr-5-1-c",
+      "eu-gdpr-5-1-b",
+      "eu-gdpr-5-1-e"
+    ],
+    "rebuttals": [
+      {
+        "objection": "Logs are technical data.",
+        "answer": "The store is technical; the content is not. What determines the category is what the line contains, not which directory it sits in."
+      },
+      {
+        "objection": "Nobody reads them.",
+        "answer": "Access is what counts, not habit. And a log nobody reads is a log whose retention nobody watches."
+      },
+      {
+        "objection": "We need it to debug.",
+        "answer": "Then it is needed for the length of the investigation, as a reference plus the record it points to, rather than as a copy of the content kept for a year."
+      },
+      {
+        "objection": "They are deleted after ninety days.",
+        "answer": "Show where that is written for this store, and check it against the monitoring system the lines were copied into. Retention set for one store rarely follows the copy."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0006",
+    "DPE-2026-0035"
+  ],
+  "in_practice": {
+    "dpia": "Verify with a marker string what ends up in the log stores, and check whether those stores appear in the retention schedule at all.",
+    "procurement": "Logs record events and references; payload content is not written, and every log store is named in the retention schedule with a period.",
+    "complaint": "The marker string, the log records returned that contain it, and the retention stated for the store that returned them.",
+    "audit_question": "If I type a sentence into your form, in how many stores does that sentence exist an hour later?",
+    "audit_question_nl": "Als ik een zin in uw formulier typ, in hoeveel bestanden staat die zin dan een uur later nog?",
+    "complaint_nl": "De ingevoerde markeringstekst, de logregels waarin die terugkomt, en de bewaartermijn van het bestand dat ze leverde.",
+    "objection_nl": "Logbestanden zijn technische gegevens.",
+    "answer_nl": "Het bestand is technisch, de inhoud niet. Wat er in de regel staat bepaalt de categorie, niet waar die regel staat."
+  },
+  "schema_version": "2.0",
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+      }
+    ]
+  },
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ]
+}

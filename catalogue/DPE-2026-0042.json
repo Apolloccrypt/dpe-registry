@@ -1,0 +1,142 @@
+{
+  "id": "DPE-2026-0042",
+  "name": "Extension permissions beyond its function",
+  "slug": "extension-permissions-beyond-function",
+  "name_nl": "Uitbreiding vraagt meer rechten dan haar functie",
+  "family": "data",
+  "applies_to": [
+    "web",
+    "desktop"
+  ],
+  "summary": "An add-on declares access to every page while the function it describes concerns a handful of them.",
+  "summary_nl": "Een uitbreiding claimt toegang tot alle paginas terwijl de functie die zij beschrijft over een handvol sites gaat.",
+  "not_a_vulnerability": "Nothing is bypassed: the browser grants exactly what the package declares. The objection is to the distance between that declaration and the function it was installed for.",
+  "mechanism": {
+    "what": "An extension declares in its package which hosts it may read and change and which interfaces it may use. That declaration is what the browser enforces; the description in the listing is what the person reads. Where the declaration covers every host, or browsing history, or the contents of all pages, while the described function operates on a named handful of sites, the extension can read everything the person does in the browser, including what sits behind a login, because it runs inside the session.",
+    "why_it_matters": "An extension sits where no website reaches: after decryption, inside the account, on every tab. Access granted once persists silently across updates, and an extension can change owner without asking again. The person granted it for a function and cannot see what is read, because reading leaves no trace.",
+    "common_causes": [
+      "a broad host pattern declared during development and never narrowed",
+      "one permission set covering several features, including ones this person never uses",
+      "a bundled library requiring a permission the extension itself does not need",
+      "an extension sold or transferred, keeping the permissions it already had"
+    ],
+    "not_this": "A page reading device characteristics is Device fingerprinting. A component inside an application that collects on its own account is Bundled component collection, which is established from observed traffic. This entry is about declared access, which exists whether or not anything has been sent yet."
+  },
+  "detection": {
+    "indicator": "The permission declaration in the published package covers hosts beyond those the listing describes the function as operating on: a pattern matching every host, or access to browsing history or to the contents of all pages, set against a description naming a bounded set. Both documents belong to the publisher; the researcher only does the set comparison.",
+    "method": "static-source",
+    "qod": 90,
+    "capture_requirements": [
+      "read the declaration from the published package, not from a repository that may differ from what is shipped",
+      "record the version, the date, and the listing text of the same date",
+      "record permissions requested at runtime separately from those declared at install",
+      "check whether the publisher offers a narrower variant that the person could have installed instead"
+    ],
+    "attribution": [
+      "document-diff"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "The described function does operate on every site.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The broad access is requested at runtime, when the person uses the extension on a site, and can be refused per site.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The listing describes the broader function plainly, on the screen where the person installs it.",
+      "checkable": "manual",
+      "if_true": "weaken"
+    },
+    {
+      "condition": "The declaration is broad and the shipped code demonstrably operates on the named hosts only.",
+      "checkable": "manual",
+      "if_true": "weaken",
+      "note": "The access still exists and survives every update. The finding is about what is granted, and it is worth saying that the current release does not use it."
+    }
+  ],
+  "legal": {
+    "provisions": [
+      "eu-gdpr-5-1-c",
+      "eu-gdpr-25",
+      "nl-tw-11-7a"
+    ],
+    "rebuttals": [
+      {
+        "objection": "The browser shows the permissions at install.",
+        "answer": "Once, in a sentence, next to a description that says something else. The comparison between those two is exactly the finding."
+      },
+      {
+        "objection": "We do not use the access we have.",
+        "answer": "Access is what can be checked; use is not, and it changes with every release without anyone being asked again."
+      },
+      {
+        "objection": "Every extension asks for this.",
+        "answer": "That is a statement about the ecosystem, not about necessity. A narrower pattern is available in the same interface and costs one line."
+      },
+      {
+        "objection": "The store reviewed and approved it.",
+        "answer": "A review checks the package against the store's rules. It does not establish that the access is necessary for the function the person installed it for."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0007",
+    "DPE-2026-0013"
+  ],
+  "seen_in_the_wild": {
+    "confirmed": false,
+    "note": "Observed in practice by the authors but not yet backed by a published reference. Set to false until a citation exists: a claim without a source is exactly what this catalogue holds others to."
+  },
+  "in_practice": {
+    "dpia": "Verify the permission declaration of the shipped package against the described function before approving an extension for managed devices.",
+    "procurement": "Extensions on managed devices declare host access limited to the sites the function operates on, checked again per version.",
+    "complaint": "The declaration from the published package, the listing text of the same date, and the version number of both.",
+    "audit_question": "Which sites can this extension read, and which sites does it say it works on?",
+    "audit_question_nl": "Welke sites mag deze uitbreiding lezen, en op welke sites zegt zij te werken?",
+    "complaint_nl": "De rechtenverklaring uit het gepubliceerde pakket, de omschrijving in de winkel van dezelfde datum, en het versienummer van allebei.",
+    "objection_nl": "De browser laat bij het installeren zien welke rechten er zijn.",
+    "answer_nl": "Een zin, een keer, naast een omschrijving die iets anders zegt. Het verschil tussen die twee is de bevinding."
+  },
+  "schema_version": "2.0",
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+      }
+    ]
+  },
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ]
+}

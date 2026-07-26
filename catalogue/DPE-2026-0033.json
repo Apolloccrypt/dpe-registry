@@ -1,0 +1,140 @@
+{
+  "id": "DPE-2026-0033",
+  "name": "Sign-in requesting more than identity",
+  "slug": "sign-in-beyond-identity",
+  "name_nl": "Inloggen vraagt meer dan inloggen nodig heeft",
+  "family": "data",
+  "applies_to": [
+    "web",
+    "mobile-app",
+    "api"
+  ],
+  "summary": "Signing in through another party grants access to records the sign-in does not need, in the same action.",
+  "summary_nl": "Inloggen via een andere partij geeft in dezelfde handeling toegang tot gegevens die voor het inloggen niet nodig zijn.",
+  "not_a_vulnerability": "Nothing is bypassed. The access is asked for openly and granted by the person, in one action with the login, and the objection is to the bundling.",
+  "mechanism": {
+    "what": "Signing in through an identity provider works through an authorisation request that states what is being asked for. Authentication needs an identifier and at most a verified address. The request as sent asks for more: a contact list, a calendar, a friend list, posted content, files, profile fields the service never displays. The person sees one screen and one button, so granting the login grants the rest in the same act. What was asked is readable in the address of the authorisation request itself.",
+    "why_it_matters": "Most of what is granted here concerns other people as well: a contact list is data about people who were never asked anything. The grant usually outlives the session and often the account, it renews itself silently, and declining the extra parts while keeping the login is rarely offered.",
+    "common_causes": [
+      "a scope copied from an example in the provider's documentation",
+      "one scope string for the whole application, including features this person never uses",
+      "access that a removed feature needed, left in the request",
+      "the broadest scope chosen during development so that nothing would fail"
+    ],
+    "not_this": "An identity check that reads a document more fully than the question required is Identity document read beyond the check. This entry is about a delegated authorisation: the extra access is granted rather than read, it concerns a live account elsewhere, and it stays granted after the sign-in is over."
+  },
+  "detection": {
+    "indicator": "The scope of the authorisation request, readable in the address bar when the provider's screen appears, contains values granting access to records other than the person's identity, such as messages, contacts, calendar, files or posted content; and no control on that screen declines those values while still completing the sign-in. Both parts are read from the request and the screen as delivered.",
+    "method": "network-observed",
+    "qod": 90,
+    "capture_requirements": [
+      "read the authorisation request as sent, from the address bar or the capture, not the summary the consent screen shows",
+      "record the provider, the application version and the date, because scope strings change per release",
+      "try declining a single item and record what happens to the sign-in",
+      "check the grant afterwards in the provider's own permissions overview, and whether it survives signing out"
+    ],
+    "attribution": [
+      "har-pageref",
+      "document-diff"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "Every value in the scope corresponds to a feature the person invoked, and the request is made at the moment they invoke it.",
+      "checkable": "manual",
+      "if_true": "drop",
+      "note": "Asking at the moment of use is the fix, and where it is done this entry does not apply."
+    },
+    {
+      "condition": "The extra items can be declined individually and the sign-in completes without them.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The provider requires the value for authentication itself and offers no narrower one.",
+      "checkable": "manual",
+      "if_true": "reclassify",
+      "note": "The fault then sits with the party that defined the scope rather than with the application that had to pick one."
+    },
+    {
+      "condition": "The scope grants only fields the application displays back to the person immediately.",
+      "checkable": "manual",
+      "if_true": "weaken"
+    }
+  ],
+  "legal": {
+    "provisions": [
+      "eu-gdpr-5-1-c",
+      "eu-gdpr-6-1-a",
+      "eu-gdpr-25"
+    ],
+    "rebuttals": [
+      {
+        "objection": "The person consented on the provider's screen.",
+        "answer": "Consent has to be specific. One button that grants a login and a contact list at once is specific for neither, and the people in that contact list were asked nothing at all."
+      },
+      {
+        "objection": "We request it but we do not use it.",
+        "answer": "A grant is access. What counts is what the token permits, not what this release happens to call, and the next release does not have to ask again."
+      },
+      {
+        "objection": "The provider designed that screen.",
+        "answer": "The application chose the scope string; the screen only renders it. Narrowing it is a change in one line."
+      },
+      {
+        "objection": "It is needed to make onboarding smooth.",
+        "answer": "Convenience is a purpose of the operator. It can be offered as a step the person takes, at the moment they want it, rather than folded into the login."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0018"
+  ],
+  "in_practice": {
+    "dpia": "Verify the scope string of the authorisation request against the features that actually exist, rather than the description of the login integration.",
+    "procurement": "The authorisation request contains only what authentication requires; access for a feature is requested when the feature is used, and can be declined separately.",
+    "complaint": "The authorisation request as sent with the scope values marked, a screenshot of the consent screen of the same date, and what happened when a single item was declined.",
+    "audit_question": "Read me the scope of your login request, and name the feature behind each item.",
+    "audit_question_nl": "Lees me voor wat er in de scope van uw inlogverzoek staat, en noem bij elk onderdeel de functie die het gebruikt.",
+    "complaint_nl": "Het inlogverzoek zoals het verstuurd is, met de gevraagde onderdelen aangewezen, en een schermafdruk van hetzelfde moment.",
+    "objection_nl": "De gebruiker heeft op het scherm van de aanbieder toestemming gegeven.",
+    "answer_nl": "Toestemming moet specifiek zijn. Een knop die tegelijk inloggen en een adresboek weggeeft is dat niet, en de mensen in dat adresboek is niets gevraagd."
+  },
+  "schema_version": "2.0",
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+      }
+    ]
+  },
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ]
+}

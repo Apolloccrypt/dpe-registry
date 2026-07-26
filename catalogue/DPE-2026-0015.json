@@ -87,7 +87,8 @@
     "DPE-2026-0016"
   ],
   "seen_in_the_wild": {
-    "confirmed": true
+    "confirmed": false,
+    "note": "Observed in practice by the authors but not yet backed by a published reference. Set to false until a citation exists: a claim without a source is exactly what this catalogue holds others to."
   },
   "does_not_establish": [
     "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",

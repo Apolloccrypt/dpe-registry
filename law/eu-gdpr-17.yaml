@@ -1,0 +1,19 @@
+id: eu-gdpr-17
+jurisdiction: EU
+instrument: "Verordening (EU) 2016/679 (AVG)"
+reference: "GDPR art. 17"
+reference_nl: "AVG art. 17"
+title: "Recht op gegevenswissing"
+core: >
+  De betrokkene heeft het recht van de verwerkingsverantwoordelijke zonder
+  onredelijke vertraging wissing van hem betreffende persoonsgegevens te
+  verkrijgen in de in dat artikel genoemde gevallen, en de verantwoordelijke is
+  verplicht die gegevens zonder onredelijke vertraging te wissen.
+why_it_matters: >
+  Wissen is een resultaat, geen handeling in een enkel systeem. Blijft het
+  gegeven in een tweede kopie staan en komt het bij een herstel terug, dan is het
+  resultaat niet bereikt en is dat toetsbaar: niet aan de belofte, maar aan de
+  vraag of de organisatie een lijst van wisopdrachten bijhoudt die na een herstel
+  opnieuw wordt toegepast.
+url: "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+verified: true

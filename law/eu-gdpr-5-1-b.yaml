@@ -1,0 +1,21 @@
+id: eu-gdpr-5-1-b
+jurisdiction: EU
+instrument: "Verordening (EU) 2016/679 (AVG)"
+reference: "GDPR art. 5(1)(b)"
+reference_nl: "AVG art. 5 lid 1 sub b"
+title: "Doelbinding"
+core: >
+  Persoonsgegevens worden verzameld voor welbepaalde, uitdrukkelijk omschreven en
+  gerechtvaardigde doeleinden en worden vervolgens niet verder verwerkt op een
+  wijze die met die doeleinden onverenigbaar is.
+why_it_matters: >
+  Dit is de bepaling die aangrijpt zodra iets dat voor het ene doel is gegeven
+  voor een tweede doel wordt gebruikt: een adres dat voor contact is
+  achtergelaten en als sleutel bij een andere partij opduikt, invoer die een
+  antwoord moest opleveren en trainingsmateriaal wordt, een registratie die voor
+  de ene wettelijke taak is aangelegd en aan die van een andere instantie wordt
+  gekoppeld. Het tweede doel is zelden verborgen; het is alleen nergens
+  afzonderlijk verantwoord, en dat verschil is toetsbaar tegen wat de partij zelf
+  opschrijft.
+url: "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+verified: true

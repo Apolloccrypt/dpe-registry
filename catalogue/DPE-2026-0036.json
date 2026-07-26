@@ -1,0 +1,146 @@
+{
+  "id": "DPE-2026-0036",
+  "name": "Per-person productivity scoring at work",
+  "slug": "per-person-productivity-scoring",
+  "name_nl": "Productiviteitsmeting per medewerker",
+  "family": "data",
+  "applies_to": [
+    "desktop",
+    "web",
+    "mobile-app"
+  ],
+  "summary": "Work software records activity per person per interval and turns it into a figure about that person.",
+  "summary_nl": "Werksoftware legt activiteit per persoon per tijdvak vast en maakt daar een cijfer over die persoon van.",
+  "not_a_vulnerability": "Nothing is exploited. The software was bought to do this, it is installed by the employer, and the objection is to what it records rather than to a defect in it.",
+  "mechanism": {
+    "what": "Software on the work device or in the work account records what the person does at intervals: which application is in the foreground, whether keyboard or mouse moved, how long a window was idle, how many messages or tickets were handled in an hour. The rows are attributable to a named worker and are stored per interval rather than per day. A figure follows from them, a score, a percentage or a ranking, which a manager sees and which is used in conversations about the person.",
+    "why_it_matters": "Employment is a relationship in which refusing costs something, so consent is not available as a basis and necessity has to carry it. Being measured minute by minute changes what people do: it rewards visible presence over work, and it turns a break, a disability or care at home into a dip that has to be explained. The worker usually cannot see their own rows while the manager can.",
+    "common_causes": [
+      "a feature enabled by default in remote-work or endpoint software",
+      "aggregate reporting bought, per-person reporting delivered in the same product",
+      "an interval left at the product default instead of set to the coarsest that serves the purpose",
+      "a pilot for one team that stayed on for everyone"
+    ],
+    "not_this": "A measurement series from a device in the home that reveals occupancy is Reporting interval that reveals occupancy, where the subject is a household and the party a supplier. Images of what is on the worker's screen are Screen capture of a worker's device: this entry counts activity, that one records content. A figure about a team that cannot be resolved to a person is not this entry."
+  },
+  "detection": {
+    "indicator": "The product's own output contains rows attributable to one named worker at an interval shorter than a working day: a timestamp, an identifier of the person, an activity value. Establish it from the administrator's view or from the worker's own access request, not from the product description or the dashboard.",
+    "method": "document-comparison",
+    "qod": 85,
+    "capture_requirements": [
+      "ask for the records of one person over one day, in the form the product exports them",
+      "record the interval, and whether the worker can see the same rows",
+      "record whether the figure is used in any assessment, and where that use is written down",
+      "note the difference between what the dashboard shows as an aggregate and what is stored per person; the storage is the finding"
+    ],
+    "attribution": [
+      "document-diff",
+      "vendor-statement"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "The stored records cannot be resolved to a person, and the export shows totals per team only.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The activity value is produced by the worker's own action, such as time they book themselves.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The worker sees the same rows at the same interval and can correct them.",
+      "checkable": "manual",
+      "if_true": "weaken"
+    },
+    {
+      "condition": "The measurement runs for a bounded investigation with a stated ground and an end date.",
+      "checkable": "manual",
+      "if_true": "weaken",
+      "note": "A targeted investigation is a different processing from permanent measurement of everyone, and it is written down somewhere."
+    }
+  ],
+  "legal": {
+    "provisions": [
+      "eu-gdpr-5-1-c",
+      "eu-gdpr-88",
+      "nl-wor-27",
+      "eu-gdpr-22"
+    ],
+    "rebuttals": [
+      {
+        "objection": "The employees agreed to it.",
+        "answer": "In a relationship of authority consent is rarely free, because refusing costs something. That is why the discussion runs over necessity and over the works council rather than over a signature."
+      },
+      {
+        "objection": "We only look at team totals.",
+        "answer": "Then the storage should be team totals. A per-person row that exists can be looked at, and will be as soon as there is a reason to look."
+      },
+      {
+        "objection": "It is our equipment.",
+        "answer": "Owning the device settles who may install software on it, not what may be recorded about the person using it."
+      },
+      {
+        "objection": "The system does not decide anything, a manager does.",
+        "answer": "Where the manager sees the score and not the work, the system did the selecting. What has to be shown is what the manager had in front of them."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0022",
+    "DPE-2026-0037",
+    "DPE-2026-0038"
+  ],
+  "seen_in_the_wild": {
+    "confirmed": false,
+    "note": "Observed in practice by the authors but not yet backed by a published reference. Set to false until a citation exists: a claim without a source is exactly what this catalogue holds others to."
+  },
+  "in_practice": {
+    "dpia": "Verify what the product stores per person per interval, rather than what the dashboard shows the manager.",
+    "procurement": "The product stores no per-person activity row at an interval shorter than the reporting the purpose requires, and the worker can see their own rows.",
+    "complaint": "The export of one worker's rows for one day, the interval, and the works council decision if there is one.",
+    "audit_question": "Show me one day of one employee, in the form the system stores it.",
+    "audit_question_nl": "Laat een dag van een medewerker zien, zoals het systeem het opslaat.",
+    "complaint_nl": "De uitdraai van een dag van een medewerker met het tijdvak per regel, en het instemmingsbesluit van de ondernemingsraad als dat er is.",
+    "objection_nl": "De medewerkers hebben ermee ingestemd.",
+    "answer_nl": "In een gezagsverhouding is toestemming zelden vrij. Het gesprek gaat over noodzaak en over de ondernemingsraad, niet over een handtekening."
+  },
+  "schema_version": "2.0",
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+      }
+    ]
+  },
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ]
+}

@@ -91,7 +91,8 @@
     "DPE-2026-0028"
   ],
   "seen_in_the_wild": {
-    "confirmed": true
+    "confirmed": false,
+    "note": "Observed in practice by the authors but not yet backed by a published reference. Set to false until a citation exists: a claim without a source is exactly what this catalogue holds others to."
   },
   "in_practice": {
     "dpia": "Verify which data groups the reader actually extracts and transmits, against the single question the check exists to answer.",

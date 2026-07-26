@@ -1,0 +1,19 @@
+id: eu-gdpr-22
+jurisdiction: EU
+instrument: "Verordening (EU) 2016/679 (AVG)"
+reference: "GDPR art. 22"
+reference_nl: "AVG art. 22"
+title: "Geautomatiseerde besluitvorming en profilering"
+core: >
+  De betrokkene heeft het recht niet te worden onderworpen aan een uitsluitend op
+  geautomatiseerde verwerking, waaronder profilering, gebaseerd besluit waaraan
+  voor hem rechtsgevolgen zijn verbonden of dat hem anderszins in aanmerkelijke
+  mate treft, behoudens de uitzonderingen van lid 2 en met waarborgen.
+why_it_matters: >
+  De vraag is zelden of er een mens in de keten zit, maar wat die mens zag. Waar
+  de beoordelaar alleen de markeringen of de score van het systeem voor zich
+  krijgt, heeft het systeem de selectie gedaan. Dat is toetsbaar aan wat er per
+  persoon wordt opgeslagen en aan wat er in het beoordelingsscherm staat, niet
+  aan de vraag of er formeel iemand tekent.
+url: "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+verified: true

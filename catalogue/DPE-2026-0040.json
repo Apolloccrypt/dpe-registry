@@ -1,0 +1,143 @@
+{
+  "id": "DPE-2026-0040",
+  "name": "Pay or accept as the only choice",
+  "slug": "pay-or-accept-only-choice",
+  "name_nl": "Betalen of accepteren als enige keuze",
+  "family": "consent",
+  "applies_to": [
+    "web",
+    "mobile-app"
+  ],
+  "summary": "The first screen offers payment or consent to third-party purposes, and no path that refuses and still reaches the content.",
+  "summary_nl": "Het eerste scherm biedt betalen of instemmen met doelen van derden, en geen pad dat weigert en toch bij de inhoud komt.",
+  "not_a_vulnerability": "Nothing is broken. The wall is the product decision, stated openly, and the objection is to the choice it leaves.",
+  "mechanism": {
+    "what": "Before any content is shown, the visitor is offered two ways forward: pay for a subscription, or accept processing for advertising and measurement by third parties. There is no third path. A refusal exists on paper, and that is what the payment is for, but exercising it costs money and the price is set by the party asking for the consent.",
+    "why_it_matters": "Consent has to be free, and here it is weighed against access to information. The people for whom the price is real are the ones with the least room to refuse, so the arrangement buys consent from those who can least afford to withhold it. And the choice returns on every site, which no household budget survives.",
+    "common_causes": [
+      "a subscription introduced as the alternative that is supposed to make the consent free",
+      "an advertising operation that cannot run without the third-party purposes, so no third path is designed",
+      "a price set at the level of a full subscription rather than at the value of the advertising it replaces",
+      "the paid tier keeping some of the same purposes, which is only visible in a capture"
+    ],
+    "not_this": "A banner with no refusal control at all is No refusal option: here a refusal exists and it has a price. A refusal that changes nothing in the traffic is Refusal without effect: here the refusal works, and the question is whether it was free."
+  },
+  "detection": {
+    "indicator": "On the first screen the paths that reach the content are exactly two: one that registers a positive consent state for third-party purposes, and one that requires payment. No control reaches the content with a negative consent state registered. Establish it by taking every path from a clean profile and recording the resulting state.",
+    "method": "differential",
+    "qod": 90,
+    "capture_requirements": [
+      "clean profile, no interaction before the wall appears",
+      "walk every layer reachable from the first screen, including screens behind a link or a small control",
+      "record the price, and which purposes the paid path still permits; a paid tier that keeps third-party purposes is part of the finding",
+      "record the country the capture egressed from, because the wall is often shown to some regions only"
+    ],
+    "attribution": [
+      "har-pageref"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "A third path exists that reaches the content with a refusal registered, however unattractive it is made.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The wall covers part of the offering while the rest is reachable without either choice.",
+      "checkable": "manual",
+      "if_true": "weaken"
+    },
+    {
+      "condition": "The accepting path registers a refusal for third-party purposes and permits only the operator's own.",
+      "checkable": "automated",
+      "if_true": "reclassify",
+      "note": "The choice is then between paying and being measured by the operator itself, which is a narrower question than this entry."
+    },
+    {
+      "condition": "The paid path is free of the third-party purposes and the price is stated before the choice is made.",
+      "checkable": "manual",
+      "if_true": "weaken",
+      "note": "This does not dispose of the freedom question, but it removes the compounding one, where paying buys nothing."
+    }
+  ],
+  "legal": {
+    "provisions": [
+      "eu-gdpr-7-4",
+      "eu-gdpr-6-1-a",
+      "nl-tw-11-7a"
+    ],
+    "rebuttals": [
+      {
+        "objection": "Nobody is forced; there is a paid alternative.",
+        "answer": "That is the point at issue. Refusing then costs money, and consent has to be free of exactly that weighing."
+      },
+      {
+        "objection": "Journalism has to be paid for.",
+        "answer": "It does, and a subscription is a lawful way to do it. What is at issue is the pairing: the price is set against the consent rather than against the advertising revenue the consent produces."
+      },
+      {
+        "objection": "Supervisory authorities have accepted this model.",
+        "answer": "Positions differ per authority and are moving. Cite the position of the authority competent for the party, with its date. The measurement is the same whatever that position becomes."
+      },
+      {
+        "objection": "The paid tier has no advertising.",
+        "answer": "Testable in a capture of the paid path. Where third-party purposes persist behind the payment, the two options collapse into one."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0002",
+    "DPE-2026-0003"
+  ],
+  "seen_in_the_wild": {
+    "confirmed": false,
+    "note": "Observed in practice by the authors but not yet backed by a published reference. Set to false until a citation exists: a claim without a source is exactly what this catalogue holds others to."
+  },
+  "in_practice": {
+    "dpia": "Verify how many paths reach the content and which consent state each one registers, rather than the statement that visitors have a choice.",
+    "procurement": "A path exists to the content with third-party purposes refused, without payment, and it is reachable from the first screen.",
+    "complaint": "A capture of the first screen, every path taken separately with the consent state that followed, and the price of the paid path.",
+    "audit_question": "Show me the way to your article for someone who refuses and does not pay.",
+    "audit_question_nl": "Laat me zien hoe iemand bij uw artikel komt die weigert en niet betaalt.",
+    "complaint_nl": "Een opname van het eerste scherm, elk pad afzonderlijk gelopen met de toestemmingsstand die eruit volgt, en de prijs van het betaalde pad.",
+    "objection_nl": "Niemand wordt gedwongen, er is een betaald alternatief.",
+    "answer_nl": "Dat is juist het punt. Weigeren kost dan geld, en toestemming moet vrij zijn van die afweging."
+  },
+  "schema_version": "2.0",
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+      }
+    ]
+  },
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ]
+}

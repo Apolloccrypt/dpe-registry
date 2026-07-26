@@ -201,7 +201,7 @@ def entry_page(x, ents):
   <dl>
     <dt>In text</dt><dd class="plain">{e(x["id"])} ({e(x["name"])})</dd>
     <dt>URL</dt><dd>{e(url)}</dd>
-    <dt>Machine</dt><dd>{e(url)}.json</dd>
+    <dt>Machine</dt><dd>{e(url)}/index.json</dd>
     <dt>Full</dt><dd class="plain">DPE Catalogue. {e(x["id"])}: {e(x["name"])}. Schema {e(x["schema_version"])}, entry status {e(x["status"])}. Retrieved from {e(url)}</dd>
     <dt>Measurement</dt><dd class="plain">When you publish a finding, cite the method version alongside the entry: &ldquo;{e(x["id"])}, established under DPE Measurement Method 1.0&rdquo;</dd>
   </dl>
@@ -217,126 +217,6 @@ def entry_page(x, ents):
 </footer>
 </div>'''
     return page(f'{x["id"]}: {x["name"]} · DPE Catalogue', body, x["summary"])
-
-
-def index_page(ents):
-    fams = {}
-    for x in ents.values():
-        fams.setdefault(x["family"], []).append(x)
-    blocks = []
-    for fam in sorted(fams, key=lambda f: -len(fams[f])):
-        rows = "".join(
-            f'<tr><td><a href="{e(x["id"])}/">{e(x["id"])}</a></td>'
-            f'<td><a href="{e(x["id"])}/">{e(x.get("name_nl") or x["name"])}</a></td>'
-            f'<td class="sm">{e(x.get("summary_nl") or x["summary"])}</td>'
-            f'<td class="sm">{e(", ".join(SYS.get(s, s) for s in x["applies_to"]))}</td></tr>'
-            for x in sorted(fams[fam], key=lambda y: y["id"]))
-        blocks.append(f'<h2 style="margin-top:30px">{e(FAM.get(fam, fam))}</h2>'
-                      f'<table><tbody>{rows}</tbody></table>')
-    credit = {c.get("name") for x in ents.values() for c in (x.get("credit") or []) if c.get("name")}
-    body = f'''<div class="wrap" style="max-width:1000px">
-<nav class="bar"><a href="https://totaledigitalewaarborging.nl/">Totale Digitale Waarborging</a>
-  <span class="sep">/</span><span>DPE catalogue</span><span class="sep">&middot;</span>
-  <a href="all.json">all.json</a><span class="sep">&middot;</span>
-  <a href="https://github.com/Apolloccrypt/dpe-registry">bron en bijdragen</a></nav>
-<p class="eyebrow">Totale Digitale Waarborging &middot; as 04, privacy &middot; Data Protection Exposures</p>
-<h1>Wij meten wat anderen aannemen</h1>
-<p class="sum">People keep asking how a researcher finds this stuff. This is the answer, in the open:
-the faults, the indicators, the conditions a measurement has to meet, and what would prove any of it
-wrong. Take it and use it.</p>
-
-<div class="routes">
-  <a class="rt" href="start.html">
-    <span class="rn">Ik moet erover beslissen</span>
-    <span class="rd">Je werkt met gegevensbescherming en meet niet zelf. Van wat je hoort of
-    leest naar het nummer, met de vraag die je kunt stellen en hoe je merkt dat je een
-    ontwijkend antwoord krijgt.</span></a>
-  <a class="rt" href="https://github.com/Apolloccrypt/dpe-registry/tree/main/repro">
-    <span class="rn">Ik wil zelf meten</span>
-    <span class="rd">Met de hand in je browser, met een bookmarklet zonder installatie, of met
-    een script dat acht fouten in een keer toetst. Je hebt geen gereedschap van ons nodig.</span></a>
-  <a class="rt" href="https://github.com/Apolloccrypt/dpe-registry/blob/main/METHOD.md">
-    <span class="rn">Ik wil weten hoe er gemeten wordt</span>
-    <span class="rd">De meetmethode, met versienummer: reikwijdte vooraf vastleggen, schoon meten,
-    per keer een ding varieren, en je eigen bevinding proberen te breken.</span></a>
-</div>
-
-<div class="lede">
-  <p>A declaration is a promise. The fourth axis of the standard asks whether you can account for a
-  system in legal terms, and this catalogue is what makes that question testable: numbered faults in how
-  systems handle personal data, so that researchers, regulators and suppliers refer to the same thing
-  instead of describing it again every time. Not vulnerabilities: there is
-  nothing to exploit, the system does what its builder intended, and that intention is the objection.
-  A router phoning home to another country gets no CVE, because nothing is broken. That is exactly why
-  there was no number for it.</p>
-
-  <p><b>Every entry hands you the method.</b> What settles it, what the capture has to satisfy, what would
-  refute it, and how to reproduce it without any tool of ours. Take it, use it on the systems you care
-  about, publish what you find under your own name.</p>
-
-  <p><b>And then help make it better.</b> This is where it works like CVE: entries improve because people
-  who use them send back what they ran into. A falsifier we missed. A national provision for your country.
-  A reproduction script. A better title for something we named badly. A whole fault we have not written
-  down yet, because you work on hardware and we mostly measure browsers.</p>
-
-  <p>You get credit, permanently, in the entry. Anonymous is fine too. And you are not on the hook for
-  what you report: this catalogue names no companies, so contributing here costs you nothing but time.</p>
-
-  <p><b>The method is written down too.</b> Not just what each fault is, but how to go looking for one:
-  scope, clean captures, vary one thing at a time, walk the catalogue, try to break your own finding, ask
-  before publishing. Versioned, so a measurement taken this year is still readable as what it meant this
-  year. Security has the OWASP Testing Guide for this; data protection had nothing.</p>
-
-  <p class="cta"><a href="https://github.com/Apolloccrypt/dpe-registry/blob/main/METHOD.md">DPE-meetmethode 1.0</a> &middot; <a href="https://github.com/Apolloccrypt/dpe-registry/blob/main/WANTED.md">Waar wij vastlopen</a> &middot; <a href="https://github.com/Apolloccrypt/dpe-registry/blob/main/CONTRIBUTING.md">Hoe je meedoet</a> &middot; <a href="all.json">de hele catalogus als JSON</a></p>
-</div>
-{"".join(blocks)}
-<div class="who">
-  <h2 style="margin:0 0 8px;font-size:22px;font-weight:600;letter-spacing:-.02em">Dit hangt niet op één persoon</h2>
-  <p style="margin:0 0 14px;color:var(--ink-2);max-width:70ch">Een standaard die door één iemand
-  wordt onderhouden en gemeten, stopt zodra die iemand een week wegvalt. Daarom staat bij elke fout
-  wat hem zou ontkrachten, is de methode openbaar, en heeft elke bijdrager zijn naam in de entry.</p>
-  <div class="wg">
-    <div><b>{len(credit)} bijdragers</b><span>staan met naam in een entry</span></div>
-    <div><b>Doe een meting</b><span>en stuur wat je zag, ook als je niets vond</span></div>
-    <div><b>Spreek ons tegen</b><span>een falsifier die wij misten is de waardevolste bijdrage</span></div>
-  </div>
-  <p style="margin:14px 0 0"><a href="https://github.com/Apolloccrypt/dpe-registry/blob/main/WANTED.md"
-   style="font-weight:500">Waar wij vastlopen</a> &middot; <a
-   href="https://github.com/Apolloccrypt/dpe-registry/blob/main/CONTRIBUTING.md">Hoe je meedoet</a></p>
-</div>
-
-<footer><p>{len(ents)} fouten. Schema 2.0. Catalogus onder CC BY 4.0, gereedschap onder MIT, zodat een
-ander dit kan voortzetten, inclusief de nummering, mocht deze catalogus ooit stoppen. Nummers zijn
-permanent en worden nooit hergebruikt: een verwijzing van vandaag moet over tien jaar nog werken.</p></footer>
-</div>
-<style>table{{border-collapse:collapse;width:100%;margin-top:8px}}
-td{{padding:9px 14px 9px 0;border-bottom:1px solid var(--line-2);vertical-align:top;font-size:14px}}
-td:first-child{{font-family:var(--mono);font-size:12px;white-space:nowrap}}
-td a{{text-decoration:none;font-weight:500}}
-td a:hover{{text-decoration:underline}}
-.sm{{font-size:13px;color:var(--ink-3)}}
-.routes{{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:14px;margin-top:26px}}
-.rt{{display:block;background:var(--surface);border:1px solid var(--line);border-radius:12px;
- padding:20px 22px;text-decoration:none;color:inherit;box-shadow:var(--shadow)}}
-.rt:hover{{border-color:var(--accent)}}
-.rn{{display:block;font-size:17.5px;font-weight:600;color:var(--accent);margin-bottom:7px;letter-spacing:-.01em}}
-.rd{{display:block;font-size:14px;color:var(--ink-2);line-height:1.55}}
-.who{{margin-top:44px;padding-top:28px;border-top:1px solid var(--line)}}
-.wg{{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;
- background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}}
-.wg div{{background:var(--surface);padding:16px 18px}}
-.wg b{{display:block;font-size:16px;margin-bottom:3px}}
-.wg span{{font-size:13.5px;color:var(--ink-3);line-height:1.5}}
-.lede{{max-width:72ch;margin-top:26px;background:var(--surface);border:1px solid var(--line);
- border-radius:12px;padding:22px 26px;box-shadow:var(--shadow)}}
-.lede p{{color:var(--ink-2);font-size:15px}}
-.lede p:last-child{{margin-bottom:0}}
-.lede b{{color:var(--ink)}}
-.cta{{margin-top:16px!important;padding-top:14px;border-top:1px solid var(--line-2);font-size:14px}}
-.cta a{{font-weight:500;text-decoration:none}}
-.cta a:hover{{text-decoration:underline}}</style>'''
-    return page("DPE-catalogus \u00b7 Totale Digitale Waarborging", body,
-                "Genummerde fouten in de omgang met persoonsgegevens, voor wat geen kwetsbaarheid is.")
 
 
 def main():
@@ -357,7 +237,9 @@ def main():
         (d / "index.json").write_text(blob, encoding="utf-8")
         # Bewust geen platte kopie ernaast: twee adressen voor dezelfde entry
         # betekent twee dingen om te citeren en een van de twee raakt achter.
-    # index wordt door tools/build_triage.py gemaakt: vragen en lijst op een pagina
+    # De index komt uit tools/build_triage.py: vragen en lijst op een pagina.
+    # Hier stond een tweede indexgenerator; die gaf een verouderde, half-Engelse
+    # pagina terug en is verwijderd om te voorkomen dat iemand hem weer aanroept.
 
     (OUT / "all.json").write_text(json.dumps({
         "catalogue": "Data Protection Exposures", "schema_version": "2.0",

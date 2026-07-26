@@ -84,6 +84,15 @@ an hour, and it is the most concrete contribution available.
 `repro/web/check.mjs` is the model: standalone, one dependency, and it reports
 what it cannot see.
 
+**DPE-2026-0030 to 0043 have no route of their own.** Three of them are within
+reach of a script and are not written yet: the per-recipient address in a message
+(compare two raw sources), the hashed address in a capture (compute three hashes
+of the test address and search), and the sign-in scope (read the authorisation
+request). The rest run on an access request or on the party's own export, which
+is a route but not a script, and it means the researcher depends on an answer
+they may not get. A worked example of such a request, with what came back and how
+long it took, is as useful here as code.
+
 ## Naming
 
 A title that does not stick will not be used. These are worth a second opinion:

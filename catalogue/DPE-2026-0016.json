@@ -97,7 +97,8 @@
     "DPE-2026-0010"
   ],
   "seen_in_the_wild": {
-    "confirmed": true
+    "confirmed": false,
+    "note": "Observed in practice by the authors but not yet backed by a published reference. Set to false until a citation exists: a claim without a source is exactly what this catalogue holds others to."
   },
   "in_practice": {
     "dpia": "Verify whether any recipient receives an identifier belonging to another recipient, rather than assessing each recipient in isolation.",

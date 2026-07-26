@@ -1,0 +1,19 @@
+id: eu-gdpr-25
+jurisdiction: EU
+instrument: "Verordening (EU) 2016/679 (AVG)"
+reference: "GDPR art. 25"
+reference_nl: "AVG art. 25"
+title: "Gegevensbescherming door ontwerp en door standaardinstellingen"
+core: >
+  De verwerkingsverantwoordelijke treft passende technische en organisatorische
+  maatregelen om de beginselen in het ontwerp te verankeren, en zorgt ervoor dat
+  door standaardinstellingen alleen persoonsgegevens worden verwerkt die voor het
+  specifieke doel noodzakelijk zijn.
+why_it_matters: >
+  Standaardinstellingen zijn meetbaar. Een vers account, niets aangeraakt, en
+  vervolgens opschrijven wat er aanstaat: dat is de hele meting, en het antwoord
+  is niet vatbaar voor uitleg. Hetzelfde geldt voor de rechten die een pakket bij
+  installatie opeist. Dat iemand het achteraf kan uitzetten, is geen antwoord op
+  wat de standaard was.
+url: "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+verified: true

@@ -1,0 +1,144 @@
+{
+  "id": "DPE-2026-0043",
+  "name": "Registers joined on a person number",
+  "slug": "registers-joined-on-person-number",
+  "name_nl": "Registraties gekoppeld op persoonsnummer",
+  "family": "chain",
+  "applies_to": [
+    "api",
+    "web",
+    "desktop"
+  ],
+  "summary": "Records collected under one statutory task are joined to another body's records on the statutory number.",
+  "summary_nl": "Gegevens die voor de ene wettelijke taak zijn verzameld, worden op het persoonsnummer gekoppeld aan die van een andere instantie.",
+  "not_a_vulnerability": "Nothing is broken into. The bodies exchange deliberately, usually under an arrangement they wrote themselves, and the objection is to the combination rather than to a defect.",
+  "mechanism": {
+    "what": "Two public bodies each hold records for their own statutory purpose. The statutory personal number makes joining them trivial, so a file, a query facility or a shared environment comes into being in which records from both sit next to each other about the same person. The combination answers questions neither register was created for. The person sees only the outcome: a check, a selection, a decision that draws on information they gave somewhere else.",
+    "why_it_matters": "Each register was justified separately and the combination was justified nowhere. A person cannot see which body drew on which source, cannot correct a record at the body that used it, and cannot avoid the number, because it is assigned to them. The combined set then becomes the reason to keep data longer, share it further and select on it.",
+    "common_causes": [
+      "a sharing arrangement made between bodies without a provision naming the combination",
+      "a joint environment for detection or enforcement, fed from several registers",
+      "one supplier delivering the same platform to both bodies, with the join as a feature",
+      "a provision that permits the delivery of one register, read as covering the combination"
+    ],
+    "not_this": "A statutory number reaching a party with no statutory task is Statutory identification number to a third party, where the recipient should not hold it at all. Here both bodies may hold the number, and the fault is the joining of records collected for different purposes. Two commercial parties matching identifiers is Identifier synchronisation between parties."
+  },
+  "detection": {
+    "indicator": "An access request to one body returns fields that only the other body collects, or the body's own processing register names a source it does not collect itself. Both are documents the body publishes or must supply, and the comparison is a set difference on the fields.",
+    "method": "document-comparison",
+    "qod": 80,
+    "capture_requirements": [
+      "make the access request at both bodies and compare the answers field by field",
+      "read the processing register entry of the same date, including the sources named in it",
+      "ask which provision names the combination, not the provision that names the register",
+      "record whether the combination is held in a separate environment, and who administers that environment"
+    ],
+    "attribution": [
+      "document-diff",
+      "vendor-statement"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "A provision names the combination itself, with its purpose and its retention.",
+      "checkable": "manual",
+      "if_true": "drop",
+      "note": "The discussion then moves to whether the practice stays inside that provision, which is a different and more tractable question."
+    },
+    {
+      "condition": "The receiving body collected the field itself, from the person.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The exchange is a single answer to a single question, with nothing retained afterwards.",
+      "checkable": "manual",
+      "if_true": "weaken"
+    },
+    {
+      "condition": "What was returned is a derived value, and the underlying record stayed with the body that holds it.",
+      "checkable": "manual",
+      "if_true": "weaken"
+    }
+  ],
+  "legal": {
+    "provisions": [
+      "eu-gdpr-5-1-b",
+      "nl-uavg-46",
+      "eu-gdpr-5-1-a"
+    ],
+    "rebuttals": [
+      {
+        "objection": "Both bodies are allowed to use the number.",
+        "answer": "For their own task, yes. The number is what makes the join cheap; it is not what makes it permitted. The provision has to name the combination."
+      },
+      {
+        "objection": "It is all one government.",
+        "answer": "Not in law. Each body has its own task and its own basis, and that separation is the reason a person can give information to one without giving it to all."
+      },
+      {
+        "objection": "We only exchange what is necessary.",
+        "answer": "Then the exchange answers a question and retains nothing. A stored combination is a different thing, and the two can be told apart by asking what is kept."
+      },
+      {
+        "objection": "The person can request access, so it is transparent.",
+        "answer": "Access is a right, not a justification. That the combination becomes visible when someone asks does not establish that it was permitted."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0016",
+    "DPE-2026-0017"
+  ],
+  "seen_in_the_wild": {
+    "confirmed": false,
+    "note": "Observed in practice by the authors but not yet backed by a published reference. Set to false until a citation exists: a claim without a source is exactly what this catalogue holds others to."
+  },
+  "in_practice": {
+    "dpia": "Verify which provision names the combination, rather than the provisions that name each of the two registers.",
+    "procurement": "A platform serving several bodies keeps their records separated, and a join requires a provision named per query and logged with it.",
+    "complaint": "The access request answers from both bodies, the field that can only have come from the other, and the processing register entry of the same date.",
+    "audit_question": "Which provision permits combining these two registers, as opposed to holding each of them?",
+    "audit_question_nl": "Welke bepaling staat het koppelen van deze twee registraties toe, los van de bepalingen die elk register afzonderlijk toestaan?",
+    "complaint_nl": "De antwoorden op inzageverzoeken bij beide instanties, het veld dat alleen van de ander kan komen, en het verwerkingsregister van dezelfde datum.",
+    "objection_nl": "Beide instanties mogen het persoonsnummer gebruiken.",
+    "answer_nl": "Voor hun eigen taak, ja. Het nummer maakt koppelen makkelijk, niet toegestaan. Er moet een bepaling zijn die de koppeling zelf noemt."
+  },
+  "schema_version": "2.0",
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+      }
+    ]
+  },
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ]
+}

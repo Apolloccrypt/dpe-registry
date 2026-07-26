@@ -1,0 +1,146 @@
+{
+  "id": "DPE-2026-0031",
+  "name": "Email address as a cross-service identifier",
+  "slug": "email-address-as-identifier",
+  "name_nl": "E-mailadres als sleutel tussen diensten",
+  "family": "chain",
+  "applies_to": [
+    "web",
+    "mobile-app",
+    "api"
+  ],
+  "summary": "An address given for contact travels on, plain or hashed, so separate parties can recognise the same person.",
+  "summary_nl": "Een adres dat voor contact is gegeven, gaat door naar andere partijen, plat of als hashwaarde, zodat zij dezelfde persoon herkennen.",
+  "not_a_vulnerability": "Nothing leaks and nothing is broken into. The address is passed on deliberately, by design, and the design is the objection.",
+  "mechanism": {
+    "what": "An address the person supplied for a purpose of their own, an account, an order, a newsletter, is used as a key. It is sent to other parties in the clear or, more often, as a hash of the address in lowercase with the spaces trimmed. The hash protects nothing here: any party that already holds the address computes the same value, which is precisely why that form is used. Neither side has to exchange anything with the other, because both derive the same key from a value the person handed over once.",
+    "why_it_matters": "An address is stable for years and follows the person across devices, browsers and applications. A cookie can be cleared; this cannot. It joins what someone did on one service to what they did on another, and usually to a name, because an address is rarely anonymous. It was given in order to be reached, not in order to be recognised elsewhere.",
+    "common_causes": [
+      "an advertising tag configured to send the address field on form submission, for audience matching",
+      "a customer list uploaded from server to server for matching against a platform's own users",
+      "an identity resolution component added through a tag container",
+      "a login form that hashes the address in the browser and sends it onward in the same step"
+    ],
+    "not_this": "Text the visitor typed appearing in a request as content is User input to third parties; there the content itself is what travels. Here the address is used as a key, it may be hashed, and it may travel from a server rather than from the browser. Two parties exchanging identifiers of their own is Identifier synchronisation between parties; here no exchange is needed, because both sides can compute the same value from the address."
+  },
+  "detection": {
+    "indicator": "A request to a host under a different registrable domain containing the address entered, or the MD5, SHA-1 or SHA-256 of that address in lowercase and trimmed, in hexadecimal or base64. Compute the hashes of the test address before measuring and search the capture for those strings.",
+    "method": "network-with-identifier",
+    "qod": 95,
+    "capture_requirements": [
+      "use an address that exists only for this measurement, so a match cannot have come from anywhere else",
+      "compute the hashes in advance, including a variant without normalisation, and record which one matched",
+      "search request bodies and fragments as well as query strings; matching values are usually posted rather than appended",
+      "a transfer from server to server does not appear in a browser capture at all, so absence in the capture settles nothing"
+    ],
+    "attribution": [
+      "har-pageref",
+      "cdp-initiator"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "The matched value is a hash of something other than the address, shown by recomputing the hash of the exact address against the captured value.",
+      "checkable": "automated",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The address travelled to a party executing a step the person asked for, such as delivering the message or the order.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The recipient acts only on the operator's instruction and does not use the value to recognise the person elsewhere.",
+      "checkable": "not-from-capture",
+      "if_true": "weaken",
+      "note": "The transfer is visible in the capture; the purpose is not. A processing agreement of the same date is what settles it."
+    },
+    {
+      "condition": "A refusal registered in the consent state removes the request.",
+      "checkable": "automated",
+      "if_true": "weaken",
+      "note": "The mechanism is then present but gated, which is a different finding from an ungated one and is worth stating as such."
+    }
+  ],
+  "legal": {
+    "provisions": [
+      "eu-gdpr-5-1-b",
+      "eu-gdpr-6-1-a",
+      "eu-gdpr-13"
+    ],
+    "rebuttals": [
+      {
+        "objection": "It is hashed, so it is not personal data.",
+        "answer": "A hash of an address is a pseudonym, not anonymity: every party that holds the address computes the same value, and that is exactly why it is sent. If it did not identify, it would not work."
+      },
+      {
+        "objection": "It is our own customer data.",
+        "answer": "It is, until it leaves. The objection is not to holding the address but to using it as a key at another party, for a purpose it was not given for."
+      },
+      {
+        "objection": "It is only for suppression, so we do not advertise to existing customers.",
+        "answer": "That purpose is testable. Suppression is a list matched once; it does not require the address to travel on every form submission or every page view."
+      },
+      {
+        "objection": "The recipient deletes it after matching.",
+        "answer": "The value it matched on is the same value the person has everywhere else, so the match persists in the profile whether the input is deleted or not."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0006",
+    "DPE-2026-0016",
+    "DPE-2026-0030"
+  ],
+  "seen_in_the_wild": {
+    "confirmed": false,
+    "note": "Observed in practice by the authors but not yet backed by a published reference. Set to false until a citation exists: a claim without a source is exactly what this catalogue holds others to."
+  },
+  "in_practice": {
+    "dpia": "Verify with a test address, and a search for its hashes, which parties receive it, rather than accepting that no personal data is shared with advertising partners.",
+    "procurement": "No form field and no server process transmits a customer address, in any encoding, to a party that is not executing the service the person asked for.",
+    "complaint": "A capture containing the hash of a test address, the hashes computed in advance, and the moment the address was entered.",
+    "audit_question": "If I enter an address on your site, which parties can compute that address afterwards?",
+    "audit_question_nl": "Als ik een adres invul op uw site, welke partijen kunnen dat adres daarna zelf uitrekenen?",
+    "complaint_nl": "Een opname waarin de hashwaarde van een testadres voorkomt, met de vooraf berekende hashes erbij en het moment van invullen.",
+    "objection_nl": "Het adres is gehasht, dus het zijn geen persoonsgegevens.",
+    "answer_nl": "Iedere partij die het adres al heeft, rekent dezelfde waarde uit. Daarom werkt het als sleutel, en daarom is het herleidbaar."
+  },
+  "schema_version": "2.0",
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+      }
+    ]
+  },
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ]
+}

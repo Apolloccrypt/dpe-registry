@@ -1,0 +1,145 @@
+{
+  "id": "DPE-2026-0041",
+  "name": "Input kept as training data by default",
+  "slug": "input-kept-as-training-data",
+  "name_nl": "Invoer wordt standaard trainingsmateriaal",
+  "family": "data",
+  "applies_to": [
+    "web",
+    "mobile-app",
+    "api",
+    "desktop"
+  ],
+  "summary": "What a person types into a service is retained to improve a model unless they find a setting and switch it off.",
+  "summary_nl": "Wat iemand in een dienst typt, wordt bewaard om een model te verbeteren, tenzij hij een instelling vindt en uitzet.",
+  "not_a_vulnerability": "Nothing is taken by force. The second use is written down somewhere and the control exists, and the objection is that the default answers for the person.",
+  "mechanism": {
+    "what": "A service accepts text, images or files in order to answer, and keeps them afterwards for a second purpose: improving a model, evaluating quality, or review by people. A control that prevents it exists, but it stands at on when the account is created, sits several steps from the input screen, applies only to what is submitted after it is changed, or is offered on a paid tier only. At the moment of typing the person is told nothing about the second purpose.",
+    "why_it_matters": "People put things into these services that they put nowhere else: a draft resignation, a medical letter, a client file, a message about a family member. Kept as training material, that content leaves the person's reach altogether. It cannot be found back, cannot be corrected, and cannot be removed from what has been built on it.",
+    "common_causes": [
+      "retention for improvement on by default, with an opt-out per account",
+      "a business tier excluded from training while the free tier is not, without that being visible at the moment of typing",
+      "review by people described as a security measure rather than as a second purpose",
+      "an application built on another party's model, passing content on under that party's default terms"
+    ],
+    "not_this": "Content reaching an advertising or measurement party is User input to third parties, where the content is a by-product. Here it is the payload, and the fault is the second use of it. A store that writes the payload into a log is Logs recording content, not events, which is about the operator's own housekeeping rather than a second purpose."
+  },
+  "detection": {
+    "indicator": "In an account created for the test and left untouched, the control governing use of input for model improvement or review by people stands at on, and the terms of the same date state that submitted content is used for that purpose. Both are read as delivered, before anything is changed.",
+    "method": "document-comparison",
+    "qod": 90,
+    "capture_requirements": [
+      "a fresh account, nothing changed, and a record of the default state with the date and the version",
+      "record where the control sits and how many steps it is from the input screen",
+      "record whether switching it off also covers what was already submitted",
+      "record whether a paid tier differs, and whether that difference is visible at the moment of typing"
+    ],
+    "attribution": [
+      "document-diff",
+      "vendor-statement"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "The default stands at off and the person has to switch it on.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "Submitted content is used to produce the answer and is destroyed within a stated short period.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "Switching the control off also removes what was submitted before.",
+      "checkable": "manual",
+      "if_true": "weaken"
+    },
+    {
+      "condition": "The operator does not retain it; the content is passed to another party under that party's terms.",
+      "checkable": "manual",
+      "if_true": "reclassify",
+      "note": "The recipient is then the party to address, and the operator's silence about it is a transparency finding."
+    }
+  ],
+  "legal": {
+    "provisions": [
+      "eu-gdpr-5-1-b",
+      "eu-gdpr-25",
+      "eu-gdpr-6-1-a"
+    ],
+    "rebuttals": [
+      {
+        "objection": "It is in the terms.",
+        "answer": "A second purpose has to be clear at the moment of typing, and the default has to be the protective one. A term accepted once at sign-up is not a choice per submission."
+      },
+      {
+        "objection": "The data is anonymised before training.",
+        "answer": "Free text is not anonymised by removing a name; it identifies through its content. And what is being examined is what is retained, not what may be filtered later."
+      },
+      {
+        "objection": "You can switch it off.",
+        "answer": "The finding is the default, not the possibility. A control that has to be found is a control most people never reach."
+      },
+      {
+        "objection": "Reviewers only see fragments.",
+        "answer": "A fragment of a medical letter is a medical letter. The unit of review does not change the category of the content."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0006",
+    "DPE-2026-0034"
+  ],
+  "seen_in_the_wild": {
+    "confirmed": false,
+    "note": "Observed in practice by the authors but not yet backed by a published reference. Set to false until a citation exists: a claim without a source is exactly what this catalogue holds others to."
+  },
+  "in_practice": {
+    "dpia": "Verify the default state of the control in a fresh account, and whether switching it off works backwards, instead of the supplier's statement that customer data is not used for training.",
+    "procurement": "Content submitted by users is used to produce the answer and for nothing else, demonstrated by the default state of a fresh account and the terms of the same date.",
+    "complaint": "A screenshot of the default state in a fresh account with its date, and the passage in the terms describing the second purpose.",
+    "audit_question": "In a new account, is the training setting on or off, and what happens to what I already typed if I switch it off?",
+    "audit_question_nl": "Staat de instelling voor trainen in een nieuw account aan of uit, en wat gebeurt er met wat ik al typte als ik hem uitzet?",
+    "complaint_nl": "Een schermafdruk van de standaardinstelling in een vers account met datum, en de passage in de voorwaarden over het tweede doel.",
+    "objection_nl": "Het staat in de voorwaarden.",
+    "answer_nl": "Het tweede doel moet duidelijk zijn op het moment van typen, en de standaard hoort de beschermende te zijn."
+  },
+  "schema_version": "2.0",
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+      }
+    ]
+  },
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ]
+}

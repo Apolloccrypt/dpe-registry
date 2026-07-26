@@ -1,0 +1,145 @@
+{
+  "id": "DPE-2026-0037",
+  "name": "Screen capture of a worker's device",
+  "slug": "screen-capture-of-a-worker",
+  "name_nl": "Schermopname op het werkapparaat",
+  "family": "data",
+  "applies_to": [
+    "desktop",
+    "web",
+    "mobile-app"
+  ],
+  "summary": "Work software records the screen itself, on a timer or a trigger, without the worker starting it.",
+  "summary_nl": "Werksoftware neemt het scherm zelf op, met vaste tussenpozen of op een signaal, zonder dat de medewerker dat start.",
+  "not_a_vulnerability": "Nothing is exploited. The agent takes the images because it was configured to, and the objection is to the configuration rather than to a defect.",
+  "mechanism": {
+    "what": "The device produces images of the screen, or a stream of it, on a timer or on a trigger such as a keyword, an application coming to the foreground, or a score crossing a threshold. The image holds everything that was visible: the work, but also a private message in another window, a colleague's data, a document belonging to a client, a password manager at the moment it was open. The images are stored centrally and can be opened by someone other than the person captured.",
+    "why_it_matters": "A screenshot is not a measurement about the worker alone. It captures whatever was on the screen, including data about clients, patients and colleagues who have no relationship with the monitoring at all, and it captures the private moments that occur on any device used all day. The worker cannot see when a capture is taken, and cannot know afterwards which ones exist.",
+    "common_causes": [
+      "a screenshot feature bundled with time tracking and enabled as delivered",
+      "a trigger list that fires far more often than the incident it was bought for",
+      "recordings kept for months although the review they serve happens the same week",
+      "an agent rolled out for one team and left running on the standard image"
+    ],
+    "not_this": "Counting activity per person is Per-person productivity scoring at work: that records how much, this records what. Recording a visitor's session on a website is Session recording, which is bounded by the page; a screen capture is bounded by nothing that was open."
+  },
+  "detection": {
+    "indicator": "Image or video records of the worker's screen exist in the product's store, produced at a moment when the worker performed no action to produce them. Establish it from the administrator's view, from the worker's own access request, or from the files the agent writes locally, and count them per hour.",
+    "method": "document-comparison",
+    "qod": 85,
+    "capture_requirements": [
+      "ask for the images of one hour of one person and record how many there are",
+      "record what triggers a capture, and whether the worker is told at the moment it happens",
+      "record what is visible in the images besides the work: other applications, other people's data",
+      "record the retention of the image store separately from the retention of the activity records"
+    ],
+    "attribution": [
+      "document-diff",
+      "process-trace"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "Every capture is started by the worker, for instance to attach evidence to a ticket.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "The stored image is reduced before storage to a form in which no content is readable.",
+      "checkable": "manual",
+      "if_true": "drop",
+      "note": "Check a stored image rather than the setting that claims to do it."
+    },
+    {
+      "condition": "Capture runs only during a bounded investigation with a stated ground, and the worker was told.",
+      "checkable": "manual",
+      "if_true": "weaken"
+    },
+    {
+      "condition": "The device serves one task and nothing else can appear on the screen.",
+      "checkable": "manual",
+      "if_true": "weaken"
+    }
+  ],
+  "legal": {
+    "provisions": [
+      "eu-gdpr-5-1-c",
+      "eu-gdpr-5-1-e",
+      "eu-gdpr-88",
+      "nl-wor-27"
+    ],
+    "rebuttals": [
+      {
+        "objection": "It is only for security incidents.",
+        "answer": "Then it runs during an incident. A capture that runs continuously is not an investigation but a standing recording, and the difference is visible in the number of images per hour."
+      },
+      {
+        "objection": "Nobody looks at the images.",
+        "answer": "They exist, they are readable, and the retention says how long that stays true. What is looked at is not the measure."
+      },
+      {
+        "objection": "Employees know it happens.",
+        "answer": "Knowing is not the same as necessary, and it does nothing for the clients and colleagues whose data is in the frame and who were told nothing."
+      },
+      {
+        "objection": "The worker can pause it during breaks.",
+        "answer": "Test that, and check the store for the period it was paused. A pause that stops the display and not the capture is the finding rather than the answer to it."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0005",
+    "DPE-2026-0036"
+  ],
+  "seen_in_the_wild": {
+    "confirmed": false,
+    "note": "Observed in practice by the authors but not yet backed by a published reference. Set to false until a citation exists: a claim without a source is exactly what this catalogue holds others to."
+  },
+  "in_practice": {
+    "dpia": "Verify how many images of one person exist for one hour and what else is visible in them, rather than the sentence that screenshots are possible.",
+    "procurement": "The product produces no screen image unless the worker starts it, or capture is bounded to a stated investigation with an end date.",
+    "complaint": "The number of images per hour for one worker, a sample in which third-party data is visible, and the retention of the image store.",
+    "audit_question": "How many pictures of my screen were taken this hour, and who can open them?",
+    "audit_question_nl": "Hoeveel opnamen van mijn scherm zijn er dit uur gemaakt, en wie kan die openen?",
+    "complaint_nl": "Het aantal opnamen per uur van een medewerker, een voorbeeld waarop gegevens van derden zichtbaar zijn, en de bewaartermijn van die opslag.",
+    "objection_nl": "Het is alleen voor beveiligingsincidenten.",
+    "answer_nl": "Dan draait het tijdens een incident. Een opname die permanent doorloopt is geen onderzoek maar een doorlopende registratie."
+  },
+  "schema_version": "2.0",
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+      }
+    ]
+  },
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ]
+}

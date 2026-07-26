@@ -1,0 +1,19 @@
+id: eu-gdpr-7-4
+jurisdiction: EU
+instrument: "Verordening (EU) 2016/679 (AVG)"
+reference: "GDPR art. 7(4)"
+reference_nl: "AVG art. 7 lid 4"
+title: "Vrije toestemming en gekoppelde voorwaarden"
+core: >
+  Bij de beoordeling of toestemming vrijelijk is gegeven, wordt onder meer ten
+  zeerste rekening gehouden met de vraag of de uitvoering van een overeenkomst
+  afhankelijk is gesteld van toestemming voor een verwerking van persoonsgegevens
+  die voor die uitvoering niet noodzakelijk is.
+why_it_matters: >
+  Dit is de bepaling waar de keuze tussen betalen en instemmen op aankomt. De
+  vraag is niet of er een alternatief bestaat, maar of het weigeren iets kost dat
+  de partij zelf heeft geprijsd. Wat een record hier laat zien is het aantal
+  paden naar de inhoud en de toestemmingsstand die elk pad registreert; of die
+  prijs de toestemming onvrij maakt, is aan de toezichthouder en de rechter.
+url: "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+verified: true

@@ -1,0 +1,141 @@
+{
+  "id": "DPE-2026-0035",
+  "name": "Erasure that does not reach the backup",
+  "slug": "erasure-not-reaching-backup",
+  "name_nl": "Wissen dat de back-up niet bereikt",
+  "family": "retention",
+  "applies_to": [
+    "web",
+    "mobile-app",
+    "api",
+    "desktop"
+  ],
+  "summary": "A record erased on request survives in the backup and returns to the live system on a restore.",
+  "summary_nl": "Een op verzoek gewist gegeven blijft in de back-up staan en komt bij een herstel weer in het systeem terug.",
+  "not_a_vulnerability": "Nothing fails and nothing is attacked. The backup does what a backup does; the objection is that the erasure procedure was never designed to survive it.",
+  "mechanism": {
+    "what": "The erasure is carried out in the live system. Backups made before it keep the record and nothing marks it as erased. When a backup is restored, in part or in whole, the record comes back, and from that moment it is live again: indexed, exported, included in the next backup. Where no register of erasures is kept, the restore cannot even be corrected afterwards, because nobody knows what was supposed to be gone.",
+    "why_it_matters": "The person was told the data was gone. It was not, and the moment it returns has nothing to do with anything they can see or ask about. The same holds for scheduled deletion: a record removed on time reappears from a backup whose cycle is longer than the period it was meant to enforce.",
+    "common_causes": [
+      "erasure implemented as a delete in the application, with backups outside the scope of the procedure",
+      "no register of erasures, so a restore cannot re-apply what was erased",
+      "a backup cycle longer than the retention period it is supposed to serve",
+      "test and analysis environments refreshed from the same backup"
+    ],
+    "not_this": "A record kept too long in the live system is an ordinary retention finding. This entry is about the second copy: the live system is right and the store behind it is not. A log holding content is Logs recording content, not events, where the fault is what gets written rather than what fails to be removed."
+  },
+  "detection": {
+    "indicator": "The organisation's own answer states either that backups are out of scope for erasure, or that no register of erasures exists from which a restore could be corrected. In a system you administer yourself the behavioural check settles it directly: a record erased on request is present again after a restore, with no re-application step in between.",
+    "method": "document-comparison",
+    "qod": 75,
+    "capture_requirements": [
+      "ask in writing what happens to backups on an erasure request, and keep the answer with its date",
+      "ask whether a register of erasures is kept and whether it is applied after a restore, and by whom",
+      "where you administer the system, test on a copy: erase, restore, look",
+      "record the backup cycle and the retention period next to each other; a cycle longer than the period settles the scheduled-deletion half on its own"
+    ],
+    "attribution": [
+      "document-diff",
+      "vendor-statement"
+    ]
+  },
+  "falsifiers": [
+    {
+      "condition": "A register of erasures is kept and re-applied after every restore, and the procedure names who does it.",
+      "checkable": "manual",
+      "if_true": "drop"
+    },
+    {
+      "condition": "Backups are encrypted per record with a key destroyed at erasure.",
+      "checkable": "manual",
+      "if_true": "drop",
+      "note": "The restore then returns something nobody can read, which is a defensible implementation of erasure."
+    },
+    {
+      "condition": "Backup retention is shorter than the period after which the record would have been deleted anyway.",
+      "checkable": "manual",
+      "if_true": "weaken"
+    },
+    {
+      "condition": "The erasure request was refused on a stated ground, so nothing had to be erased.",
+      "checkable": "manual",
+      "if_true": "drop"
+    }
+  ],
+  "legal": {
+    "provisions": [
+      "eu-gdpr-17",
+      "eu-gdpr-5-1-e",
+      "eu-gdpr-5-2"
+    ],
+    "rebuttals": [
+      {
+        "objection": "A backup cannot be edited, that is what makes it a backup.",
+        "answer": "Nobody asks for it to be edited. What is asked is that the erasure survives a restore, which a register applied on restore achieves without touching the backup at all."
+      },
+      {
+        "objection": "The backup is only for disaster recovery.",
+        "answer": "Then the disaster is the day the erased record comes back. What the copy is for does not change what happens when it is used."
+      },
+      {
+        "objection": "We keep no register of erasures, for privacy reasons.",
+        "answer": "A list of identifiers with a date is less data than the records it stops from returning, and it is the only way the promise can be kept."
+      },
+      {
+        "objection": "It is a rare edge case.",
+        "answer": "It is measurable rather than rare: the backup cycle and the number of restores per year are both known inside the organisation."
+      }
+    ]
+  },
+  "related": [
+    "DPE-2026-0004",
+    "DPE-2026-0034"
+  ],
+  "in_practice": {
+    "dpia": "Verify what happens to backups on an erasure and whether a restore re-applies past erasures, instead of recording that erasure is supported.",
+    "procurement": "The supplier states in writing how an erasure survives a restore, and demonstrates it on a test restore at delivery.",
+    "complaint": "The erasure confirmation, the written answer about backups, and the backup cycle set against the retention period.",
+    "audit_question": "You restore last month's backup tonight. Which erased records are back tomorrow?",
+    "audit_question_nl": "U zet vanavond de back-up van vorige maand terug. Welke gewiste gegevens staan er morgen weer in?",
+    "complaint_nl": "De bevestiging van het wisverzoek, het schriftelijke antwoord over back-ups, en de back-upcyclus naast de bewaartermijn.",
+    "objection_nl": "Een back-up kun je niet aanpassen, dat is het idee van een back-up.",
+    "answer_nl": "Dat hoeft ook niet. Gevraagd is dat het wissen een herstel overleeft, en daarvoor bestaat een lijst met wisopdrachten die na herstel opnieuw wordt toegepast."
+  },
+  "schema_version": "2.0",
+  "status": "active",
+  "credit": [
+    {
+      "name": "Mick Beer",
+      "role": "proposed",
+      "date": "2026-07-26"
+    }
+  ],
+  "does_not_establish": [
+    "harm; the catalogue standardises a finding so it can be referred to, it does not weigh it",
+    "severity; there is no score here, by design. Weighing belongs to whoever applies the entry to a concrete case",
+    "unlawfulness; that is for a supervisory authority or a court",
+    "intent; a fault is usually a build decision, not a plan",
+    "absence: not finding it in one capture is not evidence that it is not there"
+  ],
+  "reproduction": {
+    "methods": [
+      {
+        "tier": "manual",
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+      }
+    ]
+  },
+  "changes": [
+    {
+      "at": "2026-07-26T00:00:00Z",
+      "actor": "registry",
+      "entries": [
+        "Entry created.",
+        "Name assigned.",
+        "Detection method and falsifiers defined.",
+        "Legal provisions linked."
+      ]
+    }
+  ]
+}

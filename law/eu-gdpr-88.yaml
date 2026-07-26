@@ -1,0 +1,22 @@
+id: eu-gdpr-88
+jurisdiction: EU
+instrument: "Verordening (EU) 2016/679 (AVG)"
+reference: "GDPR art. 88"
+reference_nl: "AVG art. 88"
+title: "Verwerking in het kader van de arbeidsverhouding"
+core: >
+  Lidstaten kunnen bij wet of via collectieve overeenkomsten nadere regels
+  vaststellen ter bescherming van rechten en vrijheden met betrekking tot de
+  verwerking van persoonsgegevens van werknemers, met passende maatregelen ter
+  waarborging van de menselijke waardigheid, de gerechtvaardigde belangen en de
+  grondrechten van de betrokkene, in het bijzonder met het oog op de transparantie
+  van de verwerking en op toezichtsystemen op de werkplek.
+why_it_matters: >
+  Deze bepaling markeert waarom toezicht op de werkvloer een eigen categorie is.
+  In een gezagsverhouding is toestemming zelden vrij, dus komt het aan op
+  noodzaak en op de nationale waarborgen daaromheen. Wat een record hier laat
+  zien is wat er per persoon per tijdvak wordt opgeslagen; of die opslag
+  noodzakelijk is, is aan de toezichthouder, de rechter en het
+  medezeggenschapsorgaan.
+url: "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+verified: true

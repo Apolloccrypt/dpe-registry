@@ -29,6 +29,10 @@ LIMITS = [
 
 SLUGS = {'Tracking before consent': 'tracking-before-consent', 'Refusal without effect': 'refusal-without-effect', 'No refusal option': 'no-refusal-option', 'Maximum cookie lifetime': 'maximum-cookie-lifetime', 'Session recording': 'session-recording', 'User input to third parties': 'user-input-to-third-parties', 'Device fingerprinting': 'device-fingerprinting', 'Third-party hosted form': 'third-party-hosted-form', 'Third-party resource loading': 'third-party-resource-loading', 'Undisclosed recipient': 'undisclosed-recipient', 'Tag loaded outside the source': 'tag-loaded-outside-source', 'Device telemetry without function': 'device-telemetry-without-function', 'Bundled component collection': 'bundled-component-collection', 'No working off switch': 'no-working-off-switch'}
 
+UNSOURCED = ("Observed in practice by the authors but not yet backed by a published "
+             "reference. Set to false until a citation exists: a claim without a source "
+             "is exactly what this catalogue holds others to.")
+
 E = []
 
 
@@ -107,7 +111,7 @@ entry(id="DPE-2026-0001", name="Tracking before consent", name_nl="Meten voor de
                  {"objection": "Our consent tool handles this.",
                   "answer": "Measure it rather than assume it. A tool that blocks cookie placement may leave container loading untouched."}]},
       related=["DPE-2026-0002", "DPE-2026-0003", "DPE-2026-0005"],
-      seen_in_the_wild={"confirmed": True, "first_documented": "2026-05-27"})
+      seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
 
 entry(id="DPE-2026-0002", name="Refusal without effect", name_nl="Weigeren zonder effect", family="consent",
       summary="Refusing consent does not change what leaves the browser.",
@@ -144,7 +148,7 @@ entry(id="DPE-2026-0002", name="Refusal without effect", name_nl="Weigeren zonde
                  {"objection": "This is analytics, which needs no consent.",
                   "answer": "Then the banner should not have listed it, and there would be no refusal to honour. A party cannot both treat something as consent-bound and ignore the refusal."}]},
       related=["DPE-2026-0001", "DPE-2026-0004"],
-      seen_in_the_wild={"confirmed": True, "first_documented": "2026-05-27"})
+      seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
 
 entry(id="DPE-2026-0003", name="No refusal option", name_nl="Geen weigeroptie", family="consent",
       summary="The consent dialogue offers acceptance and no way to refuse.",
@@ -172,7 +176,7 @@ entry(id="DPE-2026-0003", name="No refusal option", name_nl="Geen weigeroptie", 
       legal={"provisions": ["eu-gdpr-6-1-a"], "caselaw": ["cjeu-planet49"],
              "rebuttals": [{"objection": "Visitors can refuse in their browser settings.",
                             "answer": "Consent is sought by the controller and must be refusable where it is sought. Delegating that to the browser does not discharge it."}]},
-      related=["DPE-2026-0002"], seen_in_the_wild={"confirmed": True})
+      related=["DPE-2026-0002"], seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
 
 entry(id="DPE-2026-0004", name="Maximum cookie lifetime", name_nl="Maximale bewaartermijn", family="retention",
       summary="An identifier cookie is set for the maximum lifetime a browser accepts, before the question is answered.",
@@ -200,7 +204,7 @@ entry(id="DPE-2026-0004", name="Maximum cookie lifetime", name_nl="Maximale bewa
       legal={"provisions": ["nl-tw-11-7a", "eu-gdpr-6-1-a"], "caselaw": ["cjeu-planet49"],
              "rebuttals": [{"objection": "399 days is the industry default.",
                             "answer": "A default is not a purpose. Storage limitation asks what term the purpose requires, and the browser ceiling is not an answer to that question."}]},
-      related=["DPE-2026-0001"], seen_in_the_wild={"confirmed": True})
+      related=["DPE-2026-0001"], seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
 
 # ---------------------------------------------------------------- data
 
@@ -232,7 +236,7 @@ entry(id="DPE-2026-0005", name="Session recording", name_nl="Sessieopname", fami
       legal={"provisions": ["eu-gdpr-6-1-a", "nl-tw-11-7a"],
              "rebuttals": [{"objection": "The recording servers are in the EU.",
                             "answer": "Where the recording is stored says nothing about whether it should have been made. Location is a separate question from lawfulness of collection."}]},
-      seen_in_the_wild={"confirmed": True})
+      seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
 
 entry(id="DPE-2026-0006", name="User input to third parties", name_nl="Invoer naar derden", family="data",
       summary="What the visitor typed or looked for reaches a third party.",
@@ -260,7 +264,7 @@ entry(id="DPE-2026-0006", name="User input to third parties", name_nl="Invoer na
       legal={"provisions": ["eu-gdpr-6-1-a"],
              "rebuttals": [{"objection": "We do not send personal data, only the page URL.",
                             "answer": "If the URL contains what the visitor typed, then the URL is the personal data. The container does not change the content."}]},
-      seen_in_the_wild={"confirmed": True})
+      seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
 
 entry(id="DPE-2026-0007", name="Device fingerprinting", name_nl="Apparaatherkenning", family="data",
       summary="The device is recognised by its characteristics, without any stored identifier.",
@@ -289,7 +293,7 @@ entry(id="DPE-2026-0007", name="Device fingerprinting", name_nl="Apparaatherkenn
       legal={"provisions": ["nl-tw-11-7a", "eu-gdpr-6-1-a"],
              "rebuttals": [{"objection": "We set no cookies.",
                             "answer": "The cookie provision covers storing and reading information on the device, not only cookies. Reading device characteristics for recognition is within its scope."}]},
-      seen_in_the_wild={"confirmed": True})
+      seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
 
 # ---------------------------------------------------------------- chain
 
@@ -319,7 +323,7 @@ entry(id="DPE-2026-0008", name="Third-party hosted form", name_nl="Formulier bij
       legal={"provisions": ["eu-gdpr-44", "eu-gdpr-6-1-a"], "caselaw": ["cjeu-fashion-id"],
              "rebuttals": [{"objection": "That is our supplier's platform, not our site.",
                             "answer": "Fashion ID holds that a controller who arranges for visitor data to reach a third party is jointly responsible for that collection and transmission. Linking to the form is arranging it."}]},
-      related=["DPE-2026-0009"], seen_in_the_wild={"confirmed": True})
+      related=["DPE-2026-0009"], seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
 
 entry(id="DPE-2026-0009", name="Third-party resource loading", name_nl="Externe bron inladen", family="transfer",
       summary="A resource loaded straight from a third party makes every page view a transfer.",
@@ -353,7 +357,7 @@ entry(id="DPE-2026-0009", name="Third-party resource loading", name_nl="Externe 
                   "answer": "The Munich ruling on Google Fonts treats hotlinking a provider resource as a transfer of personal data, precisely because the IP reaches the provider."},
                  {"objection": "Our hosting is in the Netherlands.",
                   "answer": "Storage location and loaded components are different things. The transfer runs through what the page pulls in, not through where it is stored."}]},
-      related=["DPE-2026-0008"], seen_in_the_wild={"confirmed": True})
+      related=["DPE-2026-0008"], seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
 
 # ------------------------------------------------------- transparency, method
 
@@ -382,7 +386,7 @@ entry(id="DPE-2026-0010", name="Undisclosed recipient", name_nl="Niet-vermelde o
       legal={"provisions": ["eu-gdpr-6-1-a"],
              "rebuttals": [{"objection": "The statement is generic on purpose.",
                             "answer": "Article 13 requires the recipients or categories of recipients. A statement that omits a category entirely is not generic but incomplete."}]},
-      seen_in_the_wild={"confirmed": True})
+      seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
 
 entry(id="DPE-2026-0011", name="Tag loaded outside the source", name_nl="Tag buiten de broncode", family="method",
       summary="Tags fire from a container while appearing nowhere in the page source.",
@@ -410,7 +414,7 @@ entry(id="DPE-2026-0011", name="Tag loaded outside the source", name_nl="Tag bui
       legal={"provisions": ["eu-gdpr-6-1-a"],
              "rebuttals": [{"objection": "We removed the tracking; it is not in our code.",
                             "answer": "Absence from the source is not absence from the traffic. The container is the reliable indicator, and its version history shows what ran when."}]},
-      related=["DPE-2026-0001"], seen_in_the_wild={"confirmed": True})
+      related=["DPE-2026-0001"], seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
 
 
 # ------------------------------------------- apparaten, firmware, apps
@@ -463,7 +467,7 @@ entry(id="DPE-2026-0012", name="Device telemetry without function", name_nl="App
                   "answer": "Consent must be specific and freely given. A term buried in a document accepted once at setup, with no way to refuse and keep the product working, is neither."},
                  {"objection": "The servers belong to our chip supplier, not to us.",
                   "answer": "The party placing the product on the market chose that component. Responsibility for what a shipped device does is not transferred by subcontracting it."}]},
-      related=["DPE-2026-0013"], seen_in_the_wild={"confirmed": True})
+      related=["DPE-2026-0013"], seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
 
 entry(id="DPE-2026-0013", name="Bundled component collection", name_nl="Meeliftende component", family="telemetry",
       applies_to=["mobile-app", "desktop", "firmware"],
@@ -503,7 +507,7 @@ entry(id="DPE-2026-0013", name="Bundled component collection", name_nl="Meelifte
                   "answer": "The developer decided to ship it. Fashion ID holds that arranging for data to reach a third party makes you jointly responsible for that reaching."},
                  {"objection": "We only use it for crash reporting.",
                   "answer": "Then the traffic should be limited to crashes. Establish what the payload contains when nothing has crashed."}]},
-      related=["DPE-2026-0012", "DPE-2026-0008"], seen_in_the_wild={"confirmed": True})
+      related=["DPE-2026-0012", "DPE-2026-0008"], seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
 
 entry(id="DPE-2026-0014", name="No working off switch", name_nl="Geen werkende uitschakeling", family="consent",
       applies_to=["firmware", "iot", "vehicle", "mobile-app"],
@@ -537,7 +541,7 @@ entry(id="DPE-2026-0014", name="No working off switch", name_nl="Geen werkende u
       legal={"provisions": ["eu-gdpr-6-1-a"],
              "rebuttals": [{"objection": "The device cannot function without it.",
                             "answer": "Then say so, and establish it. Necessity is a claim that can be tested by disabling the traffic and seeing what stops working."}]},
-      related=["DPE-2026-0002", "DPE-2026-0003", "DPE-2026-0012"], seen_in_the_wild={"confirmed": True})
+      related=["DPE-2026-0002", "DPE-2026-0003", "DPE-2026-0012"], seen_in_the_wild={"confirmed": False, "note": UNSOURCED})
 
 
 def main():

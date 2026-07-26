@@ -1,0 +1,27 @@
+id: nl-wor-27
+jurisdiction: NL
+instrument: "Wet op de ondernemingsraden"
+reference: "WOR art. 27 lid 1"
+implements: "AVG art. 88 (nationale waarborgen in de arbeidsverhouding)"
+title: "Instemmingsrecht bij voorzieningen voor waarneming van of controle op werknemers"
+core: >
+  De ondernemer heeft de instemming van de ondernemingsraad nodig voor elk
+  voorgenomen besluit tot vaststelling, wijziging of intrekking van onder meer
+  een regeling inzake voorzieningen die gericht zijn op of geschikt zijn voor
+  waarneming van of controle op aanwezigheid, gedrag of prestaties van de in de
+  onderneming werkzame personen.
+why_it_matters: >
+  Dit is de bepaling die van toezichtsoftware een besluit maakt in plaats van een
+  aanschaf. Zij grijpt aan op geschiktheid, niet op bedoeling: een product dat
+  gedrag of prestaties kan waarnemen valt eronder, ook als het als
+  planningshulp is gekocht. Daarmee is er een document dat er hoort te zijn, en
+  het ontbreken daarvan is toetsbaar zonder dat iemand de software hoeft te
+  meten.
+url: "https://wetten.overheid.nl/BWBR0002747"
+mirror: "https://vrijewetgeving.nl/"
+verified: false
+verification_note: >
+  Artikelnummer, lidnummer en de aanduiding van het onderdeel zijn opgeschreven
+  uit kennis van de wet, niet tegen de brontekst gecontroleerd op de datum van
+  dit bestand. Controleer het onderdeel binnen lid 1 en de actuele redactie
+  voordat een publicatie erop steunt.

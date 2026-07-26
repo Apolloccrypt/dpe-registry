@@ -330,6 +330,10 @@
               }
             }
           }
+        },
+        "note": {
+          "type": "string",
+          "description": "Why confirmed is set as it is. A claim of occurrence without a published reference is a claim, not evidence."
         }
       }
     },
