@@ -33,7 +33,7 @@ andere moet, en op alle drie ontbreekt het overdrachtsstuk.
         │                                                      │
         │   1. DE OPDRACHT                                     │
         │   ─────────────────────────────────────────────►     │
-        │   "toets deze veertien bevindingen,                  │
+        │   "toets de bevindingen uit de catalogus,                  │
         │    volgens methode 1.0, voor [datum]"                │
         │                                                      │
         │   geen jargon nodig van de vrager,                   │
@@ -73,8 +73,8 @@ raden wat er bedoeld wordt.
 > opgenomen bevindingen volgens DPE-meetmethode 1.0, met meetdatum, land van
 > meting en de ruwe meetbestanden. Termijn: [datum].
 
-Staat in [`site/register/functionaris.md`](site/register/functionaris.md), klaar
-om te kopiëren.
+Staat klaar om te kopiëren op de niet-technische ingang van het register,
+onder "Wat je doet met een bevinding".
 
 ## 2. De uitkomst
 

@@ -44,6 +44,22 @@ SYMPTOMS = [
      "Waar een bedrijf gevestigd is, is iets anders dan waar de gegevens heen gaan. Beide zijn relevant, maar het zijn twee vragen."),
     ("Iemand zegt dat het niet uitgezet kan worden", ["DPE-2026-0014", "DPE-2026-0012"],
      "Noodzaak is een bewering die te toetsen is: zet het uit en kijk wat er stukgaat."),
+    ("Er zit advertentieverkoop op de site of in de app", ["DPE-2026-0015", "DPE-2026-0016", "DPE-2026-0020"],
+     "Bij een advertentieveiling gaat een bezoek naar tientallen partijen tegelijk, niet naar een. Vraag om de lijst met wie er mag meebieden."),
+    ("Er wordt een identiteitsbewijs of BSN verwerkt", ["DPE-2026-0017", "DPE-2026-0018"],
+     "Vraag wat er van het document wordt vastgelegd en hoe lang. Vaak is de vraag ja of nee, en gaat het hele document mee."),
+    ("Het gaat om zorg, geloof, seksualiteit of een uitkering", ["DPE-2026-0019", "DPE-2026-0006"],
+     "Bijzondere gegevens hoeven niet ingetypt te zijn om te vertrekken. De naam van een pagina of een gebeurtenis kan het al verraden."),
+    ("Er wordt betaald of een transactie afgerond", ["DPE-2026-0025", "DPE-2026-0006"],
+     "Vraag wie er in de keten zit die niet nodig is om de betaling uit te voeren."),
+    ("Een meter, camera of sensor levert metingen aan", ["DPE-2026-0022", "DPE-2026-0024", "DPE-2026-0023"],
+     "Niet de meting zelf is het punt maar hoe vaak en hoe herkenbaar. Een reeks per kwartier laat zien wanneer iemand thuis is."),
+    ("Ik lees een onderzoeksrapport van iemand anders", ["DPE-2026-0026", "DPE-2026-0027", "DPE-2026-0028", "DPE-2026-0029"],
+     "Vier fouten die onderzoekers zelf maken. Staat er hoe is toegeschreven, van wanneer de landendatabase is, en of er echt is gemeten of alleen in de code gekeken?"),
+    ("Er staat geen cookiebanner, maar wel meetverkeer", ["DPE-2026-0011", "DPE-2026-0007", "DPE-2026-0021"],
+     "Wat je niet in de broncode ziet, kan er wel zijn. Vraag om de versiegeschiedenis van de tagcontainer."),
+    ("De cookies blijven heel lang staan", ["DPE-2026-0004"],
+     "Kijk naar de bewaartermijn, niet naar het aantal. Een jaar of langer vraagt om een reden die verder gaat dan de standaardinstelling."),
 ]
 
 
