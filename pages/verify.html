@@ -1,0 +1,103 @@
+<title>DPE-verifier: reken een record na</title>
+<style>
+:root{
+  --paper:#F4F5F3;--card:#FFF;--ink:#15191A;--ink2:#4A5356;--ink3:#798285;
+  --line:#DCE0DD;--line2:#EAEDE9;--accent:#0F544B;--soft:#E3EDEA;
+  --hit:#96450A;--ok:#0F544B;
+  --serif:Georgia,'Iowan Old Style',serif;--sans:ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+}
+@media(prefers-color-scheme:dark){:root{
+  --paper:#0E1113;--card:#161A1C;--ink:#E7EBE9;--ink2:#A8B2B0;--ink3:#78827F;
+  --line:#262C2E;--line2:#1E2325;--accent:#5FBFAE;--soft:#13292A;--hit:#D99A5C;--ok:#5FBFAE;}}
+:root[data-theme=dark]{--paper:#0E1113;--card:#161A1C;--ink:#E7EBE9;--ink2:#A8B2B0;--ink3:#78827F;
+  --line:#262C2E;--line2:#1E2325;--accent:#5FBFAE;--soft:#13292A;--hit:#D99A5C;--ok:#5FBFAE;}
+:root[data-theme=light]{--paper:#F4F5F3;--card:#FFF;--ink:#15191A;--ink2:#4A5356;--ink3:#798285;
+  --line:#DCE0DD;--line2:#EAEDE9;--accent:#0F544B;--soft:#E3EDEA;--hit:#96450A;--ok:#0F544B;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55}
+.wrap{max-width:1020px;margin:0 auto;padding:34px 24px 80px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 10px}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(26px,4vw,38px);margin:0;line-height:1.15;text-wrap:balance}
+.sub{font-family:var(--serif);font-size:16.5px;color:var(--ink2);max-width:64ch;margin:12px 0 0}
+h2{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin:34px 0 12px;font-weight:600}
+
+.drop{border:2px dashed var(--line);border-radius:5px;padding:34px 22px;text-align:center;
+  background:var(--card);transition:border-color .15s,background .15s;cursor:pointer}
+.drop.over{border-color:var(--accent);background:var(--soft)}
+.drop:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.drop b{display:block;font-family:var(--serif);font-size:19px;font-weight:400;margin-bottom:5px}
+.drop span{color:var(--ink3);font-size:13.5px}
+input[type=file]{display:none}
+
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:4px;overflow:hidden;margin-top:8px}
+.rule{background:var(--card);padding:13px 15px;text-align:left;border:0;cursor:pointer;color:inherit;font:inherit}
+.rule:hover{background:var(--soft)}
+.rule[aria-pressed=true]{background:var(--soft);box-shadow:inset 3px 0 0 var(--accent)}
+.rule b{display:block;font-family:var(--serif);font-size:17px;font-weight:400}
+.rule span{font-size:12.5px;color:var(--ink3);line-height:1.4;display:block;margin-top:3px}
+.rule em{font-family:var(--mono);font-size:10px;font-style:normal;color:var(--accent);letter-spacing:.06em}
+
+.out{margin-top:22px}
+.verdict{border:1px solid var(--line);border-radius:4px;padding:20px 22px;background:var(--card)}
+.verdict.hit{border-left:4px solid var(--hit)}
+.verdict.no{border-left:4px solid var(--ok)}
+.vh{font-family:var(--serif);font-size:23px;line-height:1.2;margin:0 0 4px}
+.vm{font-family:var(--mono);font-size:12px;color:var(--ink3)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:14px;margin:18px 0 0;
+  padding-top:16px;border-top:1px solid var(--line2)}
+.grid div span{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink3)}
+.grid div b{font-family:var(--mono);font-size:16px;font-weight:500;font-variant-numeric:tabular-nums}
+.tw{overflow-x:auto;margin-top:16px}
+table{border-collapse:collapse;width:100%;font-size:12.5px;min-width:560px}
+th{text-align:left;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink3);padding:0 10px 7px 0;border-bottom:1px solid var(--line)}
+td{padding:6px 10px 6px 0;border-bottom:1px solid var(--line2);vertical-align:top;font-family:var(--mono);font-size:11.5px}
+td.v{color:var(--ink);font-family:var(--sans);font-size:13px}
+td.u{color:var(--ink3);word-break:break-all;max-width:430px}
+.idflag{background:var(--hit);color:var(--paper);padding:0 5px;border-radius:2px;font-size:9.5px;letter-spacing:.05em}
+.fal{list-style:none;padding:0;margin:14px 0 0;display:flex;flex-direction:column;gap:7px}
+.fal li{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:baseline;font-size:13.5px;
+  padding-bottom:7px;border-bottom:1px dotted var(--line)}
+.fal .t{font-family:var(--mono);font-size:9px;letter-spacing:.07em;text-transform:uppercase;padding:2px 6px;
+  border-radius:2px;background:var(--soft);color:var(--accent);white-space:nowrap}
+.fal .t.warn{background:var(--line2);color:var(--ink3);border:1px dashed var(--line)}
+.fal .c{font-family:var(--serif);font-size:14.5px}
+.note{font-family:var(--serif);font-style:italic;color:var(--ink3);font-size:13.5px;margin-top:14px;max-width:76ch}
+code{font-family:var(--mono);font-size:12px;background:var(--line2);padding:1px 5px;border-radius:2px}
+footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink3);font-size:12.5px;max-width:78ch}
+.hidden{display:none}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<p class="eyebrow">Data Protection Exposures</p>
+<h1>Reken een record na</h1>
+<p class="sub">Sleep een HAR-bestand hierin en de detectieregel draait op jouw eigen computer.
+Er gaat niets naar een server: het bestand verlaat deze pagina niet. Gebruik onze HAR om een
+record te controleren, of je eigen opname om je eigen site te toetsen.</p>
+
+<h2>1 · HAR-bestand</h2>
+<div class="drop" id="drop" tabindex="0" role="button" aria-label="HAR-bestand kiezen">
+  <b>Sleep een .har hierheen</b>
+  <span>of klik om te kiezen. In devtools: tabblad Network, rechtermuisknop, Save all as HAR.</span>
+  <input type="file" id="file" accept=".har,application/json">
+</div>
+
+<h2>2 · Regel</h2>
+<div class="rules" id="rules"></div>
+
+<div class="out hidden" id="out"></div>
+
+<footer>
+  <p>De regels hier zijn dezelfde als in <code>rules/*.yaml</code> in de repository, en de uitkomst
+  hoort identiek te zijn aan wat in het record staat. Wijkt het af, dan is dat een melding waard:
+  een register dat zijn eigen bevindingen niet reproduceert, hoort dat te horen.</p>
+  <p>Wat een HAR niet bevat: verkeer dat de browser blokkeerde voordat het werd verstuurd, en
+  gegevens uit cross-origin iframes die apart zijn opgenomen. Een negatieve uitslag is geen bewijs
+  van afwezigheid.</p>
+</footer>
+</div>
+
+<script src="verify.js"></script>

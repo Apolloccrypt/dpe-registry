@@ -362,6 +362,12 @@ def main():
         (OUT / f'{x["id"]}.json').write_text(
             json.dumps(x, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (OUT / "index.html").write_text(index_page(ents), encoding="utf-8")
+
+    # Losse pagina's die niet uit de catalogus komen. Het script van de verifier
+    # staat apart: de doelserver draait script-src 'self', dus een inline script
+    # wordt daar stilzwijgend geblokkeerd en de pagina doet dan niets.
+    for f in sorted((ROOT / "pages").glob("*")):
+        (OUT / f.name).write_text(f.read_text(encoding="utf-8"), encoding="utf-8")
     (OUT / "all.json").write_text(json.dumps({
         "catalogue": "Data Protection Exposures", "schema_version": "2.0",
         "generated": TODAY, "base_url": BASE, "count": len(ents),
