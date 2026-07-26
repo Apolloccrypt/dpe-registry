@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+title: "DPE Catalogue: Data Protection Exposures"
+abstract: >-
+  A catalogue of numbered faults in how systems handle personal data, for what is
+  not a security vulnerability and therefore has no CVE. Each entry states the
+  mechanism, a deterministic indicator, the conditions a measurement must meet,
+  what would refute it, and how to reproduce it without the catalogue's own
+  tooling. Entries name no organisation and carry no severity.
+type: dataset
+license: CC-BY-4.0
+url: "https://totaledigitalewaarborging.nl/register"
+repository-code: "https://github.com/Apolloccrypt/dpe-registry"
+authors:
+  - family-names: Beer
+    given-names: Mick
+keywords:
+  - data protection
+  - privacy
+  - GDPR
+  - ePrivacy
+  - measurement
+  - telemetry
+  - reproducibility
