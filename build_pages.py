@@ -163,6 +163,7 @@ def entry_page(x, ents):
   <a href="./">DPE catalogue</a><span class="sep">/</span>
   <span>{e(x["id"])}</span><span class="sep">&middot;</span>
   <a href="{e(x["id"])}.json">JSON</a><span class="sep">&middot;</span>
+  <a href="start.html">niet-technische ingang</a><span class="sep">&middot;</span>
   <a href="https://github.com/Apolloccrypt/dpe-registry/blob/main/METHOD.md">method 1.0</a></nav>
 
 <p class="eyebrow">{e(x["id"])}</p>
@@ -235,6 +236,7 @@ def index_page(ents):
     body = f'''<div class="wrap" style="max-width:1000px">
 <nav class="bar"><a href="https://totaledigitalewaarborging.nl/">Totale Digitale Waarborging</a>
   <span class="sep">/</span><span>DPE catalogue</span><span class="sep">&middot;</span>
+  <a href="start.html">start hier als je niet meet</a><span class="sep">&middot;</span>
   <a href="all.json">all.json</a><span class="sep">&middot;</span>
   <a href="https://github.com/Apolloccrypt/dpe-registry">source and contributions</a></nav>
 <p class="eyebrow">Totale Digitale Waarborging &middot; as 04, privacy &middot; Data Protection Exposures</p>

@@ -1,0 +1,17 @@
+id: eu-gdpr-5-2
+jurisdiction: EU
+instrument: "Verordening (EU) 2016/679 (AVG)"
+reference: "GDPR art. 5(2)"
+reference_nl: "AVG art. 5 lid 2"
+title: "Verantwoordingsplicht"
+core: >
+  De verwerkingsverantwoordelijke is verantwoordelijk voor de naleving van de
+  beginselen van artikel 5 lid 1 en moet die naleving kunnen aantonen.
+why_it_matters: >
+  Aantonen werkt twee kanten op. Een partij die niet kan laten zien wat haar
+  systeem doet, kan de naleving niet aantonen; een onderzoeker die een ontvanger
+  toeschrijft op een spoofbare header kan het tegendeel evenmin aantonen. De
+  meetfouten in dit register staan hier omdat een bevinding die de toets van
+  artikel 5 lid 2 niet doorstaat, in een geschil niets waard is.
+url: "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+verified: true

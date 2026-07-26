@@ -1,0 +1,19 @@
+id: eu-gdpr-26
+jurisdiction: EU
+instrument: "Verordening (EU) 2016/679 (AVG)"
+reference: "GDPR art. 26"
+reference_nl: "AVG art. 26"
+title: "Gezamenlijke verwerkingsverantwoordelijken"
+core: >
+  Wanneer twee of meer verwerkingsverantwoordelijken gezamenlijk de doeleinden en
+  middelen van een verwerking bepalen, zijn zij gezamenlijk verantwoordelijk en
+  leggen zij hun respectieve verplichtingen in een onderlinge regeling vast,
+  waarvan de wezenlijke inhoud beschikbaar is voor de betrokkene.
+why_it_matters: >
+  Twee partijen die elkaars identificatiemerk uitwisselen om profielen te kunnen
+  koppelen, bepalen samen het middel van die verwerking. Dat is niet af te doen
+  als een technische koppeling tussen leveranciers: de regeling en de wezenlijke
+  inhoud daarvan horen kenbaar te zijn, en dat is toetsbaar tegen wat de partij
+  zelf publiceert.
+url: "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+verified: true

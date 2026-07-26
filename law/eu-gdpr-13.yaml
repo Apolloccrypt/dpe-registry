@@ -1,0 +1,18 @@
+id: eu-gdpr-13
+jurisdiction: EU
+instrument: "Verordening (EU) 2016/679 (AVG)"
+reference: "GDPR art. 13"
+reference_nl: "AVG art. 13"
+title: "Informatie bij verzameling bij de betrokkene"
+core: >
+  Wanneer persoonsgegevens bij de betrokkene worden verzameld, verstrekt de
+  verwerkingsverantwoordelijke op het moment van verkrijging onder meer de
+  identiteit van de verantwoordelijke, de doeleinden, de grondslag en de
+  ontvangers of categorieen van ontvangers.
+why_it_matters: >
+  Op het moment van verkrijging, niet ergens later in een document. Bij een
+  meting in een browser is dat te toetsen tegen de verklaring van dezelfde datum;
+  bij een camera of een terminal is het te toetsen op de plek zelf, met een foto.
+  Ontbreekt het daar, dan is de informatieplicht niet elders in te halen.
+url: "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+verified: true

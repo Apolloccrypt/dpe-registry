@@ -1,0 +1,20 @@
+id: eu-gdpr-9-1
+jurisdiction: EU
+instrument: "Verordening (EU) 2016/679 (AVG)"
+reference: "GDPR art. 9(1)"
+reference_nl: "AVG art. 9 lid 1"
+title: "Bijzondere categorieen van persoonsgegevens"
+core: >
+  Verwerking van gegevens waaruit ras of etnische afkomst, politieke opvattingen,
+  religieuze of levensbeschouwelijke overtuigingen of lidmaatschap van een
+  vakbond blijken, en verwerking van genetische gegevens, biometrische gegevens
+  met het oog op unieke identificatie, gegevens over gezondheid, seksueel gedrag
+  of seksuele gerichtheid, is verboden, behoudens de uitzonderingen van lid 2.
+why_it_matters: >
+  Het verbod geldt ook als de gegevens niet als zodanig zijn gelabeld. Een
+  gebeurtenisnaam die een symptoom bevat, een paginapad dat een aandoening noemt
+  en een gezichtsopname voor herkenning vallen alle drie onder deze categorie,
+  ongeacht wat de verwerker het noemt. Wat een record hier laat zien is dat de
+  inhoud van het bericht de categorie bepaalt, niet de bedoeling van de zender.
+url: "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+verified: true

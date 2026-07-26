@@ -1,0 +1,17 @@
+id: eu-gdpr-5-1-c
+jurisdiction: EU
+instrument: "Verordening (EU) 2016/679 (AVG)"
+reference: "GDPR art. 5(1)(c)"
+reference_nl: "AVG art. 5 lid 1 sub c"
+title: "Minimale gegevensverwerking"
+core: >
+  Persoonsgegevens moeten toereikend zijn, ter zake dienend en beperkt tot wat
+  noodzakelijk is voor de doeleinden waarvoor zij worden verwerkt.
+why_it_matters: >
+  Dit is de bepaling die aangrijpt zodra een systeem meer opneemt dan de functie
+  vraagt: een volledig documentbeeld waar een ja-of-nee volstaat, een reeks
+  metingen op een interval dat fijner is dan de dienst nodig heeft, een
+  rechtenaanvraag zonder functie erachter. Het verschil tussen de functie en de
+  vastlegging is meetbaar, en dat is wat een record hier laat zien.
+url: "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+verified: true

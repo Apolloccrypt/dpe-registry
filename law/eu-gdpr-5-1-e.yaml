@@ -1,0 +1,17 @@
+id: eu-gdpr-5-1-e
+jurisdiction: EU
+instrument: "Verordening (EU) 2016/679 (AVG)"
+reference: "GDPR art. 5(1)(e)"
+reference_nl: "AVG art. 5 lid 1 sub e"
+title: "Opslagbeperking"
+core: >
+  Persoonsgegevens mogen niet langer worden bewaard in een vorm die het mogelijk
+  maakt de betrokkene te identificeren dan noodzakelijk is voor de doeleinden
+  waarvoor zij worden verwerkt.
+why_it_matters: >
+  Een controle die geslaagd is, is klaar. Blijft het monster daarna bestaan, dan
+  bewaart de verwerking iets waarvoor het doel al bereikt is. Dat is aantoonbaar
+  zonder in de opslag te kijken: als een tweede controle slaagt zonder nieuwe
+  opname, bestaat de eerste nog.
+url: "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+verified: true
