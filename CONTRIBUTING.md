@@ -1,116 +1,108 @@
-# Meedoen
+# Contributing
 
-Dit register bestaat bij de gratie van mensen die zelf meten. Je hoeft geen
-onderzoeker te zijn en geen jurist. Hieronder staan vier manieren om bij te
-dragen, van twee minuten tot een middag.
+This catalogue improves the way CVE entries improve: because people who use them
+send back what they ran into. You do not need to be a researcher, and you do not
+need permission.
 
-Wat je in alle gevallen terugkrijgt: je naam blijft aan het record hangen, met
-de rol die je had, permanent en citeerbaar. Wil je dat niet, dan word je
-gecrediteerd als `anonymous` en verandert er verder niets.
-
----
-
-## Eerst dit: jij levert een meting, wij dragen de publicatie
-
-Dit is de belangrijkste afspraak en hij staat bewust bovenaan.
-
-Wie een bevinding meldt, levert een meting aan. Het register beoordeelt die,
-doet het wederhoor bij de betrokken partij, en publiceert onder eigen naam. De
-melder is niet de uitgever. Krijgt een record tegenwind, dan komt die bij het
-register terecht en niet bij jou.
-
-Daarom ook: **anoniem melden mag altijd.** Werk je bij de organisatie die je
-meldt, gebruik dan gerust die route. Wij vragen niet door.
-
-Wat we wel van je vragen: meet niets wat je niet mag meten. Alle checks hier
-laden een openbare pagina en kijken wat die pagina zelf doet. Niet inloggen,
-geen formulieren versturen, geen systemen van een ander onderzoeken. Wie dat wel
-doet, doet dat niet namens dit register.
+Whatever you contribute, your name stays attached to the entry, permanently and
+citably. Anonymous is fine and changes nothing about how it is handled.
 
 ---
 
-## 1. Reproduceren · vijf minuten · de meest waardevolle bijdrage
+## First, the thing that makes this cheap for you
 
-Dit is wat een register een register maakt. Een bevinding die alleen de
-oorspronkelijke meter kan aantonen, is een bewering. Wordt hij door iemand
-anders nagespeeld, dan is het een feit.
+**This catalogue names no companies.** No organisation, no product, no domain
+appears in any entry. So contributing here does not expose you to anyone: you are
+describing a class of fault, not accusing a party.
 
-Bovendien telt het door in het record: een bevestiging door een derde tilt de
-detectiekwaliteit naar `third-party-confirmed`, de hoogste trede.
+If you want to publish that a specific system exhibits a fault, that is your
+publication under your own name, and [METHOD.md](METHOD.md) sets out how to do
+that so it holds up. This repository is not involved in that and does not host it.
 
-```
-1  open een record, bijvoorbeeld DPE-2026-0001
-2  volg repro/<pattern>/MANUAL.md, of draai het script
-3  open een issue met sjabloon "reproductie" en meld wat je zag
-```
-
-Ook een mislukte reproductie is waardevol, misschien nog wel meer. Komt jouw
-uitkomst niet overeen, dan willen we dat weten. Vermeld erbij vanuit welk land
-je hebt gemeten: consent-dialogen worden vaak per regio anders uitgeleverd, en
-dat verklaart een verschil vaker dan een fout in het record.
-
-## 2. Een nieuwe meting insturen · twintig minuten
-
-Nog niet gemeten domeinen staan in de issues met het label `te-meten`. Claim er
-een door te reageren, dan werkt niemand dubbel.
-
-```
-1  open de site in een prive-venster
-2  raak de cookiebanner niet aan
-3  klik de bookmarklet (repro/bookmarklet/), of leg een HAR vast
-4  controleer je eigen resultaat op /verify
-5  open een issue met sjabloon "nieuw voorval" en plak de JSON erin
-```
-
-Je hoeft geen nummer te kiezen, geen ernst in te schatten en geen juridische
-duiding te geven. Het nummer wordt bij opname toegekend, de ernst wordt uit de
-vector afgeleid, en de juridische context hangt aan het patroon en niet aan jouw
-melding.
-
-## 3. Een patroon uitschrijven · een middag
-
-Negen patronen hebben wel records maar nog geen pagina. Een patroonpagina legt
-uit wat het is, waarom het telt, hoe je het meet, wat het zou ontkrachten en
-welke tegenwerping je kunt verwachten. Zie `registry/frontrun.md` als voorbeeld
-en model.
-
-Dit is de bijdrage waar het meeste denkwerk in zit en die het langst meegaat:
-één keer goed geschreven, en elk volgend record erft die onderbouwing.
-
-## 4. Een record betwisten · ook als je erin staat
-
-Staat jouw organisatie in het register en klopt er iets niet, gebruik dan het
-sjabloon "betwisting". Dat is geen klachtenformulier maar een gewone route in
-het proces.
-
-Wat er dan gebeurt: het record krijgt zichtbaar de status `disputed`, jouw
-reactie komt er letterlijk in te staan, en er volgt een hercontrole. Blijkt de
-bevinding onjuist, dan wordt het record ingetrokken. Het blijft dan wel staan,
-met de status `withdrawn`, want een verdwenen record is niet te controleren.
+**One boundary applies to everything here.** Every method in this catalogue loads
+a system the way an ordinary user would and observes what it does on its own. No
+logging into accounts that are not yours, no submitting data, no circumventing
+controls, no load beyond a normal visit. That is not only caution: anything you
+can only see by crossing that line cannot be reproduced by anyone else, and a
+finding nobody can check is not a finding.
 
 ---
 
-## Wat een inzending moet bevatten
+## Four ways in
 
-De poortwachter (`tools/validate.py`) draait op elke inzending. Wat rood wordt,
-komt er niet in. Hij is er niet om je af te wijzen maar om je te vertellen wat
-er nog mist.
+### 1. Reproduce an entry · 5 minutes
 
-| Wat | Waarom |
+The cheapest useful contribution, and the one that makes the catalogue trustworthy
+rather than merely opinionated.
+
+Pick an entry, follow its reproduction, and report what you saw. Every entry has a
+route that needs nothing but a browser.
+
+**A failed reproduction is at least as valuable.** If our indicator does not fire
+where it should, or fires where it should not, the entry is wrong and we want to
+know. Mention which country you measured from: consent flows and telemetry are
+frequently region-dependent, and that explains a difference more often than an
+error does.
+
+### 2. Sharpen an entry · 15 minutes
+
+Read one entry critically and tell us what is missing.
+
+- a falsifier we did not list, meaning an objection the entry currently cannot
+  answer
+- an indicator that is looser than it looks, one that would also fire on
+  legitimate behaviour
+- a boundary we drew badly against a neighbouring entry
+- a better title, if we named something in a way that does not stick
+
+### 3. Add a jurisdiction or a ruling · 30 minutes
+
+The faults are the same across the EEA; only the citation differs. Right now
+`law/` holds Dutch and EU provisions only.
+
+Send the national provision in your country that implements the same EU rule, in
+the format of an existing file in `law/`. For case law: the ECLI, the holding in
+two sentences, and which entry it touches.
+
+**Rulings that narrow an entry are especially welcome.** They make it usable in a
+discussion rather than only in an accusation.
+
+### 4. Write an entry or a script · an afternoon
+
+A fault we have not described, or a reproduction script for one of the entries
+that lacks one. [WANTED.md](WANTED.md) lists what we are actually stuck on, which
+is a better starting point than an empty template.
+
+We mostly measure browsers. If you work on firmware, routers, televisions, cars
+or apps, you will see things we cannot.
+
+---
+
+## What an entry has to contain
+
+Not a form to fill in. These are the parts that make an entry usable by someone
+who is not you.
+
+| Part | Why |
 |---|---|
-| een vector | de meting zelf, in vaste notatie |
-| minstens één bron met datum | zonder bron geen record |
-| een falsifier, en wat ervan getoetst is | wat zou dit ontkrachten, en heb je dat geprobeerd |
-| de opnamecondities | schoon profiel, geen interactie, land van meting |
-| het ruwe artefact | HAR of de JSON uit de bookmarklet |
+| The mechanism | how the fault arises, technically, without naming a vendor |
+| An indicator | something checkable without interpretation |
+| Capture requirements | conditions a measurement must meet, or it produces a confident wrong answer |
+| Falsifiers | at least one, and honesty about which cannot be settled from a capture |
+| A reproduction | one route that needs no tooling this project owns |
+| Provisions | which rules it engages, per jurisdiction |
+| The boundary | the neighbouring fault it will be confused with, and the dividing line |
 
-Twee dingen vul je expliciet **niet** in: het nummer en het ernstlabel. Het
-eerste wordt bij opname toegekend, zodat twee gelijktijdige inzendingen niet
-botsen. Het tweede wordt uit de vector afgeleid met een openbare regel, zodat
-niemand een label kan opschroeven of afzwakken zonder de meting te veranderen.
+Two things you never provide: the number and any severity. The number is assigned
+on acceptance so simultaneous submissions cannot collide. Severity does not exist
+here at all, by design.
 
-## Wat je terug mag verwachten
+---
 
-Antwoord binnen vijf werkdagen, ook als het nee is, en dan met de reden erbij.
-Een inzending die blijft hangen is een fout van ons, en daar mag je ons aan
-houden.
+## How to send it
+
+Open an issue. A pull request is welcome but not expected, and loose notes in an
+issue are fine too: we will write it up and you appear as contributor.
+
+Expect an answer within five working days, including when the answer is no, with
+the reason. A submission left hanging is our failure and you may hold us to it.
