@@ -97,6 +97,7 @@
   ],
   "slug": "undisclosed-recipient",
   "name_nl": "Niet-vermelde ontvanger",
+  "summary_nl": "Een ontvanger van persoonsgegevens ontbreekt in de eigen privacyverklaring van de partij.",
   "in_practice": {
     "dpia": "Compare the measured recipients against the recipients named in the published privacy statement of the same date.",
     "procurement": "Every party receiving personal data is named in the published statement, verified against a capture on delivery.",

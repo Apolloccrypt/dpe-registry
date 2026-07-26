@@ -92,7 +92,11 @@
     "dpia": "Verify which fields actually leave during identification, byte for byte, rather than the field list in the supplier's description.",
     "procurement": "No national identification number leaves the controller's own environment, demonstrated on delivery by a capture of a complete onboarding.",
     "complaint": "The captured payload with the number located in it, the structural check that confirms what it is, and the point in the flow at which it was sent.",
-    "audit_question": "Show me every field that leaves during identification, including what is inside the document data you upload."
+    "audit_question": "Show me every field that leaves during identification, including what is inside the document data you upload.",
+    "audit_question_nl": "Laat elk veld zien dat vertrekt bij identificatie, inclusief wat er in de documentgegevens zit die u uploadt.",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Wij hebben dat nummer nodig om iemand te identificeren.",
+    "answer_nl": "Vraag welke wettelijke taak dat vereist. Zonder die taak mag het nummer niet."
   },
   "schema_version": "2.0",
   "status": "active",
@@ -130,5 +134,6 @@
         "Legal provisions linked."
       ]
     }
-  ]
+  ],
+  "summary_nl": "Een nummer dat de overheid toekent voor identificatie gaat naar een partij zonder wettelijke taak die het vraagt."
 }

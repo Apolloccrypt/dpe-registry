@@ -454,8 +454,29 @@
         "audit_question": {
           "type": "string",
           "description": "The single question an auditor or DPO can ask that surfaces this fault."
+        },
+        "audit_question_nl": {
+          "type": "string",
+          "description": "Dutch phrasing of the one question. The entry points serve a Dutch audience; a page that mixes languages loses half of them."
+        },
+        "complaint_nl": {
+          "type": "string",
+          "description": "Dutch phrasing of what a sound answer looks like. The entry points serve a Dutch audience; a page that mixes languages loses half of them."
+        },
+        "objection_nl": {
+          "type": "string",
+          "description": "The evasive answer you will most often hear, in Dutch. The entry points serve a Dutch audience; a page that mixes languages loses half of them."
+        },
+        "answer_nl": {
+          "type": "string",
+          "description": "Why that answer misses the question, in Dutch. The entry points serve a Dutch audience; a page that mixes languages loses half of them."
         }
       }
+    },
+    "summary_nl": {
+      "type": "string",
+      "maxLength": 200,
+      "description": "Dutch summary for the front end. The catalogue's core is English because the behaviour is the same across the EEA, but the entry points serve a Dutch audience and a page that mixes the two loses half of them."
     }
   }
 }

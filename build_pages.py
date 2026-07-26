@@ -41,15 +41,6 @@ CSS = """
  --sans:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
  --mono:"DM Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
  --serif:"Iowan Old Style",Georgia,serif;}
-@media(prefers-color-scheme:dark){:root{--bg:#111118;--surface:#181820;--surface-2:#1E1E28;--ink:#ECECF2;
- --ink-2:#AEAEBC;--ink-3:#7E7E8E;--line:#2A2A36;--line-2:#22222C;--accent:#7C9BE8;--soft:#1B2340;
- --aline:#2E3A63;--ok:#5FC177;--ok-bg:#16281C;--ok-line:#274A31;--warn-bg:#2E2513;--warn-line:#4A3D1D;
- --warn-ink:#E8C05A;}}
-:root[data-theme=dark]{--bg:#111118;--surface:#181820;--surface-2:#1E1E28;--ink:#ECECF2;--ink-2:#AEAEBC;
- --ink-3:#7E7E8E;--line:#2A2A36;--line-2:#22222C;--accent:#7C9BE8;--soft:#1B2340;--aline:#2E3A63;
- --ok:#5FC177;--ok-bg:#16281C;--ok-line:#274A31;--warn-bg:#2E2513;--warn-line:#4A3D1D;--warn-ink:#E8C05A;}
-:root[data-theme=light]{--bg:#FCFCFE;--surface:#FFF;--surface-2:#F7F7FB;--ink:#161620;--ink-2:#54545F;
- --ink-3:#8B8B97;--line:#E9E9F0;--line-2:#F3F3F8;--accent:#4269D0;--soft:#EDF1FC;--aline:#D5E0F7;}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6}
 .wrap{max-width:860px;margin:0 auto;padding:0 24px 80px}
@@ -236,8 +227,8 @@ def index_page(ents):
     for fam in sorted(fams, key=lambda f: -len(fams[f])):
         rows = "".join(
             f'<tr><td><a href="{e(x["id"])}/">{e(x["id"])}</a></td>'
-            f'<td><a href="{e(x["id"])}/">{e(x["name"])}</a></td>'
-            f'<td class="sm">{e(x["summary"])}</td>'
+            f'<td><a href="{e(x["id"])}/">{e(x.get("name_nl") or x["name"])}</a></td>'
+            f'<td class="sm">{e(x.get("summary_nl") or x["summary"])}</td>'
             f'<td class="sm">{e(", ".join(SYS.get(s, s) for s in x["applies_to"]))}</td></tr>'
             for x in sorted(fams[fam], key=lambda y: y["id"]))
         blocks.append(f'<h2 style="margin-top:30px">{e(FAM.get(fam, fam))}</h2>'
@@ -247,9 +238,9 @@ def index_page(ents):
 <nav class="bar"><a href="https://totaledigitalewaarborging.nl/">Totale Digitale Waarborging</a>
   <span class="sep">/</span><span>DPE catalogue</span><span class="sep">&middot;</span>
   <a href="all.json">all.json</a><span class="sep">&middot;</span>
-  <a href="https://github.com/Apolloccrypt/dpe-registry">source and contributions</a></nav>
+  <a href="https://github.com/Apolloccrypt/dpe-registry">bron en bijdragen</a></nav>
 <p class="eyebrow">Totale Digitale Waarborging &middot; as 04, privacy &middot; Data Protection Exposures</p>
-<h1>We measure what others assume</h1>
+<h1>Wij meten wat anderen aannemen</h1>
 <p class="sum">People keep asking how a researcher finds this stuff. This is the answer, in the open:
 the faults, the indicators, the conditions a measurement has to meet, and what would prove any of it
 wrong. Take it and use it.</p>
@@ -296,10 +287,7 @@ wrong. Take it and use it.</p>
   before publishing. Versioned, so a measurement taken this year is still readable as what it meant this
   year. Security has the OWASP Testing Guide for this; data protection had nothing.</p>
 
-  <p class="cta"><a href="https://github.com/Apolloccrypt/dpe-registry/blob/main/METHOD.md">DPE Measurement
-  Method 1.0</a> &middot; <a href="https://github.com/Apolloccrypt/dpe-registry/blob/main/WANTED.md">What we
-  are stuck on</a> &middot; <a href="https://github.com/Apolloccrypt/dpe-registry/blob/main/CONTRIBUTING.md">How
-  to contribute</a> &middot; <a href="all.json">the whole catalogue as JSON</a></p>
+  <p class="cta"><a href="https://github.com/Apolloccrypt/dpe-registry/blob/main/METHOD.md">DPE-meetmethode 1.0</a> &middot; <a href="https://github.com/Apolloccrypt/dpe-registry/blob/main/WANTED.md">Waar wij vastlopen</a> &middot; <a href="https://github.com/Apolloccrypt/dpe-registry/blob/main/CONTRIBUTING.md">Hoe je meedoet</a> &middot; <a href="all.json">de hele catalogus als JSON</a></p>
 </div>
 {"".join(blocks)}
 <div class="who">
@@ -317,9 +305,9 @@ wrong. Take it and use it.</p>
    href="https://github.com/Apolloccrypt/dpe-registry/blob/main/CONTRIBUTING.md">Hoe je meedoet</a></p>
 </div>
 
-<footer><p>{len(ents)} entries. Schema 2.0. Licence CC BY 4.0 for the entries, MIT for the tooling, so
-anyone can take this further, including the numbering, if this catalogue ever stops. Identifiers are
-permanent and never reused: a reference made today has to still resolve in ten years.</p></footer>
+<footer><p>{len(ents)} fouten. Schema 2.0. Catalogus onder CC BY 4.0, gereedschap onder MIT, zodat een
+ander dit kan voortzetten, inclusief de nummering, mocht deze catalogus ooit stoppen. Nummers zijn
+permanent en worden nooit hergebruikt: een verwijzing van vandaag moet over tien jaar nog werken.</p></footer>
 </div>
 <style>table{{border-collapse:collapse;width:100%;margin-top:8px}}
 td{{padding:9px 14px 9px 0;border-bottom:1px solid var(--line-2);vertical-align:top;font-size:14px}}
@@ -347,8 +335,8 @@ td a:hover{{text-decoration:underline}}
 .cta{{margin-top:16px!important;padding-top:14px;border-top:1px solid var(--line-2);font-size:14px}}
 .cta a{{font-weight:500;text-decoration:none}}
 .cta a:hover{{text-decoration:underline}}</style>'''
-    return page("DPE Catalogue", body,
-                "Numbered faults in how systems handle personal data, for what is not a vulnerability.")
+    return page("DPE-catalogus \u00b7 Totale Digitale Waarborging", body,
+                "Genummerde fouten in de omgang met persoonsgegevens, voor wat geen kwetsbaarheid is.")
 
 
 def main():

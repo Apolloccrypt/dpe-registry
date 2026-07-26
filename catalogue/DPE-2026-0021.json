@@ -91,7 +91,11 @@
     "dpia": "Verify whether any component addresses the visitor's own machine or network, and in which consent states it does so.",
     "procurement": "No page issues requests to the visitor's loopback address or local network, demonstrated by a capture that includes loopback traffic.",
     "complaint": "A capture including loopback requests, the port and path set, the consent state per capture, and the content security policy of the page.",
-    "audit_question": "Does anything on this page talk to the visitor's own computer, and on which ports?"
+    "audit_question": "Does anything on this page talk to the visitor's own computer, and on which ports?",
+    "audit_question_nl": "Praat er iets op deze pagina met de computer van de bezoeker zelf, en op welke poorten?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Dat is een beveiligingscontrole.",
+    "answer_nl": "Vraag welke poorten en welke software er wordt gezocht, en wat er met die uitkomst gebeurt."
   },
   "schema_version": "2.0",
   "status": "active",
@@ -129,5 +133,6 @@
         "Legal provisions linked."
       ]
     }
-  ]
+  ],
+  "summary_nl": "Een pagina tast de eigen machine of het thuisnetwerk van de bezoeker af om te zien wat daar draait."
 }

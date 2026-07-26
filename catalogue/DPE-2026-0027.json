@@ -93,7 +93,11 @@
     "dpia": "Verify how the destination country in a supporting measurement was established, and with a source of which date.",
     "procurement": "Any transfer statement is supported by addresses resolved at the stated date, with the version of the lookup source named.",
     "complaint": "The addresses as resolved at capture time, the version and build date of the lookup source, and the routing evidence for the hosts the claim rests on.",
-    "audit_question": "Which database told you that this address is in that country, and when was it built?"
+    "audit_question": "Which database told you that this address is in that country, and when was it built?",
+    "audit_question_nl": "Welke database zei dat dit adres in dat land ligt, en van wanneer is die?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Volgens onze database ligt dat adres daar.",
+    "answer_nl": "Vraag van wanneer die database is. Adresblokken wisselen van land."
   },
   "schema_version": "2.0",
   "status": "active",
@@ -131,5 +135,6 @@
         "Legal provisions linked."
       ]
     }
-  ]
+  ],
+  "summary_nl": "Een doorgifteclaim rust op een adres-naar-landtabel die niet meer klopt met de toewijzing."
 }

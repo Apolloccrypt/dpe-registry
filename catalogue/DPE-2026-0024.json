@@ -93,7 +93,11 @@
     "dpia": "Verify what happens to a reading that does not match, separately from what happens to one that does.",
     "procurement": "Readings that produce no match are discarded within the comparison, demonstrated from the delivered configuration and the export.",
     "complaint": "The retention configuration or schedule with its date, and where possible the answer to an access request showing your own non-matching passage.",
-    "audit_question": "I am on no list and I drove past. What do you have about me, and for how long?"
+    "audit_question": "I am on no list and I drove past. What do you have about me, and for how long?",
+    "audit_question_nl": "Ik sta op geen enkele lijst en ik reed langs. Wat heeft u over mij, en hoe lang?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Wij bewaren alleen treffers.",
+    "answer_nl": "Vraag hoe lang de niet-treffers blijven staan. Daar zit het verschil."
   },
   "schema_version": "2.0",
   "status": "active",
@@ -131,5 +135,6 @@
         "Legal provisions linked."
       ]
     }
-  ]
+  ],
+  "summary_nl": "Een herkenningssysteem legt iedereen vast die het ziet, terwijl het doel alleen over de gezochten gaat."
 }

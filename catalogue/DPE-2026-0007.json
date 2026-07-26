@@ -102,6 +102,7 @@
   ],
   "slug": "device-fingerprinting",
   "name_nl": "Apparaatherkenning",
+  "summary_nl": "Het apparaat wordt herkend aan zijn kenmerken, zonder dat er iets is opgeslagen.",
   "in_practice": {
     "dpia": "Verify whether device characteristics are read by third parties, rather than checking only for cookies.",
     "procurement": "No third-party script enumerates device characteristics for recognition purposes before consent.",

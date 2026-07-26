@@ -108,6 +108,7 @@
   ],
   "slug": "maximum-cookie-lifetime",
   "name_nl": "Maximale bewaartermijn",
+  "summary_nl": "Een identifier-cookie krijgt de maximale bewaartermijn die een browser aanvaardt, voordat de vraag is beantwoord.",
   "in_practice": {
     "dpia": "Verify the actual lifetime of identifiers set before consent, rather than the retention table in the document.",
     "procurement": "No identifier is stored with a lifetime beyond what the stated purpose requires, and none before consent.",

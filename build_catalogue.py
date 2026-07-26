@@ -544,6 +544,10 @@ def main():
     # Koppeling naar DPIA, inkoop en klacht staat apart, omdat het per entry
     # geschreven is en niet af te leiden valt uit de definitie.
     prac = json.loads((ROOT / "tools" / "in_practice.json").read_text(encoding="utf-8"))
+    nl = json.loads((ROOT / "tools" / "summary_nl.json").read_text(encoding="utf-8"))
+    for x in E:
+        if x["id"] in nl:
+            x["summary_nl"] = nl[x["id"]]
     # Een gedeeld script voor alle webfouten, in plaats van tien losse. Wie
     # meet wil een run doen en alles tegelijk toetsen, niet tien keer hetzelfde.
     WEB = {"DPE-2026-0001", "DPE-2026-0002", "DPE-2026-0003", "DPE-2026-0004",

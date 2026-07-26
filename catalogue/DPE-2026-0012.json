@@ -125,6 +125,7 @@
   ],
   "slug": "device-telemetry-without-function",
   "name_nl": "Apparaat belt naar huis",
+  "summary_nl": "Een apparaat zoekt contact met een server in het buitenland zonder functie die dat vraagt.",
   "in_practice": {
     "dpia": "Verify what the device contacts while idle, rather than accepting the telemetry section of the manual.",
     "procurement": "The device contacts no host that serves no function the owner enabled, demonstrated by an idle capture.",

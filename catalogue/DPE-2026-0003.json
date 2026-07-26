@@ -107,6 +107,7 @@
   ],
   "slug": "no-refusal-option",
   "name_nl": "Geen weigeroptie",
+  "summary_nl": "De toestemmingsdialoog biedt accepteren en geen manier om te weigeren.",
   "in_practice": {
     "dpia": "Verify that a refusal control exists and writes a negative state, rather than that a banner is present.",
     "procurement": "The consent dialogue offers refusal at the same level as acceptance, verifiable from the first screen.",

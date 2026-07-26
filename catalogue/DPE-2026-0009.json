@@ -114,6 +114,7 @@
   ],
   "slug": "third-party-resource-loading",
   "name_nl": "Externe bron inladen",
+  "summary_nl": "Een bron die rechtstreeks van een derde wordt geladen, maakt van elke paginaweergave een doorgifte.",
   "in_practice": {
     "dpia": "Verify which external resources the page loads on first byte, rather than reviewing only the tracking section.",
     "procurement": "All fonts, scripts and libraries are served from the controller's own infrastructure.",

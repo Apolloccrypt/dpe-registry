@@ -96,6 +96,7 @@
   ],
   "slug": "user-input-to-third-parties",
   "name_nl": "Invoer naar derden",
+  "summary_nl": "Wat de bezoeker intypte of zocht, bereikt een derde partij.",
   "in_practice": {
     "dpia": "Verify that user-entered values do not travel to third parties, rather than that 'only page URLs' are shared.",
     "procurement": "No value entered or searched by a user appears in a request to a party outside the processing chain.",

@@ -102,7 +102,11 @@
     "dpia": "Verify how many parties receive a copy of one page view and whether that list is fixed, rather than accepting that 'an advertising partner' is engaged.",
     "procurement": "The supplier states the complete list of parties receiving a bid request, the list is capped, and it is verifiable from a capture on delivery.",
     "complaint": "A HAR per consent mode, the list of distinct receiving domains, and the shared identifier value that connects the copies.",
-    "audit_question": "How many companies receive a copy when one visitor opens one page, and who decides that list?"
+    "audit_question": "How many companies receive a copy when one visitor opens one page, and who decides that list?",
+    "audit_question_nl": "Hoeveel bedrijven krijgen een kopie als een bezoeker een pagina opent, en wie bepaalt die lijst?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Wij delen niets, wij verkopen alleen advertentieruimte.",
+    "answer_nl": "Bij een veiling gaat het verzoek naar alle deelnemers tegelijk. Vraag om de lijst met wie mag meebieden."
   },
   "schema_version": "2.0",
   "status": "active",
@@ -133,5 +137,6 @@
         "Legal provisions linked."
       ]
     }
-  ]
+  ],
+  "summary_nl": "Een paginaweergave gaat tegelijk naar veel biedende partijen, elk met de context en een identifier."
 }

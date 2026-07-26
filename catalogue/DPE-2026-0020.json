@@ -94,7 +94,11 @@
     "dpia": "Verify where each collection endpoint on your own domain actually resolves, rather than treating own-domain traffic as internal.",
     "procurement": "No host under the buyer's domain resolves to a party outside the processing chain, verifiable from the name resolution on delivery.",
     "complaint": "The resolution chain as recorded at capture time, the cookie set on that host with its attributes, and the requests sent to it.",
-    "audit_question": "Which of your own subdomains resolve to somebody else, and who put those aliases there?"
+    "audit_question": "Which of your own subdomains resolve to somebody else, and who put those aliases there?",
+    "audit_question_nl": "Welke van uw eigen subdomeinen wijzen naar iemand anders, en wie heeft die verwijzingen gezet?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Dat subdomein is van onszelf.",
+    "answer_nl": "Vraag waar het naartoe wijst. Een eigen naam kan naar een derde resolven."
   },
   "schema_version": "2.0",
   "status": "active",
@@ -132,5 +136,6 @@
         "Legal provisions linked."
       ]
     }
-  ]
+  ],
+  "summary_nl": "Een subdomein van de site zelf wijst naar een derde, zodat diens verzameling leest als die van de site."
 }

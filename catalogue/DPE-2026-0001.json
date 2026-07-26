@@ -148,6 +148,7 @@
   ],
   "slug": "tracking-before-consent",
   "name_nl": "Meten voor de toestemmingsvraag",
+  "summary_nl": "Een tag vuurt voordat de toestemmingsvraag is beantwoord.",
   "in_practice": {
     "dpia": "Verify that no measurement request leaves before consent is recorded, rather than accepting a statement that tags are 'consent-gated'.",
     "procurement": "On delivery, a capture in the no-interaction state shows no requests to third-party measurement hosts and no identifier cookies.",

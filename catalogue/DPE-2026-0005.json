@@ -109,6 +109,7 @@
   ],
   "slug": "session-recording",
   "name_nl": "Sessieopname",
+  "summary_nl": "De sessie zelf wordt opgenomen, niet alleen de paginaweergave.",
   "in_practice": {
     "dpia": "Verify whether in-page behaviour is captured and whether input fields are masked, rather than treating it as analytics.",
     "procurement": "No session recording is active before consent, and where used, input masking is enabled and demonstrated.",

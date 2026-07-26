@@ -97,7 +97,11 @@
     "dpia": "Verify which data groups the reader actually extracts and transmits, against the single question the check exists to answer.",
     "procurement": "The check returns a derived attribute and the source material stays on the device, demonstrated on delivery by a capture of one complete check.",
     "complaint": "The captured upload with its field list, the answer the relying party received, and the difference between them.",
-    "audit_question": "What question does this check answer, and what exactly leaves the phone in order to answer it?"
+    "audit_question": "What question does this check answer, and what exactly leaves the phone in order to answer it?",
+    "audit_question_nl": "Welke vraag beantwoordt deze controle, en wat verlaat het toestel precies om die te beantwoorden?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Wij bewaren het document niet.",
+    "answer_nl": "Bewaren en versturen zijn verschillende vragen. Vraag wat er vertrekt om de controle uit te voeren."
   },
   "schema_version": "2.0",
   "status": "active",
@@ -135,5 +139,6 @@
         "Legal provisions linked."
       ]
     }
-  ]
+  ],
+  "summary_nl": "Een identiteitscontrole legt het hele document vast waar de vraag aan een fractie genoeg had."
 }

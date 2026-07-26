@@ -1,0 +1,176 @@
+{
+  "DPE-2026-0001": {
+    "audit_question_nl": "Laat een netwerkopname zien van de homepage voordat iemand de banner aanraakt.",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Analytics valt onder de uitzondering voor noodzakelijke cookies.",
+    "answer_nl": "De uitzondering geldt voor wat nodig is voor een dienst die de bezoeker vroeg. Publieksmeting is nodig voor u, niet voor hem."
+  },
+  "DPE-2026-0002": {
+    "audit_question_nl": "Laat twee opnames zien, een waarin de bezoeker weigerde, en vertel me het verschil.",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Er staat toch een banner.",
+    "answer_nl": "De keuze bestaat op het scherm en niet op de lijn. Dat is precies het verwijt."
+  },
+  "DPE-2026-0003": {
+    "audit_question_nl": "Waar in de banner zegt iemand nee, en wat slaat die knop op?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Wie niet wil, kan het in zijn browser uitzetten.",
+    "answer_nl": "Toestemming wordt door u gevraagd en moet dus bij u geweigerd kunnen worden."
+  },
+  "DPE-2026-0004": {
+    "audit_question_nl": "Wat is de langstlevende cookie die u zet voordat iemand iets heeft gekozen?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "399 dagen is de standaard in de markt.",
+    "answer_nl": "Een standaardinstelling is geen doel. De vraag is welke termijn het doel vraagt."
+  },
+  "DPE-2026-0005": {
+    "audit_question_nl": "Wordt er muisbeweging of toetsaanslag opgenomen, en vanaf welk moment?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Het is alleen om de gebruikservaring te verbeteren.",
+    "answer_nl": "Vraag of de opname invoervelden meeneemt. Dat verschil is groot en wordt zelden uit zichzelf genoemd."
+  },
+  "DPE-2026-0006": {
+    "audit_question_nl": "Typ een onzinwoord in het zoekveld en laat me elk verzoek zien waar het in staat.",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Wij sturen geen persoonsgegevens, alleen de pagina-URL.",
+    "answer_nl": "Staat wat de bezoeker intypte in die URL, dan is de URL het persoonsgegeven."
+  },
+  "DPE-2026-0007": {
+    "audit_question_nl": "Wat leest de canvas, de lettertypen of de tijdzone uit, en van wie is dat?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Wij zetten geen cookies.",
+    "answer_nl": "De cookiebepaling gaat over opslaan en uitlezen op het apparaat, niet alleen over cookies."
+  },
+  "DPE-2026-0008": {
+    "audit_question_nl": "Als iemand uw contactformulier invult, op wiens domein staat hij dan?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Dat is het platform van onze leverancier, niet onze site.",
+    "answer_nl": "Wie regelt dat bezoekersgegevens bij een derde belanden, is daarvoor medeverantwoordelijk."
+  },
+  "DPE-2026-0009": {
+    "audit_question_nl": "Welke hosts benadert de pagina voordat een script van u heeft gedraaid?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Onze hosting staat in Nederland.",
+    "answer_nl": "Waar het staat en wat de pagina inlaadt zijn twee dingen. De doorgifte loopt via het inladen."
+  },
+  "DPE-2026-0010": {
+    "audit_question_nl": "Noem elke partij die gegevens ontvangt, dan leg ik dat naast het verkeer.",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "De verklaring is bewust algemeen gehouden.",
+    "answer_nl": "De wet vraagt de ontvangers of categorieen ervan. Een categorie die ontbreekt is niet algemeen maar onvolledig."
+  },
+  "DPE-2026-0011": {
+    "audit_question_nl": "Welke tags laadt uw container die niet in de broncode staan, en wie mag die wijzigen?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Wij hebben de tracking verwijderd, het staat niet in onze code.",
+    "answer_nl": "Afwezig in de broncode is niet afwezig in het verkeer. De container is de betrouwbare indicator."
+  },
+  "DPE-2026-0012": {
+    "audit_question_nl": "Zet alles uit wat het doet en vertel me waar het dan nog mee praat.",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Dat is anonieme diagnostiek.",
+    "answer_nl": "Een apparaatnummer dat aan een huishouden hangt is niet anoniem. Vraag wat er in het bericht zit."
+  },
+  "DPE-2026-0013": {
+    "audit_question_nl": "Noem elke bibliotheek van derden die u meelevert en wat elk daarvan naar huis stuurt.",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Die SDK is de verantwoordelijkheid van de leverancier.",
+    "answer_nl": "U hebt hem meegeleverd. Dat maakt u medeverantwoordelijk voor wat er daardoor vertrekt."
+  },
+  "DPE-2026-0014": {
+    "audit_question_nl": "Zet het uit, herstart het, werk het bij, en laat zien dat het nog steeds uit staat.",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Zonder dit werkt het apparaat niet.",
+    "answer_nl": "Noodzaak is te toetsen: blokkeer het verkeer en kijk wat er stukgaat."
+  },
+  "DPE-2026-0015": {
+    "audit_question_nl": "Hoeveel bedrijven krijgen een kopie als een bezoeker een pagina opent, en wie bepaalt die lijst?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Wij delen niets, wij verkopen alleen advertentieruimte.",
+    "answer_nl": "Bij een veiling gaat het verzoek naar alle deelnemers tegelijk. Vraag om de lijst met wie mag meebieden."
+  },
+  "DPE-2026-0016": {
+    "audit_question_nl": "Krijgt een van uw partners een identifier die een andere partner heeft uitgegeven, en waar staat die afspraak?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Wij wisselen geen gegevens uit met andere partijen.",
+    "answer_nl": "Vraag naar de koppeling van identifiers tussen partijen, ook de vorm die niet via cookies loopt."
+  },
+  "DPE-2026-0017": {
+    "audit_question_nl": "Laat elk veld zien dat vertrekt bij identificatie, inclusief wat er in de documentgegevens zit die u uploadt.",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Wij hebben dat nummer nodig om iemand te identificeren.",
+    "answer_nl": "Vraag welke wettelijke taak dat vereist. Zonder die taak mag het nummer niet."
+  },
+  "DPE-2026-0018": {
+    "audit_question_nl": "Welke vraag beantwoordt deze controle, en wat verlaat het toestel precies om die te beantwoorden?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Wij bewaren het document niet.",
+    "answer_nl": "Bewaren en versturen zijn verschillende vragen. Vraag wat er vertrekt om de controle uit te voeren."
+  },
+  "DPE-2026-0019": {
+    "audit_question_nl": "Druk de lijst af met namen van gebeurtenissen die u naar buiten stuurt, en lees hem hardop voor.",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Wij versturen geen medische gegevens.",
+    "answer_nl": "De naam van een gebeurtenis of een pagina kan het al verraden, zonder dat iemand iets intypt."
+  },
+  "DPE-2026-0020": {
+    "audit_question_nl": "Welke van uw eigen subdomeinen wijzen naar iemand anders, en wie heeft die verwijzingen gezet?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Dat subdomein is van onszelf.",
+    "answer_nl": "Vraag waar het naartoe wijst. Een eigen naam kan naar een derde resolven."
+  },
+  "DPE-2026-0021": {
+    "audit_question_nl": "Praat er iets op deze pagina met de computer van de bezoeker zelf, en op welke poorten?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Dat is een beveiligingscontrole.",
+    "answer_nl": "Vraag welke poorten en welke software er wordt gezocht, en wat er met die uitkomst gebeurt."
+  },
+  "DPE-2026-0022": {
+    "audit_question_nl": "Hoe vaak rapporteert dit ding, en kan ik daaraan zien wanneer het huis leeg was?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Het zijn alleen meetwaarden, geen persoonsgegevens.",
+    "answer_nl": "Vraag naar het interval en of elke meting hetzelfde nummer draagt. Een reeks per kwartier toont aanwezigheid."
+  },
+  "DPE-2026-0023": {
+    "audit_question_nl": "Wat beantwoordt dit systeem uit zichzelf, aan iemand van wie de gebruiker nooit iets wilde horen?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Het systeem antwoordt alleen op een geldige aanvraag.",
+    "answer_nl": "Vraag wie zo'n aanvraag kan sturen en of de gebruiker daarvan weet."
+  },
+  "DPE-2026-0024": {
+    "audit_question_nl": "Ik sta op geen enkele lijst en ik reed langs. Wat heeft u over mij, en hoe lang?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Wij bewaren alleen treffers.",
+    "answer_nl": "Vraag hoe lang de niet-treffers blijven staan. Daar zit het verschil."
+  },
+  "DPE-2026-0025": {
+    "audit_question_nl": "Wie krijgt bericht als een klant betaalt, en wie daarvan verplaatst het geld werkelijk?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Dat is nodig om de betaling te verwerken.",
+    "answer_nl": "Vraag wie in die lijst het geld daadwerkelijk verplaatst, en wie niet."
+  },
+  "DPE-2026-0026": {
+    "audit_question_nl": "Hoe weet u dat dit verzoek van die pagina kwam?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Het staat in de referer.",
+    "answer_nl": "Die is te vervalsen en meetsoftware doet dat standaard. Vraag om de pageref of de initiator-keten."
+  },
+  "DPE-2026-0027": {
+    "audit_question_nl": "Welke database zei dat dit adres in dat land ligt, en van wanneer is die?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Volgens onze database ligt dat adres daar.",
+    "answer_nl": "Vraag van wanneer die database is. Adresblokken wisselen van land."
+  },
+  "DPE-2026-0028": {
+    "audit_question_nl": "Hebt u dit onderdeel iets zien versturen, of hebt u gezien dat het in het pakket zit?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Het zit in de app, dus het verstuurt.",
+    "answer_nl": "In het pakket zitten en verzenden zijn twee dingen. Vraag om de opname."
+  },
+  "DPE-2026-0029": {
+    "audit_question_nl": "Hoe weet u dat uw meting het gezien zou hebben als het er was geweest?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Wij hebben gemeten en niets gevonden.",
+    "answer_nl": "Vraag hoe u weet dat de meting het gezien zou hebben. Een mislukte opname lijkt op een schone."
+  }
+}

@@ -103,7 +103,11 @@
     "dpia": "Verify whether any recipient receives an identifier belonging to another recipient, rather than assessing each recipient in isolation.",
     "procurement": "No party in the chain receives an identifier issued by another party, demonstrated by a capture in which no identifier value appears across two registrable domains.",
     "complaint": "A HAR with the redirect chain intact, the cookie value as set by the first party, and the request to the second party containing that same value.",
-    "audit_question": "Does any of your partners receive an identifier that another partner issued, and where is the arrangement between them?"
+    "audit_question": "Does any of your partners receive an identifier that another partner issued, and where is the arrangement between them?",
+    "audit_question_nl": "Krijgt een van uw partners een identifier die een andere partner heeft uitgegeven, en waar staat die afspraak?",
+    "complaint_nl": "Een opname of uitdraai die laat zien wat er werkelijk gebeurt, met de datum erbij en het land van waaruit is gemeten.",
+    "objection_nl": "Wij wisselen geen gegevens uit met andere partijen.",
+    "answer_nl": "Vraag naar de koppeling van identifiers tussen partijen, ook de vorm die niet via cookies loopt."
   },
   "schema_version": "2.0",
   "status": "active",
@@ -141,5 +145,6 @@
         "Legal provisions linked."
       ]
     }
-  ]
+  ],
+  "summary_nl": "Twee partijen wisselen elkaars identifier uit, zodat hun aparte dossiers over dezelfde persoon te koppelen zijn."
 }

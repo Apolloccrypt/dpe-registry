@@ -116,6 +116,7 @@
   ],
   "slug": "bundled-component-collection",
   "name_nl": "Meeliftende component",
+  "summary_nl": "Een meegeleverd onderdeel verzamelt voor eigen rekening, naast wat de app zelf doet.",
   "in_practice": {
     "dpia": "Inventory the bundled components and what each contacts, rather than reviewing only the application's own code.",
     "procurement": "The supplier delivers a component inventory listing every bundled library and the hosts it contacts.",

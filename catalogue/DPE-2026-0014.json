@@ -108,6 +108,7 @@
   ],
   "slug": "no-working-off-switch",
   "name_nl": "Geen werkende uitschakeling",
+  "summary_nl": "De instelling die het verzamelen zou stoppen bestaat niet, of overleeft geen herstart.",
   "in_practice": {
     "dpia": "Verify that the control that stops collection exists and survives a reboot and an update.",
     "procurement": "Any collection beyond what is strictly necessary can be switched off, and the setting survives updates.",
