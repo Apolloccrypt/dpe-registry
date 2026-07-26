@@ -163,7 +163,7 @@ def entry_page(x, ents):
   <a href="./">DPE catalogue</a><span class="sep">/</span>
   <span>{e(x["id"])}</span><span class="sep">&middot;</span>
   <a href="{e(x["id"])}.json">JSON</a><span class="sep">&middot;</span>
-  <a href="start.html">niet-technische ingang</a><span class="sep">&middot;</span>
+  <a href="start.html">niet-technisch</a><span class="sep">&middot;</span>
   <a href="https://github.com/Apolloccrypt/dpe-registry/blob/main/METHOD.md">method 1.0</a></nav>
 
 <p class="eyebrow">{e(x["id"])}</p>
@@ -236,7 +236,6 @@ def index_page(ents):
     body = f'''<div class="wrap" style="max-width:1000px">
 <nav class="bar"><a href="https://totaledigitalewaarborging.nl/">Totale Digitale Waarborging</a>
   <span class="sep">/</span><span>DPE catalogue</span><span class="sep">&middot;</span>
-  <a href="start.html">start hier als je niet meet</a><span class="sep">&middot;</span>
   <a href="all.json">all.json</a><span class="sep">&middot;</span>
   <a href="https://github.com/Apolloccrypt/dpe-registry">source and contributions</a></nav>
 <p class="eyebrow">Totale Digitale Waarborging &middot; as 04, privacy &middot; Data Protection Exposures</p>
@@ -244,6 +243,22 @@ def index_page(ents):
 <p class="sum">People keep asking how a researcher finds this stuff. This is the answer, in the open:
 the faults, the indicators, the conditions a measurement has to meet, and what would prove any of it
 wrong. Take it and use it.</p>
+
+<div class="routes">
+  <a class="rt" href="start.html">
+    <span class="rn">Ik moet erover beslissen</span>
+    <span class="rd">Je werkt met gegevensbescherming en meet niet zelf. Van wat je hoort of
+    leest naar het nummer, met de vraag die je kunt stellen en hoe je merkt dat je een
+    ontwijkend antwoord krijgt.</span></a>
+  <a class="rt" href="https://github.com/Apolloccrypt/dpe-registry/tree/main/repro">
+    <span class="rn">Ik wil zelf meten</span>
+    <span class="rd">Met de hand in je browser, met een bookmarklet zonder installatie, of met
+    een script dat acht fouten in een keer toetst. Je hebt geen gereedschap van ons nodig.</span></a>
+  <a class="rt" href="verify.html">
+    <span class="rn">Ik wil een meting narekenen</span>
+    <span class="rd">Sleep een opname erin en de regels draaien op je eigen computer. Er gaat
+    niets naar een server. Ook voor je eigen opname.</span></a>
+</div>
 
 <div class="lede">
   <p>A declaration is a promise. The fourth axis of the standard asks whether you can account for a
@@ -287,7 +302,13 @@ td:first-child{{font-family:var(--mono);font-size:12px;white-space:nowrap}}
 td a{{text-decoration:none;font-weight:500}}
 td a:hover{{text-decoration:underline}}
 .sm{{font-size:13px;color:var(--ink-3)}}
-.lede{{max-width:72ch;margin-top:20px;background:var(--surface);border:1px solid var(--line);
+.routes{{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:14px;margin-top:26px}}
+.rt{{display:block;background:var(--surface);border:1px solid var(--line);border-radius:12px;
+ padding:20px 22px;text-decoration:none;color:inherit;box-shadow:var(--shadow)}}
+.rt:hover{{border-color:var(--accent)}}
+.rn{{display:block;font-size:17.5px;font-weight:600;color:var(--accent);margin-bottom:7px;letter-spacing:-.01em}}
+.rd{{display:block;font-size:14px;color:var(--ink-2);line-height:1.55}}
+.lede{{max-width:72ch;margin-top:26px;background:var(--surface);border:1px solid var(--line);
  border-radius:12px;padding:22px 26px;box-shadow:var(--shadow)}}
 .lede p{{color:var(--ink-2);font-size:15px}}
 .lede p:last-child{{margin-bottom:0}}

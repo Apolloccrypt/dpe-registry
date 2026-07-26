@@ -154,6 +154,39 @@ afgeserveerd. Dat laatste is geen achterdocht: de meest gehoorde antwoorden gaan
 heen, meestal zonder opzet, omdat de leverancier een andere vraag beantwoordt dan je stelde.</p>
 {qa}
 
+<section id="proces">
+<h2>Wat je doet met een bevinding</h2>
+<p class="note">Vinden is het makkelijke deel. Hier loopt het meestal vast, dus dit is de route.</p>
+<div class="grid">
+  <div class="sy"><h3>1 · Vraag om de meting</h3>
+    <p>Niet om een toelichting maar om een uitkomst. Wie het goed geregeld heeft, levert het
+    binnen een week. Wie erover moet nadenken, weet het niet, en dat is zelf een antwoord.</p>
+    <p style="font-size:13.5px;color:var(--ink-3)">Wij toetsen deze verwerking tegen de
+    DPE-catalogus. Graag een meting volgens DPE-meetmethode 1.0, met meetdatum, land van meting
+    en de ruwe meetbestanden. Termijn: [datum].</p></div>
+  <div class="sy"><h3>2 · Lees de uitkomst</h3>
+    <p>Je hoeft alleen te kijken of er een datum bij staat en vanuit welk land is gemeten.
+    Ontbreekt een van beide, stuur het terug. Dat is een vormvereiste, geen technisch oordeel,
+    en die mag je stellen.</p>
+    <p style="font-size:13.5px;color:var(--ink-3)">Aangetroffen, niet aangetroffen, of niet
+    getoetst. Dat laatste is geen uitkomst.</p></div>
+  <div class="sy"><h3>3 · Stel een termijn</h3>
+    <p>Geen van deze bevindingen is een datalek, dus er loopt geen meldtermijn van 72 uur. Vier
+    weken is redelijk voor iets dat neerkomt op een instelling wijzigen.</p>
+    <p style="font-size:13.5px;color:var(--ink-3)">DPE-2026-0001 herstellen voor [datum],
+    aantonen met een hermeting volgens dezelfde methode.</p></div>
+  <div class="sy"><h3>4 · Laat hermeten</h3>
+    <p>Zonder hermeting heb je een toezegging en geen herstel. Werk daarna het
+    verwerkingsregister bij als er een ontvanger in beeld kwam die er niet in stond.</p>
+    <p style="font-size:13.5px;color:var(--ink-3)">Wordt er niet hersteld, leg dan vast dat je
+    hebt geadviseerd en wat het antwoord was. Dat is je taak en het beschermt jou.</p></div>
+</div>
+<p class="note" style="margin-top:20px">De goedkoopste plek om dit te regelen is voordat er iets
+gebouwd is. Eén zin in het bestek: de oplevering is vrij van de bevindingen DPE-2026-0001 tot en
+met 0004, aan te tonen met een meting volgens DPE-meetmethode 1.0. Dat is toetsbaar, waar privacy
+by design dat niet is, en je hoeft het niet zelf te toetsen.</p>
+</section>
+
 <footer>
 <p>Krijg je een antwoord dat je niet kunt beoordelen, dan is dat op zichzelf informatie. Vraag om de
 meting: een netwerkopname met een datum, of een uitdraai uit het beheerpaneel. Wie het goed heeft
