@@ -161,7 +161,8 @@ def entry_page(x, ents):
     body = f'''<div class="wrap">
 <nav class="bar"><a href="./">DPE catalogue</a><span class="sep">/</span>
   <span>{e(x["id"])}</span><span class="sep">&middot;</span>
-  <a href="{e(x["id"])}.json">JSON</a></nav>
+  <a href="{e(x["id"])}.json">JSON</a><span class="sep">&middot;</span>
+  <a href="https://github.com/Apolloccrypt/dpe-registry/blob/main/METHOD.md">method 1.0</a></nav>
 
 <p class="eyebrow">{e(x["id"])}</p>
 <h1>{e(x["name"])}</h1>
@@ -199,7 +200,8 @@ def entry_page(x, ents):
     <dt>In text</dt><dd class="plain">{e(x["id"])} ({e(x["name"])})</dd>
     <dt>URL</dt><dd>{e(url)}</dd>
     <dt>Machine</dt><dd>{e(url)}.json</dd>
-    <dt>Full</dt><dd class="plain">DPE Catalogue. {e(x["id"])}: {e(x["name"])}. Version {e(x["schema_version"])}, entry status {e(x["status"])}. Retrieved from {e(url)}</dd>
+    <dt>Full</dt><dd class="plain">DPE Catalogue. {e(x["id"])}: {e(x["name"])}. Schema {e(x["schema_version"])}, entry status {e(x["status"])}. Retrieved from {e(url)}</dd>
+    <dt>Measurement</dt><dd class="plain">When you publish a finding, cite the method version alongside the entry: &ldquo;{e(x["id"])}, established under DPE Measurement Method 1.0&rdquo;</dd>
   </dl>
   <p style="margin:14px 0 0;font-size:13px;color:var(--ink-3)">Identifiers are permanent and are never
   reused. An entry that is deprecated keeps its number and its address, with the reason attached, because
@@ -257,8 +259,14 @@ the method, the indicators, the measurement conditions, and what would prove any
   <p>You get credit, permanently, in the entry. Anonymous is fine too. And you are not on the hook for
   what you report: this catalogue names no companies, so contributing here costs you nothing but time.</p>
 
-  <p class="cta"><a href="https://github.com/Apolloccrypt/dpe-registry/blob/main/WANTED.md">What we are
-  stuck on</a> &middot; <a href="https://github.com/Apolloccrypt/dpe-registry/blob/main/CONTRIBUTING.md">How
+  <p><b>The method is written down too.</b> Not just what each fault is, but how to go looking for one:
+  scope, clean captures, vary one thing at a time, walk the catalogue, try to break your own finding, ask
+  before publishing. Versioned, so a measurement taken this year is still readable as what it meant this
+  year. Security has the OWASP Testing Guide for this; data protection had nothing.</p>
+
+  <p class="cta"><a href="https://github.com/Apolloccrypt/dpe-registry/blob/main/METHOD.md">DPE Measurement
+  Method 1.0</a> &middot; <a href="https://github.com/Apolloccrypt/dpe-registry/blob/main/WANTED.md">What we
+  are stuck on</a> &middot; <a href="https://github.com/Apolloccrypt/dpe-registry/blob/main/CONTRIBUTING.md">How
   to contribute</a> &middot; <a href="all.json">the whole catalogue as JSON</a></p>
 </div>
 {"".join(blocks)}
