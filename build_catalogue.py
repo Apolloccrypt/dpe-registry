@@ -533,6 +533,12 @@ entry(id="DPE-2026-0014", name="No working off switch", name_nl="Geen werkende u
 
 
 def main():
+    # Koppeling naar DPIA, inkoop en klacht staat apart, omdat het per entry
+    # geschreven is en niet af te leiden valt uit de definitie.
+    prac = json.loads((ROOT / "tools" / "in_practice.json").read_text(encoding="utf-8"))
+    for x in E:
+        if x["id"] in prac:
+            x["in_practice"] = prac[x["id"]]
     OUT.mkdir(parents=True, exist_ok=True)
     for f in OUT.glob("DPE-*.json"):
         f.unlink()

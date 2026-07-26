@@ -96,5 +96,11 @@
     }
   ],
   "slug": "undisclosed-recipient",
-  "name_nl": "Niet-vermelde ontvanger"
+  "name_nl": "Niet-vermelde ontvanger",
+  "in_practice": {
+    "dpia": "Compare the measured recipients against the recipients named in the published privacy statement of the same date.",
+    "procurement": "Every party receiving personal data is named in the published statement, verified against a capture on delivery.",
+    "complaint": "A capture of recipients plus the archived statement of that date, and the set difference between them.",
+    "audit_question": "Name every party that receives data, then let me check that against the traffic."
+  }
 }

@@ -433,6 +433,29 @@
       "type": "string",
       "maxLength": 60,
       "description": "Dutch title for the front end."
+    },
+    "in_practice": {
+      "type": "object",
+      "description": "Where this entry plugs into processes that today run on paper. A DPIA states what a supplier declares and is almost never verified against the system; a procurement clause requires privacy by design and is almost never tested on delivery; a complaint arrives as a narrative rather than a measurement. Each field below turns one of those into something checkable.",
+      "additionalProperties": false,
+      "properties": {
+        "dpia": {
+          "type": "string",
+          "description": "The claim in a DPIA that this entry makes testable, phrased as what to verify instead of assume."
+        },
+        "procurement": {
+          "type": "string",
+          "description": "The clause, phrased so a supplier can read it and a buyer can verify it on delivery."
+        },
+        "complaint": {
+          "type": "string",
+          "description": "What to hand a supervisory authority so they do not have to measure it themselves."
+        },
+        "audit_question": {
+          "type": "string",
+          "description": "The single question an auditor or DPO can ask that surfaces this fault."
+        }
+      }
     }
   }
 }

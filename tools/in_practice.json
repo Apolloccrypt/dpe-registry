@@ -1,0 +1,86 @@
+{
+  "DPE-2026-0001": {
+    "dpia": "Verify that no measurement request leaves before consent is recorded, rather than accepting a statement that tags are 'consent-gated'.",
+    "procurement": "On delivery, a capture in the no-interaction state shows no requests to third-party measurement hosts and no identifier cookies.",
+    "complaint": "A HAR of the no-interaction state, the timestamp of the consent event, and the falsifier list worked through.",
+    "audit_question": "Show me a network capture of the homepage before anyone clicks the banner."
+  },
+  "DPE-2026-0002": {
+    "dpia": "Verify that refusing changes the outgoing traffic, rather than accepting that a consent tool is installed.",
+    "procurement": "On delivery, the set of third-party hosts contacted after refusal is empty of measurement hosts, demonstrated by two captures.",
+    "complaint": "Two HARs, no-interaction and refused, plus the read-back consent state proving the refusal registered.",
+    "audit_question": "Show me two captures, one where the visitor refused, and tell me the difference."
+  },
+  "DPE-2026-0003": {
+    "dpia": "Verify that a refusal control exists and writes a negative state, rather than that a banner is present.",
+    "procurement": "The consent dialogue offers refusal at the same level as acceptance, verifiable from the first screen.",
+    "complaint": "A screenshot of every layer of the dialogue and the consent state written by each control.",
+    "audit_question": "Where in the banner does someone say no, and what does that store?"
+  },
+  "DPE-2026-0004": {
+    "dpia": "Verify the actual lifetime of identifiers set before consent, rather than the retention table in the document.",
+    "procurement": "No identifier is stored with a lifetime beyond what the stated purpose requires, and none before consent.",
+    "complaint": "The Set-Cookie headers from the pre-consent capture, with lifetimes.",
+    "audit_question": "What is the longest-lived cookie you set before anyone has chosen anything?"
+  },
+  "DPE-2026-0005": {
+    "dpia": "Verify whether in-page behaviour is captured and whether input fields are masked, rather than treating it as analytics.",
+    "procurement": "No session recording is active before consent, and where used, input masking is enabled and demonstrated.",
+    "complaint": "A capture showing the recording endpoint contacted at load, and whether field masking was active.",
+    "audit_question": "Is anything recording mouse movement or keystrokes, and from what moment?"
+  },
+  "DPE-2026-0006": {
+    "dpia": "Verify that user-entered values do not travel to third parties, rather than that 'only page URLs' are shared.",
+    "procurement": "No value entered or searched by a user appears in a request to a party outside the processing chain.",
+    "complaint": "A capture using a distinctive search term, showing where that term reappears.",
+    "audit_question": "Type a nonsense word into the search box and show me every request containing it."
+  },
+  "DPE-2026-0007": {
+    "dpia": "Verify whether device characteristics are read by third parties, rather than checking only for cookies.",
+    "procurement": "No third-party script enumerates device characteristics for recognition purposes before consent.",
+    "complaint": "A trace of property reads with the initiating script per read.",
+    "audit_question": "What reads the canvas, the fonts or the time zone, and who does it belong to?"
+  },
+  "DPE-2026-0008": {
+    "dpia": "Verify who actually hosts each form and what it sets, rather than treating a supplier form as an internal one.",
+    "procurement": "Forms are served from the controller's own domain, or the third-party host sets nothing before submission.",
+    "complaint": "A capture of the form page at load, showing the host and the cookies it sets.",
+    "audit_question": "When someone fills in your contact form, whose domain are they on?"
+  },
+  "DPE-2026-0009": {
+    "dpia": "Verify which external resources the page loads on first byte, rather than reviewing only the tracking section.",
+    "procurement": "All fonts, scripts and libraries are served from the controller's own infrastructure.",
+    "complaint": "A capture of the initial document with every subresource host listed.",
+    "audit_question": "Which hosts does the page contact before any script of yours has run?"
+  },
+  "DPE-2026-0010": {
+    "dpia": "Compare the measured recipients against the recipients named in the published privacy statement of the same date.",
+    "procurement": "Every party receiving personal data is named in the published statement, verified against a capture on delivery.",
+    "complaint": "A capture of recipients plus the archived statement of that date, and the set difference between them.",
+    "audit_question": "Name every party that receives data, then let me check that against the traffic."
+  },
+  "DPE-2026-0011": {
+    "dpia": "Verify what fires at runtime rather than reading the page source, and require the container version history.",
+    "procurement": "The supplier delivers the tag container version history alongside the site, so what ran when is auditable.",
+    "complaint": "A capture showing an identifier in traffic that is absent from the fetched HTML.",
+    "audit_question": "Which tags does your container load that are not in the source, and who can change them?"
+  },
+  "DPE-2026-0012": {
+    "dpia": "Verify what the device contacts while idle, rather than accepting the telemetry section of the manual.",
+    "procurement": "The device contacts no host that serves no function the owner enabled, demonstrated by an idle capture.",
+    "complaint": "An idle capture at the gateway, with firmware version and region, and the destinations established by routing.",
+    "audit_question": "Unplug everything it does and tell me what it still talks to."
+  },
+  "DPE-2026-0013": {
+    "dpia": "Inventory the bundled components and what each contacts, rather than reviewing only the application's own code.",
+    "procurement": "The supplier delivers a component inventory listing every bundled library and the hosts it contacts.",
+    "complaint": "A static inventory plus a capture from a fresh install before the first screen is dismissed.",
+    "audit_question": "List every third-party library you ship and what each one sends home."
+  },
+  "DPE-2026-0014": {
+    "dpia": "Verify that the control that stops collection exists and survives a reboot and an update.",
+    "procurement": "Any collection beyond what is strictly necessary can be switched off, and the setting survives updates.",
+    "complaint": "Captures with the control on, off, and again after a reboot and an update.",
+    "audit_question": "Turn it off, restart it, update it, and show me it is still off."
+  }
+}

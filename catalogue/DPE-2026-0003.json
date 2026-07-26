@@ -101,5 +101,11 @@
     }
   ],
   "slug": "no-refusal-option",
-  "name_nl": "Geen weigeroptie"
+  "name_nl": "Geen weigeroptie",
+  "in_practice": {
+    "dpia": "Verify that a refusal control exists and writes a negative state, rather than that a banner is present.",
+    "procurement": "The consent dialogue offers refusal at the same level as acceptance, verifiable from the first screen.",
+    "complaint": "A screenshot of every layer of the dialogue and the consent state written by each control.",
+    "audit_question": "Where in the banner does someone say no, and what does that store?"
+  }
 }

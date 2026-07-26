@@ -4,12 +4,12 @@ import glob, html, json, pathlib
 
 ROOT = pathlib.Path(__file__).parent
 OUT = ROOT / "site" / "catalogus.html"
-FAM = {"consent": "Toestemming", "data": "Gegevens", "chain": "Keten", "transfer": "Doorgifte",
-       "transparency": "Transparantie", "retention": "Bewaring", "telemetry": "Telemetrie",
-       "method": "Methode"}
+FAM = {"consent": "Consent", "data": "Data", "chain": "Chain", "transfer": "Transfer",
+       "transparency": "Transparency", "retention": "Retention", "telemetry": "Telemetry",
+       "method": "Method"}
 SYS = {"web": "web", "mobile-app": "app", "firmware": "firmware", "iot": "IoT",
-       "vehicle": "voertuig", "desktop": "desktop", "api": "API", "network-device": "netwerkapparaat"}
-TIER = {"manual": "met de hand", "bookmarklet": "bookmarklet", "script": "script", "suite": "suite"}
+       "vehicle": "vehicle", "desktop": "desktop", "api": "API", "network-device": "network device"}
+TIER = {"manual": "by hand", "bookmarklet": "bookmarklet", "script": "script", "suite": "suite"}
 
 
 def e(s):
@@ -39,7 +39,7 @@ def build():
                    f'<span class="cnt">{len(fams[fam])}</span></div><ul>')
         for x in sorted(fams[fam], key=lambda y: y["id"]):
             nav.append(f'<li><button class="nb" data-id="{e(x["id"])}">'
-                       f'<span class="nn">{e(x.get("name_nl") or x["name"])}</span>'
+                       f'<span class="nn">{e(x["name"])}</span>'
                        f'<span class="nid">{e(x["id"].replace("DPE-", ""))}</span></button></li>')
         nav.append("</ul></div>")
 
@@ -49,10 +49,10 @@ def build():
         sys_ = "".join(f'<span class="sys">{e(SYS.get(s, s))}</span>' for s in x["applies_to"])
         causes = "".join(f"<li>{e(c)}</li>" for c in m.get("common_causes", []))
         fals = "".join(
-            f'<li><span class="fk fk-{e(f["checkable"])}">{e({"automated": "machinaal", "manual": "handmatig", "not-from-capture": "niet uit de opname"}[f["checkable"]])}</span>'
+            f'<li><span class="fk fk-{e(f["checkable"])}">{e({"automated": "automated", "manual": "by hand", "not-from-capture": "not from the capture"}[f["checkable"]])}</span>'
             f'<span class="fc">{e(f["condition"])}</span>'
             + (f'<span class="fn">{e(f["note"])}</span>' if f.get("note") else "")
-            + (f'<span class="fi">{e({"drop": "vervalt", "reclassify": "herclassificeren", "weaken": "verzwakt"}[f["if_true"]])}</span>' if f.get("if_true") else "")
+            + (f'<span class="fi">{e({"drop": "finding falls", "reclassify": "reclassify", "weaken": "weakens"}[f["if_true"]])}</span>' if f.get("if_true") else "")
             + "</li>" for f in x["falsifiers"])
         caps = "".join(f"<li>{e(c)}</li>" for c in d.get("capture_requirements", []))
         meth = "".join(f'<li><span class="tier">{e(TIER.get(t["tier"], t["tier"]))}</span>'
@@ -75,34 +75,44 @@ def build():
             if c in case else f"<li><code>{e(c)}</code></li>" for c in x["legal"].get("caselaw", []))
         nav_ = f'<div class="nav-note">{e(x["not_a_vulnerability"])}</div>' if x.get("not_a_vulnerability") else ""
         rel = "".join(f'<button class="relb" data-id="{e(r)}">{e(r)}</button>' for r in x.get("related", []))
+        ip = x.get("in_practice") or {}
+        prac = ""
+        if ip:
+            rows = "".join(
+                f'<div class="pr"><div class="pr-h">{e(h)}</div><p>{e(ip[k])}</p></div>'
+                for k, h in (("dpia", "In a DPIA, verify this"),
+                             ("procurement", "As a procurement clause"),
+                             ("complaint", "With a complaint, hand over")) if ip.get(k))
+            q = f'<div class="askq"><span>The one question that surfaces it</span><b>{e(ip["audit_question"])}</b></div>' if ip.get("audit_question") else ""
+            prac = f'<section class="prac"><h3>Where this plugs into existing processes</h3>{q}<div class="prg">{rows}</div></section>' 
 
         panes.append(f'''<article class="pane" id="p-{e(x["id"])}" hidden>
   <header class="ph">
     <div><div class="pid">{e(x["id"])}</div>
-      <h2>{e(x.get("name_nl") or x["name"])}</h2>
-      <p class="pen">{e(x["name"])}</p>
+      <h2>{e(x["name"])}</h2>
       <p class="psum">{e(x["summary"])}</p></div>
     <div class="pmeta"><span class="fam">{e(FAM.get(x["family"], x["family"]))}</span>{sys_}</div>
   </header>
   {nav_}
-  <section><h3>Wat het is</h3><p>{e(m["what"])}</p></section>
-  <section><h3>Waarom het telt</h3><p>{e(m["why_it_matters"])}</p></section>
-  {f'<section><h3>Hoe het ontstaat</h3><ul class="pl">{causes}</ul></section>' if causes else ''}
-  {f'<section><h3>Niet te verwarren met</h3><p>{e(m["not_this"])}</p></section>' if m.get("not_this") else ''}
-  <section><h3>Hoe je het vaststelt</h3>
+  <section><h3>What it is</h3><p>{e(m["what"])}</p></section>
+  <section><h3>Why it is a separate entry</h3><p>{e(m["why_it_matters"])}</p></section>
+  {f'<section><h3>How it arises</h3><ul class="pl">{causes}</ul></section>' if causes else ''}
+  {f'<section><h3>Not to be confused with</h3><p>{e(m["not_this"])}</p></section>' if m.get("not_this") else ''}
+  <section><h3>How to establish it</h3>
     <div class="ind">{e(d["indicator"])}</div>
-    <div class="qod"><span>methode</span><b>{e(d["method"])}</b><span>QoD</span><b>{d["qod"]}</b></div>
-    {f'<h4>Eisen aan de meting</h4><ul class="pl">{caps}</ul>' if caps else ''}
+    <div class="qod"><span>method</span><b>{e(d["method"])}</b><span>QoD</span><b>{d["qod"]}</b></div>
+    {f'<h4>Requirements on the measurement</h4><ul class="pl">{caps}</ul>' if caps else ''}
   </section>
-  <section><h3>Wat dit zou ontkrachten</h3><ul class="fals">{fals}</ul></section>
-  <section><h3>Reproductie</h3><ul class="meths">{meth}</ul>
-    {f'<h4>Onafhankelijk te laten meten</h4><div class="scans">{scan}</div>' if scan else ''}</section>
-  <section><h3>Wettelijk kader</h3><ul class="prov">{prov}</ul>
-    {f'<h4>Jurisprudentie</h4><ul class="prov">{cl}</ul>' if cl else ''}
-    {f'<h4>Tegenwerpingen en het antwoord</h4>{rebut}' if rebut else ''}</section>
-  <section><h3>Wat dit niet vaststelt</h3>
+  <section><h3>What would refute it</h3><ul class="fals">{fals}</ul></section>
+  {prac}
+  <section><h3>Reproduction</h3><ul class="meths">{meth}</ul>
+    {f'<h4>Third parties that can confirm it</h4><div class="scans">{scan}</div>' if scan else ''}</section>
+  <section><h3>Legal framing</h3><ul class="prov">{prov}</ul>
+    {f'<h4>Case law</h4><ul class="prov">{cl}</ul>' if cl else ''}
+    {f'<h4>Objections, and the answer</h4>{rebut}' if rebut else ''}</section>
+  <section><h3>What this does not establish</h3>
     <ul class="pl">{"".join(f"<li>{e(l)}</li>" for l in x["does_not_establish"])}</ul></section>
-  {f'<section><h3>Verwant</h3><div class="rels">{rel}</div></section>' if rel else ''}
+  {f'<section><h3>Related</h3><div class="rels">{rel}</div></section>' if rel else ''}
 </article>''')
 
     page = TPL.replace("{n}", str(len(ent))).replace("{nf}", str(len(fams)))
@@ -113,7 +123,7 @@ def build():
     print(f"{len(ent)} fouten gerenderd naar {OUT}")
 
 
-TPL = r"""<title>DPE-catalogus</title>
+TPL = r"""<title>DPE Catalogue</title>
 <style>
 :root{--bg:#FCFCFE;--surface:#FFF;--surface-2:#F7F7FB;--ink:#161620;--ink-2:#54545F;--ink-3:#8B8B97;
  --line:#E9E9F0;--line-2:#F3F3F8;--blue:#4269D0;--green:#3CA951;--gold:#EFB118;--coral:#FF725C;
@@ -177,7 +187,7 @@ h1{font-size:clamp(28px,4vw,40px);font-weight:600;letter-spacing:-.022em;margin:
 .sys{background:var(--surface-2);border:1px solid var(--line);color:var(--ink-2)}
 .nav-note{margin-top:18px;background:var(--warn-bg);border:1px solid var(--warn-line);border-radius:9px;
  padding:13px 16px;font-size:14px;color:var(--warn-ink)}
-.nav-note:before{content:"Dit is geen kwetsbaarheid. ";font-weight:600}
+.nav-note:before{content:"Not a vulnerability. ";font-weight:600}
 section{padding:20px 0;border-bottom:1px solid var(--line-2)}
 section:last-child{border-bottom:0;padding-bottom:0}
 h3{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 10px;font-weight:600}
@@ -218,6 +228,14 @@ code{font-family:var(--mono);font-size:12px;background:var(--line-2);padding:1px
 .rq{font-weight:600;font-size:14.5px;margin:0 0 3px}
 .rq:before{content:"\201C"}.rq:after{content:"\201D"}
 .ra{font-family:var(--serif);font-size:15px;color:var(--ink-2);margin:0;line-height:1.6}
+.prac .askq{background:var(--soft);border:1px solid var(--aline);border-radius:9px;padding:14px 17px;margin-bottom:14px}
+.askq span{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.11em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+.askq b{font-size:16.5px;font-weight:600;line-height:1.4}
+.prg{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:1px;background:var(--line);
+ border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.pr{background:var(--surface);padding:13px 15px}
+.pr-h{font-family:var(--mono);font-size:9px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);margin-bottom:5px}
+.pr p{margin:0;font-size:13.5px;color:var(--ink-2);line-height:1.55}
 .rels{display:flex;gap:7px;flex-wrap:wrap}
 .relb{font-family:var(--mono);font-size:11px;padding:5px 11px;border-radius:999px;background:var(--surface-2);
  border:1px solid var(--line);color:var(--ink-2);cursor:pointer}
@@ -229,21 +247,21 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);color:v
 <div class="wrap">
 <div class="top">
   <p class="eyebrow">Data Protection Exposures</p>
-  <h1>De catalogus<span class="pill">concept</span></h1>
-  <p class="sub">Genummerde fouten in de omgang met persoonsgegevens, zodat onderzoekers, toezichthouders
-  en leveranciers naar hetzelfde ding kunnen verwijzen. Geen kwetsbaarheden: er valt niets te misbruiken,
-  het systeem doet wat de bouwer wilde, en juist dat is het bezwaar. Daarom bestaat er geen CVE voor.</p>
+  <h1>The catalogue<span class="pill">draft</span></h1>
+  <p class="sub">Numbered faults in how systems handle personal data, so that researchers, regulators and
+  suppliers can refer to the same thing. Not vulnerabilities: there is nothing to exploit, the system does
+  what its builder intended, and that intention is the objection. Which is why no CVE exists for any of this.</p>
   <div class="notice">
-    <p><b>Waarvoor dit nummer bestaat.</b> Voor verwijsbaarheid. Een fout die een naam en een nummer heeft,
-    hoeft niet in elke publicatie opnieuw uitgelegd te worden, en twee onderzoekers die hetzelfde aantreffen
-    noemen het voortaan hetzelfde.</p>
-    <p><b>Wat hier niet staat.</b> Geen ernst, geen score, geen schadeoordeel. Dat is met opzet: CVE weegt
-    ook niet, dat doet NVD apart. Hoe zwaar een concreet geval weegt, hangt af van de context van dat geval
-    en is aan wie de bevinding toepast. Ook staat er geen bedrijf en geen product in; wie constateert dat een
-    systeem een van deze fouten vertoont, publiceert dat zelf en verwijst naar het nummer.</p>
+    <p><b>What the number is for.</b> Referability. A fault with a title and a number does not need
+    explaining again in every publication, and two researchers who find the same thing now call it the
+    same thing.</p>
+    <p><b>What is deliberately absent.</b> No severity, no score, no judgement of harm. CVE does not weigh
+    either; NVD does that, separately. How heavily a concrete case weighs depends on that case and belongs
+    to whoever applies the entry. No company and no product appears here: whoever establishes that a system
+    exhibits one of these faults publishes that themselves and cites the number.</p>
   </div>
   <div class="stats">
-    <div class="stat"><span>Fouten</span><b>{n}</b></div>
+    <div class="stat"><span>Faults</span><b>{n}</b></div>
     <div class="stat"><span>Families</span><b>{nf}</b></div>
     <div class="stat"><span>Schema</span><b>2.0</b></div>
   </div>
@@ -253,11 +271,11 @@ footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);color:v
   <main>{panes}</main>
 </div>
 <footer>
-  <p>Elke fout beschrijft gedrag van een systeem, niet gedrag van een organisatie, en de catalogus kent
-  geen ernst toe. Of een concreet geval onrechtmatig is en hoe zwaar het weegt, stelt de Autoriteit
-  Persoonsgegevens of de rechter vast. De catalogus benoemt welke bepalingen in het geding zijn, per
-  rechtsgebied, zodat een definitie ook buiten Nederland bruikbaar is: het gedrag is in de hele EER
-  hetzelfde en alleen de verwijzing verschilt.</p>
+  <p>Every entry describes the behaviour of a system, not the behaviour of an organisation, and the
+  catalogue assigns no severity. Whether a concrete case is unlawful, and how heavily it weighs, is for a
+  supervisory authority or a court. The catalogue names the provisions in play per jurisdiction, so an
+  entry is usable outside one country: the behaviour is the same across the EEA and only the citation
+  differs.</p>
 </footer>
 </div>
 <script>

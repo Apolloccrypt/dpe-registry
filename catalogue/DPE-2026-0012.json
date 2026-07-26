@@ -129,5 +129,11 @@
     }
   ],
   "slug": "device-telemetry-without-function",
-  "name_nl": "Apparaat belt naar huis"
+  "name_nl": "Apparaat belt naar huis",
+  "in_practice": {
+    "dpia": "Verify what the device contacts while idle, rather than accepting the telemetry section of the manual.",
+    "procurement": "The device contacts no host that serves no function the owner enabled, demonstrated by an idle capture.",
+    "complaint": "An idle capture at the gateway, with firmware version and region, and the destinations established by routing.",
+    "audit_question": "Unplug everything it does and tell me what it still talks to."
+  }
 }

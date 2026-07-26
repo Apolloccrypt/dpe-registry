@@ -100,5 +100,11 @@
     }
   ],
   "slug": "device-fingerprinting",
-  "name_nl": "Apparaatherkenning"
+  "name_nl": "Apparaatherkenning",
+  "in_practice": {
+    "dpia": "Verify whether device characteristics are read by third parties, rather than checking only for cookies.",
+    "procurement": "No third-party script enumerates device characteristics for recognition purposes before consent.",
+    "complaint": "A trace of property reads with the initiating script per read.",
+    "audit_question": "What reads the canvas, the fonts or the time zone, and who does it belong to?"
+  }
 }

@@ -120,5 +120,11 @@
     }
   ],
   "slug": "bundled-component-collection",
-  "name_nl": "Meeliftende component"
+  "name_nl": "Meeliftende component",
+  "in_practice": {
+    "dpia": "Inventory the bundled components and what each contacts, rather than reviewing only the application's own code.",
+    "procurement": "The supplier delivers a component inventory listing every bundled library and the hosts it contacts.",
+    "complaint": "A static inventory plus a capture from a fresh install before the first screen is dismissed.",
+    "audit_question": "List every third-party library you ship and what each one sends home."
+  }
 }

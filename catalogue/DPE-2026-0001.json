@@ -142,5 +142,11 @@
     }
   ],
   "slug": "tracking-before-consent",
-  "name_nl": "Meten voor de toestemmingsvraag"
+  "name_nl": "Meten voor de toestemmingsvraag",
+  "in_practice": {
+    "dpia": "Verify that no measurement request leaves before consent is recorded, rather than accepting a statement that tags are 'consent-gated'.",
+    "procurement": "On delivery, a capture in the no-interaction state shows no requests to third-party measurement hosts and no identifier cookies.",
+    "complaint": "A HAR of the no-interaction state, the timestamp of the consent event, and the falsifier list worked through.",
+    "audit_question": "Show me a network capture of the homepage before anyone clicks the banner."
+  }
 }

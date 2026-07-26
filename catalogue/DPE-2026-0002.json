@@ -122,5 +122,11 @@
     }
   ],
   "slug": "refusal-without-effect",
-  "name_nl": "Weigeren zonder effect"
+  "name_nl": "Weigeren zonder effect",
+  "in_practice": {
+    "dpia": "Verify that refusing changes the outgoing traffic, rather than accepting that a consent tool is installed.",
+    "procurement": "On delivery, the set of third-party hosts contacted after refusal is empty of measurement hosts, demonstrated by two captures.",
+    "complaint": "Two HARs, no-interaction and refused, plus the read-back consent state proving the refusal registered.",
+    "audit_question": "Show me two captures, one where the visitor refused, and tell me the difference."
+  }
 }

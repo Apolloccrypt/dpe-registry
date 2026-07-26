@@ -102,5 +102,11 @@
     }
   ],
   "slug": "tag-loaded-outside-source",
-  "name_nl": "Tag buiten de broncode"
+  "name_nl": "Tag buiten de broncode",
+  "in_practice": {
+    "dpia": "Verify what fires at runtime rather than reading the page source, and require the container version history.",
+    "procurement": "The supplier delivers the tag container version history alongside the site, so what ran when is auditable.",
+    "complaint": "A capture showing an identifier in traffic that is absent from the fetched HTML.",
+    "audit_question": "Which tags does your container load that are not in the source, and who can change them?"
+  }
 }

@@ -106,5 +106,11 @@
     }
   ],
   "slug": "third-party-hosted-form",
-  "name_nl": "Formulier bij een derde"
+  "name_nl": "Formulier bij een derde",
+  "in_practice": {
+    "dpia": "Verify who actually hosts each form and what it sets, rather than treating a supplier form as an internal one.",
+    "procurement": "Forms are served from the controller's own domain, or the third-party host sets nothing before submission.",
+    "complaint": "A capture of the form page at load, showing the host and the cookies it sets.",
+    "audit_question": "When someone fills in your contact form, whose domain are they on?"
+  }
 }

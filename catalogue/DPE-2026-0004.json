@@ -111,5 +111,11 @@
     }
   ],
   "slug": "maximum-cookie-lifetime",
-  "name_nl": "Maximale bewaartermijn"
+  "name_nl": "Maximale bewaartermijn",
+  "in_practice": {
+    "dpia": "Verify the actual lifetime of identifiers set before consent, rather than the retention table in the document.",
+    "procurement": "No identifier is stored with a lifetime beyond what the stated purpose requires, and none before consent.",
+    "complaint": "The Set-Cookie headers from the pre-consent capture, with lifetimes.",
+    "audit_question": "What is the longest-lived cookie you set before anyone has chosen anything?"
+  }
 }

@@ -107,5 +107,11 @@
     }
   ],
   "slug": "session-recording",
-  "name_nl": "Sessieopname"
+  "name_nl": "Sessieopname",
+  "in_practice": {
+    "dpia": "Verify whether in-page behaviour is captured and whether input fields are masked, rather than treating it as analytics.",
+    "procurement": "No session recording is active before consent, and where used, input masking is enabled and demonstrated.",
+    "complaint": "A capture showing the recording endpoint contacted at load, and whether field masking was active.",
+    "audit_question": "Is anything recording mouse movement or keystrokes, and from what moment?"
+  }
 }

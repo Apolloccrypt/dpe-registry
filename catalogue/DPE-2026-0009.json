@@ -117,5 +117,11 @@
     }
   ],
   "slug": "third-party-resource-loading",
-  "name_nl": "Externe bron inladen"
+  "name_nl": "Externe bron inladen",
+  "in_practice": {
+    "dpia": "Verify which external resources the page loads on first byte, rather than reviewing only the tracking section.",
+    "procurement": "All fonts, scripts and libraries are served from the controller's own infrastructure.",
+    "complaint": "A capture of the initial document with every subresource host listed.",
+    "audit_question": "Which hosts does the page contact before any script of yours has run?"
+  }
 }

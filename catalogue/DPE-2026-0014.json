@@ -107,5 +107,11 @@
     }
   ],
   "slug": "no-working-off-switch",
-  "name_nl": "Geen werkende uitschakeling"
+  "name_nl": "Geen werkende uitschakeling",
+  "in_practice": {
+    "dpia": "Verify that the control that stops collection exists and survives a reboot and an update.",
+    "procurement": "Any collection beyond what is strictly necessary can be switched off, and the setting survives updates.",
+    "complaint": "Captures with the control on, off, and again after a reboot and an update.",
+    "audit_question": "Turn it off, restart it, update it, and show me it is still off."
+  }
 }
