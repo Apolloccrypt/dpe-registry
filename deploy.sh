@@ -31,6 +31,7 @@ fi
 echo "== pagina's bouwen"
 python3 build_pages.py
 # De voorpagina (vragen + lijst) komt hiervandaan, niet uit build_pages.
+python3 tools/build_db.py
 python3 tools/build_triage.py
 python3 tools/build_readme_list.py
 

@@ -159,16 +159,16 @@ def entry_page(x, ents):
 
     body = f'''<div class="wrap">
 <nav class="bar"><a href="https://totaledigitalewaarborging.nl/">TDW</a><span class="sep">/</span>
-  <a href="../">DPE catalogue</a><span class="sep">/</span>
+  <a href="../">DPE-database</a><span class="sep">/</span>
   <span>{e(x["id"])}</span><span class="sep">&middot;</span>
   <a href="index.json">JSON</a><span class="sep">&middot;</span>
-  <a href="../start.html">niet-technisch</a><span class="sep">&middot;</span>
+  <a href="../uitleg.html">van symptoom naar nummer</a><span class="sep">&middot;</span>
   <a href="https://github.com/Apolloccrypt/dpe-registry/blob/main/METHOD.md">method 1.0</a></nav>
 
 <p class="eyebrow">{e(x["id"])}</p>
 <h1>{e(x["name"])}</h1>
 <p class="sum">{e(x["summary"])}</p>
-{f'<div class="nl"><span>In het Nederlands</span><b>{e(x["name_nl"])}</b><a href="../start.html">Wat vraag ik hierover, en hoe herken ik een ontwijkend antwoord?</a></div>' if x.get("name_nl") else ""}
+{f'<div class="nl"><span>In het Nederlands</span><b>{e(x["name_nl"])}</b><a href="../uitleg.html">Wat vraag ik hierover, en hoe herken ik een ontwijkend antwoord?</a></div>' if x.get("name_nl") else ""}
 <div class="tags"><span class="tag fam">{e(FAM.get(x["family"], x["family"]))}</span>
   {"".join(f'<span class="tag">{e(SYS.get(s, s))}</span>' for s in x["applies_to"])}
   <span class="tag">status {e(x["status"])}</span></div>

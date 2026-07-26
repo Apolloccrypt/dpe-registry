@@ -14,7 +14,7 @@ nodig heeft, want daar wordt hij afgeserveerd.
 import glob, html, json, pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-OUT = ROOT / "site" / "register" / "index.html"
+OUT = ROOT / "site" / "register" / "uitleg.html"
 
 
 def e(s):
@@ -137,7 +137,7 @@ def build():
     print(f"triagepagina met {len(SYMPTOMS)} symptomen en {len(rows)} vragen -> {OUT}")
 
 
-TPL = r"""<title>DPE-catalogus · Totale Digitale Waarborging</title>
+TPL = r"""<title>Van symptoom naar nummer · DPE</title>
 <style>
 :root{--bg:#FCFCFE;--surface:#FFF;--surface-2:#F7F7FB;--ink:#161620;--ink-2:#54545F;--ink-3:#8B8B97;
  --line:#E9E9F0;--line-2:#F3F3F8;--accent:#4269D0;--soft:#EDF1FC;--aline:#D5E0F7;
@@ -193,7 +193,7 @@ h2{font-size:24px;font-weight:600;letter-spacing:-.02em;margin:44px 0 8px}
 footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);color:var(--ink-3);font-size:13px}
 </style>
 <div class="in">
-<nav class="bar"><a href="https://totaledigitalewaarborging.nl/">Totale Digitale Waarborging</a> &middot; <span>DPE-catalogus</span> &middot; <a href="#lijst">alle fouten</a> &middot; <a href="all.json">JSON</a> &middot; <a href="https://github.com/Apolloccrypt/dpe-registry">bron en bijdragen</a></nav>
+<nav class="bar"><a href="https://totaledigitalewaarborging.nl/">Totale Digitale Waarborging</a> &middot; <a href="./">DPE-database</a> &middot; <span>Van symptoom naar nummer</span> &middot; <a href="all.json">JSON</a> &middot; <a href="https://github.com/Apolloccrypt/dpe-registry">bron en bijdragen</a></nav>
 <p class="eyebrow">Data Protection Exposures &middot; as 04, privacy</p>
 <h1>Je hoeft niet te kunnen meten om te weten wat je moet vragen</h1>
 <p class="lede">De catalogus staat vol netwerkopnames en indicatoren. Dat is voor wie zelf meet.
@@ -205,11 +205,6 @@ gaat van wat je hoort naar het nummer.</p>
 <p class="note">Kies wat het dichtst in de buurt komt. Je krijgt de fouten die daarbij horen, met
 per fout de vraag die je kunt stellen.</p>
 <div class="grid">{sym}</div>
-
-<h2 id="lijst">Alle {n} fouten</h2>
-<p class="note">De volledige catalogus, gegroepeerd naar het soort fout. Klik door voor de
-beschrijving, de indicator die hem vaststelt, wat hem zou ontkrachten en hoe je hem naspeelt.</p>
-{lijst}
 
 <h2>De vraag per fout</h2>
 <p class="note">Eén vraag per fout, in gewone taal, zonder dat je hoeft te weten hoe je meet.
