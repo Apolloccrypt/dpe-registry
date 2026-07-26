@@ -41,8 +41,8 @@
     "methods": [
       {
         "tier": "manual",
-        "path": "repro/offbooks/MANUAL.md",
-        "expect": "a recipient present in the capture and absent from the statement of the same date"
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
       }
     ],
     "public_scanners": [

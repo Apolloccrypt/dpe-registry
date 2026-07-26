@@ -59,6 +59,11 @@
         "expect": "measurement requests visible before touching the banner"
       },
       {
+        "tier": "script",
+        "path": "repro/web/check.mjs",
+        "expect": "the run reports DPE-2026-0001 as present, with the detail behind it"
+      },
+      {
         "tier": "bookmarklet",
         "path": "repro/bookmarklet/frontrun.bookmarklet.txt"
       },

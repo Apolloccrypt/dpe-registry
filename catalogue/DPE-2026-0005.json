@@ -47,12 +47,13 @@
     "methods": [
       {
         "tier": "manual",
-        "path": "repro/overshoulder/MANUAL.md",
-        "expect": "a request to a recording vendor endpoint before consent"
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
       },
       {
         "tier": "script",
-        "path": "repro/overshoulder/overshoulder.mjs"
+        "path": "repro/web/check.mjs",
+        "expect": "the run reports DPE-2026-0005 as present, with the detail behind it"
       }
     ],
     "public_scanners": [

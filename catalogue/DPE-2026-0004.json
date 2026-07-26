@@ -40,17 +40,13 @@
   "reproduction": {
     "methods": [
       {
-        "tier": "manual",
-        "path": "repro/maxstay/MANUAL.md",
-        "expect": "a cookie with a lifetime near 399 days, present before any interaction"
-      },
-      {
         "tier": "bookmarklet",
         "path": "repro/bookmarklet/frontrun.bookmarklet.txt"
       },
       {
         "tier": "script",
-        "path": "repro/maxstay/maxstay.mjs"
+        "path": "repro/web/check.mjs",
+        "expect": "the run reports DPE-2026-0004 as present, with the detail behind it"
       }
     ],
     "public_scanners": [

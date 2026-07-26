@@ -50,12 +50,13 @@
     "methods": [
       {
         "tier": "manual",
-        "path": "repro/hollowno/MANUAL.md",
-        "expect": "identical host sets in the no-action and refuse captures"
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
       },
       {
         "tier": "script",
-        "path": "repro/hollowno/hollowno.mjs"
+        "path": "repro/web/check.mjs",
+        "expect": "the run reports DPE-2026-0002 as present, with the detail behind it"
       }
     ],
     "public_scanners": [

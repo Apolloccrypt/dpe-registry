@@ -41,12 +41,13 @@
     "methods": [
       {
         "tier": "manual",
-        "path": "repro/silhouette/MANUAL.md",
-        "expect": "property reads by third-party scripts before consent"
+        "path": "METHOD.md",
+        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
       },
       {
         "tier": "script",
-        "path": "repro/silhouette/silhouette.mjs"
+        "path": "repro/web/check.mjs",
+        "expect": "the run reports DPE-2026-0007 as present, with the detail behind it"
       }
     ],
     "public_scanners": [

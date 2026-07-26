@@ -48,9 +48,17 @@ def entry(**kw):
 
 
 def repro(*tiers, scanners=()):
-    m = []
-    for t in tiers:
-        m.append({"tier": t[0], "path": t[1], **({"expect": t[2]} if len(t) > 2 else {})})
+    """Alleen routes die daadwerkelijk bestaan.
+
+    Een entry die verwijst naar een script dat er niet is, belooft iets wat het
+    register niet waarmaakt, en dat is precies het verwijt dat we anderen maken.
+    Ontbreekt alles, dan staat dat er zichtbaar bij in plaats van dat het wordt
+    weggepoetst."""
+    m = [{"tier": t[0], "path": t[1], **({"expect": t[2]} if len(t) > 2 else {})}
+         for t in tiers if (ROOT / t[1]).exists()]
+    if not m:
+        m = [{"tier": "manual", "path": "METHOD.md",
+              "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"}]
     return {"methods": m, "public_scanners": list(scanners)}
 
 
@@ -536,9 +544,17 @@ def main():
     # Koppeling naar DPIA, inkoop en klacht staat apart, omdat het per entry
     # geschreven is en niet af te leiden valt uit de definitie.
     prac = json.loads((ROOT / "tools" / "in_practice.json").read_text(encoding="utf-8"))
+    # Een gedeeld script voor alle webfouten, in plaats van tien losse. Wie
+    # meet wil een run doen en alles tegelijk toetsen, niet tien keer hetzelfde.
+    WEB = {"DPE-2026-0001", "DPE-2026-0002", "DPE-2026-0003", "DPE-2026-0004",
+           "DPE-2026-0005", "DPE-2026-0007", "DPE-2026-0009", "DPE-2026-0011"}
     for x in E:
         if x["id"] in prac:
             x["in_practice"] = prac[x["id"]]
+        if x["id"] in WEB:
+            x["reproduction"]["methods"].insert(1, {
+                "tier": "script", "path": "repro/web/check.mjs",
+                "expect": f'the run reports {x["id"]} as present, with the detail behind it'})
     OUT.mkdir(parents=True, exist_ok=True)
     for f in OUT.glob("DPE-*.json"):
         f.unlink()
