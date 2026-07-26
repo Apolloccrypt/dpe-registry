@@ -53,8 +53,8 @@
     "methods": [
       {
         "tier": "manual",
-        "path": "METHOD.md",
-        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+        "path": "repro/deadend/MANUAL.md",
+        "expect": "identical idle traffic with the control on and off, or the control reverting after a reboot or update"
       }
     ],
     "public_scanners": []

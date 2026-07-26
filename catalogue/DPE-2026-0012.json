@@ -63,8 +63,8 @@
     "methods": [
       {
         "tier": "manual",
-        "path": "METHOD.md",
-        "expect": "no dedicated reproduction exists yet; follow the general method and the indicator above"
+        "path": "repro/homecall/MANUAL.md",
+        "expect": "destinations contacted while the device is idle, with frequency and volume"
       }
     ],
     "public_scanners": []
