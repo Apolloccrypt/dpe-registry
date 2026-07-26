@@ -37,20 +37,20 @@
       {
         "tier": "manual",
         "label": "Browser devtools, met de hand",
-        "repo": "https://github.com/OWNER/dpe-registry",
+        "repo": "https://github.com/Apolloccrypt/dpe-registry",
         "path": "repro/MANUAL.md",
         "expect": "cookies gezet bij paginalaad op het formulierdomein van de derde partij, zonder consent-mechanisme"
       },
       {
         "tier": "script",
         "label": "Standalone Playwright, geen registertooling",
-        "repo": "https://github.com/OWNER/dpe-registry",
+        "repo": "https://github.com/Apolloccrypt/dpe-registry",
         "path": "repro/handover/handover.mjs",
         "language": "javascript",
         "command": "npm i playwright && node handover.mjs",
         "runner": {
           "service": "github-codespaces",
-          "url": "https://codespaces.new/OWNER/dpe-registry",
+          "url": "https://codespaces.new/Apolloccrypt/dpe-registry",
           "exit_country": "NL",
           "caveat": "Kies een EU-regio. Een US-egress kan een andere consent-flow krijgen, waardoor CS:PRE niet reproduceert."
         },

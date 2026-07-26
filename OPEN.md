@@ -5,10 +5,14 @@ hetzelfde probleem als de partijen die het meet.
 
 ## Blokkerend voor publicatie
 
-- **Repo-URL's zijn placeholders.** Elk record verwijst naar
-  `github.com/OWNER/dpe-registry`. Zodra de repo bestaat: vervangen en de
-  reproductiepaden pinnen op commit, zodat een geciteerde snippet niet meer kan
-  veranderen onder een record dat ernaar verwijst.
+- **Reproductiepaden zijn nog niet op commit gepind.** De repo bestaat
+  (`github.com/Apolloccrypt/dpe-registry`) en de verwijzingen kloppen, maar ze
+  wijzen naar de branch en niet naar een commit. Daardoor kan een geciteerde
+  snippet veranderen onder een record dat ernaar verwijst. Het `commit`-veld
+  staat in het schema en moet gevuld worden bij publicatie van elk record.
+- **De repository is nog privé.** Publiek maken pas als de negen stub-regels af
+  zijn; zolang er `TODO` in een regel staat, belooft het register iets wat er
+  niet is.
 - **`independent_confirmation` is overal leeg.** Dat is bewust: er zijn geen
   URL's ingevuld die niet daadwerkelijk zijn gedraaid. Nog te doen op de drie
   domeinen waar de bevindingen nog actief zijn (pgwoo.nl, pgawb.nl,

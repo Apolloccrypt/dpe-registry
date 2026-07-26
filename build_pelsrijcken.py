@@ -45,15 +45,15 @@ def repro(tier_script_path, expect, manual_path="repro/MANUAL.md"):
     return {
         "methods": [
             {"tier": "manual", "label": "Browser devtools, met de hand",
-             "repo": "https://github.com/OWNER/dpe-registry",
+             "repo": "https://github.com/Apolloccrypt/dpe-registry",
              "path": manual_path,
              "expect": expect},
             {"tier": "script", "label": "Standalone Playwright, geen registertooling",
-             "repo": "https://github.com/OWNER/dpe-registry",
+             "repo": "https://github.com/Apolloccrypt/dpe-registry",
              "path": tier_script_path, "language": "javascript",
              "command": "npm i playwright && node " + tier_script_path.split("/")[-1],
              "runner": {"service": "github-codespaces",
-                        "url": "https://codespaces.new/OWNER/dpe-registry",
+                        "url": "https://codespaces.new/Apolloccrypt/dpe-registry",
                         "exit_country": "NL",
                         "caveat": "Kies een EU-regio. Een US-egress kan een andere consent-flow krijgen, waardoor CS:PRE niet reproduceert."},
              "environment": {"browser": "chromium", "exit_country": "NL",

@@ -24,20 +24,20 @@
       {
         "tier": "manual",
         "label": "Browser devtools, met de hand",
-        "repo": "https://github.com/OWNER/dpe-registry",
+        "repo": "https://github.com/Apolloccrypt/dpe-registry",
         "path": "repro/offbooks/offbooks.md",
         "expect": "vergelijking van de gemeten ontvangers met de lijst in de privacyverklaring van dezelfde datum, beide via Wayback"
       },
       {
         "tier": "script",
         "label": "Standalone Playwright, geen registertooling",
-        "repo": "https://github.com/OWNER/dpe-registry",
+        "repo": "https://github.com/Apolloccrypt/dpe-registry",
         "path": "repro/offbooks/offbooks.md",
         "language": "javascript",
         "command": "npm i playwright && node offbooks.md",
         "runner": {
           "service": "github-codespaces",
-          "url": "https://codespaces.new/OWNER/dpe-registry",
+          "url": "https://codespaces.new/Apolloccrypt/dpe-registry",
           "exit_country": "NL",
           "caveat": "Kies een EU-regio. Een US-egress kan een andere consent-flow krijgen, waardoor CS:PRE niet reproduceert."
         },
