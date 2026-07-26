@@ -159,7 +159,8 @@ def entry_page(x, ents):
         prac = f'<section><h2>Where this plugs into existing processes</h2>{q}<div class="prg">{rows}</div></section>'
 
     body = f'''<div class="wrap">
-<nav class="bar"><a href="./">DPE catalogue</a><span class="sep">/</span>
+<nav class="bar"><a href="https://totaledigitalewaarborging.nl/">TDW</a><span class="sep">/</span>
+  <a href="./">DPE catalogue</a><span class="sep">/</span>
   <span>{e(x["id"])}</span><span class="sep">&middot;</span>
   <a href="{e(x["id"])}.json">JSON</a><span class="sep">&middot;</span>
   <a href="https://github.com/Apolloccrypt/dpe-registry/blob/main/METHOD.md">method 1.0</a></nav>
@@ -232,17 +233,21 @@ def index_page(ents):
         blocks.append(f'<h2 style="margin-top:30px">{e(FAM.get(fam, fam))}</h2>'
                       f'<table><tbody>{rows}</tbody></table>')
     body = f'''<div class="wrap" style="max-width:1000px">
-<nav class="bar"><span>DPE catalogue</span><span class="sep">&middot;</span>
+<nav class="bar"><a href="https://totaledigitalewaarborging.nl/">Totale Digitale Waarborging</a>
+  <span class="sep">/</span><span>DPE catalogue</span><span class="sep">&middot;</span>
   <a href="all.json">all.json</a><span class="sep">&middot;</span>
   <a href="https://github.com/Apolloccrypt/dpe-registry">source and contributions</a></nav>
-<p class="eyebrow">Data Protection Exposures</p>
-<h1>How these things are found, written down so you can find them too</h1>
+<p class="eyebrow">Totale Digitale Waarborging &middot; as 04, privacy &middot; Data Protection Exposures</p>
+<h1>We measure what others assume</h1>
 <p class="sum">People keep asking how a researcher finds this stuff. This is the answer, in the open:
-the method, the indicators, the measurement conditions, and what would prove any of it wrong.</p>
+the faults, the indicators, the conditions a measurement has to meet, and what would prove any of it
+wrong. Take it and use it.</p>
 
 <div class="lede">
-  <p>Numbered faults in how systems handle personal data, so that researchers, regulators and suppliers
-  can refer to the same thing instead of describing it again every time. Not vulnerabilities: there is
+  <p>A declaration is a promise. The fourth axis of the standard asks whether you can account for a
+  system in legal terms, and this catalogue is what makes that question testable: numbered faults in how
+  systems handle personal data, so that researchers, regulators and suppliers refer to the same thing
+  instead of describing it again every time. Not vulnerabilities: there is
   nothing to exploit, the system does what its builder intended, and that intention is the objection.
   A router phoning home to another country gets no CVE, because nothing is broken. That is exactly why
   there was no number for it.</p>
